@@ -24,6 +24,12 @@
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('youtube-player', {
             videoId: 'cKOWZPWLeaQ',
+            playerVars: {
+                rel : 0,
+                control : 0,
+                disablekb : 1,
+                modestbranding : 1,
+            },
             events: {
                 'onReady': onPlayerReady,
                 'onStateChange': onPlayerStateChange
@@ -47,6 +53,7 @@
             console.log("동영상 종료");
         }
         if (event.data === YT.PlayerState.PAUSED) {     /* 동영상 일시정지 상태 */
+            // 초 단위로 읽어서 원래 위치로 옮기는 로직 구성
             console.log("동영상 일시 정지");
 
             /* 동영상의 일시정지 상황 시 재생 위치 저장 */
