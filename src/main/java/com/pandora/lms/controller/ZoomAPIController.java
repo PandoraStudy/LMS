@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ZoomAPIController {
 
     @GetMapping("/zoom")
-    public String index() {
+    public String zoom() {
         return "zoom";
     }
 
