@@ -9,5 +9,6 @@
 </script>
 <body>
     <h1>테스트 화면 입니다.</h1>
+    <a href="/zoom">줌</a>
 </body>
 </html>
