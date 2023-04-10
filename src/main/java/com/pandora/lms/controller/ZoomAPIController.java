@@ -1,15 +1,14 @@
-package controller;
+package com.pandora.lms.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class ZoomAPIController {
 
-    @GetMapping("/index")
+    @GetMapping("/zoom")
     public String index() {
-        System.out.println("접근!");
-        return "index";
+        return "zoom";
     }
 
 }
