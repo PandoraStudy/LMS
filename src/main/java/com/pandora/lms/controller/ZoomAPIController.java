@@ -4,14 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class IndexController {
+public class ZoomAPIController {
 
-    @GetMapping("/index")
-    public String index() {
-    	
-        System.out.println("접근!");
-
-        return "index";
+    @GetMapping("/zoom")
+    public String zoom() {
+        return "zoom";
     }
 
 }
