@@ -9,15 +9,20 @@
 <html>
 <body>
 <script>
+    /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
     var tag = document.createElement('script');
 
+    /* 만들어진 태그 유튜브 API가 정상적으로 동작할 시 <div id='player'> 안에 iframe을 삽입 준비 */
     tag.src = "https://www.youtube.com/iframe_api";
+
+    /* 위에 선언된 var tag를 가장 첫번째 <script>로 인식 시키기 위한 코드 */
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+    /* 유튜브 동영상 iframe 생성 객체, 그 안에 실행될 동영상 정보를 가져오고 상태 변화에 따른 이벤트를 발생 시킴 */
     var player;
     function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
+        player = new YT.Player('youtube-player', {
             videoId: 'cKOWZPWLeaQ',
             events: {
                 'onReady': onPlayerReady,
@@ -33,7 +38,7 @@
 
     let curr_time = 0;
 
-    function onPlayerStateChange(event) {
+    function onPlayerStateChange(event) {   /* 플레이어 상태 변화 */
 
         if (event.data === YT.PlayerState.PLAYING) {    /* 동영상 재생 상태 */
             console.log("동영상 재생");
@@ -72,7 +77,7 @@
 </body>
 </html>
 <body>
-    <div style="width: 1280px; height: 720px; background-color: #ccc;" id="player"></div>
+    <div style="width: 1280px; height: 720px; background-color: #ccc;" id="youtube-player"></div>
 
     <br>
 
