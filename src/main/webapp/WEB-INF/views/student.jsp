@@ -67,7 +67,7 @@ position: relative;
 top: 1px;
 border: 1px solid lightgray;
 }
-.user-menu{
+.user_menu{
 width: 310px;
 height: 32px;
 background-color: #f7f6f6;
@@ -77,16 +77,16 @@ top: 0;
 clip-path: polygon(0% 0, 100% 0, 95% 100%, 5% 100%);
 line-height: 32px;
 }
-.user-menu > ul{
+.user_menu > ul{
 margin: 0;
 }
-.user-menu > ul >li{
+.user_menu > ul >li{
 width: 90px;
 height: 20px;
 list-style: none;
 float: left;
 }
-.user-menu > ul >li:not(:last-child):after{
+.user_menu > ul >li:not(:last-child):after{
     content: "\00a0\00a0\00a0|";
 }
 .menu_divider{
@@ -108,7 +108,7 @@ top: -40px;
 left: 20px;
 font-size: 14px;
 }
-.side_menu-title{
+.side_menu_title{
 width: 200px;
 height: 80px;
 background-color: #0060af;
@@ -149,11 +149,11 @@ box-sizing: border-box;
 padding-left: 38px;
 display: none;
 }
-.side_submenu-sub{
+.side_submenu_sub{
 padding: 0;
 margin: 0;
 }
-.side_submenu-sub > li{
+.side_submenu_sub > li{
 list-style: none;
 /* width: 182px; 														슬라이드바를 쓸 경우	*/
 width: 200px;
@@ -165,7 +165,7 @@ box-sizing: border-box;
 padding-left: 57px;
 display: none;
 }
-.side_submenu-sub > li:before {
+.side_submenu_sub > li:before {
 	content: "\25AA";
 }
 .main_content{
@@ -181,11 +181,11 @@ right: -20px;
 function dp_menu() {
 	  event.stopPropagation(); // Prevent event bubbling
 	  let clickedLi = event.target.closest("li"); // Get the clicked <li> element
-	  let clickedLiLevel = parseInt(clickedLi.getAttribute("data-level"));
+	  let clickedLiLevel = parseInt(clickedLi.getAttribute("data_level"));
 
 	  let childLis = clickedLi.querySelectorAll("li");
 	  childLis.forEach(function(li) {
-	    let liLevel = parseInt(li.getAttribute("data-level"));
+	    let liLevel = parseInt(li.getAttribute("data_level"));
 	    
 	    // Check if the current <li> is a direct child of the clicked <li>
 	    if (liLevel == (clickedLiLevel+1)) {
@@ -219,7 +219,7 @@ function dp_menu() {
 	<div class="top_search_bar">
 		<input type="text" class="top_search"><input type="button" value="검색" class="top_search_btn">
 	</div>
-	<div class="user-menu">
+	<div class="user_menu">
 		<ul>
 			<li>내이름</li>
 			<li>즐겨찾기</li>
@@ -230,19 +230,19 @@ function dp_menu() {
 <div class="menu_divider"></div>
 <div class="main_body">
 		<div class="side_menu">
-			<div class="side_menu-title">입시</div>
+			<div class="side_menu_title">입시</div>
 			<ul>
-				<li onclick="dp_menu()" data-level="1">학생관리
+				<li onclick="dp_menu()" data_level="1">학생관리
 					<ul class="side_submenu" id="side_submenu">
-						<li onclick="dp_menu()" data-level="2">학생명단조회
-							<ul class="side_submenu-sub">
-								<li data-level="3">학생명부조회</li>
+						<li onclick="dp_menu()" data_level="2">학생명단조회
+							<ul class="side_submenu_sub">
+								<li data_level="3">학생명부조회</li>
 							</ul>
 						</li>
-						<li onclick="dp_menu()" data-level="2">학생성적조회
-							<ul class="side_submenu-sub">
-								<li data-level="3">학생성적조회</li>
-								<li data-level="3">학생성적조회</li>
+						<li onclick="dp_menu()" data_level="2">학생성적조회
+							<ul class="side_submenu_sub">
+								<li data_level="3">학생성적조회</li>
+								<li data_level="3">학생성적조회</li>
 							</ul>
 						</li>
 					</ul>
