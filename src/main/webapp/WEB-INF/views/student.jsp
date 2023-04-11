@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>Student</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 body{
 margin: 0;
@@ -178,29 +179,59 @@ right: -20px;
 }
 </style>
 <script type="text/javascript">
+
 function dp_menu() {
-	  event.stopPropagation(); // Prevent event bubbling
-	  let clickedLi = event.target.closest("li"); // Get the clicked <li> element
-	  let clickedLiLevel = parseInt(clickedLi.getAttribute("data_level"));
+	event.stopPropagation(); // Prevent event bubbling
+	let clickedLi = event.target.closest("li"); // Get the clicked <li> element
+	let clickedLiLevel = parseInt(clickedLi.getAttribute("data_level"));
 
-	  let childLis = clickedLi.querySelectorAll("li");
-	  childLis.forEach(function(li) {
-	    let liLevel = parseInt(li.getAttribute("data_level"));
-	    
-	    // Check if the current <li> is a direct child of the clicked <li>
-	    if (liLevel == (clickedLiLevel+1)) {
-	      if (li.style.display === "none") {
-	        li.style.display = "block";
-	      } else {
-	        li.style.display = "none";
-	      }
-	      
-	    } else {
-	    	
-	    }
-	  });
-	}
+	let childLis = clickedLi.querySelectorAll("li");
+	childLis.forEach(function(li) {
+		let liLevel = parseInt(li.getAttribute("data_level"));
 
+		// Check if the current <li> is a direct child of the clicked <li>
+		if (liLevel === clickedLiLevel + 1) {
+			if (li.style.display === "none") {
+				li.style.display = "block";
+				console.log("레벨 : " + liLevel);
+				console.log("클릭레벨 : " + clickedLiLevel);
+			} else {
+				li.style.display = "none";
+				console.log("레벨2 : " + liLevel);
+				console.log("클릭레벨2 : " + clickedLiLevel);
+			}
+
+		} else {
+			console.log("레벨3 : " + liLevel);
+			console.log("클릭레벨3 : " + clickedLiLevel);
+		}
+	});
+}
+$(document).ready( function() {
+$(".d").click(function(e){
+// 	console.log("d");
+	$(".dd").toggle();
+// 	$(this).find('.dd').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+	});
+});
+$(document).ready( function() {
+$(".dd").click(function(e){
+// 	console.log("dd");
+// 	$(".ddd").toggle();
+	$(this).find('.ddd').toggle();
+    e.stopPropagation();								//e.stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
+    e.preventDefault();									//e.preventDefault는 고유 동작을 중단시킨다.
+    													//이제 ddd에 iframe을 띄우면서 상위 엘리먼트에 전달되지 않게 막는게 되나?
+	});
+});
+$(document).ready( function() {
+	$(".ddd").click(function(e){
+		alert("ddd");
+	    e.stopPropagation();
+	});
+});
 </script>
 </head>
 <body>
@@ -247,11 +278,29 @@ function dp_menu() {
 						</li>
 					</ul>
 				</li>
-				<li>수업관리
+				<li class="d">수업관리
 					<ul class="side_submenu">
-						<li>강의주차관리</li>
-						<li>개설강좌관리</li>
-						<li>강의출석관리</li>
+						<li class="dd">강의주차관리
+							<ul class="side_submenu_sub">
+								<li class="ddd">1주차</li>
+								<li class="ddd">2주차</li>
+								<li class="ddd">3주차</li>
+							</ul>
+						</li>
+						<li class="dd">개설강좌관리
+							<ul class="side_submenu_sub">
+								<li class="ddd">1주차</li>
+								<li class="ddd">2주차</li>
+								<li class="ddd">3주차</li>
+							</ul>
+						</li>
+						<li class="dd">강의출석관리
+							<ul class="side_submenu_sub">
+								<li class="ddd">1주차</li>
+								<li class="ddd">2주차</li>
+								<li class="ddd">3주차</li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 				<li>교직관리
