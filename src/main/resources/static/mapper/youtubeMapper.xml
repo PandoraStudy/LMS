@@ -6,7 +6,7 @@
         SELECT b_like
             FROM board
                 WHERE
-            b_no = 2
+            b_no = 1
     </select>
 
     <update id="studentTimeSave" parameterType="HashMap">
@@ -14,7 +14,7 @@
             SET
                 b_like = ${curr_time}
         WHERE
-            b_no = 2
+            b_no = 1
     </update>
 
 </mapper>

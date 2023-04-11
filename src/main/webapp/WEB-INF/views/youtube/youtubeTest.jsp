@@ -25,7 +25,7 @@
         /* 유튜브 Iframe 준비 상태 */
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
-                videoId: 'cKOWZPWLeaQ',
+                videoId: 'zml76nYyHEo',
                 playerVars: {
                     rel: 0,
                     control: 0,
@@ -115,7 +115,9 @@
             count += 1;
             curr_time = Math.floor(player.getCurrentTime());
 
-            if ((count % 5) == 0){  /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
+            /* 재생 위치를 5초마다 저장합니다. */
+            if ((count % 5) == 0){
+                /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
                 if(curr_time > student_time) {
                     studentTimeSave();
                 }
@@ -155,6 +157,12 @@
 <div style="width: 1280px; height: 720px; background-color: #ccc;" id="youtube-player"></div>
 <br>
 <button type="button" id="test_btn">위치로</button>
-${student_time}
+<br>
+<h1>
+    총 재생시간 : console.log("동영상 총 재생 시간 : " + player.getDuration()); <br>
+    할 일<br>
+    1. 추천 영상 및 추가 동영상이 나오기 전에 동영상을 끝내기 <br>
+    2. 리스트 별로 강의 리스트 출력 후 해당 강의 클릭 시 클릭된 강의 디테일 보여주기
+</h1>
 </body>
 </html>

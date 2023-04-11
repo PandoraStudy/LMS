@@ -46,9 +46,11 @@ public class YouTubeController {
 	@ResponseBody
 	public String studentTimeSave(@RequestParam Map<String, Object> userData) {
 		int result = sqlSession.update("youtube.studentTimeSave", userData);
-		System.out.println("저장 시간 : " + userData);
-		System.out.println("저장 결과 : " + result);
-		return result;
+
+		String msg = "저장 실패";
+		if(result == 1) msg = "저장 완료";
+
+		return msg;
 	}
 
 }
