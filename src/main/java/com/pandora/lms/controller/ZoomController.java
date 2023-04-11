@@ -40,7 +40,7 @@ public class ZoomController {
                 /*.add("code_verifier", DecEncUtil.encode(code))*/ // 나중에 시간이 된다면 code를 SHA-256 방식으로 암호화하여 전달할 예정
                 .build();
 
-        Request zoomRequest = new Request.Builder()/*http 요청을 생성하기 위해 만듬*/
+        Request zoomRequest = new Request.Builder()/*http 요청 헤더를 만듬*/
                 .url(zoomUrl) // 호출 url
                 .addHeader("Content-Type", "application/x-www-form-urlencoded") // 공식 문서에 명시 된 type
                 .addHeader("Authorization", "Basic RVprd2w0U2tTY1NtcHBZR25aQWtkUTpqQ3NBMXYzNW9QZW5ST1FwTWE0VVh1N3RCdlU1MXNiZg==") // Client_ID:Client_Secret 을  Base64-encoded 한 값
