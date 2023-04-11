@@ -1,8 +1,9 @@
 package com.pandora.lms.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kotlin.jvm.internal.TypeReference;
+import com.fasterxml.jackson.core.type.TypeReference;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ZoomController {
@@ -50,13 +54,12 @@ public class ZoomController {
 
 
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);/*위에서 생성한  ObjectMapper에 벨류값을 배열 타입으로 만들어줌*/
+        Map<String, Object> list = new HashMap<String, Object>();
+        list = mapper.readValue(zoomText, new TypeReference<HashMap<String, Object>>() {});
+        System.out.println("response :: " + list);// model.addAttribute("response", list.get(0));
 
-        List<Object> list = mapper.readValue(zoomText, new TypeReference<List<Object>>() {});
-        System.out.println("response :: " + list);
-        model.addAttribute("response", list.get(0));
 
-
-        model.addAttribute("code", code);
+        //model.addAttribute("code", code);
         return "";
     }
 
