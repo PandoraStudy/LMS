@@ -21,6 +21,12 @@
 
         /* 유튜브 동영상 iframe 생성 객체, 그 안에 실행될 동영상 정보를 가져오고 상태 변화에 따른 이벤트를 발생 시킴 */
         var player;
+        /* 인터벌 사용하기 위한 변수 선언 */
+        let timer = null;
+        /* 실제 동영상 재생 시간 위치 */
+        let curr_time = 0;
+        /* 학생이 실제 시청 시간 위치 */
+        let student_time = ${student_time};
 
         /* 유튜브 Iframe 준비 상태 */
         function onYouTubeIframeAPIReady() {
@@ -29,6 +35,7 @@
                 playerVars: {
                     rel: 0,
                     control: 0,
+                    start : student_time
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -40,20 +47,7 @@
         /* iframe 준비 완료 상태 */
         function onPlayerReady(event) {
             console.log("플레이어 (iframe) 준비 완료");
-
-            /* 저장돤 재생 위치값을 보고 0이 아닐 경우 해당 위치에서 시작합니다. */
-            getStudentTime();
-            if(student_time != 0) {
-                player.seekTo(student_time);
-            }
         }
-
-        /* 인터벌 사용하기 위한 변수 선언 */
-        let timer = null;
-        /* 실제 동영상 재생 시간 위치 */
-        let curr_time = 0;
-        /* 학생이 실제 시청 시간 위치 */
-        let student_time = ${student_time};
 
         /* 플레이어 상태 변화 */
         function onPlayerStateChange(event) {
@@ -163,6 +157,8 @@
     할 일<br>
     1. 추천 영상 및 추가 동영상이 나오기 전에 동영상을 끝내기 <br>
     2. 리스트 별로 강의 리스트 출력 후 해당 강의 클릭 시 클릭된 강의 디테일 보여주기
+
+    물어볼거 동영상 더보기 삭제를 rel : 0 으로 하는데 더이상 지원하지 않는걸로 알고 있다.
 </h1>
 </body>
 </html>
