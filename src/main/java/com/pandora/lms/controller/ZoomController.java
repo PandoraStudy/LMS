@@ -72,16 +72,13 @@ public class ZoomController {
         System.err.println("사용자 코드 : "+model.getAttribute("code"));
         System.err.println("엑세스 토큰 : "+accessToken);
 
-
-// ------------------------------------------------------------------------------------------------------
-
+        //회의 url 가져옴
         String joinurl = zoomService.meeting(accessToken);
+
+
         ModelAndView mv = new ModelAndView("zoom");
         if(joinurl.contains("https://us05web.zoom.us/j/")){
-            System.err.println("join url : "+joinurl);
             mv.addObject("join",joinurl);
-        }else{
-            System.out.println("Error: " + joinurl);
         }
         return mv;
     }
