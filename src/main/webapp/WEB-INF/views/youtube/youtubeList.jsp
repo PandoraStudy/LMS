@@ -26,6 +26,7 @@
                         dataType: "json",
                         success: function (video) {
                             let videoDuration = video.items[0].contentDetails.duration;
+
                             videoDuration = videoDuration.replace("PT", "");
                             videoDuration = videoDuration.replace("H", ":");
                             videoDuration = videoDuration.replace("M", ":");
