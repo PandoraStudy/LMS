@@ -23,14 +23,24 @@ public class YouTubeController {
 		return "youtube/youtube";
 	}
 
-	@GetMapping("/youtubeTest")
-	public ModelAndView youtubeTest() {
+	@GetMapping("/youtubeList")
+	public ModelAndView youtubeList() {
+		ModelAndView view = new ModelAndView();
+
+
+
+		view.setViewName("youtube/youtubeList");
+		return view;
+	}
+
+	@GetMapping("/youtubeDetail")
+	public ModelAndView youtubeDetail() {
 		ModelAndView view = new ModelAndView();
 
 		int num = sqlSession.selectOne("youtube.test");
 
 		view.addObject("student_time", num);
-		view.setViewName("youtube/youtubeTest");
+		view.setViewName("youtube/youtubeDetail");
 
 		return view;
 	}
