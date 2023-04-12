@@ -11,10 +11,11 @@
     <%-- API Key값 --%>
     <script src="js/apikey.js"></script>
 </head>
-
 <script>
-
     $(function () {
+        // 로딩창 보여주기
+        $('#loading').show();
+
         let studentNo = 131;
         let playlistId = "PL317rEM99HE2GI-kYLlu0D455A0SxVXKF";
 
@@ -64,17 +65,21 @@
                                     $("#tb_lecture").append($tr);
                                 },
                                 error: function () {
+                                    $("#loading").hide();
                                     alert("저장된 재생 시간을 불러오지 못했습니다.");
                                 }
                             });
                         },
                         error: function () {
+                            $("#loading").hide();
                             alert("유튜브 동영상 정보를 불러오는 도중 에러가 발생했습니다.");
                         }
                     });
                 } /* 반복문 종료 */
+                $("#loading").hide();
             },
             error: function () {
+                $("#loading").hide();
                 alert("유튜브 플레이리스트를 불러오는 도중 에러가 발생했습니다.");
             }
         });
@@ -91,6 +96,36 @@
     }
 </script>
 <style>
+    #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: white;
+        z-index: 9999;
+    }
+
+    .spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        width: 40px;
+        height: 40px;
+        border: 10px solid #fff;
+        border-radius: 50%;
+        border-top-color: red;
+        animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
     .video-thumnails {
         position: relative;
         width: 160px;
@@ -116,6 +151,10 @@
     }
 </style>
 <body>
+<div id="loading">
+    <div class="spinner"></div>
+</div>
+
 <h1>이 곳은 유튜브 리스트 화면입니다.</h1>
 <a href="/youtubeDetail">디테일 화면으로</a>
 <br>
