@@ -4,22 +4,27 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.pandora.lms.service.ZoomService;
+import lombok.AllArgsConstructor;
+import okhttp3.*;
+import okhttp3.RequestBody;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@AllArgsConstructor
 @Controller
 public class ZoomController {
+
+    private final ZoomService zoomService;
 
     @GetMapping("/zoom")/*줌 관리 페이지 띄우기용*/
     public String zoom() {
@@ -27,7 +32,7 @@ public class ZoomController {
     }
 
     @RequestMapping(value="/zoom/token" , method = {RequestMethod.GET, RequestMethod.POST})/*토큰 발급 받고 코드 값을 가져옴*/
-    public String get_token(@RequestParam("code") String code, Model model) throws IOException {
+    public ModelAndView get_token(@RequestParam("code") String code, Model model) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
 
@@ -68,11 +73,18 @@ public class ZoomController {
         System.err.println("엑세스 토큰 : "+accessToken);
 
 
+// ------------------------------------------------------------------------------------------------------
 
-        return "zoom";
+        String joinurl = zoomService.meeting(accessToken);
+        ModelAndView mv = new ModelAndView("zoom");
+        if(joinurl.contains("https://us05web.zoom.us/j/")){
+            System.err.println("join url : "+joinurl);
+            mv.addObject("join",joinurl);
+        }else{
+            System.out.println("Error: " + joinurl);
+        }
+        return mv;
     }
-
-
 
 }
 
