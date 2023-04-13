@@ -31,10 +31,13 @@ $(function(){
 				var playlist = playlists[i];
 				var title = playlist.snippet.title;
 				var description = playlist.snippet.description || "";
-				var playlist_title = "<h2>" + title + "</h2>";
-				var playlist_sub_title = "<p>" + description + "</p>";
-				$("#playlist_title").append(playlist_title);
-				$("#playlist_sub_title").append(playlist_sub_title);
+				var playlist_id = playlist.id;
+				//console.log(playlist_id);
+				
+				document.postList.playlist_id.value = playlist_id;
+				
+				$("#playlist_title").append(title);
+				$("#playlist_sub_title").append(description);
 			}
 		}, error: function(jqXHR, textStatus, errorThrown) {
 		    console.log(jqXHR.responseJSON.error.message);
@@ -45,9 +48,11 @@ $(function(){
 <body>
 	<table>
 		<tr>
-		
 			<th id="playlist_title"></th>
 			<th id="playlist_sub_title"></th>
+			<form action="/youtubeList" name="postList" method="get">
+				<input type="hidden" name="playlist_id" value="">
+			</form>
 		</tr>
 		<tr>
 			<td></td>
