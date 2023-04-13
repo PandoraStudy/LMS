@@ -35,6 +35,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'com.squareup.okhttp3:okhttp:3.6.0'/*OkHttp*/
     implementation 'org.json:json:20201115' //json
+    //implementation 'us.zoom:zoom-sdk:5.7.1' //zoom sdk
+
 }
 
 tasks.named('test') {

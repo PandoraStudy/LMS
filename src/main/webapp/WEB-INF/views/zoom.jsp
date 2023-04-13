@@ -3,9 +3,30 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <title>zoom</title>
 </head>
 <script>
+    $(function(){
+
+        $("#userList").click(function(){
+            var mt1 = $("#meetingID").val().split("?");
+            console.log(mt1);
+            var meetingid;
+
+
+          $.ajax({
+            url: "/zoomUsers",
+            type: "POST",
+            data: { 'accessToken' : $(this).val() },
+            dataType:"json",
+            success: function(data){ document.location.reload(); },
+            error: function(xhr,status,error){ alert("실패") }
+             });
+        });
+
+
+    });
 </script>
 <style>
     body{
@@ -22,7 +43,7 @@
     }
     .meeting{
         width:1200px;
-        height:800px;
+        height:500px;
         border: 1px solid black;
         box-sizing: border-box;
     }
@@ -40,15 +61,25 @@
         color:white;
         cursor:pointer;
     }
+    .userlist_btn{
+        background-color: darkred;
+        color:white;
+        cursor:pointer;
+    }
 </style>
 <body>
 <div class="container">
     <h1 style="text-align: center;">Zoom Meeting</h1>
     <div class="meeting"></div><br>
     <button class="Oauth_btn"><a class="a_btn a_btn1" href="/zoom">초기화</a></button>
-    <button class="Oauth_btn"><a class="a_btn a_btn2" href="https://zoom.us/oauth/authorize?client_id=EZkwl4SkScSmppYGnZAkdQ&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%2Fzoom%2Ftoken">사용자 인증</a></button>
+    <button class="Oauth_btn"><a class="a_btn a_btn2" href="https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token">사용자 인증</a></button>
+
     <c:if test="${ join ne null }">
-        <button class="Oauth_btn Oauth_btn1" ><a class="a_btn" href="${ join }">개설된 회의로 이동</a></button>
+        <button class="Oauth_btn Oauth_btn1" ><a class="a_btn" href="${ join }" target="_blank">개설된 회의로 이동</a></button>
+        <button class="Oauth_btn userlist_btn" id="userList" value="${ accessToken }">회의참여자</button>
+        <input type="hidden" value="${ join }" id="meetingID"><br>
+        엑세스 토큰 : ${ accessToken } <br>
+        회의 주소 : ${ join } <br>
     </c:if>
 </div>
 </body>

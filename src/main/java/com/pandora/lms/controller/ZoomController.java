@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class ZoomController {
         Request zoomRequest = new Request.Builder()/*http 요청 헤더를 만듬*/
                 .url(zoomUrl) // 호출 url
                 .addHeader("Content-Type", "application/x-www-form-urlencoded") // 공식 문서에 명시 된 type
-                .addHeader("Authorization", "Basic RVprd2w0U2tTY1NtcHBZR25aQWtkUTpqQ3NBMXYzNW9QZW5ST1FwTWE0VVh1N3RCdlU1MXNiZg==") // Client_ID:Client_Secret 을  Base64-encoded 한 값
+                .addHeader("Authorization", "Basic S3B2dThxakRTWkNFbkV0elo1OEtuQTpaUXVYQlRhYTlXTUFWVk82VFJMTG1kVG9vVlVsNkk5NQ==") // Client_ID:Client_Secret 을  Base64-encoded 한 값
                 .post(formBody)
                 .build();
 
@@ -75,12 +76,19 @@ public class ZoomController {
         //회의 url 가져옴
         String joinurl = zoomService.meeting(accessToken);
 
-
         ModelAndView mv = new ModelAndView("zoom");
         if(joinurl.contains("https://us05web.zoom.us/j/")){
             mv.addObject("join",joinurl);
+            mv.addObject("accessToken",accessToken);
         }
         return mv;
+    }
+
+    @PostMapping("/zoomUsers")
+    public String zoomUserList(String accessToken) throws IOException{
+        zoomService.userlist(accessToken);
+
+        return "";
     }
 
 }
