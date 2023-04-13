@@ -17,7 +17,7 @@
         $('#loading').show();
 
         let studentNo = 131;
-        let playlistId = "PL317rEM99HE2GI-kYLlu0D455A0SxVXKF";
+        let playlistId = ${playlistId};
 
         $.get({
             url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + API_KEY,
@@ -50,26 +50,13 @@
                             /* 1번 포인트 */
                             console.log(videoId + "1st : " + totalTime);
 
-                            /* 데이터베이스 저장된 재생 시간 가져오기 (해당 ajax는 getPlayTime() 함수 호출로 변경할 예정입니다.) */
-                            $.ajax({
-                                type: "POST",
-                                url: "/getPlayTime",
-                                data: {"video_id": videoId, "student_no": studentNo, "total_time": totalTime},
-                                dataType: "text",
-                                success: function (progress) {
-                                    /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
-                                    let $tr = $("<tr>");
-                                    $tr.append("<td><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
-                                    $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
-                                    $tr.append("<td><span>(<i style='color: red;'>" + progress + "</i> )</span></td>");
-                                    $("#tb_lecture").append($tr);
-                                    $("#loading").hide();
-                                },
-                                error: function () {
-                                    $("#loading").hide();
-                                    alert("저장된 재생 시간을 불러오지 못했습니다.");
-                                }
-                            });
+                            /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
+                            let $tr = $("<tr onclick=location.href='youtubeDetail?video_id=" + videoId + "'>");
+                            $tr.append("<td><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
+                            $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
+                            $tr.append("<th><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
+                            $("#tb_lecture").append($tr);
+                            $("#loading").hide();
                         },
                         error: function () {
                             $("#loading").hide();
@@ -156,7 +143,8 @@
 </div>
 
 <h1>이 곳은 유튜브 리스트 화면입니다.</h1>
-<a href="/youtubeDetail">디테일 화면으로</a>
+<a href="/youtubeDetail">디테일 화면으로</a><br>
+<a href="/youtubeUpload">동영상 업로드</a>
 <br>
 <hr>
 
@@ -165,7 +153,6 @@
     <tr>
         <th>썸네일</th>
         <th>제목(파일여부)</th>
-        <th>진도율</th>
         <th>출석여부</th>
     </tr>
     </thead>
@@ -178,7 +165,6 @@
             </div>
         </td>
         <td><span>제목입니다.</span></td>
-        <td>진도율 : (특정값 / 기준값 * 100)</td>
         <th><input class="chk-lecture" type="checkbox" checked onclick="return false;"></th>
     </tr>
     </tbody>
@@ -189,5 +175,21 @@
 고민해야 할 것 <br>
 플레이리스트 ID를 가져오는 방식
 강의 갯수가 많아질 경우 보여지는 방식
+
+필요한것 <br>
+
+예시 : 컴퓨터공학 기초 1란 강의가 있으면
+그 안에 1주차, 2주차, 3주차 강의를 어떤 형식으로 출력해서 사용자에게 유도할 것인가
+과목 정보 테이블에 몇 주차 강의인지 필요합니다.
+
+-------------------
+강의 목록들 (대분류) / 심
+
+해당 강의의 동영상들 (중분류) / 됨
+
+해당 강의 동영상(소분류) / 됨
+
+
+
 </body>
 </html>

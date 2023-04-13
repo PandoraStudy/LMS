@@ -1,7 +1,9 @@
 package com.pandora.lms.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
-interface YoutubeService {
+public interface YoutubeService {
+    int test();
+
 }
