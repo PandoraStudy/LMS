@@ -9,6 +9,7 @@ import com.pandora.lms.service.ZoomService;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
 import okhttp3.RequestBody;
+import org.apache.catalina.util.ToStringUtil;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,6 +77,8 @@ public class ZoomController {
         //회의 url 가져옴
         String joinurl = zoomService.meeting(accessToken);
 
+
+
         ModelAndView mv = new ModelAndView("zoom");
         if(joinurl.contains("https://us05web.zoom.us/j/")){
             mv.addObject("join",joinurl);
@@ -84,11 +87,34 @@ public class ZoomController {
         return mv;
     }
 
-    @GetMapping("/zoomUsers")
+   /* @GetMapping("/zoomwUsers")
     public String zoomUserList( String accessToken, String meetingid ) throws IOException{
         System.err.println("accessToken : "+accessToken);
         System.err.println("meetingid : "+meetingid);
         zoomService.userlist(accessToken,meetingid);
+        return "";
+    }*/
+
+    @GetMapping("/zoomUsers")
+    public String zoomUsers(String accessToken, String meeting_Id ) throws IOException{
+
+        OkHttpClient client = new OkHttpClient(); //통신을 위한 OkHttp
+        ObjectMapper mapper = new ObjectMapper();//Json 처리를 위하여 생성
+
+        String zoomUrl = "https://api.zoom.us/v2/metrics/meetings/"+meeting_Id+"/participants"; //Access token 을 받는 zoom api 호출 url
+
+        Request zoomRequest = new Request.Builder()//http 요청 헤더를 만듬
+                .url(zoomUrl) // 호출 url
+                .addHeader("Content-Type", "application/x-www-form-urlencoded") // 공식 문서에 명시 된 type
+                .addHeader("Authorization", "Bearer "+accessToken) // Client_ID:Client_Secret 을  Base64-encoded 한 값
+                .build();
+
+        Response zoomResponse = client.newCall(zoomRequest).execute();
+
+        String zoomText = zoomResponse.body().string();
+
+        System.out.println(zoomText);
+
         return "";
     }
 

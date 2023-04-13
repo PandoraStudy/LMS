@@ -10,14 +10,14 @@
     $(function(){
 
         $("#userList").click(function(){
-            let mt1 = $("#meetingID").val().split("?");
+            let mt1 = $("#meeting_Id").val().split("?");
             let mt2 = mt1[0].split("/j/");
-            let meetingid = mt2[1];
-            console.log(meetingid);
+            let meeting_Id = mt2[1];
+            console.log(meeting_Id);
           $.ajax({
             url: "/zoomUsers",
             type: "GET",
-            data: { 'accessToken' : $(this).val(), 'meetingid' : meetingid },
+            data: { 'accessToken' : $(this).val(), 'meeting_Id' : meeting_Id },
             dataType:"json",
             success: function(data){ console.log(data) },
             error: function(xhr,status,error){ alert("실패")}
@@ -76,7 +76,7 @@
     <c:if test="${ join ne null }">
         <button class="Oauth_btn Oauth_btn1" ><a class="a_btn" href="${ join }" target="_blank">개설된 회의로 이동</a></button>
         <button class="Oauth_btn userlist_btn" id="userList" value="${ accessToken }">회의참여자</button>
-        <input type="hidden" value="${ join }" id="meetingID"><br>
+        <input type="hidden" value="${ join }" id="meeting_Id"><br>
         엑세스 토큰 : ${ accessToken } <br>
         회의 주소 : ${ join } <br>
     </c:if>

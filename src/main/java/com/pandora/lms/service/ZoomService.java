@@ -4,6 +4,7 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +15,6 @@ import java.net.URL;
 @Service
 public class ZoomService {
 
-
     public String meeting(String accessToken) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
 
@@ -23,9 +23,10 @@ public class ZoomService {
         // Zoom API 요청에 필요한 회의 개설내용 정의
         JSONObject jsonBody = new JSONObject();
         jsonBody.put("topic", "줌 회의 첫 개설 2023_04_13");  //회의 이름
-        jsonBody.put("type", 2);// 회의 타입  >> 0: 기본 회의, 1: 일회성 회의, 2: 반복 회의
+        jsonBody.put("type", 2);// 회의 타입  >> 0: 기본 회0의, 1: 일회성 회의, 2: 반복 회의
         //jsonBody.put("start_time", "2023-04-12T22:00:00");    //회의 시작시간_기본 현재시간
         jsonBody.put("duration", 40);   //회의 시간 (40분)
+        jsonBody.put("password", "1234");
         // settings 객체 생성
         JSONObject settings = new JSONObject();
         settings.put("join_before_host", true);   // 호스트가 입장하기 전에 참여 가능 여부
@@ -51,10 +52,18 @@ public class ZoomService {
 
         //Zoom API 요청
         Response response = client.newCall(request).execute();
+
         //요청 성공시 회의 url 반환
         if (response.isSuccessful()) {
             JSONObject responseBody = new JSONObject(response.body().string());
+            System.err.println(responseBody);
+            String meeting_no = Long.toString(responseBody.getLong("id"));
+            String meeting_ps = responseBody.getString("h323_password");
+            System.err.println("미팅 참가 번호 : "+meeting_no);
+            System.err.println("미팅 참가 비번 : "+meeting_ps);
+
             String joinUrl = responseBody.getString("join_url");
+
             System.err.println("Join URL: " + joinUrl);
             return joinUrl;
         } else { //요청 실패시 에러메시지 반환
@@ -64,7 +73,7 @@ public class ZoomService {
         }
     }
 
-    public void userlist(String accessToken, String meetingid) throws IOException {
+   /* public void userlist(String accessToken, String meetingid) throws IOException {
 
         // Zoom API 엔드포인트 URL 생성
         String url = String.format("https://api.zoom.us/v2/users/meetings/%s/participants", meetingid);
@@ -106,6 +115,8 @@ public class ZoomService {
             System.err.println("Zoom API 오류: " + con.getResponseMessage());
         }
         con.disconnect();
-    }
+  }*/
+
+
 
 }
