@@ -166,7 +166,7 @@
         <th>썸네일</th>
         <th>제목(파일여부)</th>
         <th>진도율</th>
-        <th>출석</th>
+        <th>출석여부</th>
     </tr>
     </thead>
     <tbody id="tb_lecture">
