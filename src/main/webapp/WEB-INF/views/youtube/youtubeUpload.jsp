@@ -7,21 +7,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <script>
-    $(function(){
-        $("#upload_btn").click(function() {
-            $.ajax({
-                type: "POST",
-                url: "/youtubeUpload",
-                data: { "": , }
-            });
+    $(function () {
+        $("#upload_btn").click(function () {
+            $("#lecture_form").submit();
         });
     });
 </script>
-</body>
-    <h1>
-        동영상 업로드
-    </h1>
-    <input id="" type="file" accept="video/*"><br>
+<body>
+<h1>
+    동영상 업로드
+</h1>
+<form id="lecture_form" method="post" enctype="multipart/form-data">
+    <input id="lecture_video" name="lecture_video" type="file" accept="video/*"><br>
+    <input id="lecture_title" name="lecture_title" type="text"><br>
+    <input id="lecture_content" name="lecture_content" type="text"><br>
     <button id="upload_btn">동영상 업로드</button>
+</form>
 </body>
 </html>

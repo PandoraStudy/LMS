@@ -50,26 +50,13 @@
                             /* 1번 포인트 */
                             console.log(videoId + "1st : " + totalTime);
 
-                            /* 데이터베이스 저장된 재생 시간 가져오기 (해당 ajax는 getPlayTime() 함수 호출로 변경할 예정입니다.) */
-                            $.ajax({
-                                type: "POST",
-                                url: "/getPlayTime",
-                                data: {"video_id": videoId, "student_no": studentNo},
-                                dataType: "text",
-                                success: function (progress) {
-                                    /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
-                                    let $tr = $("<tr onclick=location.href='youtubeDetail?video_id=" + videoId + "'>");
-                                    $tr.append("<td><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
-                                    $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
-                                    $tr.append("<th><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
-                                    $("#tb_lecture").append($tr);
-                                    $("#loading").hide();
-                                },
-                                error: function () {
-                                    $("#loading").hide();
-                                    alert("저장된 재생 시간을 불러오지 못했습니다.");
-                                }
-                            });
+                            /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
+                            let $tr = $("<tr onclick=location.href='youtubeDetail?video_id=" + videoId + "'>");
+                            $tr.append("<td><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
+                            $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
+                            $tr.append("<th><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
+                            $("#tb_lecture").append($tr);
+                            $("#loading").hide();
                         },
                         error: function () {
                             $("#loading").hide();

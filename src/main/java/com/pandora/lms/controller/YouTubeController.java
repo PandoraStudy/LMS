@@ -66,12 +66,12 @@ public class YouTubeController {
     }
 
     @PostMapping("/youtubeUpload")
-    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart File video) {
+    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture-video") File lectureVideo) {
         System.out.println("접근");
 
         youtubeService.test();
 
-        System.out.println(video);
+        System.out.println(lectureVideo);
         System.out.println(lectureInfo);
 
         return "";

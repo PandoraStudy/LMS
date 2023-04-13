@@ -164,7 +164,7 @@
         });
     }
 </script>
-</body>
+<body>
 <div style="width: 1280px; height: 720px; background-color: #ccc;" id="youtubePlayer"></div>
 <br>
 <a href="/youtubeList">유튜브 플레이리스트로</a>
