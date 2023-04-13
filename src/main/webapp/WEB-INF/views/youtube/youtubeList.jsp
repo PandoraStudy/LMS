@@ -63,6 +63,7 @@
                                     $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
                                     $tr.append("<td><span>(<i style='color: red;'>" + progress + "</i> )</span></td>");
                                     $("#tb_lecture").append($tr);
+                                    $("#loading").hide();
                                 },
                                 error: function () {
                                     $("#loading").hide();
@@ -76,7 +77,6 @@
                         }
                     });
                 } /* 반복문 종료 */
-                $("#loading").hide();
             },
             error: function () {
                 $("#loading").hide();
