@@ -30,8 +30,9 @@ public class YouTubeController {
     }
 
     @GetMapping("/youtubeList")
-    public ModelAndView youtubeList() {
+    public ModelAndView youtubeList(@RequestParam(name="playlist-id") String playlistId) {
         ModelAndView view = new ModelAndView();
+        view.addObject("playlistId", playlistId);
         view.setViewName("youtube/youtubeList");
         return view;
     }
@@ -71,7 +72,7 @@ public class YouTubeController {
     }
 
     @PostMapping("/youtubeUpload")
-    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture-video") File lectureVideo) {
+    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture_video") File lectureVideo) {
         System.out.println("접근");
 
         youtubeService.test();

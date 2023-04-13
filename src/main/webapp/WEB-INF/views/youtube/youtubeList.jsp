@@ -17,7 +17,7 @@
         $('#loading').show();
 
         let studentNo = 131;
-        let playlistId = "PL317rEM99HE2GI-kYLlu0D455A0SxVXKF";
+        let playlistId = ${playlistId};
 
         $.get({
             url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + API_KEY,
