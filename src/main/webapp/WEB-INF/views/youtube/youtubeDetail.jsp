@@ -25,13 +25,15 @@
     let timer = null;
     /* 실제 동영상 재생 시간 위치 */
     let curr_time = 0;
+    /* 동영상 주소 */
+    let video_id = "${videoId}";
     /* 학생이 실제 시청 시간 위치 */
     let play_time = ${playTime};
 
     /* 유튜브 Iframe 준비 상태 */
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('youtubePlayer', {
-            videoId: 'q2I2w4jksCQ',
+            videoId: video_id,
             playerVars: {
                 rel: 0,
                 controls: 1,
@@ -131,7 +133,7 @@
             $.ajax({
                 type: "POST",
                 url: "/getPlayTime",
-                data: {"video_id": "q2I2w4jksCQ", "student_no": student_no},
+                data: {"video_id": video_id, "student_no": student_no},
                 dataType: "text",
                 success: function (playTime) {
                     console.log("[getPlayTime] " + playTime + "초");
@@ -150,7 +152,7 @@
             $.ajax({
                 type: "POST",
                 url: "/playTimeSave",
-                data: {"video_id": "q2I2w4jksCQ", "curr_time": curr_time, "student_no": student_no},
+                data: {"video_id": video_id, "curr_time": curr_time, "student_no": student_no},
                 dataType: "text",
                 success: function (result) {
                     console.log("[playTimeSave] " + result);
@@ -173,7 +175,7 @@
     1. 추천 영상 및 추가 동영상이 나오기 전에 동영상을 끝내기 (업로드 시 사용자가 직접 정하는 상황인데 이걸 어느정도로 맞춰야할까?) <br>
     
     2. 리스트 별로 강의 리스트 출력 후 해당 강의 클릭 시 클릭된 강의 디테일 보여주기<br>
-     - 
+     - 완료
 
     물어볼거<br>
     동영상 더보기 제어 : 동영상 더보기 삭제를 rel : 0 으로 하는데 더이상 지원하지 않는걸로 알고 있다.
