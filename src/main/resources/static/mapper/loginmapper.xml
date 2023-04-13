@@ -9,7 +9,14 @@
 		SELECT
 		COUNT(*)
 		FROM stud_info
-		WHERE KORN_FLNM=#{id }
+		WHERE KORN_FLNM=#{id } and
+	</select>
+	
+	<select id="CheckStudent" parameterType="HashMap" resultType="Integer">
+		SELECT
+		COUNT(*)
+		FROM stud_info
+		WHERE KORN_FLNM=#{param1 } and USER_BRDT=#{param2 }
 	</select>
 
 </mapper>
