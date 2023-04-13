@@ -84,10 +84,11 @@ public class ZoomController {
         return mv;
     }
 
-    @PostMapping("/zoomUsers")
-    public String zoomUserList(String accessToken) throws IOException{
-        zoomService.userlist(accessToken);
-
+    @GetMapping("/zoomUsers")
+    public String zoomUserList( String accessToken, String meetingid ) throws IOException{
+        System.err.println("accessToken : "+accessToken);
+        System.err.println("meetingid : "+meetingid);
+        zoomService.userlist(accessToken,meetingid);
         return "";
     }
 

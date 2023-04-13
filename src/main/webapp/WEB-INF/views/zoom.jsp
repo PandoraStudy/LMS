@@ -10,19 +10,18 @@
     $(function(){
 
         $("#userList").click(function(){
-            var mt1 = $("#meetingID").val().split("?");
-            console.log(mt1);
-            var meetingid;
-
-
+            let mt1 = $("#meetingID").val().split("?");
+            let mt2 = mt1[0].split("/j/");
+            let meetingid = mt2[1];
+            console.log(meetingid);
           $.ajax({
             url: "/zoomUsers",
-            type: "POST",
-            data: { 'accessToken' : $(this).val() },
+            type: "GET",
+            data: { 'accessToken' : $(this).val(), 'meetingid' : meetingid },
             dataType:"json",
-            success: function(data){ document.location.reload(); },
-            error: function(xhr,status,error){ alert("실패") }
-             });
+            success: function(data){ console.log(data) },
+            error: function(xhr,status,error){ alert("실패")}
+            });
         });
 
 

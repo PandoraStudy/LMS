@@ -22,7 +22,7 @@ public class ZoomService {
 
         // Zoom API 요청에 필요한 회의 개설내용 정의
         JSONObject jsonBody = new JSONObject();
-        jsonBody.put("topic", "줌 회의 첫 개설 2023_04_12");  //회의 이름
+        jsonBody.put("topic", "줌 회의 첫 개설 2023_04_13");  //회의 이름
         jsonBody.put("type", 2);// 회의 타입  >> 0: 기본 회의, 1: 일회성 회의, 2: 반복 회의
         //jsonBody.put("start_time", "2023-04-12T22:00:00");    //회의 시작시간_기본 현재시간
         jsonBody.put("duration", 40);   //회의 시간 (40분)
@@ -64,11 +64,10 @@ public class ZoomService {
         }
     }
 
-    public void userlist(String accessToken) throws IOException {
-        String meetingId = "83793802671";
+    public void userlist(String accessToken, String meetingid) throws IOException {
 
         // Zoom API 엔드포인트 URL 생성
-        String url = String.format("https://api.zoom.us/v2/users/date810@naver.com/meetings/%s/participants", meetingId);
+        String url = String.format("https://api.zoom.us/v2/users/meetings/%s/participants", meetingid);
 
         // HTTP GET 요청 생성 및 설정
         HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
@@ -83,6 +82,7 @@ public class ZoomService {
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
+            response.append("{");
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
