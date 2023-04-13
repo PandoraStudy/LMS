@@ -1,17 +1,21 @@
 package com.pandora.lms.controller;
 
+import com.pandora.lms.service.YoutubeService;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 @AllArgsConstructor
 public class YouTubeController {
+
+    private final YoutubeService youtubeService;
 
     private final SqlSession sqlSession;
 
@@ -54,6 +58,23 @@ public class YouTubeController {
         String msg = (result == 1) ? userData.get("curr_time") + "초 저장 완료" : "저장 실패";
 
         return msg;
+    }
+
+    @GetMapping("/youtubeUpload")
+    public String yotubeUpload() {
+        return "youtube/youtubeUpload";
+    }
+
+    @PostMapping("/youtubeUpload")
+    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart File video) {
+        System.out.println("접근");
+
+        youtubeService.test();
+
+        System.out.println(video);
+        System.out.println(lectureInfo);
+
+        return "";
     }
 
 }

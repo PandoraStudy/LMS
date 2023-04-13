@@ -156,7 +156,8 @@
 </div>
 
 <h1>이 곳은 유튜브 리스트 화면입니다.</h1>
-<a href="/youtubeDetail">디테일 화면으로</a>
+<a href="/youtubeDetail">디테일 화면으로</a><br>
+<a href="/youtubeUpload">동영상 업로드</a>
 <br>
 <hr>
 
