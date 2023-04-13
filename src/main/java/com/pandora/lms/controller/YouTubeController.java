@@ -19,6 +19,11 @@ public class YouTubeController {
     public String YouTube() {
         return "youtube/youtube";
     }
+    
+    @GetMapping("/youte")
+    public String YouTe() {
+    	return "/youtube/youte";
+    }
 
     @GetMapping("/youtubeList")
     public ModelAndView youtubeList() {

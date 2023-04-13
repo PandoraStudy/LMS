@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>YouTube</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="js/youtubetest.js"></script>
 </head>
 <!DOCTYPE html>
 <html>
@@ -144,7 +145,7 @@ function startTimer() {
 </html>
 <body>
     <h1>강의 제목이 들어갈 자리 입니다.</h1>
-    <div style="width: 1280px; height: 720px; background-color: #ccc;" id="youtube-player"></div>
+    <div style="width: 1280px; height: 720px; background-color: #ccc;" id="youtube-player" class="movie_player"></div>
     <br>
 
     <button type="button" id="test_btn">지정 위치로</button><br>
