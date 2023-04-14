@@ -1,7 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
+<style>
 
+    .logo_space{
+        float: left;
+    }
+
+    .logo_small_text{
+        float: left;
+        margin-top: 7px;
+        margin-left: 40px;
+    }
+    .logo_big_text{
+        margin-left: -35px;
+    }
+
+    .logo_img{
+        margin-left: 0px;
+    }
+
+</style>
 <head>
 
     <meta charset="utf-8">
@@ -28,15 +47,15 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+        <!-- 사이드 메뉴바 -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center logo_space" href="index">
+
+                    <div class="logo_img"><img src="/img/pandora_logo.png"></div>
+
+                <div class="sidebar-brand-text mx-3"><div class="logo_big_text">PANDORA</div><sup class="logo_small_text">university</sup></div>
             </a>
 
             <!-- Divider -->
@@ -44,50 +63,50 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>수정해주세요</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
+            <!-- A 카테고리 -->
             <div class="sidebar-heading">
-                Interface
+                A 카테고리
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- A카테고리 A탭 드롭다운-->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>A탭 드롭다운</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <h6 class="collapse-header">A카테고리 A탭 드롭다운</h6>
+                        <a class="collapse-item" href="buttons.html">A카태고리 A탭 A</a>
+                        <a class="collapse-item" href="cards.html">A카태고리 A탭 B</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- A카테고리 B탭 드롭다운 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>B탭 드롭다운</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <h6 class="collapse-header">A카테고리 B탭 드롭다운</h6>
+                        <a class="collapse-item" href="utilities-color.html">A카테고리 B탭 드롭다운 A</a>
+                        <a class="collapse-item" href="utilities-border.html">A카테고리 B탭 드롭다운 B</a>
+                        <a class="collapse-item" href="utilities-animation.html">A카테고리 B탭 드롭다운 C</a>
+                        <a class="collapse-item" href="utilities-other.html">A카테고리 B탭 드롭다운 D</a>
                     </div>
                 </div>
             </li>
@@ -95,59 +114,59 @@
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
+            <!-- B 카테고리 -->
             <div class="sidebar-heading">
-                Addons
+                B 카테고리
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- B 카테고리 A탭 드롭다운 -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>A탭 드롭다운</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">B 카테고리 A</h6>
+                        <a class="collapse-item" href="login.html">A</a>
+                        <a class="collapse-item" href="register.html">B</a>
+                        <a class="collapse-item" href="forgot-password.html">C</a>
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">B 카테고리 B</h6>
+                        <a class="collapse-item" href="404.html">A</a>
+                        <a class="collapse-item" href="blank.html">B</a>
                     </div>
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
+            <!-- C 부분1 -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>C one</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
+            <!-- C 부분2 -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>C two</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
+            <!-- 사이드바 토클 버튼 (누르면 들어감) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            <!-- Sidebar Message -->
+            <!-- 사이드바 메시지 -->
             <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                <p class="text-center mb-2"><strong>로켓트!</strong> 날라가유~ 두번 날라가유~</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">응애 나 애기 밍규</a>
             </div>
 
         </ul>
@@ -156,10 +175,10 @@
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
+            <!-- 메인 컨텐츠 -->
             <div id="content">
 
-                <!-- Topbar -->
+                <!-- 탑 바 -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
@@ -167,7 +186,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
+                    <!-- 탑 검색창 -->
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
@@ -208,19 +227,19 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
+                        <!-- 알림 아이콘 부분 -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+                                <!-- 알림 카운트 부분 -->
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
-                            <!-- Dropdown - Alerts -->
+                            <!-- 알림 아이콘 드롭다운 -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
-                                    Alerts Center
+                                    수정해라
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="mr-3">
@@ -229,8 +248,8 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <div class="small text-gray-500">2023-04-14</div>
+                                        <span class="font-weight-bold">오늘은 자바 이민규 교수님 강의일 입니다.</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -240,8 +259,8 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
+                                        <div class="small text-gray-500">2023-04-15</div>
+                                        내일은 자바 이민규 교수님 강의 일정이 있습니다.
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -251,27 +270,27 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        <div class="small text-gray-500">2023-04-15</div>
+                                        내일은 자바 레포트 제출 마감일 입니다.
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
+                        <!-- 쪽지(메시지) 부분 -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
+                                <!-- 메시지 카운트 부분 -->
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
-                            <!-- Dropdown - Messages -->
+                            <!-- 쪽지(메시지) 드롭 다운 부분 -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
-                                    Message Center
+                                    메시지 보관함
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
@@ -327,15 +346,15 @@
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
+                        <!-- 유저 프로필 부분 -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">이민규</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src="img/undraw_profile.svg"><%--유저 프로필 이미지 부분--%>
                             </a>
-                            <!-- Dropdown - User Information -->
+                            <!-- 유저 프로필 드롭다운 부분 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
@@ -361,30 +380,30 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
+                <!-- 탑바 마무리 -->
 
-                <!-- Begin Page Content -->
+                <!-- 본문 컨텐츠 부분 시작 -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
+                    <!-- 페이지 헤드 부분 -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">메인 컨텐츠 부분</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                                class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- 컨텐츠 탑 부분 -->
                     <div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- A카드 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                A카드</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">A응애응애</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -394,14 +413,14 @@
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- B카드 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
+                                                B응애응애</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -412,13 +431,13 @@
                             </div>
                         </div>
 
-                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- C카드 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">진도율로 써볼까?
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -441,7 +460,7 @@
                             </div>
                         </div>
 
-                        <!-- Pending Requests Card Example -->
+                        <!-- D카드 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
@@ -449,7 +468,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18십팔</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -460,17 +479,17 @@
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- 컨텐츠 탑 부분 끝 -->
 
                     <div class="row">
 
-                        <!-- Area Chart -->
+                        <!-- A카드 게시판 -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
+                                <!-- A 카드 설정 버튼 부분 -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">본문 제목</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -478,30 +497,30 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-header">필요할까?</div>
+                                            <a class="dropdown-item" href="#">필요한가?</a>
+                                            <a class="dropdown-item" href="#">필요하나요?</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="#">응애응애</a>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Card Body -->
+                                <!-- A 본문 부분 -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <div>아아아 본문 내용은 여기에~~~</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Pie Chart -->
+                        <!-- B 카드 -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
+                                <!-- B 카드 설정 버튼 부분 -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">본문 제목을 써</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -509,28 +528,28 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-header">필요한가 ?</div>
+                                            <a class="dropdown-item" href="#">필요하나요?</a>
+                                            <a class="dropdown-item" href="#">필요 합니까?</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="#">아아아ㅏ아아아아</a>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Card Body -->
+                                <!-- B 카드 본문 -->
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
+                                        내용?ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ
                                     </div>
                                     <div class="mt-4 text-center small">
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
+                                            <i class="fas fa-circle text-primary"></i> 일단
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
+                                            <i class="fas fa-circle text-success"></i> 남겨
                                         </span>
                                         <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
+                                            <i class="fas fa-circle text-info"></i> 놓는다
                                         </span>
                                     </div>
                                 </div>
@@ -538,43 +557,43 @@
                         </div>
                     </div>
 
-                    <!-- Content Row -->
+                    <!-- C 카드 부분 -->
                     <div class="row">
 
                         <!-- Content Column -->
                         <div class="col-lg-6 mb-4">
 
-                            <!-- Project Card Example -->
+                            <!-- C 카드 본문 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">Server Migration <span
+                                    <h4 class="small font-weight-bold">자바 <span
                                             class="float-right">20%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">Sales Tracking <span
+                                    <h4 class="small font-weight-bold">파이썬 <span
                                             class="float-right">40%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
                                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">Customer Database <span
+                                    <h4 class="small font-weight-bold">자바 스크립트<span
                                             class="float-right">60%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar" role="progressbar" style="width: 60%"
                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">Payout Details <span
+                                    <h4 class="small font-weight-bold">HTML<span
                                             class="float-right">80%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
                                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">Account Setup <span
+                                    <h4 class="small font-weight-bold">진행율<span
                                             class="float-right">Complete!</span></h4>
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
@@ -583,12 +602,12 @@
                                 </div>
                             </div>
 
-                            <!-- Color System -->
+                            <!-- 컬러 카드 본문 -->
                             <div class="row">
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-primary text-white shadow">
                                         <div class="card-body">
-                                            Primary
+                                            너 파랑?
                                             <div class="text-white-50 small">#4e73df</div>
                                         </div>
                                     </div>
@@ -596,7 +615,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-success text-white shadow">
                                         <div class="card-body">
-                                            Success
+                                            너 연두?
                                             <div class="text-white-50 small">#1cc88a</div>
                                         </div>
                                     </div>
@@ -604,7 +623,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-info text-white shadow">
                                         <div class="card-body">
-                                            Info
+                                            넌 하늘?
                                             <div class="text-white-50 small">#36b9cc</div>
                                         </div>
                                     </div>
@@ -612,7 +631,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-warning text-white shadow">
                                         <div class="card-body">
-                                            Warning
+                                            넌 노랑?
                                             <div class="text-white-50 small">#f6c23e</div>
                                         </div>
                                     </div>
@@ -620,7 +639,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-danger text-white shadow">
                                         <div class="card-body">
-                                            Danger
+                                            넌 빨강?
                                             <div class="text-white-50 small">#e74a3b</div>
                                         </div>
                                     </div>
@@ -628,7 +647,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-secondary text-white shadow">
                                         <div class="card-body">
-                                            Secondary
+                                            넌 회색?
                                             <div class="text-white-50 small">#858796</div>
                                         </div>
                                     </div>
@@ -636,7 +655,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-light text-black shadow">
                                         <div class="card-body">
-                                            Light
+                                            넌 하양?
                                             <div class="text-black-50 small">#f8f9fc</div>
                                         </div>
                                     </div>
@@ -644,7 +663,7 @@
                                 <div class="col-lg-6 mb-4">
                                     <div class="card bg-dark text-white shadow">
                                         <div class="card-body">
-                                            Dark
+                                            넌 검정?
                                             <div class="text-white-50 small">#5a5c69</div>
                                         </div>
                                     </div>
@@ -655,36 +674,36 @@
 
                         <div class="col-lg-6 mb-4">
 
-                            <!-- Illustrations -->
+                            <!-- D 카드 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">D카드</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
+                                        일단 넣어 일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어 일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
                                     </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                        unDraw &rarr;</a>
                                 </div>
                             </div>
 
-                            <!-- Approach -->
+                            <!-- E 카드 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">E 카드</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
+                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
+                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
+                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
+                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
+                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
                                 </div>
                             </div>
 

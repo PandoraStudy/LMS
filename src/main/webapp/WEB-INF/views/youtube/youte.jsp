@@ -11,11 +11,13 @@
 </head>
 <script type="text/javascript">
 $(function(){
+
 	
 	let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
 	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//동영
 	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//정목
-	
+
+
 	$.get({
 		url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" + channelId + "&key=" + API_KEY+"&privacyStatus=unlisted&maxResults=50",
 		dataType: "json",
