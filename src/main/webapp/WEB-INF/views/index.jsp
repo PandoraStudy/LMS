@@ -91,13 +91,13 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
                     <!-- 컨텐츠 탑 부분 끝 -->
 
                     <div class="row">
 
                         <!-- 학사일정 -->
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-7 col-md-6 mb-4">
                             <div class="card shadow mb-4">
                                 <!-- A 카드 설정 버튼 부분 -->
                                 <div
