@@ -30,10 +30,11 @@ public class YouTubeController {
     }
 
     @GetMapping("/youtubeList")
-    public ModelAndView youtubeList(@RequestParam(name="playlist-id") String playlistId) {
+    public ModelAndView youtubeList(@RequestParam(name="playlist_id") String playlistId) {
         ModelAndView view = new ModelAndView();
         view.addObject("playlistId", playlistId);
         view.setViewName("youtube/youtubeList");
+        System.out.println(playlistId);
         return view;
     }
 

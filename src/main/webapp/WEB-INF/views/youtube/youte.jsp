@@ -12,10 +12,12 @@
 <script type="text/javascript">
 $(function(){
 	
-	let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";
+	//let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
+	let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//동영
+	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//정목
 	
 	$.get({
-		url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" + channelId + "&key=" + API_KEY+"&maxResults=50",
+		url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" + channelId + "&key=" + API_KEY+"&privacyStatus=unlisted&maxResults=50",
 		dataType: "json",
 		success: function (playlists) {
 			//alert("성공");
@@ -31,13 +33,19 @@ $(function(){
 				var playlist = playlists[i];
 				var title = playlist.snippet.title;
 				var description = playlist.snippet.description || "";
-				var playlist_id = playlist.id;
-				//console.log(playlist_id);
+				var id = playlist.id;
 				
-				document.postList.playlist_id.value = playlist_id;
+				let $tr = $("<tr onclick=location.href='youtubeList?playlist_id=" + id + "'>");
 				
-				$("#playlist_title").append(title);
-				$("#playlist_sub_title").append(description);
+
+				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
+
+				$tr.append("<td><span>" + title + "</span></td>");
+
+				$("#tb_lecture").append($tr);
+				
+				
+                
 			}
 		}, error: function(jqXHR, textStatus, errorThrown) {
 		    console.log(jqXHR.responseJSON.error.message);
@@ -46,18 +54,36 @@ $(function(){
 });
 </script>
 <body>
+<!-- 
 	<table>
 		<tr>
-			<th id="playlist_title"></th>
-			<th id="playlist_sub_title"></th>
 			<form action="/youtubeList" name="postList" method="get">
+				<th id="playlist_title"></th>
 				<input type="hidden" name="playlist_id" value="">
+				<button type="submit">전송</button>
 			</form>
+			<th id="playlist_sub_title"></th>
 		</tr>
 		<tr>
 			<td></td>
 		</tr>
 	</table>
-<!-- <div id="playlist"></div> -->
+ -->
+	
+	<table id="table_lecture">
+		<thead>
+			<tr>
+				<th>제목</th>
+				<th>학과</th>
+			</tr>
+		</thead>
+		<tbody id="tb_lecture">
+			<tr>
+				<td id="playlist_title"></td>
+			</tr>
+		</tbody>
+	</table>
+
+
 </body>
 </html>
