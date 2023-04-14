@@ -31,6 +31,17 @@ public class YouTubeController {
     	return "/youtube/lecture";
     }
 
+
+    @GetMapping("/lectureDetail")
+    public String lectureDetail() {
+        return "youtube/lectureDetail";
+    }
+
+    @GetMapping("/youte")
+    public String YouTe() {
+    	return "/youtube/youte";
+    }
+
     @GetMapping("/OAuthTest")
     public String OAuthTest() {
         return "youtube/oauthTest";
