@@ -238,14 +238,11 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- 메인 컨텐츠 -->
         <div id="content">
-            <%-- 탑 바 --%>
-            <%@include file="../top.jsp" %>
-
             <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid">
 
                 <!-- 메인 페이지의 탑 -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
                     <h1 class="h3 mb-0 text-gray-800">내 강의실</h1>
                     <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
