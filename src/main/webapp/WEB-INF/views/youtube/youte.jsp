@@ -54,22 +54,6 @@ $(function(){
 });
 </script>
 <body>
-<!-- 
-	<table>
-		<tr>
-			<form action="/youtubeList" name="postList" method="get">
-				<th id="playlist_title"></th>
-				<input type="hidden" name="playlist_id" value="">
-				<button type="submit">전송</button>
-			</form>
-			<th id="playlist_sub_title"></th>
-		</tr>
-		<tr>
-			<td></td>
-		</tr>
-	</table>
- -->
-	
 	<table id="table_lecture">
 		<thead>
 			<tr>
@@ -83,7 +67,5 @@ $(function(){
 			</tr>
 		</tbody>
 	</table>
-
-
 </body>
 </html>
