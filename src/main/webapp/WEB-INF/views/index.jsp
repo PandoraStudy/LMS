@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <!-- 진도율 -->
-                        <div style="margin-left: 40px;" class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -91,13 +91,12 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
                     <!-- 컨텐츠 탑 부분 끝 -->
 
                     <div class="row">
-
                         <!-- 학사일정 -->
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-7 col-md-6 mb-4">
                             <div class="card shadow mb-4">
                                 <!-- A 카드 설정 버튼 부분 -->
                                 <div
@@ -172,10 +171,8 @@
 
                     <!-- C 카드 부분 -->
                     <div class="row">
-
                         <!-- Content Column -->
                         <div class="col-lg-6 mb-4">
-
                             <!-- 진도율 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -214,10 +211,9 @@
                                     </div>
                                 </div>
                             </div>
-
+                        </div>
 
                         <div class="col-lg-6 mb-4">
-
                             <!-- 식단 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
@@ -236,8 +232,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 

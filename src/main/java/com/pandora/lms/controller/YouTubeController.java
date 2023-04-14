@@ -26,6 +26,17 @@ public class YouTubeController {
         return "youtube/sample";
     }
     
+    @GetMapping("/lecture")
+    public String lecture() {
+    	return "/youtube/lecture";
+    }
+
+
+    @GetMapping("/lectureDetail")
+    public String lectureDetail() {
+        return "youtube/lectureDetail";
+    }
+
     @GetMapping("/youte")
     public String YouTe() {
     	return "/youtube/youte";
