@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+
 <!-- 사이드 메뉴바 -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
@@ -15,10 +17,9 @@
     <!-- 학생정보 -->
     <li class="nav-item active">
         <a class="nav-link" href="index">
-            <i style="line-height: 42px; float: left;" class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>
-                안녕하세요. 이민규님<br>
-                학번 20170017
+                2023년도 1학기
             </span></a>
 
 
@@ -34,7 +35,7 @@
 
     <!-- A카테고리 A탭 드롭다운-->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        <a style="height: 40px;" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>학교</span>
@@ -49,7 +50,7 @@
 
     <!-- A카테고리 B탭 드롭다운 -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+        <a class="nav-link collapsed tap_place" href="#" data-toggle="collapse" data-target="#collapseUtilities"
            aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
             <span>내 강의실</span>
@@ -57,7 +58,7 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider line">
 
     <!-- B 카테고리 -->
     <div class="sidebar-heading">
@@ -67,7 +68,7 @@
 
     <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a style="height: 40px;" class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>캘린더</span></a>
     </li>
@@ -88,11 +89,11 @@
     </div>
 
     <!-- 사이드바 메시지 -->
-    <div class="sidebar-card d-none d-lg-flex">
+    <%--<div class="sidebar-card d-none d-lg-flex">
         <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
         <p class="text-center mb-2"><strong>로켓트!</strong> 날라가유~ 두번 날라가유~</p>
         <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">응애 나 애기 밍규</a>
-    </div>
+    </div>--%>
 
 </ul>
 <!-- End of Sidebar -->

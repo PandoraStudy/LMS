@@ -15,7 +15,31 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
+
+    <%-- ==================full캘린더================== --%>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
+    <%-- ==================full캘린더================== --%>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth'
+            });
+            calendar.render();
+        });
+
+    </script>
+    <style>
+        #calendar {
+            width: 90%;
+            height: 500px;
+            margin: 0 auto;
+        }
+
+    </style>
 </head>
+
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -36,14 +60,12 @@
 
                     <!-- 페이지 헤드 부분 -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">메인 컨텐츠 부분</h1>
+                        <h1 class="h3 mb-0 text-gray-800">학생</h1>
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
                     </div>
-
                     <!-- 컨텐츠 탑 부분 -->
                     <div class="row">
-
                         <!-- 학사 공지 -->
                         <div class="col-xl-7 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -64,7 +86,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 진도율 -->
+                        <!-- 학점 -->
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
@@ -148,22 +170,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- B 카드 본문 -->
-                                <div class="card-body">
+
+                                <div style="margin:5px; padding:0; height: 550px;" class="card-body">
+
                                     <div class="chart-pie pt-4 pb-2">
-                                        내용?ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ
+                                        <%--본문 내용 작성하는 부분--%>
+                                            <div id="calendar"></div>
                                     </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> 일단
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> 남겨
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> 놓는다
-                                        </span>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
