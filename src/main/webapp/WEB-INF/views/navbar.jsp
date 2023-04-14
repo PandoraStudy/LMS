@@ -12,11 +12,16 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <!-- Nav Item - Dashboard -->
+    <!-- 학생정보 -->
     <li class="nav-item active">
         <a class="nav-link" href="index">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>수정해주세요</span></a>
+            <i style="line-height: 42px; float: left;" class="fas fa-fw fa-tachometer-alt"></i>
+            <span>
+                안녕하세요. 이민규님<br>
+                학번 20170017
+            </span></a>
+
+
     </li>
 
     <!-- Divider -->
@@ -24,7 +29,7 @@
 
     <!-- A 카테고리 -->
     <div class="sidebar-heading">
-        A 카테고리
+        학사
     </div>
 
     <!-- A카테고리 A탭 드롭다운-->
@@ -32,13 +37,12 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>A탭 드롭다운</span>
+            <span>학교</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">A카테고리 A탭 드롭다운</h6>
-                <a class="collapse-item" href="buttons.html">A카태고리 A탭 A</a>
-                <a class="collapse-item" href="cards.html">A카태고리 A탭 B</a>
+                <h6 class="collapse-header">학교</h6>
+                <a class="collapse-item" href="notice">공지사항</a>
             </div>
         </div>
     </li>
@@ -48,18 +52,8 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
            aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>B탭 드롭다운</span>
+            <span>내 강의실</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">A카테고리 B탭 드롭다운</h6>
-                <a class="collapse-item" href="utilities-color.html">A카테고리 B탭 드롭다운 A</a>
-                <a class="collapse-item" href="utilities-border.html">A카테고리 B탭 드롭다운 B</a>
-                <a class="collapse-item" href="utilities-animation.html">A카테고리 B탭 드롭다운 C</a>
-                <a class="collapse-item" href="utilities-other.html">A카테고리 B탭 드롭다운 D</a>
-            </div>
-        </div>
     </li>
 
     <!-- Divider -->
@@ -67,42 +61,22 @@
 
     <!-- B 카테고리 -->
     <div class="sidebar-heading">
-        B 카테고리
+        추가적인 기능(이름수정필요)
     </div>
 
-    <!-- B 카테고리 A탭 드롭다운 -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-           aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>A탭 드롭다운</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">B 카테고리 A</h6>
-                <a class="collapse-item" href="login.html">A</a>
-                <a class="collapse-item" href="register.html">B</a>
-                <a class="collapse-item" href="forgot-password.html">C</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">B 카테고리 B</h6>
-                <a class="collapse-item" href="404.html">A</a>
-                <a class="collapse-item" href="blank.html">B</a>
-            </div>
-        </div>
-    </li>
 
-    <!-- C 부분1 -->
+    <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">
         <a class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>C one</span></a>
+            <span>캘린더</span></a>
     </li>
 
     <!-- C 부분2 -->
     <li class="nav-item">
         <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-table"></i>
-            <span>C two</span></a>
+            <span>미정</span></a>
     </li>
 
     <!-- Divider -->

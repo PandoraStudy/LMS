@@ -11,6 +11,7 @@
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
@@ -43,15 +44,18 @@
                     <!-- 컨텐츠 탑 부분 -->
                     <div class="row">
 
-                        <!-- A카드 -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- 학사 공지 -->
+                        <div class="col-xl-7 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                A카드</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">A응애응애</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">학사 공지</div>
+                                            <div  class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                <div>
+                                                    학사 공지
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -60,33 +64,13 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- B카드 -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                B응애응애</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- C카드 -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <!-- 진도율 -->
+                        <div style="margin-left: 40px;" class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">진도율로 써볼까?
-                                            </div>
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">학점</div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
@@ -108,36 +92,17 @@
                             </div>
                         </div>
 
-                        <!-- D카드 -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18십팔</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- 컨텐츠 탑 부분 끝 -->
 
                     <div class="row">
 
-                        <!-- A카드 게시판 -->
+                        <!-- 학사일정 -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- A 카드 설정 버튼 부분 -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">본문 제목</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">학사 일정</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -162,13 +127,13 @@
                             </div>
                         </div>
 
-                        <!-- B 카드 -->
+                        <!-- 캘린더 -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
                                 <!-- B 카드 설정 버튼 부분 -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">본문 제목을 써</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">캘린더</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -211,7 +176,7 @@
                         <!-- Content Column -->
                         <div class="col-lg-6 mb-4">
 
-                            <!-- C 카드 본문 -->
+                            <!-- 진도율 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
@@ -250,79 +215,10 @@
                                 </div>
                             </div>
 
-                            <!-- 컬러 카드 본문 -->
-                            <div class="row">
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-primary text-white shadow">
-                                        <div class="card-body">
-                                            너 파랑?
-                                            <div class="text-white-50 small">#4e73df</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-success text-white shadow">
-                                        <div class="card-body">
-                                            너 연두?
-                                            <div class="text-white-50 small">#1cc88a</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-info text-white shadow">
-                                        <div class="card-body">
-                                            넌 하늘?
-                                            <div class="text-white-50 small">#36b9cc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-warning text-white shadow">
-                                        <div class="card-body">
-                                            넌 노랑?
-                                            <div class="text-white-50 small">#f6c23e</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-danger text-white shadow">
-                                        <div class="card-body">
-                                            넌 빨강?
-                                            <div class="text-white-50 small">#e74a3b</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-secondary text-white shadow">
-                                        <div class="card-body">
-                                            넌 회색?
-                                            <div class="text-white-50 small">#858796</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-light text-black shadow">
-                                        <div class="card-body">
-                                            넌 하양?
-                                            <div class="text-black-50 small">#f8f9fc</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 mb-4">
-                                    <div class="card bg-dark text-white shadow">
-                                        <div class="card-body">
-                                            넌 검정?
-                                            <div class="text-white-50 small">#5a5c69</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
 
                         <div class="col-lg-6 mb-4">
 
-                            <!-- D 카드 -->
+                            <!-- 식단 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">D카드</h6>
@@ -341,19 +237,6 @@
                                 </div>
                             </div>
 
-                            <!-- E 카드 -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">E 카드</h6>
-                                </div>
-                                <div class="card-body">
-                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
-                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
-                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
-                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
-                                    아무 말 아무 말 아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말아무 말 아무 말
-                                </div>
-                            </div>
 
                         </div>
                     </div>
