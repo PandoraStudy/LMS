@@ -26,9 +26,9 @@ public class YouTubeController {
         return "youtube/sample";
     }
     
-    @GetMapping("/youte")
-    public String YouTe() {
-    	return "/youtube/youte";
+    @GetMapping("/lecture")
+    public String lecture() {
+    	return "/youtube/lecture";
     }
 
     @GetMapping("/OAuthTest")
