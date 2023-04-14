@@ -12,8 +12,8 @@
 <script type="text/javascript">
 $(function(){
 	
-	//let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
-	let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//동영
+	let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
+	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//동영
 	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//정목
 	
 	$.get({
