@@ -3,8 +3,10 @@ package com.pandora.lms.controller;
 import com.pandora.lms.service.YoutubeService;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
@@ -19,14 +21,19 @@ public class YouTubeController {
 
     private final SqlSession sqlSession;
 
-    @GetMapping("/youtube")
+    @GetMapping("/sample")
     public String YouTube() {
-        return "youtube/youtube";
+        return "youtube/sample";
     }
     
     @GetMapping("/youte")
     public String YouTe() {
     	return "/youtube/youte";
+    }
+
+    @GetMapping("/OAuthTest")
+    public String OAuthTest() {
+        return "youtube/oauthTest";
     }
 
     @GetMapping("/youtubeList")
@@ -73,14 +80,9 @@ public class YouTubeController {
     }
 
     @PostMapping("/youtubeUpload")
-    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture_video") File lectureVideo) {
-        System.out.println("접근");
-
-        youtubeService.test();
-
+    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture_video") MultipartFile lectureVideo) {
         System.out.println(lectureVideo);
         System.out.println(lectureInfo);
-
         return "";
     }
 
