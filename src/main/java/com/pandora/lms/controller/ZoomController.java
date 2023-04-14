@@ -1,27 +1,21 @@
 package com.pandora.lms.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.pandora.lms.service.ZoomService;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
-import okhttp3.RequestBody;
-import org.apache.catalina.util.ToStringUtil;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
+
 @AllArgsConstructor
 @Controller
 public class ZoomController {
@@ -99,7 +93,6 @@ public class ZoomController {
     public String zoomUsers(String accessToken, String meeting_Id ) throws IOException{
 
         OkHttpClient client = new OkHttpClient(); //통신을 위한 OkHttp
-        ObjectMapper mapper = new ObjectMapper();//Json 처리를 위하여 생성
 
         String zoomUrl = "https://api.zoom.us/v2/metrics/meetings/"+meeting_Id+"/participants"; //Access token 을 받는 zoom api 호출 url
 
