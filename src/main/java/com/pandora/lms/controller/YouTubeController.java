@@ -65,7 +65,8 @@ public class YouTubeController {
         int playTime = sqlSession.selectOne("youtube.getPlayTime", userData);
 
         view.addObject("playTime", playTime);
-        view.addObject("videoId", userData.get("video_id"));
+//        view.addObject("videoId", userData.get("video_id"));
+        view.addObject("videoId", "l86vssSMAsA");
 
         return view;
     }

@@ -53,7 +53,7 @@
         <a class="nav-link collapsed tap_place" href="#" data-toggle="collapse" data-target="#collapseUtilities"
            aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>내 강의실</span>
+            <span id="my-lecture">내 강의실</span>
         </a>
     </li>
 
@@ -94,6 +94,8 @@
         <p class="text-center mb-2"><strong>로켓트!</strong> 날라가유~ 두번 날라가유~</p>
         <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">응애 나 애기 밍규</a>
     </div>--%>
-
 </ul>
 <!-- End of Sidebar -->
+<script>
+    $(".my-lecture")
+</script>
