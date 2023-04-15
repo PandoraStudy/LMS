@@ -97,5 +97,7 @@
 </ul>
 <!-- End of Sidebar -->
 <script>
-    $(".my-lecture")
+    $("#my-lecture").click(function() {
+        location.href = "/lecture";
+    });
 </script>
