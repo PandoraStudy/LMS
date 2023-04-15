@@ -247,7 +247,7 @@
                     <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
 
-                <div class="row item-center" style="background-color: #ccc;">
+                <div class="row">
                     <!-- A카드 게시판 -->
                     <div class="col-xl-10 col-lg-7">
                         <div class="card shadow mb-4">
@@ -296,9 +296,16 @@
                         </div>
                     </div>
 
-
-                    <div>
-                        과제 제출
+                    <!-- 동영상 본문 사이드 메뉴 -->
+                    <div class="col-xl-2">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">강의 목록</h6>
+                            </div>
+                            <div class="card-body" style="height: auto;">
+                                test
+                            </div>
+                        </div>
                     </div>
 
                 </div>
