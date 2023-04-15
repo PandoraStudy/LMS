@@ -49,8 +49,7 @@
 
     <!-- A카테고리 B탭 드롭다운 -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-           aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="/lecture">
             <i class="fas fa-fw fa-wrench"></i>
             <span>내 강의실</span>
         </a>
