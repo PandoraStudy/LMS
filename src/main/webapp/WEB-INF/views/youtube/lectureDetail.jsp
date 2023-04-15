@@ -37,9 +37,11 @@
     /* 실제 동영상 재생 시간 위치 */
     let curr_time = 0;
     /* 동영상 주소 */
-    let video_id = "aXpmB5BgG4U";
+    let video_id = "l86vssSMAsA"; // 전체 공개
+    // let video_id = "q2I2w4jksCQ"; // 부분 공개
+
     /* 학생이 실제 시청 시간 위치 */
-    let play_time = ${playTime};
+    let play_time = 0;
 
     /* 유튜브 Iframe 준비 상태 */
     function onYouTubeIframeAPIReady() {
@@ -175,6 +177,58 @@
         });
     }
 </script>
+<style>
+    .card-body {
+        height: 900px;
+    }
+
+    .lecture-content {
+        justify-content: center;
+        width: 100%;
+        height: 85%;
+    }
+
+    .youtube-player {
+        width: 100%;
+        height: 100%;
+    }
+
+    .lecture-info {
+        display: block;
+        width: 100%;
+        height: 16%;
+    }
+
+    .lecture-progress {
+        display: block;
+        width: 100%;
+        height: 50%;
+    }
+
+    .lecture-progress > span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-top: 10px;
+        box-sizing: border-box;
+    }
+
+    .lecture-page-btn {
+        display: block;
+        width: 100%;
+        height: 50%;
+    }
+
+    .lecture-page-btn > span {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-align: right;
+        padding-top: 10px;
+        box-sizing: border-box;
+    }
+</style>
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -186,25 +240,21 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- 메인 컨텐츠 -->
         <div id="content">
-            <%-- 탑 바 --%>
-            <%@include file="../top.jsp" %>
-
             <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid">
 
                 <!-- 메인 페이지의 탑 -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
                     <h1 class="h3 mb-0 text-gray-800">내 강의실</h1>
                     <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
 
-                <div class="row">
+                <div class="row item-center" style="background-color: #ccc;">
                     <!-- A카드 게시판 -->
-                    <div class="col-xl-12 col-lg-7">
+                    <div class="col-xl-10 col-lg-7">
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
-                            <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">과목명</h6>
                                 <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
@@ -220,16 +270,41 @@
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
-                                <div class="chart-area">
-                                    <div>
-                                        <!-- 실제 구성은 이곳에서 진행합니다. -->
-                                        <div style="width: 1280px; height: 720px; background-color: #ccc;"class="youtube-player" id="youtubePlayer"></div>
+                                <div class="lecture-content">
+                                    <!-- 실제 구성은 이곳에서 진행합니다. -->
+                                    <div class="youtube-player" id="youtubePlayer"></div>
+                                    <div class="lecture-info">
+                                        <div class="lecture-progress">
+                                            <span>
+                                                <span>학습 진행 상황 : 8분 4초(100%)</span>
+                                                <span>
+                                                    <input type="checkbox" checked onclick="return false;">
+                                                    <result>완료</result>
+                                                    <button class="btn btn-primary" type="button">출석</button>
+                                                </span>
+                                            </span>
+
+                                        </div>
+                                        <div class="lecture-page-btn">
+                                            <span>
+                                                <!-- 강의 진도율이 100프로가 아닐 시 제어합시다. -->
+                                                <button class="btn btn-secondary">이전 학습</button>
+                                                <button class="btn btn-primary">다음 학습</button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                    <div>
+                        과제 제출
+                    </div>
+
                 </div>
+
             </div>
             <!-- 디테일 화면 종료 -->
         </div>

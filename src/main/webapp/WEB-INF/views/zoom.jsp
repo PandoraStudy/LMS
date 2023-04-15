@@ -13,7 +13,7 @@
             let mt1 = $("#meeting_Id").val().split("?");
             let mt2 = mt1[0].split("/j/");
             let meeting_Id = mt2[1];
-            console.log(meeting_Id);
+            console.log(meeting_Id)thfl;
           $.ajax({
             url: "/zoomUsers",
             type: "GET",
