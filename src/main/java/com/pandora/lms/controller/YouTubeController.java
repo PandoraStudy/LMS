@@ -3,14 +3,11 @@ package com.pandora.lms.controller;
 import com.pandora.lms.service.YoutubeService;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -21,52 +18,29 @@ public class YouTubeController {
 
     private final SqlSession sqlSession;
 
-    @GetMapping("/sample")
-    public String YouTube() {
-        return "youtube/sample";
-    }
-    
     @GetMapping("/lecture")
     public String lecture() {
-    	return "/youtube/lecture";
+        return "/youtube/lecture";
     }
 
-
-    @GetMapping("/lectureDetail")
-    public String lectureDetail() {
-        return "youtube/lectureDetail";
-    }
-
-    @GetMapping("/youte")
-    public String YouTe() {
-    	return "/youtube/youte";
-    }
-
-    @GetMapping("/OAuthTest")
-    public String OAuthTest() {
-        return "youtube/oauthTest";
-    }
-
-    @GetMapping("/youtubeList")
-    public ModelAndView youtubeList(@RequestParam(name="playlist_id") String playlistId) {
+    @GetMapping("/lectureList")
+    public ModelAndView youtubeList(@RequestParam(name = "playlist_id") String playlistId) {
         ModelAndView view = new ModelAndView();
         view.addObject("playlistId", playlistId);
-        view.setViewName("youtube/youtubeList");
+        view.setViewName("youtube/lectureList");
         System.out.println(playlistId);
         return view;
     }
 
-    @GetMapping("/youtubeDetail")
-    public ModelAndView youtubeDetail(@RequestParam Map<String, Object> userData) {
-        ModelAndView view = new ModelAndView("youtube/youtubeDetail");
-
+    @GetMapping("/lectureDetail")
+    public ModelAndView lectureDetail(@RequestParam Map<String, Object> userData) {
+        ModelAndView view = new ModelAndView("youtube/lectureDetail");
         /* 추후 세션이나 사용자 인증 아이디 값으로 변경 */
         userData.put("student_no", "131");
+        userData.put("video_id", userData.get("video_id"));
         int playTime = sqlSession.selectOne("youtube.getPlayTime", userData);
-
         view.addObject("playTime", playTime);
-//        view.addObject("videoId", userData.get("video_id"));
-        view.addObject("videoId", "l86vssSMAsA");
+        view.addObject("videoId", userData.get("video_id"));
 
         return view;
     }
@@ -86,16 +60,21 @@ public class YouTubeController {
         return msg;
     }
 
-    @GetMapping("/youtubeUpload")
-    public String yotubeUpload() {
-        return "youtube/youtubeUpload";
-    }
-
-    @PostMapping("/youtubeUpload")
-    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture_video") MultipartFile lectureVideo) {
-        System.out.println(lectureVideo);
-        System.out.println(lectureInfo);
-        return "";
-    }
+    /* 기능 미구현 상태
+     *  @GetMapping("/OAuthTest")
+     *     public String OAuthTest() {
+     *         return "youtube/oauthTest";
+     *     }
+     *
+     *  @GetMapping("/youtubeUpload") public String yotubeUpload() {
+     *          return "youtube/youtubeUpload";
+     *     }
+     *
+     *  @PostMapping("/youtubeUpload") public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture_video") MultipartFile lectureVideo) {
+     *          System.out.println(lectureVideo);
+     *          System.out.println(lectureInfo);
+     *          return "";
+     *     }
+     */
 
 }

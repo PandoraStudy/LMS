@@ -47,7 +47,7 @@ $(function(){
 				var description = playlist.snippet.description || "";
 				var id = playlist.id;
 				
-				let $tr = $("<tr onclick=location.href='youtubeList?playlist_id=" + id + "'>");
+				let $tr = $("<tr onclick=location.href='lectureList?playlist_id=" + id + "'>");
 				
 
 				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */

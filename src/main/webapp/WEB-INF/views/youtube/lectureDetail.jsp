@@ -37,11 +37,9 @@
     /* 실제 동영상 재생 시간 위치 */
     let curr_time = 0;
     /* 동영상 주소 */
-    let video_id = "l86vssSMAsA"; // 전체 공개
-    // let video_id = "q2I2w4jksCQ"; // 부분 공개
-
+    let video_id = "${videoId}";
     /* 학생이 실제 시청 시간 위치 */
-    let play_time = 0;
+    let play_time = ${playTime};
 
     /* 유튜브 Iframe 준비 상태 */
     function onYouTubeIframeAPIReady() {
@@ -82,7 +80,7 @@
             curr_time = Math.floor(player.getCurrentTime());
 
             /* 실시간 재생 시간과 저장된 재생 시간의 차이가 5보다 클 경우 저장된 위치로 옮깁니다. */
-            if ((curr_time - play_time) > 5) {
+            if ((curr_time - play_time) > 3) {
                 player.seekTo(play_time);
             }
 
