@@ -62,9 +62,9 @@
 
                             /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
                             let $tr = $("<tr onclick=location.href='lectureDetail?video_id=" + videoId + "'>");
-                            $tr.append("<td><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
+                            $tr.append("<td class='text-center'><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
                             $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
-                            $tr.append("<th><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
+                            $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
                             $("#tb_lecture").append($tr);
                             $("#loading").hide();
                         },
@@ -200,9 +200,9 @@
                                     <table class="table table-sm" id="table_lecture">
                                         <thead class="table-light">
                                             <tr>
-                                                <th class="col-2">강의 이미지</th>
+                                                <th class="col-2 text-center">강의 이미지</th>
                                                 <th class="col-9">제목[강의자료]</th>
-                                                <th class="col-1">출석여부</th>
+                                                <th class="col-1 text-center">출석여부</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider" id="tb_lecture">
