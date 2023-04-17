@@ -92,20 +92,19 @@
                 <div>
                     <table class="table">
                         <tr class="table_header">
-                            <td class="col-1" style="text-align: center;">번호</td>
+                            <td class="col-2" style="text-align: center;">번호</td>
                             <td class="col-6" style="text-align: center;">제목</td>
                             <td class="col-1" style="text-align: center;">작성자</td>
                             <td class="col-1" style="text-align: center;">조회수</td>
-                            <td class="col-3" style="text-align: center;">등록일</td>
+                            <td class="col-2" style="text-align: center;">등록일</td>
                         </tr>
+
                         <c:forEach var="notice" items="${list }">
-                            <c:if test="${notice.rowNum eq null }" > 일치하는 값이 없습니다. </c:if>
+                            <c:if test="${notice.rowNum eq 0 }" > 일치하는 값이 없습니다. </c:if>
                             <tr>
                                 <td>${notice.rowNum }</td>
-                                <td class="title text-truncate" style="max-width:1px; text-align: left;"><a
-                                        href="/noticeDetail?notice_no=${notice.notice_no }">${notice.notice_title }</a>
-                                </td>
-                                <td>${notice.admin_name}</td>
+                                <td class="title text-truncate" style="max-width:1px; text-align: left;"><a href="/noticeDetail?notice_no=${notice.notice_no }">${notice.notice_title }</a></td>
+                                <td>${notice.admin_id }</td>
                                 <td>${notice.notice_read }</td>
                                 <td>${notice.notice_date }</td>
                             </tr>

@@ -64,7 +64,7 @@
                     <!--수정할 부분 시작-->
                     <h1 class="h3 mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
                         <c:choose>
-                            <c:when test="${noticeDetail.notice_no ne null }"> 공지사항 수정 </c:when>
+                            <c:when test="${noticeDetail.notice_no ne null }">수정</c:when>
                             <c:otherwise> 신규 글쓰기 </c:otherwise>
                         </c:choose>
                     </h1>

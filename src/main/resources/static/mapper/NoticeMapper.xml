@@ -3,7 +3,7 @@
 <mapper namespace="com.pandora.lms.dao.NoticeDAO">
 
     <select id="noticeCount" parameterType="HashMap" resultType="Integer">
-        SELECT COUNT(*) FROM NOTICE
+        SELECT COUNT(*) FROM noticeview
         <if test="searchType != null">
             WHERE
             <choose>
@@ -15,9 +15,8 @@
     </select>
 
     <select id="noticeList"  parameterType="Integer"  resultType="HashMap">
-        SELECT notice_no,notice_title,admin_id,notice_date,notice_like,notice_read,
-        row_number() over() as rowNum
-        FROM NOTICE
+        SELECT notice_no,notice_title,admin_id,notice_date,notice_like,notice_read,rowNum
+        FROM noticeview
         <if test="searchType != null">
             WHERE
             <choose>
@@ -36,7 +35,7 @@
 
     <select id="noticeDetail" parameterType="String" resultType="HashMap">
         SELECT notice_no,admin_id,notice_title,notice_date,notice_like,notice_read,notice_content
-        FROM NOTICE
+        FROM noticeview
         WHERE notice_no = #{notice_no}
     </select>
 
