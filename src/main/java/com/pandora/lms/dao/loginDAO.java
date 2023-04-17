@@ -21,5 +21,5 @@ public class loginDAO {
 		return sqlSession.insert("signup", userdto);
 		
 	}
-
+	
 }
