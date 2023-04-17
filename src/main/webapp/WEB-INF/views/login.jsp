@@ -17,69 +17,37 @@ if (location.protocol === "https:") {
 }
 ch();
 
-function submit_s(){
-	const s_user = document.getElementById("s_user").value;	
-	console.log(s_user);
-	const s_pass = document.getElementById("s_pass").value;
-	console.log(s_pass);
 
-	if (/^\d{8}$/.test(s_user)) {	   	
-	} else {
-	   alert("숫자 8자리를 입력해주세요.");
-	   return;
-	}
-	
-	const form = document.createElement('form');
-	form.action = '/slogin';
-	form.method = 'POST';
-	const input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = 'user';
-	input.value = s_user;
-	
-	const input2 = document.createElement('input');
-	input2.type = 'hidden';
-	input2.name = 'pass';
-	input2.value = s_pass;
-	
-	form.appendChild(input);
-	form.appendChild(input2);
-	document.body.appendChild(form);
-	form.submit();
+function submit_info(element) {
+  var username = element.parentNode.parentNode.querySelector('input[name="username"]').value;
+  var password = element.parentNode.parentNode.querySelector('input[name="password"]').value;
+ 		if (/^\d{8}$/.test(username)) {	   	
+ 		} else {
+ 		   alert("숫자 8자리를 입력해주세요.");
+ 		   return;
+ 		}
+  var form = document.createElement('form');
+  form.action = '/login';
+  form.method = 'post';
 
-}
+  var input1 = document.createElement('input');
+  input1.type = 'hidden';
+  input1.name = 'username';
+  input1.value = username;
 
-function submit_t(){
-	const t_user = document.getElementById("t_user").value;	
-	console.log(t_user);
-	const t_pass = document.getElementById("t_pass").value;
-	console.log(t_pass);
-	
-	const form = document.createElement('form');
-	form.action = '/tlogin';
-	form.method = 'POST';
-	
-	const input = document.createElement('input');
-	input.type = 'hidden';
-	input.name = 'user';
-	input.value = t_user;
-	
-	const input2 = document.createElement('input');
-	input2.type = 'hidden';
-	input2.name = 'pass';
-	input2.value = t_pass;
-	
-	form.appendChild(input);
-	form.appendChild(input2);
-	document.body.appendChild(form);
-	form.submit();
+  var input2 = document.createElement('input');
+  input2.type = 'hidden';
+  input2.name = 'password';
+  input2.value = password;
 
-}
+  form.appendChild(input1);
+  form.appendChild(input2);
 
-function verifie(param){
-	
+  document.body.appendChild(form);
 
-}
+  form.submit();
+	  }
+
 </script>
 <style>
 body{
@@ -246,11 +214,11 @@ ${sc}
       <div class="student">
         <div class="group">
           <label for="user" class="label">학번</label>
-          <input id="s_user" type="text" class="input" maxlength="8">
+          <input name="username" type="text" class="input" maxlength="8"/>
         </div>
         <div class="group">
           <label for="pass" class="label">비밀번호</label>
-          <input id="s_pass" type="password" class="input" data-type="password" onkeydown="if (event.keyCode === 13) submit_s()">
+          <input name="password" type="password" class="input" data-type="password" onkeydown="if (event.keyCode === 13) submit_info(this)"/>
           
         </div>
         <div class="group">
@@ -258,7 +226,7 @@ ${sc}
           <label for="check"><span class="icon"></span> Keep me Signed in</label>
         </div>
         <div class="group">
-          <input type="button" class="button" value="들어가기" onclick="submit_s()">
+          <input type="button" class="button" value="들어가기" onclick="submit_info(this)"/>
         </div>
         <div class="hr"></div>
         <div class="foot-lnk">
@@ -268,15 +236,15 @@ ${sc}
       <div class="professor">
         <div class="group">
           <label for="user" class="label">교수코드</label>
-          <input id="t_user" type="text" class="input">
+          <input name="username" type="text" class="input"/>
         </div>
         <div class="group">
           <label for="pass" class="label">비밀번호</label>
-          <input id="t_pass" type="password" class="input" data-type="password">
+          <input name="password" type="password" class="input" data-type="password" onkeydown="if (event.keyCode === 13) submit_info(this)"/>
         </div>
         
         <div class="group">
-          <input type="button" class="button" value="들어가기" onclick="submit_t()">
+          <input type="button" class="button" value="들어가기" onclick="submit_info(this)"/>
         </div>
         <div class="hr"></div>
         <div class="foot-lnk">

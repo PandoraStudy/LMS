@@ -5,18 +5,16 @@
 
 <mapper namespace="com.pandora.lms.DAO">
 
-	<select id="checkID" parameterType="String" resultType="Integer">
+	<select id="checkID" parameterType="String" resultType="UserDTO">
 		SELECT
-		COUNT(*)
-		FROM stud_info
-		WHERE KORN_FLNM=#{id } and
+		*
+		FROM USER_INFO
+		WHERE USER_ID=#{user_name }
 	</select>
 	
-	<select id="CheckStudent" parameterType="HashMap" resultType="Integer">
-		SELECT
-		COUNT(*)
-		FROM stud_info
-		WHERE KORN_FLNM=#{param1 } and USER_BRDT=#{param2 }
-	</select>
-
+	
+	<insert id="signup" parameterType="UserDTO">
+		INSERT INTO USER_INFO (USER_ID, PSWD, KORN_FLNM, USER_BRDT, EML_ADDR, TELNO, USER_GROUP_CD)
+    VALUES (#{USER_ID}, #{PSWD}, #{KORN_FLNM}, #{USER_BRDT}, #{EML_ADDR} , #{TELNO} , #{USER_GROUP_CD})
+	</insert>
 </mapper>

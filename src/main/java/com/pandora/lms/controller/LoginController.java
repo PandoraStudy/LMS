@@ -1,20 +1,15 @@
 package com.pandora.lms.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-import com.pandora.lms.Service.loginService;
+
+import com.pandora.lms.security.callnowsession;
 
 @Controller
 public class LoginController {
-
-	@Autowired
-	private loginService loginservice;
 
 	@GetMapping("/login")
 	public String loginpage() {
@@ -22,47 +17,34 @@ public class LoginController {
 
 		return "login";
 	}
-
-	@PostMapping("/slogin")
-	public ModelAndView slogin(HttpServletRequest request) {
-		String user_id = request.getParameter("user");
-		String user_pass = request.getParameter("pass");
-
-		ModelAndView mv = new ModelAndView();
-
-		int usercheck = loginservice.CheckStudent(user_id, user_pass);
-
-		if (usercheck == 1) {
-			HttpSession session = request.getSession();
-			session.setAttribute("id", user_id);
-			mv.setViewName("index");
-			return mv;
-		} else {
-			mv = loginservice.showAlert();
-		}
-		return mv;
+	
+	@Secured({"ROLE_USER" , "ROLE_ADMIN"})
+	@GetMapping("/onlyuser")
+	public String onlyuserpage() {
+		callnowsession session = new callnowsession();
+		System.out.println("접속자 아이디 : "+session.getsessionid());
+		System.out.println("접속자 권한 : "+session.getsessionAuth());
+		return "onlyuser";
 	}
-
-	@PostMapping("/tlogin")
-	public ModelAndView tlogin(HttpServletRequest request) {
-		String user_id = request.getParameter("user");
-		String user_pass = request.getParameter("pass");
-
-		ModelAndView mv = new ModelAndView();
-
-		int usercheck = loginservice.CheckStudent(user_id, user_pass);
-
-		if (usercheck == 1) {
-			HttpSession session = request.getSession();
-			session.setAttribute("id", user_id);
-			mv.setViewName("index");
-			return mv;
-		} else {
-			mv = loginservice.showAlert();
-			return mv;
-		}
+	
+	@Secured("ROLE_ADMIN")
+	@GetMapping("/onlyadmin")
+	public String onlyadminpage() {
+		callnowsession session = new callnowsession();
+		System.out.println("접속자 아이디 : "+session.getsessionid());
+		System.out.println("접속자 권한 : "+session.getsessionAuth());
+		return "onlyadmin";
 	}
-
+	
+	@Secured({"ROLE_INSTR" , "ROLE_ADMIN"})
+	@GetMapping("/onlyinstr")
+	public String onlyinstrpage() {
+		callnowsession session = new callnowsession();
+		System.out.println("접속자 아이디 : "+session.getsessionid());
+		System.out.println("접속자 권한 : "+session.getsessionAuth());
+		return "onlyinstr";
+	}
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
