@@ -8,21 +8,21 @@
             WHERE
             <choose>
                 <when test="searchType == 'title'">notice_title</when>
-                <when test="searchType == 'writer'">admin_name</when>
+                <when test="searchType == 'writer'">admin_id</when>
             </choose>
             LIKE CONCAT('%', #{searchValue }, '%')
         </if>
     </select>
 
     <select id="noticeList"  parameterType="Integer"  resultType="HashMap">
-        SELECT notice_no,notice_title,admin_name,notice_date,notice_like,notice_read,
+        SELECT notice_no,notice_title,admin_id,notice_date,notice_like,notice_read,
         row_number() over() as rowNum
         FROM NOTICE
         <if test="searchType != null">
             WHERE
             <choose>
                 <when test="searchType == 'title'">notice_title</when>
-                <when test="searchType == 'writer'">admin_name</when>
+                <when test="searchType == 'writer'">admin_id</when>
             </choose>
             LIKE CONCAT('%', #{searchValue }, '%')
         </if>
@@ -35,9 +35,23 @@
     </update>
 
     <select id="noticeDetail" parameterType="String" resultType="HashMap">
-        SELECT notice_no,admin_name,notice_title,notice_date,notice_like,notice_read,notice_content
+        SELECT notice_no,admin_id,notice_title,notice_date,notice_like,notice_read,notice_content
         FROM NOTICE
         WHERE notice_no = #{notice_no}
     </select>
+
+    <insert id="noticeWrite" parameterType="HashMap">
+        INSERT INTO NOTICE(admin_id,notice_title, notice_content)
+        VALUES(ADMIN,'${notice_title}', '${notice_content}')
+    </insert>
+
+    <update id="noticeUpdate" parameterType="HashMap">
+        UPDATE NOTICE SET notice_title= '${notice_title}', notice_content = '${notice_content}'
+        WHERE notice_no = ${ notice_no }
+    </update>
+
+    <update id="noticeDelete" parameterType="String">
+        UPDATE NOTICE SET notice_status = 2 WHERE notice_no = ${ notice_no }
+    </update>
 
 </mapper>

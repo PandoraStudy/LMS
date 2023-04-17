@@ -17,4 +17,10 @@ public interface NoticeDAO {
     void noticeRead(String noticeNo);
 
     Map<String, Object> noticeDetail(String noticeNo);
+
+    void noticeWrite(Map<String, Object> map);
+
+    void noticeUpdate(Map<String, Object> map);
+
+    int noticeDelete(String noticeNo);
 }
