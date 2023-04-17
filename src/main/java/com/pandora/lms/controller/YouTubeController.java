@@ -1,6 +1,7 @@
 package com.pandora.lms.controller;
 
-import com.pandora.lms.service.YoutubeService;
+import com.google.api.client.auth.oauth2.Credential;
+import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
@@ -8,14 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @AllArgsConstructor
 public class YouTubeController {
-
-    private final YoutubeService youtubeService;
-
     private final SqlSession sqlSession;
 
     @GetMapping("/lecture")
@@ -60,24 +60,41 @@ public class YouTubeController {
         return msg;
     }
 
-    @GetMapping("/OAuthTest")
+    @GetMapping("/OAuth")
     public String OAuthTest() {
         return "youtube/oauthTest";
     }
 
+    @PostMapping("/OAuth")
+    @ResponseBody
+    public String youtubeUpload() {
+        String access_token = "";
 
-    /* 기능 미구현 상태
+        OAuth oAuth = new OAuth();
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube.upload");
+
+        try {
+            Credential credential = oAuth.authorize(scopes);
+
+            access_token = credential.getAccessToken();
+            System.out.println("액세스 토큰 : " + access_token);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return access_token;
+    }
+
     @GetMapping("/youtubeUpload")
     public String yotubeUpload() {
-     return "youtube/youtubeUpload";
-     }
+        return "youtube/youtubeUpload";
+    }
 
-    @PostMapping("/youtubeUpload")
-    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name = "lecture_video") MultipartFile lectureVideo) {
-     System.out.println(lectureVideo);
-     System.out.println(lectureInfo);
-     return "";
-     }
-     */
+    @PostMapping("/videoUpload")
+    public void videoUpload(@RequestParam Map<String, Object> userVideoInfo, @RequestPart(value = "lecture_video") MultipartFile userVideo) {
+    }
 
 }
