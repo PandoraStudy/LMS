@@ -296,18 +296,30 @@
                         </div>
                     </div>
 
-                    <!-- 동영상 본문 사이드 메뉴 -->
                     <div class="col-xl-2">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">강의 목록</h6>
+                        <!-- 동영상 본문 사이드 메뉴 -->
+                        <div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">강의 목록</h6>
+                                </div>
+                                <div class="card-body" style="height: auto;">
+                                    test
+                                </div>
                             </div>
-                            <div class="card-body" style="height: auto;">
-                                test
+                        </div>
+
+                        <div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">과제</h6>
+                                </div>
+                                <div class="card-body" style="height: auto;">
+                                    test
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
             </div>
