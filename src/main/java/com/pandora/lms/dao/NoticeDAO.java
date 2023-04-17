@@ -3,6 +3,7 @@ package com.pandora.lms.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -10,4 +11,10 @@ import java.util.Map;
 public interface NoticeDAO {
 
     int noticeCount(Map<String, Object> pages);
+
+    List<Map<String, Object>> noticeList(Map<String, Object> pages);
+
+    void noticeRead(String noticeNo);
+
+    Map<String, Object> noticeDetail(String noticeNo);
 }
