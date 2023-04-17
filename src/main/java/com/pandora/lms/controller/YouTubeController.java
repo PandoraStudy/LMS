@@ -76,11 +76,7 @@ public class YouTubeController {
         scopes.add("https://www.googleapis.com/auth/youtube.upload");
 
         try {
-            Credential credential = oAuth.authorize(scopes);
-
-            access_token = credential.getAccessToken();
-            System.out.println("액세스 토큰 : " + access_token);
-
+            oAuth.authorize(scopes);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
