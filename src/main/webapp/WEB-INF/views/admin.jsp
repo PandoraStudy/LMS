@@ -11,6 +11,7 @@
 <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" /> -->
 <!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/mainContentTest.js"></script>
 <style type="text/css">
 body{
 margin: 0;
@@ -115,34 +116,14 @@ bottom: 0;
 right: 20px;
 font-size: 14px;
 }
-.tab_bar > input{
-display: none;
-}
-.tab_bar > label{
-width: 112px;
-height: 30px;
-background-color: black;
-border-radius: 5px 5px 0 0;
-line-height: 30px;
-text-align: center;
-display: block;
-vertical-align: text-bottom;
-float: left;
-color: gray;
-}
-.tab_bar input:checked + label {
-/* 해당 메뉴가 선택된 상태인지 아닌지를 사용자에게 알려줄 수 있음 */
-font-weight: bold;
-background-color: white;
-}
-.tabs{
-width: 112px;
-height: 30px;
-background-color: white;
-border-radius: 5px 5px 0 0;
-line-height: 30px;
-text-align: center;
-}
+/* .tabs{ */
+/* width: 112px; */
+/* height: 30px; */
+/* background-color: white; */
+/* border-radius: 5px 5px 0 0; */
+/* line-height: 30px; */
+/* text-align: center; */
+/* } */
 .main_body{
 height: calc(100vh - 125px);
 background-color: skyblue;
@@ -390,54 +371,56 @@ height: 13px;
 }
 </style>
 <script type="text/javascript">
-function dp_menu() {
-	event.stopPropagation(); // Prevent event bubbling
-	let clickedLi = event.target.closest("li"); // Get the clicked <li> element
-	let clickedLiLevel = parseInt(clickedLi.getAttribute("data_level"));
+// function dp_menu() {
+// 	event.stopPropagation(); // Prevent event bubbling
+// 	let clickedLi = event.target.closest("li"); // Get the clicked <li> element
+// 	let clickedLiLevel = parseInt(clickedLi.getAttribute("data_level"));
 
-	let childLis = clickedLi.querySelectorAll("li");
-	childLis.forEach(function(li) {
-		let liLevel = parseInt(li.getAttribute("data_level"));
+// 	let childLis = clickedLi.querySelectorAll("li");
+// 	childLis.forEach(function(li) {
+// 		let liLevel = parseInt(li.getAttribute("data_level"));
 
-		// Check if the current <li> is a direct child of the clicked <li>
-		if (liLevel === clickedLiLevel + 1) {
-			if (li.style.display === "none") {
-				li.style.display = "block";
-				console.log("레벨 : " + liLevel);
-				console.log("클릭레벨 : " + clickedLiLevel);
-			} else {
-				li.style.display = "none";
-				console.log("레벨2 : " + liLevel);
-				console.log("클릭레벨2 : " + clickedLiLevel);
-			}
+// 		// Check if the current <li> is a direct child of the clicked <li>
+// 		if (liLevel === clickedLiLevel + 1) {
+// 			if (li.style.display === "none") {
+// 				li.style.display = "block";
+// 				console.log("레벨 : " + liLevel);
+// 				console.log("클릭레벨 : " + clickedLiLevel);
+// 			} else {
+// 				li.style.display = "none";
+// 				console.log("레벨2 : " + liLevel);
+// 				console.log("클릭레벨2 : " + clickedLiLevel);
+// 			}
 
-		} else {
-			console.log("레벨3 : " + liLevel);
-			console.log("클릭레벨3 : " + clickedLiLevel);
-		}
-	});
-}
+// 		} else {
+// 			console.log("레벨3 : " + liLevel);
+// 			console.log("클릭레벨3 : " + clickedLiLevel);
+// 		}
+// 	});
+// }
+
+//side_menu의 li toggle
 $(document).ready( function() {
-$(".d").click(function(e){
+$(".li_step1").click(function(e){
 // 	console.log("d");
-	$(".dd").toggle();
+	$(".li_step2").toggle();
 // 	$(this).find('.dd').toggle();
     e.stopPropagation();
     e.preventDefault();
 	});
 });
 $(document).ready( function() {
-$(".dd").click(function(e){
+$(".li_step2").click(function(e){
 // 	console.log("dd");
 // 	$(".ddd").toggle();
-	$(this).find('.ddd').toggle();
+	$(this).find('.li_step3').toggle();
     e.stopPropagation();								//e.stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
     e.preventDefault();									//e.preventDefault는 고유 동작을 중단시킨다.
 	});
 });
 $(document).ready( function() {
-	$(".ddd").click(function(e){
-		alert("ddd");
+	$(".li_step3").click(function(e){
+		alert("li_step3");
 	    e.stopPropagation();
 	});
 });
@@ -456,24 +439,34 @@ $(document).ready( function() {
 });
 //test include
 $(document).ready( function() {
-	$("#li_content4").click(function(e){
-		alert("테스트");
-		$("#content1").load("/mainContentTest");
+	$("#li_content1").click(function(e){
+		//alert("테스트");
+		$("#tab_bar").load("/mainContentTest #tab1");
+		$("#content1").load("/mainContentTest #main_container", function() {
+			initMainContentTest();
+		});
 	    $("#tabs1").attr("checked", "checked");
+	    
 	    
 	});
 });
+
+
+	
+	
+	
+	
 //탭 추가
-$(document).ready( function() {
-	$("#li_content3").click(function(e){
-		var title = $("#li_content3").text();
-		var tabs = $(".tab_bar").html();
-		$(".tab_bar").empty();
-	    $(".tab_bar").append(tabs + "<input type='radio' name='tabs' id='tabs3' checked><label for='tabs3'>"
-	    		+ title 
-	    		+"<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX'></label>");
-	});
-});
+// $(document).ready( function() {
+// 	$("#li_content3").click(function(e){
+// 		var title = $("#li_content3").text();
+// 		var tabs = $(".tab_bar").html();
+// 		$(".tab_bar").empty();
+// 	    $(".tab_bar").append(tabs + "<input type='radio' name='tabs' id='tabs3' checked><label for='tabs3'>"
+// 	    		+ title 
+// 	    		+"<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX'></label>");
+// 	});
+// });
 </script>
 
 </head>
@@ -502,18 +495,15 @@ $(document).ready( function() {
 	</div>
 </div>
 <div class="menu_divider">
-	<div class="tab_bar">
+	<div class="tab_bar" id="tab_bar">
 	
 <!-- 		<div class="tabs">학생일정관리<img alt="btnMenuX" src="/img/btnMenuX.png" style="width: 13px; height: 13	px;"></div> -->
-		<input type="radio" name="tabs" id="tabs1">
-		<label for="tabs1">학생명부조회
-		<img alt="btnMenuX" src="/img/btnMenuX.png" class="btnMenuX">
-		</label>
 		
-		<input type="radio" name="tabs" id="tabs2">
-		<label for="tabs2">강사일정관리
-		<img alt="btnMenuX" src="/img/btnMenuX.png" class="btnMenuX">
-		</label>
+		
+<!-- 		<input type="radio" name="tabs" id="tabs2"> -->
+<!-- 		<label for="tabs2">강사일정관리 -->
+<!-- 		<img alt="btnMenuX" src="/img/btnMenuX.png" class="btnMenuX"> -->
+<!-- 		</label> -->
 		
 	</div>
 </div>
@@ -536,49 +526,54 @@ $(document).ready( function() {
 						</li>
 					</ul>
 				</li>
-				<li class="d">수업관리
+				<li class="li_step1">수업관리
 					<ul class="side_submenu">
-						<li class="dd">학생관리
+						<li class="li_step2">학생관리
 							<ul class="side_submenu_sub">
-								<li class="ddd" id="li_content1">학생명부조회</li>
-								<li class="ddd" id="li_content4">학생일정관리</li>
-								<li class="ddd" id="li_content3">출결관리</li>
-								<li class="ddd">강사일정관리</li>
+								<li class="li_step3" id="li_content1">학생명부조회</li>
+								<li class="li_step3" id="li_content4">학생일정관리</li>
+								<li class="li_step3" id="li_content3">출결관리</li>
+								<li class="li_step3">강사일정관리</li>
 							</ul>
 						</li>
-						<li class="dd">강의주차관리
+						<li class="li_step2">강의주차관리
 							<ul class="side_submenu_sub">
-								<li class="ddd">1주차</li>
-								<li class="ddd">2주차</li>
-								<li class="ddd">3주차</li>
+								<li class="li_step3">1주차</li>
+								<li class="li_step3">2주차</li>
+								<li class="li_step3">3주차</li>
 							</ul>
 						</li>
-						<li class="dd">개설강좌관리
+						<li class="li_step2">개설강좌관리
 							<ul class="side_submenu_sub">
-								<li class="ddd">1주차</li>
-								<li class="ddd">2주차</li>
-								<li class="ddd">3주차</li>
+								<li class="li_step3">1주차</li>
+								<li class="li_step3">2주차</li>
+								<li class="li_step3">3주차</li>
 							</ul>
 						</li>
-						<li class="dd">강의출석관리
+						<li class="li_step2">강의출석관리
 							<ul class="side_submenu_sub">
-								<li class="ddd">1주차</li>
-								<li class="ddd">2주차</li>
-								<li class="ddd">3주차</li>
+								<li class="li_step3">1주차</li>
+								<li class="li_step3">2주차</li>
+								<li class="li_step3">3주차</li>
 							</ul>
 						</li>
 					</ul>
 				</li>
-				<li>교직관리
+				<li class="li_step1">empty
 					<ul class="side_submenu">
-						<li></li>
+						<li class="li_step2">
+							<ul class="side_submenu_sub">
+								<li class="li_step3"></li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 			</ul>
 		</div>
 <!-- 		<div class="main_container" id="content2" style="background-color: blue;"></div> -->
+
+<!-- main_container -->
 		<div class="main_container" id="content1">
-			
 		</div>
 </div>
 </body>
