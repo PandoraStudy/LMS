@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pandora.lms.dao.AdminDAO">
+
+	<select id="searchList" parameterType="searchDTO" resultType="adminDTO">
+		SELECT *
+		FROM student
+		<where>
+		<if test="name!=''">
+			name LIKE CONCAT('%',#{name},'%')
+		</if>
+		<if test="academic_status!=''">
+			AND academic_status LIKE CONCAT('%',#{academic_status},'%')
+		</if>
+		<if test="department!=''">
+			AND department LIKE CONCAT('%',#{department},'%')
+		</if>
+		</where>
+	</select>
+	
+</mapper>

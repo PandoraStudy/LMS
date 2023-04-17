@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PnadoraApplication {
+public class PandoraApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PnadoraApplication.class, args);
+        SpringApplication.run(PandoraApplication.class, args);
     }
 
 }
