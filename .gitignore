@@ -8,7 +8,7 @@ build/
 ### Pandora ###
 application-db.properties
 apikey.js
-client_secret.com
+client_secrets.com
 
 ### STS ###
 .apt_generated

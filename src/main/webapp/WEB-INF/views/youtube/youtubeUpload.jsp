@@ -17,7 +17,7 @@
 <h1>
     동영상 업로드
 </h1>
-<form id="lecture_form" method="post" enctype="multipart/form-data">
+<form id="lecture_form" method="post" action="/videoUpload" enctype="multipart/form-data">
     <input id="lecture_video" name="lecture_video" type="file" accept="video/*"><br>
     <input id="lecture_title" name="lecture_title" type="text"><br>
     <input id="lecture_content" name="lecture_content" type="text"><br>

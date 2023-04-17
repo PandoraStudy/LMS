@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="NoticeDAO">
-    <select id="noticeCount" parameterType="HashMap" resultType="HashMap">
+<mapper namespace="com.pandora.lms.dao.NoticeDAO">
 
+    <select id="noticeCount" parameterType="HashMap" resultType="Integer">
+        SELECT COUNT(*) FROM NOTICE
+        <if test="searchType != null">
+            WHERE
+            <choose>
+                <when test="searchType == 'title'">notice_title</when>
+                <when test="searchType == 'writer'">admin_name</when>
+            </choose>
+            LIKE CONCAT('%', #{searchValue }, '%')
+        </if>
+    </select>
 
+    <select id="noticeList"  parameterType="Integer"  resultType="HashMap">
+        SELECT notice_no,notice_title,admin_name,notice_date,notice_like,notice_read,
+        row_number() over() as rowNum
+        FROM NOTICE
+        <if test="searchType != null">
+            WHERE
+            <choose>
+                <when test="searchType == 'title'">notice_title</when>
+                <when test="searchType == 'writer'">admin_name</when>
+            </choose>
+            LIKE CONCAT('%', #{searchValue }, '%')
+        </if>
+        ORDER BY notice_no DESC
+        LIMIT #{startPage}, 10
+    </select>
+
+    <update id="noticeRead" parameterType="String">
+        UPDATE NOTICE SET notice_read = notice_read + 1 WHERE notice_no=${ notice_no }
+    </update>
+
+    <select id="noticeDetail" parameterType="String" resultType="HashMap">
+        SELECT notice_no,admin_name,notice_title,notice_date,notice_like,notice_read,notice_content
+        FROM NOTICE
+        WHERE notice_no = #{notice_no}
     </select>
 
 </mapper>

@@ -10,8 +10,16 @@
 </head>
 <script>
     $(function () {
-        $("#access-btn").click(function() {
-            location.href = "https://accounts.google.com/o/oauth2/auth?client_id=118755665364-936hqtrt2ei5aughd29p56l49qqasqem.apps.googleusercontent.com&redirect_uri=http://localhost/OAuthTest&scope=https://www.googleapis.com/auth/youtube&response_type=code&access_type=offline";
+        $("#access-btn").click(function () {
+            $.ajax({
+                type: "post",
+                url: "/OAuth",
+                dataType: "text",
+                success: function (token) {
+                    console.log(token);
+                    $("#txt_code").text(token);
+                }
+            });
         });
     });
 </script>
@@ -35,47 +43,14 @@
     </thead>
     <tbody class="table-group-divider">
     <tr>
-        <td>Client ID</td>
-        <td><input type="text" id="clientId"></td>
-    </tr>
-    <tr>
-        <td>Redirect URL</td>
-        <td><input type="text" id="redirectUri" value="http://localhost/OAuthTest"></td>
-    </tr>
-    <tr>
-        <td>Scope</td>
-        <td><input type="text" id="scope" placeholder="여러 개의 scope를 입력할 시 공백으로 구분"></td>
-    </tr>
-    <tr>
-        <td>Response Type</td>
-        <td><input type="text" id="responseType"></td>
-    </tr>
-    <tr>
-        <td>Access Type</td>
+        <td>인증 코드</td>
         <td>
-            <select name="job" id="accessType">
-                <option value="online">online</option>
-                <option value="offline" selected>offline</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>Google OAuth 2 요청 경로</td>
-        <td><span id="result"
-                  style="display: block; border: 1px solid #ccc; width: 90%; height: 30px; padding-left: 3px; box-sizing: border-box;">test
-        </td>
-    </tr>
-    <tr>
-        <td>파일</td>
-        <td>
-            <div class="mb-3">
-                <input class="form-control file" type="file" id="videoFile">
-            </div>
+            <span id="txt_code">인증 코드를 발급 받아주세요.</span>
         </td>
     </tr>
     </tbody>
 </table>
-<button class="btn btn-primary" id="access-btn">사용 권한 요청</button>
+<button class="btn btn-primary" id="access-btn">OAuth 인증</button>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
