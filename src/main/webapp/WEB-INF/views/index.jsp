@@ -38,6 +38,30 @@
             margin: 0 auto;
         }
 
+        .main_content{
+            width:1400px;
+            float: left;
+        }
+
+        .main_left{
+            width: 700px;
+            float: left;
+        }
+
+        .notice_card{
+            width: 885px;
+            height: 150px;
+        }
+
+        .schedule_card{
+            width: 885px;
+        }
+
+        .main_right{
+            width: 500px;
+            margin-left: 200px;
+        }
+
     </style>
 </head>
 
@@ -66,9 +90,11 @@
                                 class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
                     </div>
                     <!-- 컨텐츠 탑 부분 -->
-                    <div class="row">
+                    <div class="main_content"><%--main_left--%>
+
+                    <div class="main_left">
                         <!-- 학사 공지 -->
-                        <div class="col-xl-7 col-md-6 mb-4">
+                        <div class="notice_card mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -87,70 +113,32 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- 학점 -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">학점</div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 컨텐츠 탑 부분 끝 -->
 
-                    <div class="row">
                         <!-- 학사일정 -->
-                        <div class="col-xl-7 col-md-6 mb-4">
+                        <div class="schedule_card mb-4">
                             <div class="card shadow mb-4">
                                 <!-- A 카드 설정 버튼 부분 -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">학사 일정</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">필요할까?</div>
-                                            <a class="dropdown-item" href="#">필요한가?</a>
-                                            <a class="dropdown-item" href="#">필요하나요?</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">응애응애</a>
-                                        </div>
-                                    </div>
                                 </div>
                                 <!-- A 본문 부분 -->
                                 <div class="card-body">
-                                    <div class="chart-area">
+                                    <div style="height: 345px;" class="chart-area">
                                         <div>아아아 본문 내용은 여기에~~~</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+
+                    </div><%--main_left--%>
+
+
+                    <!-- 컨텐츠 탑 부분 끝 -->
+
+                    <div class="row">
                         <!-- 캘린더 -->
-                        <div class="col-xl-4 col-lg-5">
+                        <div class="main_right">
                             <div class="card shadow mb-4">
                                 <!-- B 카드 설정 버튼 부분 -->
                                 <div
@@ -232,18 +220,11 @@
                             <!-- 식단 -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">D카드</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        일단 넣어 일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어 일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
-                                        일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어일단 넣어
+                                    <div style="height: 294px;" class="text-center">
+                                        <img src="/img/pandora_rise.png">
                                     </div>
                                 </div>
                             </div>
