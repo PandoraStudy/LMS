@@ -20,4 +20,10 @@ public class NoticeService {
     public void noticeRead(String noticeNo) { noticeDAO.noticeRead(noticeNo); }
 
     public Map<String, Object> noticeDetail(String noticeNo) { return noticeDAO.noticeDetail(noticeNo); }
+
+    public void noticeWrite(Map<String, Object> map) { noticeDAO.noticeWrite(map); }
+
+    public void noticeUpdate(Map<String, Object> map) { noticeDAO.noticeUpdate(map); }
+
+    public int noticeDelete(String noticeNo) { return noticeDAO.noticeDelete(noticeNo); }
 }

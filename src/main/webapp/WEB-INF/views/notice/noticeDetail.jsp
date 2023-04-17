@@ -29,6 +29,10 @@
 </head>
 <style></style>
 <script>
+    function noticeUpdate(notice_no){ location.href="/noticeUpdate?notice_no="+notice_no; }
+    function noticeDelete(notice_no){
+        if(confirm("정말로 삭제하시겠습니까?")){ location.href="/noticeDelete?notice_no="+notice_no; }
+    }
 </script>
 <style>
 </style>
@@ -44,8 +48,8 @@
 
             <div class="container-fluid" style="width:1100px; height:750px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4"
-                     style=" margin-top:50px; text-align: center;">
-                    <h1 class="h3 mb-0 text-gray-800" style="font-weight:bold;">공지</h1>
+                     style=" margin-top:50px; text-align: center; ">
+                    <h1 class="h3 mb-0 text-gray-800 text-truncate" style="font-weight:bold;">&nbsp;&nbsp; ${noticeDetail.notice_title }</h1>
                     <div>
                         <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
                     </div><!--search-->
@@ -53,39 +57,31 @@
                 <!--수정할 부분 시작-->
                 <div class="detailBox">
                     <div class="detailTop">
-                        <div class="detailTop_item text-truncate">${noticeDetail.notice_title }</div>
-                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_id }</div>
+                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_name }</div>
                         <div class="detailTop_item">${noticeDetail.notice_date }</div>
                     </div>
                     <div class="detailMid">
                         <div class="detailMid_item">${noticeDetail.notice_content }</div>
                     </div>
                     <div class="btnBox">
-                        <c:if test="${sessionScope.member_id eq null }"> <b>미로그인시 이용에 제한이 있습니다. 로그인을 해주세요</b></c:if>
                         <div class="btnBox_1">
-                            <c:if test="${sessionScope.member_id ne null && sessionScope.member_id ne noticeDetail.admin_id }">
                                 <button class="detailBtn" style="background-color: #3dcc00; width:100px;" id="thumsUp">
                                     <img src="/img/thumbs-up.png" style="margin-bottom: 5px; width:25px; height:25px;">
                                     (${noticeDetail.notice_like })
                                 </button>
-                            </c:if>
                         </div>
                         <div class="btnBox_2">
-                            <c:if test="${sessionScope.id eq noticeDetail.admin_id  }">
                                 <button class="detailBtn" style="background-color: #ffc414;"
                                         onclick="noticeUpdate(${noticeDetail.notice_no })">수정
                                 </button>
                                 <button class="detailBtn" style="background-color: #ff3d3d;"
                                         onclick="noticeDelete(${noticeDetail.notice_no })">삭제
                                 </button>
-                            </c:if>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
         <!--수정할 부분 끝-->
     </div>
 </div><!-- End of Main Content -->

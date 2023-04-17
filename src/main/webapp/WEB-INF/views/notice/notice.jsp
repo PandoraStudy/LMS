@@ -129,7 +129,12 @@
                         <li class="pageNo page_btn" onclick="moveNext(${pages.lastPage })"><i
                                 class="xi-forward xi-x"></i></li>
                     </ul>
+
                 </div><!--paging end-->
+                <!-- 글쓰기 -->
+                <div class="write">
+                    <button class="write_btn" onclick="location.href='/noticeWrite'">글쓰기</button>
+                </div>
                 <!--수정할 부분 끝-->
             </div>
         </div><!-- End of Main Content -->
