@@ -4,6 +4,7 @@ import com.pandora.lms.dao.NoticeDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -13,4 +14,10 @@ public class NoticeService {
     private final NoticeDAO noticeDAO;
 
     public int noticeCount(Map<String, Object> pages) { return noticeDAO.noticeCount(pages); }
+
+    public List<Map<String, Object>> noticeList(Map<String, Object> pages) { return noticeDAO.noticeList(pages); }
+
+    public void noticeRead(String noticeNo) { noticeDAO.noticeRead(noticeNo); }
+
+    public Map<String, Object> noticeDetail(String noticeNo) { return noticeDAO.noticeDetail(noticeNo); }
 }
