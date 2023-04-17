@@ -1,4 +1,4 @@
-package com.pandora.lms.DTO;
+package com.pandora.lms.dto;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.pandora.lms.DAO;
+package com.pandora.lms.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;

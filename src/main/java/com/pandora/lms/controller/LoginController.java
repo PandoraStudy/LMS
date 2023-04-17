@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pandora.lms.DTO.STDTO;
-import com.pandora.lms.Service.loginService;
+import com.pandora.lms.dto.STDTO;
+import com.pandora.lms.service.loginService;
 
 @Controller
 public class LoginController {
