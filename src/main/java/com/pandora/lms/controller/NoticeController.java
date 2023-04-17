@@ -47,6 +47,7 @@ public class NoticeController {
     public ModelAndView noticeDetail(HttpServletRequest request, HttpSession session) {
         ModelAndView mv = new ModelAndView("/notice/noticeDetail");
         String notice_no = request.getParameter("notice_no");
+        String rowNum = request.getParameter("rowNum");
         noticeService.noticeRead(notice_no);
         Map<String, Object> noticeDetail = noticeService.noticeDetail(notice_no);
         noticeDetail.put("notice_title", textChangeUtil.changeText((String)noticeDetail.get("notice_title")));

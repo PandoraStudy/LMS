@@ -54,18 +54,11 @@
             <div class="container-fluid" style="width:1100px; height:750px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4"
                      style=" margin-top:50px; text-align: center; ">
-                    <h1 class="h3 mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
+                    <h1 class="text-truncate" style="font-weight:bold; width:1100px;">
                         &nbsp;&nbsp; ${noticeDetail.notice_title }</h1>
                     <div>
-                        <c:if test="${sessionScope.admin_id ne null }">
-                            <button class="detailBtn" style="background-color: #ffc414;"
-                                    onclick="noticeUpdate(${noticeDetail.notice_no })">수정
-                            </button>
-                            <button class="detailBtn" style="background-color: #ff3d3d;"
-                                    onclick="noticeDelete(${noticeDetail.notice_no })">삭제
-                            </button>
-                        </c:if>
-                        <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
+
+
                     </div><!--search-->
                 </div>
                 <!--수정할 부분 시작-->
@@ -79,8 +72,19 @@
                         <div class="detailMid_item">${noticeDetail.notice_content }</div>
                     </div>
                 </div>
-                <div><a href="">이전글</a></div>
-                <div><a>다음글</a></div>
+                <div><a href="/noticeDetail?notice_no=${noticeDetail.notice_no - 1 }">이전글</a></div>
+                <div><a href="/noticeDetail?notice_no=${noticeDetail.notice_no + 1 }">다음글</a></div>
+                <div>
+                    <c:if test="${sessionScope.admin_id ne null }">
+                        <button class="detailBtn" style="background-color: #ffc414;"
+                                onclick="noticeUpdate(${noticeDetail.notice_no })">수정
+                        </button>
+                        <button class="detailBtn" style="background-color: #ff3d3d;"
+                                onclick="noticeDelete(${noticeDetail.notice_no })">삭제
+                        </button>
+                    </c:if>
+                    <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
+                </div>
             </div>
         </div>
         <!--수정할 부분 끝-->

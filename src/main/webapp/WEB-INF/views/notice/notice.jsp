@@ -100,7 +100,6 @@
                         </tr>
 
                         <c:forEach var="notice" items="${list }">
-                            <c:if test="${notice.rowNum eq 0 }" > 일치하는 값이 없습니다. </c:if>
                             <tr>
                                 <td>${notice.rowNum }</td>
                                 <td class="title text-truncate" style="max-width:1px; text-align: left;"><a href="/noticeDetail?notice_no=${notice.notice_no }">${notice.notice_title }</a></td>
