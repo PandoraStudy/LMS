@@ -47,7 +47,7 @@ $(function(){
 				var description = playlist.snippet.description || "";
 				var id = playlist.id;
 				
-				let $tr = $("<tr onclick=location.href='youtubeList?playlist_id=" + id + "'>");
+				let $tr = $("<tr style='height:35px;' onclick=location.href='youtubeList?playlist_id=" + id + "'>");
 				
 
 				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
@@ -84,7 +84,7 @@ $(function(){
 
                 <!-- 메인 페이지의 탑 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">내 강의실</h1>
+                    <h1 class="h3 mb-0 text-gray-800"></h1>
                     <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
 
@@ -95,18 +95,7 @@ $(function(){
                             <!-- A 카드 설정 버튼 부분 -->
                             <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">과목명</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">더보기</div>
-                                        <a class="dropdown-item" href="#">추가 메뉴</a>
-                                    </div>
-                                </div>
+                                <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
@@ -116,13 +105,24 @@ $(function(){
 										<table id="table_lecture">
 										<thead>
 											<tr>
-												<th>제목</th>
-												<th>학과</th>
+												<th class="col-5">제목</th>
+												<th class="col-3">학과</th>
+												<th class="col-3">과제제출여부</th>
+												<th class="col-1">전공유무</th>
 											</tr>
+											<!-- 
+											- 내 강의실 B 
+											  과목 선택 지점
+											    - 계획서 (유튜브)
+											    - 과제 및 평가 (하드 코딩)  (유튜브) > 과제제출여부
+											    - 강의 콘텐츠 (콘텐츠 : 유튜브, 줌 따로), 위에 공지 : (유튜브) > 현 제목
+											    - 강의 자료실 : (하드코딩) (유튜브)
+											    - 출결/학습현황 : (유튜브) > 출석률
+											 -->
 										</thead>
 										<tbody id="tb_lecture">
 											<tr>
-												<td id="playlist_title"></td>
+												<td></td>
 											</tr>
 										</tbody>
 									</table>
