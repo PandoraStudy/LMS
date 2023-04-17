@@ -68,7 +68,7 @@ public class YouTubeController {
     @PostMapping("/OAuth")
     @ResponseBody
     public String youtubeUpload() {
-        String access_token = "";
+        String access_token = "인증 코드를 발급 받아주세요.";
 
         OAuth oAuth = new OAuth();
 
@@ -76,7 +76,7 @@ public class YouTubeController {
         scopes.add("https://www.googleapis.com/auth/youtube.upload");
 
         try {
-            oAuth.authorize(scopes);
+            access_token = oAuth.authorize(scopes).getAccessToken();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
