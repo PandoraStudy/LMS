@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-
+//세션에 접근하여 필요한 정보를 획득하기 위한 세션조회클래스
 public class callnowsession {
 	
 	Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-	String username;
-	List<String> usergroup;
+	String username; //유저 ID
+	List<String> usergroup; //유저 권한
 	
 	public callnowsession() {
 		if (principal instanceof UserDetails) {
