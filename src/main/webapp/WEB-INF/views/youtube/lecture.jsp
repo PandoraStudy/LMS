@@ -22,16 +22,14 @@
 <script type="text/javascript">
 $(function(){
 
-	
-	var lectureInfo = ${lectureInfo }
+
+	var lectureInfo = ${lectureInfo};
 	console.log(lectureInfo);
-	
-	console.log(lectureInfo.length());
-	
+
+
 	let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
 	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//동영
 	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//정목
-
 
 	$.get({
 		url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" + channelId + "&key=" + API_KEY+"&maxResults=9",
@@ -39,29 +37,29 @@ $(function(){
 		success: function (playlists) {
 			//alert("성공");
 			console.log(playlists);
-			
+
 			var playlists = playlists.items;
-			
+
 			console.log(playlists);
-			
+
 			console.log(playlists.length);
-			
-			
-			
+
+
+
 // 			for (var i = 0; i < playlists.length; i++) {
 // 				var playlist = playlists[i];
 // 				var title = playlist.snippet.title;
 // 				var description = playlist.snippet.description || "";
 // 				var id = playlist.id;
-				
+
 // 				for(var key in lectureInfo){
 // 					console.log("key : "+ key);
 // 					console.log("value : "+ lectureInfo[key]);
-					
+
 // 				}
-				
-				
-				
+
+
+
 				//let $tr = $("<tr style='height:35px;' class='text-center'>");
 				let $tr = $("<tr style='height:35px;'>");
 
@@ -73,9 +71,9 @@ $(function(){
 				$tr.append("<td class='text-center'>" + "KORN_FLNM" + "</td>");
 
 				$("#tb_lecture").append($tr);
-				
-				
-                
+
+
+
 			}
 		}, error: function(jqXHR, textStatus, errorThrown) {
 		    console.log(jqXHR.responseJSON.error.message);
@@ -127,8 +125,8 @@ $(function(){
 												<th class="col-2 text-center">학과</th>
 												<th class="col-2 text-center">교수</th>
 											</tr>
-											<!-- 
-											- 내 강의실 B 
+											<!--
+											- 내 강의실 B
 											  과목 선택 지점
 											    - 계획서 (유튜브)
 											    - 과제 및 평가 (하드 코딩)  (유튜브) > 과제제출여부
