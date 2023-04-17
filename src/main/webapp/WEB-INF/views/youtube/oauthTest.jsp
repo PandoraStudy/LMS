@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
+<%
+    String resultCode = request.getParameter("code");
+    String youtubeScope = request.getParameter("scope");
+%>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -10,8 +14,35 @@
 </head>
 <script>
     $(function () {
-        $("#access-btn").click(function() {
-            location.href = "https://accounts.google.com/o/oauth2/auth?client_id=118755665364-936hqtrt2ei5aughd29p56l49qqasqem.apps.googleusercontent.com&redirect_uri=http://localhost/OAuthTest&scope=https://www.googleapis.com/auth/youtube&response_type=code&access_type=offline";
+        const CLIENT_ID = "118755665364-936hqtrt2ei5aughd29p56l49qqasqem.apps.googleusercontent.com";
+        const CLIENT_SECRET = "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";
+        const REDIRECT_URI = "http://localhost:8080/OAuthTest";
+        const SCOPE = "https://www.googleapis.com/auth/youtube";
+        const AUTHORIZATION_CODE = "<%=resultCode%>";
+        $("#request-token-btn").click(function () {
+            location.href = "https://accounts.google.com/o/oauth2/auth?client_id=" + CLIENT_ID + "&redirect_uri=" + REDIRECT_URI + "&scope=" + SCOPE + "&response_type=code";
+
+        });
+
+        $("#exchange-code-for-token-btn").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "https://www.googleapis.com/oauth2/v4/token",
+                data: {
+                    code: AUTHORIZATION_CODE,
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                    redirect_uri: REDIRECT_URI,
+                    grant_type: "authorization_code"
+                },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function(error) {
+                    console.log(error.responseText);
+                }
+            });
+
         });
     });
 </script>
@@ -35,34 +66,9 @@
     </thead>
     <tbody class="table-group-divider">
     <tr>
-        <td>Client ID</td>
-        <td><input type="text" id="clientId"></td>
-    </tr>
-    <tr>
-        <td>Redirect URL</td>
-        <td><input type="text" id="redirectUri" value="http://localhost/OAuthTest"></td>
-    </tr>
-    <tr>
-        <td>Scope</td>
-        <td><input type="text" id="scope" placeholder="여러 개의 scope를 입력할 시 공백으로 구분"></td>
-    </tr>
-    <tr>
-        <td>Response Type</td>
-        <td><input type="text" id="responseType"></td>
-    </tr>
-    <tr>
-        <td>Access Type</td>
+        <td>인증 코드</td>
         <td>
-            <select name="job" id="accessType">
-                <option value="online">online</option>
-                <option value="offline" selected>offline</option>
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td>Google OAuth 2 요청 경로</td>
-        <td><span id="result"
-                  style="display: block; border: 1px solid #ccc; width: 90%; height: 30px; padding-left: 3px; box-sizing: border-box;">test
+            <span><%=resultCode%></span>
         </td>
     </tr>
     <tr>
@@ -75,7 +81,9 @@
     </tr>
     </tbody>
 </table>
-<button class="btn btn-primary" id="access-btn">사용 권한 요청</button>
+<button class="btn btn-primary" id="request-token-btn">Request Token 요청</button>
+<button class="btn btn-primary" id="exchange-code-for-token-btn">Exchange Code For Token 요청</button>
+<button class="btn btn-primary" id="access-btn">- 요청</button>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

@@ -60,21 +60,24 @@ public class YouTubeController {
         return msg;
     }
 
+    @GetMapping("/OAuthTest")
+    public String OAuthTest() {
+        return "youtube/oauthTest";
+    }
+
+
     /* 기능 미구현 상태
-     *  @GetMapping("/OAuthTest")
-     *     public String OAuthTest() {
-     *         return "youtube/oauthTest";
-     *     }
-     *
-     *  @GetMapping("/youtubeUpload") public String yotubeUpload() {
-     *          return "youtube/youtubeUpload";
-     *     }
-     *
-     *  @PostMapping("/youtubeUpload") public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name="lecture_video") MultipartFile lectureVideo) {
-     *          System.out.println(lectureVideo);
-     *          System.out.println(lectureInfo);
-     *          return "";
-     *     }
+    @GetMapping("/youtubeUpload")
+    public String yotubeUpload() {
+     return "youtube/youtubeUpload";
+     }
+
+    @PostMapping("/youtubeUpload")
+    public String youtubeUpload(@RequestParam Map<String, Object> lectureInfo, @RequestPart(name = "lecture_video") MultipartFile lectureVideo) {
+     System.out.println(lectureVideo);
+     System.out.println(lectureInfo);
+     return "";
+     }
      */
 
 }
