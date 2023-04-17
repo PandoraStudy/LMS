@@ -1,6 +1,7 @@
 package com.pandora.lms.controller;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.pandora.lms.service.YoutubeServiceImpl;
 import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
@@ -17,10 +18,20 @@ import java.util.Map;
 @AllArgsConstructor
 public class YouTubeController {
     private final SqlSession sqlSession;
-
+    private YoutubeServiceImpl youtubeServiceImpl;
+    
     @GetMapping("/lecture")
-    public String lecture() {
-        return "/youtube/lecture";
+    public ModelAndView lecture(@RequestParam Map<String, Object> userData) {
+    	ModelAndView mv = new ModelAndView("/youtube/lecture");
+    	
+    	//List<Map<String, Object>> info = youtubeServiceImpl.lectureInfo();
+
+		//mv.addObject("info", info);
+    	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", userData);
+    	System.out.println(lectureInfo);
+        mv.addObject("lectureInfo", lectureInfo);
+        
+        return mv;
     }
 
     @GetMapping("/lectureList")

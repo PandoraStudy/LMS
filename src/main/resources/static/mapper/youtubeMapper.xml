@@ -20,5 +20,12 @@
         AND
             student_no = #{student_no}
     </update>
+    
+     <select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
+        SELECT *
+		FROM lectureView
+        ORDER BY SBJCT_NM DESC
+		LIMIT 1, 9
+    </select>
 
 </mapper>
