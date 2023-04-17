@@ -1,6 +1,9 @@
 package com.pandora.lms.controller;
 
+import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.pandora.lms.service.YoutubeService;
 import com.pandora.lms.service.YoutubeServiceImpl;
 import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
@@ -17,20 +20,22 @@ import java.util.Map;
 @Controller
 @AllArgsConstructor
 public class YouTubeController {
+    private final OAuth oAuth;
+    private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
     private YoutubeServiceImpl youtubeServiceImpl;
-    
+
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userData) {
     	ModelAndView mv = new ModelAndView("/youtube/lecture");
-    	
+
     	//List<Map<String, Object>> info = youtubeServiceImpl.lectureInfo();
 
 		//mv.addObject("info", info);
     	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", userData);
     	System.out.println(lectureInfo);
         mv.addObject("lectureInfo", lectureInfo);
-        
+
         return mv;
     }
 
@@ -71,37 +76,26 @@ public class YouTubeController {
         return msg;
     }
 
-    @GetMapping("/OAuth")
-    public String OAuthTest() {
-        return "youtube/oauthTest";
+    @GetMapping("/uploadVideo")
+    public String uploadVideo() {
+        return "youtube/uploadVideo";
     }
 
-    @PostMapping("/OAuth")
-    @ResponseBody
-    public String youtubeUpload() {
-        String access_token = "인증 코드를 발급 받아주세요.";
-
-        OAuth oAuth = new OAuth();
-
+    @PostMapping("/uploadVideo")
+    public String uploadVideo(@RequestPart(value = "video_file") MultipartFile videoFile) {
         List<String> scopes = new ArrayList<>();
-        scopes.add("https://www.googleapis.com/auth/youtube.upload");
-
+        scopes.add("https://www.googleapis.com/auth/youtube");
         try {
-            access_token = oAuth.authorize(scopes).getAccessToken();
+            Credential credential = oAuth.authorize(scopes);
+            youtubeService.uploadVideo(credential, videoFile);
         } catch (Exception e) {
+            System.out.println("에러..");
             throw new RuntimeException(e);
         }
 
-        return access_token;
-    }
+//        String url = flow.newAuthorizationUrl().setRedirectUri("http://localhost:9000/Callback").build();
 
-    @GetMapping("/youtubeUpload")
-    public String yotubeUpload() {
-        return "youtube/youtubeUpload";
-    }
-
-    @PostMapping("/videoUpload")
-    public void videoUpload(@RequestParam Map<String, Object> userVideoInfo, @RequestPart(value = "lecture_video") MultipartFile userVideo) {
+        return "index";
     }
 
 }
