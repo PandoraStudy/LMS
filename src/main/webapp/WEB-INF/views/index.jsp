@@ -131,7 +131,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2" >
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">학사 공지</div><br>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">공지사항 최신글</div><br>
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 <table class="table">
                                                     <tr class="table_header">
