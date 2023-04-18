@@ -32,11 +32,6 @@ public class YouTubeController {
     private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
 
-    
-
-
-
-
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
     	ModelAndView mv = new ModelAndView("/youtube/lecture");

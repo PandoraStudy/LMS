@@ -1,11 +1,14 @@
 package com.pandora.lms.ytbUtil;
 
+import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.java6.auth.oauth2.FileCredentialStore;
+import com.google.api.client.extensions.java6.auth.oauth2.VerificationCodeReceiver;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -14,6 +17,7 @@ import com.google.api.client.util.Preconditions;
 import com.google.api.services.youtube.YouTube;
 import org.springframework.stereotype.Component;
 
+import javax.naming.AuthenticationException;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
@@ -42,6 +46,7 @@ public class OAuth {
 
     /**
      * 설치된 애플리케이션이 사용자의 보호된 데이터에 액세스할 수 있도록 인증합니다.
+     *
      * @param scopes YouTube 업로드에 필요한 범위(scope) 목록입니다.
      */
     public static Credential authorize(List<String> scopes) throws Exception {
@@ -70,10 +75,12 @@ public class OAuth {
         // 로컬 서버를 빌드하고 9000 포트에 바인드합니다.
         LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(9000).build();
 
-        System.out.println("내일 확인해볼 목록 : " + Preconditions.checkNotNull(flow) );
+        // String url = flow.newAuthorizationUrl().setRedirectUri("http://localhost:9000/Callback").build();
 
         // 인증합니다.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+        Credential credential=  new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+
+        return credential;
     }
 
 }
