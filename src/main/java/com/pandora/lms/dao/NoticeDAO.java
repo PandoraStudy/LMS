@@ -23,4 +23,6 @@ public interface NoticeDAO {
     void noticeUpdate(Map<String, Object> map);
 
     int noticeDelete(String noticeNo);
+
+    int noticeNo(String rowNum);
 }

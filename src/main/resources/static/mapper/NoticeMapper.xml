@@ -41,7 +41,7 @@
 
     <insert id="noticeWrite" parameterType="HashMap">
         INSERT INTO NOTICE(admin_id,notice_title, notice_content)
-        VALUES(ADMIN,'${notice_title}', '${notice_content}')
+        VALUES('ADMIN','${notice_title}', '${notice_content}')
     </insert>
 
     <update id="noticeUpdate" parameterType="HashMap">
@@ -53,4 +53,7 @@
         UPDATE NOTICE SET notice_status = 2 WHERE notice_no = ${ notice_no }
     </update>
 
+    <select id="noticeNo" parameterType="String" resultType="Integer">
+        SELECT notice_no FROM noticeview WHERE rowNum='${ rowNum }'
+    </select>
 </mapper>

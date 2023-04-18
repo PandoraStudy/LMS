@@ -29,13 +29,11 @@
 </head>
 <style></style>
 <script>
-    function noticeUpdate(notice_no) {
-        location.href = "/noticeUpdate?notice_no=" + notice_no;
-    }
+    function noticeUpdate(rowNum) { location.href = "/noticeUpdate?rowNum="+rowNum+"&totalCnt=${totalCnt}"; }
 
-    function noticeDelete(notice_no) {
+    function noticeDelete(rowNum) {
         if (confirm("정말로 삭제하시겠습니까?")) {
-            location.href = "/noticeDelete?notice_no=" + notice_no;
+            location.href = "/noticeDelete?rowNum=" + rowNum;
         }
     }
 </script>
@@ -72,17 +70,18 @@
                         <div class="detailMid_item">${noticeDetail.notice_content }</div>
                     </div>
                 </div>
-                <div><a href="/noticeDetail?notice_no=${noticeDetail.notice_no - 1 }">이전글</a></div>
-                <div><a href="/noticeDetail?notice_no=${noticeDetail.notice_no + 1 }">다음글</a></div>
+                <div style="display: inline-block; "><a style="color:black; font-weight: bold;"href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>이전글</a></div>
+                <div style="display: inline-block; float:right;"><a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}">다음글<i class="xi-angle-right xi-x"></i></a></div>
+                <br><br>
                 <div>
-                    <c:if test="${sessionScope.admin_id ne null }">
+<%--                    <c:if test="${sessionScope.admin_id ne null }">--%>
                         <button class="detailBtn" style="background-color: #ffc414;"
-                                onclick="noticeUpdate(${noticeDetail.notice_no })">수정
+                                onclick="noticeUpdate(${rowNum })">수정
                         </button>
                         <button class="detailBtn" style="background-color: #ff3d3d;"
-                                onclick="noticeDelete(${noticeDetail.notice_no })">삭제
+                                onclick="noticeDelete(${rowNum })">삭제
                         </button>
-                    </c:if>
+<%--                    </c:if>--%>
                     <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
                 </div>
             </div>

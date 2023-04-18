@@ -61,7 +61,6 @@
 <style>
 </style>
 <body id="page-top">
-
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -102,7 +101,7 @@
                         <c:forEach var="notice" items="${list }">
                             <tr>
                                 <td>${notice.rowNum }</td>
-                                <td class="title text-truncate" style="max-width:1px; text-align: left;"><a href="/noticeDetail?notice_no=${notice.notice_no }">${notice.notice_title }</a></td>
+                                <td class="title text-truncate" style="max-width:1px; text-align: left;"><a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a></td>
                                 <td>${notice.admin_id }</td>
                                 <td>${notice.notice_read }</td>
                                 <td>${notice.notice_date }</td>
