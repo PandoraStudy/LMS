@@ -26,4 +26,7 @@ public class NoticeService {
     public void noticeUpdate(Map<String, Object> map) { noticeDAO.noticeUpdate(map); }
 
     public int noticeDelete(String noticeNo) { return noticeDAO.noticeDelete(noticeNo); }
+
+    public int noticeNo(String rowNum) { return noticeDAO.noticeNo(rowNum); }
+
 }

@@ -29,9 +29,12 @@
 </head>
 <style></style>
 <script>
-    function noticeUpdate(notice_no){ location.href="/noticeUpdate?notice_no="+notice_no; }
-    function noticeDelete(notice_no){
-        if(confirm("정말로 삭제하시겠습니까?")){ location.href="/noticeDelete?notice_no="+notice_no; }
+    function noticeUpdate(rowNum) { location.href = "/noticeUpdate?rowNum="+rowNum+"&totalCnt=${totalCnt}"; }
+
+    function noticeDelete(rowNum) {
+        if (confirm("정말로 삭제하시겠습니까?")) {
+            location.href = "/noticeDelete?rowNum=" + rowNum;
+        }
     }
 </script>
 <style>
@@ -49,36 +52,37 @@
             <div class="container-fluid" style="width:1100px; height:750px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4"
                      style=" margin-top:50px; text-align: center; ">
-                    <h1 class="h3 mb-0 text-gray-800 text-truncate" style="font-weight:bold;">&nbsp;&nbsp; ${noticeDetail.notice_title }</h1>
+                    <h1 class="text-truncate" style="font-weight:bold; width:1100px;">
+                        &nbsp;&nbsp; ${noticeDetail.notice_title }</h1>
                     <div>
-                        <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
+
+
                     </div><!--search-->
                 </div>
                 <!--수정할 부분 시작-->
                 <div class="detailBox">
                     <div class="detailTop">
-                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_name }</div>
+                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_id }
+                        </div>
                         <div class="detailTop_item">${noticeDetail.notice_date }</div>
                     </div>
                     <div class="detailMid">
                         <div class="detailMid_item">${noticeDetail.notice_content }</div>
                     </div>
-                    <div class="btnBox">
-                        <div class="btnBox_1">
-                                <button class="detailBtn" style="background-color: #3dcc00; width:100px;" id="thumsUp">
-                                    <img src="/img/thumbs-up.png" style="margin-bottom: 5px; width:25px; height:25px;">
-                                    (${noticeDetail.notice_like })
-                                </button>
-                        </div>
-                        <div class="btnBox_2">
-                                <button class="detailBtn" style="background-color: #ffc414;"
-                                        onclick="noticeUpdate(${noticeDetail.notice_no })">수정
-                                </button>
-                                <button class="detailBtn" style="background-color: #ff3d3d;"
-                                        onclick="noticeDelete(${noticeDetail.notice_no })">삭제
-                                </button>
-                        </div>
-                    </div>
+                </div>
+                <div style="display: inline-block; "><a style="color:black; font-weight: bold;"href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>이전글</a></div>
+                <div style="display: inline-block; float:right;"><a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}">다음글<i class="xi-angle-right xi-x"></i></a></div>
+                <br><br>
+                <div>
+<%--                    <c:if test="${sessionScope.admin_id ne null }">--%>
+                        <button class="detailBtn" style="background-color: #ffc414;"
+                                onclick="noticeUpdate(${rowNum })">수정
+                        </button>
+                        <button class="detailBtn" style="background-color: #ff3d3d;"
+                                onclick="noticeDelete(${rowNum })">삭제
+                        </button>
+<%--                    </c:if>--%>
+                    <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
                 </div>
             </div>
         </div>
