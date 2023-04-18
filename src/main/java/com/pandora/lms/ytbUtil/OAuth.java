@@ -42,7 +42,6 @@ public class OAuth {
 
     /**
      * 설치된 애플리케이션이 사용자의 보호된 데이터에 액세스할 수 있도록 인증합니다.
-     *
      * @param scopes YouTube 업로드에 필요한 범위(scope) 목록입니다.
      */
     public static Credential authorize(List<String> scopes) throws Exception {
@@ -62,16 +61,16 @@ public class OAuth {
 
         // 파일 자격 증명 저장소를 설정합니다.
         FileCredentialStore credentialStore = new FileCredentialStore(
-                new File(System.getProperty("user.home"), ".credentials/youtube-api-uploadvideo.json"),
-                JSON_FACTORY);
+                new File(System.getProperty("user.home"), ".credentials/youtube-api-uploadvideo.json"), JSON_FACTORY);
 
         // 권한 코드 플로우를 설정합니다.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialStore(credentialStore)
-                .build();
+                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialStore(credentialStore).build();
 
         // 로컬 서버를 빌드하고 9000 포트에 바인드합니다.
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8000).build();
+        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(9000).build();
+
+        System.out.println("내일 확인해볼 목록 : " + Preconditions.checkNotNull(flow) );
 
         // 인증합니다.
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
