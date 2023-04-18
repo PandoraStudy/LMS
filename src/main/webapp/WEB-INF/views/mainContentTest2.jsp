@@ -2,21 +2,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 $(document).ready( function() {
-	$(".search_btn").click(
+	$("#search_btn2").click(
 		function(e) {
 			e.preventDefault();
 			$.ajax({
-				url : "/search",
+				url : "/search2",
 				type : "POST",
 				dataType : "json",
-				data : $("#search-form").serialize(),
+				data : $("#search-form2").serialize(),
 				success : function(data) {
-					$('#tableBody').empty();
-					$('#cnt').empty();
-					var result = data;
-					var str = "";
-					$.each(result, function(i, info) {
-						str += '<tr><td>' + info.procedure
+					$('#tableBody2').empty();
+					$('#cnt2').empty();
+					var result2 = data;
+					var str2 = "";
+					$.each(result2, function(i, info) {
+						str2 += '<tr><td>' + info.procedure
 								+ '</td><td>' + info.admission
 								+ '</td><td>' + info.student_no
 								+ '</td><td>' + info.name
@@ -30,90 +30,83 @@ $(document).ready( function() {
 								+ '</td><td>' + info.date_of_admission
 								+ '</td></tr>';
 					});
-					$('#tableBody').append(str);
-					$('#cnt').append(result.length);
+					$('#tableBody2').append(str2);
+					$('#cnt2').append(result2.length);
 				}
 			});
 		});
 	});
 </script>
 <script type="text/javascript">
-var columnSortingStates = {};
+var currentColumn = -1;
+var currentDirection = '';
 
 function sortTable(n) {
-	  var table, rows, switching, i, x, y, shouldSwitch;
-	  table = document.getElementById("main_table");
-	  switching = true;
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
+    table = document.getElementById("main_table");
+    switching = true;
+    dir = "asc";
 
-	  // Reset all other columnSortingStates to undefined when a new column is clicked
-	  for (var key in columnSortingStates) {
-	    if (key != n) {
-	      columnSortingStates[key] = undefined;
-	    }
-	  }
+    // 이전에 선택한 열이 있는 경우, ▲와 ▼ 기호를 제거합니다.
+    if (currentColumn !== -1) {
+        var header = table.getElementsByTagName("TH")[currentColumn];
+        header.innerHTML = header.innerHTML.replace(/(▲|▼)$/, '');
+    }
 
-	  if (columnSortingStates[n] === undefined) {
-	    columnSortingStates[n] = "asc";
-	  } else if (columnSortingStates[n] === "asc") {
-	    columnSortingStates[n] = "desc";
-	  } else if (columnSortingStates[n] === "desc") {
-	    columnSortingStates[n] = "none";
-	  } else if (columnSortingStates[n] === "none") {
-	    columnSortingStates[n] = "asc";
-	  }
-	  dir = columnSortingStates[n];
+    // 같은 열을 다시 클릭한 경우 방향을 바꿉니다. 그렇지 않으면 기본 방향을 사용합니다.
+    if (currentColumn === n) {
+        dir = currentDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        dir = 'asc';
+    }
 
-	  // Remove the symbols from all the th elements
-	  var thElements = table.getElementsByTagName("th");
-	  for (var j = 0; j < thElements.length; j++) {
-	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
-	  }
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
 
-	  while (switching) {
-	    switching = false;
-	    rows = table.rows;
-	    for (i = 1; i < (rows.length - 1); i++) {
-	      shouldSwitch = false;
-	      x = rows[i].getElementsByTagName("TD")[n];
-	      y = rows[i + 1].getElementsByTagName("TD")[n];
+            if (dir === "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir === "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchCount++;
+        } else {
+            if (switchCount === 0 && dir === "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
 
-	      if (dir === "asc") {
-	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "desc") {
-	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "none") {
-	        break;
-	      }
-	    }
-	    if (shouldSwitch) {
-	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	      switching = true;
-	    }
-	  }
-
-	  // Add the symbols to the sorted th element
-	  if (dir === "asc") {
-	    thElements[n].innerHTML += " ▲";
-	  } else if (dir === "desc") {
-	    thElements[n].innerHTML += " ▼";
-	  }
-	}
-
+    // 현재 열 및 방향을 저장하고, 해당하는 ▲ 또는 ▼ 기호를 추가합니다.
+    currentColumn = n;
+    currentDirection = dir;
+    var header = table.getElementsByTagName("TH")[n];
+    header.innerHTML += dir === 'asc' ? '▲' : '▼';
+}
 </script>
 <div id="main_container_load">
 	<div class="main_container_title">
-		<img class="title_img" alt="title" src="/img/icon/title.png">학생명부조회{side_submenu_sub}
+		<img class="title_img" alt="title" src="/img/icon/title.png">학생명부조회2{side_submenu_sub}
 	</div>
 
-	<form id="search-form">
+	<form id="search-form2">
 		<div class="main_container_interspace">
-			<input type="button" value="조회" id="search_btn" class="search_btn">
+			<input type="button" value="조회" id="search_btn2" class="search_btn">
 		</div>
 		<div class="main_container_search">
 			<div>학번(이름)</div>
@@ -143,7 +136,7 @@ function sortTable(n) {
 	</div>
 	<div
 		style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
-		<span id="cnt"></span>건이 조회되었습니다.
+		<span id="cnt2"></span>건이 조회되었습니다.
 	</div>
 	<div class="main_content">
 		<table id="main_table" class="main_table">
@@ -163,7 +156,7 @@ function sortTable(n) {
 					<th onclick="sortTable(11)">입학일자</th>
 				</tr>
 			</thead>
-			<tbody id="tableBody">
+			<tbody id="tableBody2">
 			</tbody>
 		</table>
 	</div>

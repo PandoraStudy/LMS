@@ -54,8 +54,28 @@ public class AdminController {
 		
 		return searchList;
 	}
+	@ResponseBody
+	@PostMapping("/search2")
+	public List<AdminDTO> search2(@RequestParam("name") String name
+			, @RequestParam("academic_status") String academic_status
+			, @RequestParam("department") String department
+			) {
+		SearchDTO search = new SearchDTO();
+		
+		search.setName(name);
+		search.setAcademic_status(academic_status);
+		search.setDepartment(department);
+		
+		List<AdminDTO> searchList = adminService.searchList(search);
+		
+		return searchList;
+	}
 	@GetMapping("/mainContentTest")
 	public String mainContentTest() {
 	    return "mainContentTest";
+	}
+	@GetMapping("/mainContentTest2")
+	public String mainContentTest2() {
+		return "mainContentTest2";
 	}
 }
