@@ -43,7 +43,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">학교</h6>
-                <a class="collapse-item" href="/noticeIframe">공지사항</a>
+                <a class="collapse-item" href="/notice">공지사항</a>
             </div>
         </div>
     </li>

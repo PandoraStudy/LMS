@@ -43,12 +43,15 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-
+    <%-- 네비게이션 바 --%>
+    <%@include file="../navbar.jsp" %>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- 메인 컨텐츠 -->
         <div id="content">
-
+            <%-- 탑 바 --%>
+            <%@include file="../top.jsp" %>
+            <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid" style="width:1100px; height:750px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4"
                      style=" margin-top:50px; text-align: center; ">
