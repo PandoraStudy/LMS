@@ -188,9 +188,8 @@
 
                                     <div class="chart-pie pt-4 pb-2">
                                         <%--본문 내용 작성하는 부분--%>
-                                        <div id="calendar"></div>
+										<div id="calendar"></div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -206,8 +205,8 @@
                                     <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">자바 <span
-                                            class="float-right">20%</span></h4>
+                                    <h4 class="small font-weight-bold">자바
+                                    <span class="float-right">20%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>

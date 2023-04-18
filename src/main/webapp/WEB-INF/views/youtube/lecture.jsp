@@ -22,10 +22,8 @@
 <script type="text/javascript">
 $(function(){
 
-
 	var lectureInfo = ${lectureInfo};
 	console.log(lectureInfo);
-
 
 	let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
 	//let channelId = "UC5s_Ei99uCIsArS1Zle4lRA";//동영
@@ -35,45 +33,39 @@ $(function(){
 		url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&channelId=" + channelId + "&key=" + API_KEY+"&maxResults=9",
 		dataType: "json",
 		success: function (playlists) {
-			//alert("성공");
-			console.log(playlists);
 
 			var playlists = playlists.items;
-
-			console.log(playlists);
-
-			console.log(playlists.length);
-
-
-
-// 			for (var i = 0; i < playlists.length; i++) {
-// 				var playlist = playlists[i];
-// 				var title = playlist.snippet.title;
-// 				var description = playlist.snippet.description || "";
-// 				var id = playlist.id;
-
-// 				for(var key in lectureInfo){
-// 					console.log("key : "+ key);
-// 					console.log("value : "+ lectureInfo[key]);
-
-// 				}
-
-
-
-				//let $tr = $("<tr style='height:35px;' class='text-center'>");
-				let $tr = $("<tr style='height:35px;'>");
+			
+			var lectureInfo = ${lectureInfo };
+			var jAlectureInfo = lectureInfo.jAlectureInfo;
+			
+			for (var i = 0; i < playlists.length; i++) {
+				var playlist = playlists[i];
+				var title = playlist.snippet.title;
+				var description = playlist.snippet.description || "";
+				var id = playlist.id;
+				
+				var SBJT_NM = jAlectureInfo[i].SBJCT_NM;
+				var KORN_FLNM = jAlectureInfo[i].KORN_FLNM ;
+				
+				let $tr = $("<tr style='height:70px; line-height:70px;'>");
 
 
 				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
-
-				$tr.append("<td><a onclick=location.href='lectureList?playlist_id=" + id + "'>"+ title + "</a>" + "</td>");
-				$tr.append("<td class='text-center'>" + "SBJT_NM" + "</td>");
-				$tr.append("<td class='text-center'>" + "KORN_FLNM" + "</td>");
-
+				$tr.append("<td class='text-center'><a onclick=location.href='lectureList?playlist_id=" + id + "'>"+ title + "</a>" + "</td>");
+				$tr.append("<td class='text-center'>" + SBJT_NM + "</td>");
+				$tr.append("<td class='text-center'>" + KORN_FLNM + "</td>");
+				$tr.append("<td style='height:70px;'>"
+			            + "<div style='height:20px; line-height: 20px;'>&nbsp;<span class='float-right' style='height:20px; margin-right:45px;'>"
+			            + "10%"
+			            + "</span></div>"
+			            + "<div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>"
+			            + "<div class='progress-bar bg-success' role='progressbar' style='height:20px;"
+			            +" width: 10%'"
+			            + "aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>"
+			            + "</div>"
+			            + "</td>");
 				$("#tb_lecture").append($tr);
-
-
-
 			}
 		}, error: function(jqXHR, textStatus, errorThrown) {
 		    console.log(jqXHR.responseJSON.error.message);
@@ -109,40 +101,25 @@ $(function(){
                     <div class="col-xl-12 col-lg-7">
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
-                            <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
-                                <div class="chart-area">
-                                    <div>
-                                        <!-- 실제 구성은 이곳에서 진행합니다. -->
-										<table id="table_lecture">
+								<div>
+									<!-- 실제 구성은 이곳에서 진행합니다. -->
+									<table class="table table-sm"  id="table_lecture">
 										<thead>
 											<tr>
-												<th class="col-2">수강신청 목록</th>
+												<th class="col-2 text-center">수강신청 목록</th>
 												<th class="col-2 text-center">학과</th>
 												<th class="col-2 text-center">교수</th>
+												<th class="col-3 text-center">진도율</th>
 											</tr>
-											<!--
-											- 내 강의실 B
-											  과목 선택 지점
-											    - 계획서 (유튜브)
-											    - 과제 및 평가 (하드 코딩)  (유튜브) > 과제제출여부
-											    - 강의 콘텐츠 (콘텐츠 : 유튜브, 줌 따로), 위에 공지 : (유튜브) > 현 제목
-											    - 강의 자료실 : (하드코딩) (유튜브)
-											    - 출결/학습현황 : (유튜브) > 출석률
-											 -->
 										</thead>
-										<tbody id="tb_lecture">
-<!-- 											<tr> -->
-<!-- 												<td></td> -->
-<!-- 											</tr> -->
-										</tbody>
+										<tbody id="tb_lecture"></tbody>
 									</table>
-                                    </div>
-                                </div>
+								</div>
                             </div>
                         </div>
                     </div>
