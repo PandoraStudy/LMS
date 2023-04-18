@@ -25,4 +25,8 @@ public interface NoticeDAO {
     int noticeDelete(String noticeNo);
 
     int noticeNo(String rowNum);
+
+    int mainNoticCnt();
+
+    List<Map<String, Object>> mainNoticeList();
 }

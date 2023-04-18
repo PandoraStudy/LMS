@@ -56,4 +56,11 @@
     <select id="noticeNo" parameterType="String" resultType="Integer">
         SELECT notice_no FROM noticeview WHERE rowNum='${ rowNum }'
     </select>
+    <select id="mainNoticCnt" resultType="Integer">
+        SELECT COUNT(*) FROM noticeview
+    </select>
+    <select id="mainNoticeList" resultType="HashMap">
+        SELECT * FROM noticeview ORDER BY rowNum DESC LIMIT 5
+
+    </select>
 </mapper>
