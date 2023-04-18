@@ -29,4 +29,7 @@ public class NoticeService {
 
     public int noticeNo(String rowNum) { return noticeDAO.noticeNo(rowNum); }
 
+    public int mainNoticCnt() { return noticeDAO.mainNoticCnt(); }
+
+    public List<Map<String, Object>> mainNoticeList() { return noticeDAO.mainNoticeList(); }
 }
