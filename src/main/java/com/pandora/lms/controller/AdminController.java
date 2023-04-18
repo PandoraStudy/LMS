@@ -70,9 +70,9 @@ public class AdminController {
 		
 		return searchList;
 	}
-	@GetMapping("/mainContentTest")
-	public String mainContentTest() {
-	    return "mainContentTest";
+	@GetMapping("/studentList")
+	public String studentList() {
+	    return "studentList";
 	}
 	@GetMapping("/mainContentTest2")
 	public String mainContentTest2() {

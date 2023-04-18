@@ -20,7 +20,7 @@ min-width: 1245px;
 .top_menu{
 width: 100%;
 height: 85px;
-background-color: lightblue;
+/* background-color: lightblue; */
 }
 .banner{
 width: 200px;
@@ -37,7 +37,7 @@ height: 40px;
 left: 200px;
 bottom: 20px;
 position: relative;
-background-color: lightgreen;
+/* background-color: lightgreen; */
 }
 .menu > ul{
 margin: 0;
@@ -64,14 +64,14 @@ margin-right: 5px;
 width: 150px;
 height: 25px;
 position: relative;
-border: 1px solid lightgray;
+border: 1px solid #c7ced2;
 }
 .top_search_btn{
 width: 50px;
 height: 31px;
 position: relative;
 top: 1px;
-border: 1px solid lightgray;
+border: 1px solid #c7ced2;
 }
 .user_menu{
 width: 310px;
@@ -132,7 +132,13 @@ float: left;
 font-weight: bold;
 background-color: white;
 }
-.tab_bar input:not(:checked) + label {
+.tab_bar label{
+cursor: pointer;
+}
+.tab_bar label:hover{
+text-decoration-line: underline;
+}
+.tab_bar input:not(:checked) + label{
 /* 해당 메뉴가 선택된 상태인지 아닌지를 사용자에게 알려줄 수 있음 */
 color: gray;
 background-color: black;
@@ -147,17 +153,18 @@ background-color: black;
 /* } */
 .main_body{
 height: calc(100vh - 125px);
-background-color: skyblue;
+/* background-color: skyblue; */
 display: flex;
 }
 .side_menu{
 width: 200px;
 height: calc(100vh - 85px);
-background-color: pink;
+/* background-color: pink; */
 position: relative;
 top: -40px;
 left: 20px;
 font-size: 14px;
+/* border: 1px solid #c7ced2; */
 }
 .side_menu_title{
 width: 200px;
@@ -169,16 +176,20 @@ line-height: 80px;
 font-weight: 700;
 text-align: center;
 }
-.side_menu > ul{
+.side_menu_list{
+border: 1px solid #c7ced2;
+border-collapse: collapse;
+}
+.side_menu_list > ul{
 padding: 0;
 margin: 0;
 }
-.side_menu > ul > li{
+.side_menu_list > ul > li{
 list-style: none;
 /* width: 182px; 														슬라이드바를 쓸 경우	*/
 width: 200px;
 /* height: 33px; */
-border: 1px solid black;
+border: 1px solid #c7ced2;
 line-height: 31px;
 float: right;
 box-sizing: border-box;
@@ -193,7 +204,7 @@ list-style: none;
 /* width: 182px; 														슬라이드바를 쓸 경우	*/
 width: 200px;
 /* height: 33px; */
-border: 1px solid black;
+border-top: 1px solid #c7ced2;
 line-height: 31px;
 float: right;
 box-sizing: border-box;
@@ -209,7 +220,7 @@ list-style: none;
 /* width: 182px; 														슬라이드바를 쓸 경우	*/
 width: 200px;
 /* height: 33px; */
-border: 1px solid black;
+border-top: 1px solid #c7ced2;
 line-height: 31px;
 float: right;
 box-sizing: border-box;
@@ -225,7 +236,7 @@ padding-right: 20px;
 width: calc(100% - 260px);
 height: calc(100vh - 125px);
 /* float: right; */
-background-color: skyblue;
+/* background-color: skyblue; */
 position: relative;
 right: -20px;
 /* display: none; */
@@ -253,7 +264,7 @@ align-items: flex-end;
 width: 100%;
 /* min-width: 1040px; */
 height: 48px;
-background-color: red;
+/* background-color: red; */
 position: relative;
 }
 .search_btn{
@@ -267,9 +278,10 @@ height: 28px;
 width: 100%;
 /* min-width: 1020px; */
 height: 40px;
-border: 1px solid gray;
+border: 1px solid #c7ced2;
 position: relative;
 box-sizing: border-box;
+background-color: #f3fafe;
 }
 .main_container_search > div{
 width: 119px;
@@ -335,7 +347,7 @@ position: relative;
 top: 20px;
 width: 92px;
 height: 20px;
-background-color: red;
+/* background-color: red; */
 font-size: 16px;
 float: left;
 }
@@ -351,7 +363,7 @@ margin-right: 3px;
 width: 100%;
 min-height: 450px;
 /* min-height: calc(100vh - 400px;); */
-border: 1px solid gray;
+border: 1px solid #c7ced2;
 border-top: 2px solid blue;
 position: relative;
 top: 40px;
@@ -360,7 +372,7 @@ top: 40px;
 width: 100%;
 /* min-height: 450px; */
 /* min-height: calc(100vh - 400px;); */
-border: 1px solid gray;
+border: 1px solid #c7ced2;
 /* border-top: 2px solid blue; */
 position: relative;
 top: -20px;
@@ -374,25 +386,22 @@ border-collapse: collapse;
 height: 36px;
 }
 .main_table > thead > tr > th {
-border: 1px solid gray;
+border: 1px solid #c7ced2;
 box-sizing: border-box;
 border-collapse: collapse;
-background-color: lightgray;
+background-color: #f7f6f6;
 cursor: pointer;
 }
 .main_table > tbody > tr > td{
 height: 36px;
 min-height: 36px;
-border: 1px solid gray;
+border: 1px solid #c7ced2;
 box-sizing: border-box;
 border-collapse: collapse;
 }
 .btnMenuX{
 width: 13px;
 height: 13px;
-}
-.content{
-
 }
 </style>
 <script type="text/javascript">
@@ -434,14 +443,14 @@ $(document).ready( function() {
 });
 //test include
 $(document).ready( function() {
-	$("#mainContentTest").click(function(e){
+	$("#studentList").click(function(e){
+		var id = $(this).attr("id");
 		//alert("테스트");
 // 		$("#tab_bar").load("/mainContentTest #tab1");
-		$("#main_container").append("<div id='load_mainContentTest' class='content'></div>");
-		$("#load_mainContentTest").load("/mainContentTest");
+		$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
+		$("#load_"+id).load("/studentList");
 	    $("#tabs1").attr("checked", "checked");
-	    var id = $(this).attr("id");
-	    showContent("load_mainContentTest", id);
+	    showContent("load_" + id, id);
 	});
 });
 //test2 include
@@ -475,14 +484,11 @@ function showContent(c_id, id) {
 
 //tab을 클릭했을 때 main_content 활성화
 function tabs(id){
-	alert(id);
+// 	alert(id);
 	$(".content").hide();
 	$("#load_" + id).show();
 }
-	
-	
-	
-	
+
 //탭 추가
 $(document).ready(function () {
     $(".li_step3").click(function (e) {
@@ -501,12 +507,20 @@ $(document).ready(function () {
 
         // 중복되는 탭이 없을 때만 새로운 탭을 추가합니다.
         if (!isDuplicate) {
-            var newTab = "<input type='radio' name='tabs' id='tabs_" + id + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX'></label>";
+            var newTab = "<input type='radio' name='tabs' id='tabs_" 
+            + id + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" 
+            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' id='tabs_"+id+"' onclick='close_tab(\""+id+"\")'></label>";
             $("#tab_bar").append(newTab);
         }
     });
 });
 
+//tab 닫기
+function close_tab(id){
+	$("#tabs_" + id).remove();
+	$("label[for='tabs_" + id + "']").remove();
+	$("#load_" + id).remove();
+}
 </script>
 
 </head>
@@ -550,65 +564,67 @@ $(document).ready(function () {
 <div class="main_body">
 		<div class="side_menu">
 			<div class="side_menu_title">학사</div>
-			<ul>
-				<li onclick="dp_menu()" data_level="1">학생관리
-					<ul class="side_submenu" id="side_submenu">
-						<li onclick="dp_menu()" data_level="2">학생명단조회
-							<ul class="side_submenu_sub">
-								<li data_level="3">학생명부조회</li>
-							</ul>
-						</li>
-						<li onclick="dp_menu()" data_level="2">학생성적조회
-							<ul class="side_submenu_sub">
-								<li data_level="3">학생성적조회</li>
-								<li data_level="3">학생성적조회</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li class="li_step1">수업관리
-					<ul class="side_submenu">
-						<li class="li_step2">학생관리
-							<ul class="side_submenu_sub">
-								<li class="li_step3" id="mainContentTest">학생명부조회</li>
-								<li class="li_step3" id="li_content4">학생일정관리</li>
-								<li class="li_step3" id="li_content3">출결관리</li>
-								<li class="li_step3">강사일정관리</li>
-							</ul>
-						</li>
-						<li class="li_step2">강의주차관리
-							<ul class="side_submenu_sub">
-								<li class="li_step3">1주차</li>
-								<li class="li_step3">2주차</li>
-								<li class="li_step3">3주차</li>
-							</ul>
-						</li>
-						<li class="li_step2">개설강좌관리
-							<ul class="side_submenu_sub">
-								<li class="li_step3">1주차</li>
-								<li class="li_step3">2주차</li>
-								<li class="li_step3">3주차</li>
-							</ul>
-						</li>
-						<li class="li_step2">강의출석관리
-							<ul class="side_submenu_sub">
-								<li class="li_step3">1주차</li>
-								<li class="li_step3">2주차</li>
-								<li class="li_step3">3주차</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<li class="li_step1">empty1
-					<ul class="side_submenu">
-						<li class="li_step2">empty2
-							<ul class="side_submenu_sub">
-								<li class="li_step3" id="mainContentTest2">empty3</li>
-							</ul>
-						</li>
-					</ul>
-				</li>
-			</ul>
+			<div class="side_menu_list">
+				<ul>
+					<li class="li_step1">학생관리
+						<ul class="side_submenu" id="side_submenu">
+							<li class="li_step2">학생명단조회
+								<ul class="side_submenu_sub">
+									<li class="li_step3">학생명부조회</li>
+								</ul>
+							</li>
+							<li class="li_step2">학생성적조회
+								<ul class="side_submenu_sub">
+									<li class="li_step3">학생성적조회</li>
+									<li class="li_step3">학생성적조회</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">수업관리
+						<ul class="side_submenu">
+							<li class="li_step2">학생관리
+								<ul class="side_submenu_sub">
+									<li class="li_step3" id="studentList">학생명부조회</li>
+									<li class="li_step3" id="li_content4">학생일정관리</li>
+									<li class="li_step3" id="li_content3">출결관리</li>
+									<li class="li_step3">강사일정관리</li>
+								</ul>
+							</li>
+							<li class="li_step2">강의주차관리
+								<ul class="side_submenu_sub">
+									<li class="li_step3">1주차</li>
+									<li class="li_step3">2주차</li>
+									<li class="li_step3">3주차</li>
+								</ul>
+							</li>
+							<li class="li_step2">개설강좌관리
+								<ul class="side_submenu_sub">
+									<li class="li_step3">1주차</li>
+									<li class="li_step3">2주차</li>
+									<li class="li_step3">3주차</li>
+								</ul>
+							</li>
+							<li class="li_step2">강의출석관리
+								<ul class="side_submenu_sub">
+									<li class="li_step3">1주차</li>
+									<li class="li_step3">2주차</li>
+									<li class="li_step3">3주차</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3" id="mainContentTest2">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 <!-- 		<div class="main_container" id="content2" style="background-color: blue;"></div> -->
 

@@ -45,7 +45,7 @@ function sortTable(n) {
 	  table = document.getElementById("main_table");
 	  switching = true;
 
-	  // Reset all other columnSortingStates to undefined when a new column is clicked
+	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
 	  for (var key in columnSortingStates) {
 	    if (key != n) {
 	      columnSortingStates[key] = undefined;
@@ -63,7 +63,7 @@ function sortTable(n) {
 	  }
 	  dir = columnSortingStates[n];
 
-	  // Remove the symbols from all the th elements
+	  // 모든 th 요소에서 기호를 제거하십시오.
 	  var thElements = table.getElementsByTagName("th");
 	  for (var j = 0; j < thElements.length; j++) {
 	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
@@ -97,7 +97,7 @@ function sortTable(n) {
 	    }
 	  }
 
-	  // Add the symbols to the sorted th element
+	  // 정렬된 요소에 기호를 추가합니다.
 	  if (dir === "asc") {
 	    thElements[n].innerHTML += " ▲";
 	  } else if (dir === "desc") {

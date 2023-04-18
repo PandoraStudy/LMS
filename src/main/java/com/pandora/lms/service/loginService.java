@@ -1,9 +1,9 @@
-package com.pandora.lms.Service;
+package com.pandora.lms.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pandora.lms.DAO.loginDAO;
+import com.pandora.lms.dao.loginDAO;
 
 @Service
 public class loginService {
