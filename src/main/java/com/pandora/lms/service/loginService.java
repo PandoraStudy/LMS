@@ -34,6 +34,4 @@ public class loginService implements UserDetailsService{
 			return new userdatas(userdto);
 					}
 		return null;
-	}
-
 }
