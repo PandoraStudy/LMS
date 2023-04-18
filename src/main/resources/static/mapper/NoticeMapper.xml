@@ -34,14 +34,14 @@
     </update>
 
     <select id="noticeDetail" parameterType="String" resultType="HashMap">
-        SELECT notice_no,admin_id,notice_title,notice_date,notice_like,notice_read,notice_content
+        SELECT notice_no,admin_id,notice_title,notice_date,notice_like,notice_read,notice_content,rowNum
         FROM noticeview
         WHERE notice_no = #{notice_no}
     </select>
 
     <insert id="noticeWrite" parameterType="HashMap">
         INSERT INTO NOTICE(admin_id,notice_title, notice_content)
-        VALUES(ADMIN,'${notice_title}', '${notice_content}')
+        VALUES('ADMIN','${notice_title}', '${notice_content}')
     </insert>
 
     <update id="noticeUpdate" parameterType="HashMap">
@@ -53,4 +53,7 @@
         UPDATE NOTICE SET notice_status = 2 WHERE notice_no = ${ notice_no }
     </update>
 
+    <select id="noticeNo" parameterType="String" resultType="Integer">
+        SELECT notice_no FROM noticeview WHERE rowNum='${ rowNum }'
+    </select>
 </mapper>

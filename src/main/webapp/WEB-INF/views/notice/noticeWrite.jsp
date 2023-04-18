@@ -64,7 +64,7 @@
                     <!--수정할 부분 시작-->
                     <h1 class="h3 mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
                         <c:choose>
-                            <c:when test="${noticeDetail.notice_no ne null }">수정</c:when>
+                            <c:when test="${noticeDetail.rowNum ne null }">수정</c:when>
                             <c:otherwise> 신규 글쓰기 </c:otherwise>
                         </c:choose>
                     </h1>
@@ -75,7 +75,7 @@
                 <div class="writeBox">
                     <form action=
                     <c:choose>
-                            <c:when test="${noticeDetail.notice_no ne null }">"/noticeWrite?notice_no=${noticeDetail.notice_no}"</c:when>
+                            <c:when test="${noticeDetail.rowNum ne null }">"/noticeWrite?rowNum=${ noticeDetail.rowNum }&totalCnt=${ totalCnt }"</c:when>
                             <c:otherwise>"/noticeWrite"</c:otherwise>
                     </c:choose>
                     method="post" onsubmit="return check()" enctype="multipart/form-data">
@@ -84,7 +84,7 @@
                     <div class="btnBox">
                         <button class="writeBtn">
                             <c:choose>
-                                <c:when test="${noticeDetail.notice_no ne null }">수정</c:when>
+                                <c:when test="${noticeDetail.rowNum ne null }">수정</c:when>
                                 <c:otherwise>저장</c:otherwise>
                             </c:choose>
                         </button>
