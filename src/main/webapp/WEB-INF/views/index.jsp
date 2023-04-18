@@ -40,18 +40,24 @@
         });
 
         $(function() {
-
             $('#zoom_open').click(function (result){
-                alert("누름");
                 $.ajax({
-                    url: 'https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token',
-                    type: 'get',
+                    url: '/zoom_open',
+                    type: 'post',
                     dataType: 'text',
                     success : function(result) {
                         if(result == "true"){
                             alert("인증에 성공했습니다.");
+                            window.location.href = "https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token";
+
+
+
+                         /*   let joinUrl = $("#Join_URL").val();
+                            window.location.href = joinUrl;*/
+
                         }else{
                             alert("인증실패 관리자 문의 바람.");
+                            return false;
                         }
                     },
                     error : function(xhr) {
@@ -121,6 +127,7 @@
                     <h1 class="h3 mb-0 text-gray-800">학생</h1>
                     <a id="zoom_open" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
+                    <input type="hidden" id="Join_URL" value="${Join_URL}">
                 </div>
                 <!-- 컨텐츠 탑 부분 -->
                 <div class="main_content"><%--main_left--%>
