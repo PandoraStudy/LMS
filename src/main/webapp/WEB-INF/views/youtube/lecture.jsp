@@ -37,7 +37,9 @@ $(function(){
 			var playlists = playlists.items;
 			
 			var lectureInfo = ${lectureInfo };
-			var jAlectureInfo = lectureInfo.jAlectureInfo;
+			var LECT_PRGRS_RT = ${LECT_PRGRS_RT };
+			var AjlectureInfo = lectureInfo.AjlectureInfo;
+			var AjLECT_PRGRS_RT = LECT_PRGRS_RT.AjLECT_PRGRS_RT;
 			
 			for (var i = 0; i < playlists.length; i++) {
 				var playlist = playlists[i];
@@ -45,8 +47,9 @@ $(function(){
 				var description = playlist.snippet.description || "";
 				var id = playlist.id;
 				
-				var SBJT_NM = jAlectureInfo[i].SBJCT_NM;
-				var KORN_FLNM = jAlectureInfo[i].KORN_FLNM ;
+				var SBJT_NM = AjlectureInfo[i].SBJCT_NM;
+				var KORN_FLNM = AjlectureInfo[i].KORN_FLNM ;
+				var LECT_PRGRS_RT = AjLECT_PRGRS_RT[i].LECT_PRGRS_RT;
 				
 				let $tr = $("<tr style='height:70px; line-height:70px;'>");
 
@@ -57,11 +60,11 @@ $(function(){
 				$tr.append("<td class='text-center'>" + KORN_FLNM + "</td>");
 				$tr.append("<td style='height:70px;'>"
 			            + "<div style='height:20px; line-height: 20px;'>&nbsp;<span class='float-right' style='height:20px; margin-right:45px;'>"
-			            + "10%"
+			            + LECT_PRGRS_RT + "%"
 			            + "</span></div>"
 			            + "<div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>"
 			            + "<div class='progress-bar bg-success' role='progressbar' style='height:20px;"
-			            +" width: 10%'"
+			            +" width: "+LECT_PRGRS_RT+"%'"
 			            + "aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>"
 			            + "</div>"
 			            + "</td>");

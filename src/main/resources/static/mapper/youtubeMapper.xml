@@ -28,4 +28,8 @@
 		LIMIT 1, 9
     </select>
 
+	<select id="lectureRate" resultType="HashMap">
+        SELECT LECT_PRGRS_RT
+		FROM ON_LECT_PROG
+    </select>
 </mapper>

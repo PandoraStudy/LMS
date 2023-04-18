@@ -32,24 +32,30 @@ public class YouTubeController {
     private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
 
-    
-
-
-
 
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
     	ModelAndView mv = new ModelAndView("/youtube/lecture");
 
-
     	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", userData);
+    	System.out.println(lectureInfo);
     	
-    	JSONArray jAlectureInfo = new JSONArray(lectureInfo);
+    	List<Map<String, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", userData);
+    	System.out.println(LECT_PRGRS_RT);
+    	
+    	JSONArray AjlectureInfo = new JSONArray(lectureInfo);
+    	JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
+    	
         JSONObject json = new JSONObject();
-        json.put("jAlectureInfo", jAlectureInfo);
+
+        json.put("AjlectureInfo", AjlectureInfo);
+        json.put("AjLECT_PRGRS_RT", AjLECT_PRGRS_RT);
     	
         mv.addObject("lectureInfo", json);
-
+        mv.addObject("LECT_PRGRS_RT", json);
+        
+        
+        
         return mv;
     }
 
