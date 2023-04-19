@@ -2,20 +2,31 @@ package com.pandora.lms.controller;
 
 
 //github.com/PandoraStudy/LMS.git
+
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Value;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +35,7 @@ import com.pandora.lms.service.YoutubeService;
 import com.pandora.lms.ytbUtil.OAuth;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Controller
 @AllArgsConstructor
@@ -34,15 +46,15 @@ public class YouTubeController {
 
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
-    	ModelAndView mv = new ModelAndView("/youtube/lecture");
+        ModelAndView mv = new ModelAndView("/youtube/lecture");
 
 
-    	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", userData);
-    	
-    	JSONArray jAlectureInfo = new JSONArray(lectureInfo);
+        List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", userData);
+
+        JSONArray jAlectureInfo = new JSONArray(lectureInfo);
         JSONObject json = new JSONObject();
         json.put("jAlectureInfo", jAlectureInfo);
-    	
+
         mv.addObject("lectureInfo", json);
 
         return mv;
@@ -90,21 +102,25 @@ public class YouTubeController {
         return "youtube/uploadVideo";
     }
 
-    @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestPart(value = "video_file") MultipartFile videoFile) {
+    @PostMapping("/youtubeAccess")
+    @ResponseBody
+    public String youtubeAccess() throws IOException {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
+
         try {
             Credential credential = oAuth.authorize(scopes);
-            youtubeService.uploadVideo(credential, videoFile);
+
+            if(credential != null) {
+                System.out.println("결과 : " + credential.getAccessToken());
+                return credential.getAccessToken();
+            } else {
+                return null;
+            }
+
         } catch (Exception e) {
-            System.out.println("에러..");
             throw new RuntimeException(e);
         }
-
-//        String url = flow.newAuthorizationUrl().setRedirectUri("http://localhost:9000/Callback").build();
-
-        return "index";
     }
 
 }

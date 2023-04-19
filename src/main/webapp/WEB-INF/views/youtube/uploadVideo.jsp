@@ -5,21 +5,39 @@
     <meta charset="UTF-8">
     <title>유튜브 인증 테스트 화면</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
+<script>
+    $(function () {
+        $("#btn-access").click(function () {
+            $.post({
+                url: "/youtubeAccess",
+                dataType: "text",
+                success: function(response) {
+                    if(response != "") {
+                        alert("인증을 완료 했습니다.");
+                    } else {
+                        alert("인증에 실패 했습니다.")
+                    }
+                }
+            });
+        });
+    });
+</script>
 <style>
     input[type=text] {
         width: 90%;
     }
 
-    .btn-primary {
+    .div-btn {
         float: right;
         margin-right: 30px;
     }
 </style>
 <body>
-<form method="post" action="/uploadVideo" enctype="multipart/form-data" >
+<form method="post" action="/uploadVideo" enctype="multipart/form-data">
     <table class="table">
         <thead>
         <tr>
@@ -42,7 +60,10 @@
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" type="submit">동영상 등록</button>
+    <div class="div-btn">
+        <button class="btn btn-primary" type="button" id="btn-access">인증하기</button>
+        <button class="btn btn-secondary" type="submit" id="btn-upload">동영상 등록</button>
+    </div>
 </form>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

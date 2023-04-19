@@ -1,28 +1,30 @@
 package com.pandora.lms.ytbUtil;
 
-import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
+import com.google.api.client.auth.oauth2.AuthorizationCodeRequestUrl;
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.auth.oauth2.TokenResponse;
 import com.google.api.client.extensions.java6.auth.oauth2.FileCredentialStore;
 import com.google.api.client.extensions.java6.auth.oauth2.VerificationCodeReceiver;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Preconditions;
-import com.google.api.services.youtube.YouTube;
 import org.springframework.stereotype.Component;
 
-import javax.naming.AuthenticationException;
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 사용자의 계정에 OAuth2를 사용하여 YouTube Data API (V3)를 통해 비디오를 업로드하는 데모입니다.
@@ -33,6 +35,7 @@ import java.util.List;
  */
 @Component
 public class OAuth {
+    private static final Logger LOGGER = Logger.getLogger(OAuth.class.getName());
 
     /**
      * HTTP 전송의 전역 인스턴스입니다.
@@ -49,7 +52,10 @@ public class OAuth {
      *
      * @param scopes YouTube 업로드에 필요한 범위(scope) 목록입니다.
      */
-    public static Credential authorize(List<String> scopes) throws Exception {
+    public Credential authorize(List<String> scopes) throws Exception {
+        GoogleAuthorizationCodeFlow flow = null;
+        VerificationCodeReceiver localReceiver = null;
+
         // 클라이언트 시크릿을 로드합니다.
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
                 JSON_FACTORY, new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
@@ -69,18 +75,73 @@ public class OAuth {
                 new File(System.getProperty("user.home"), ".credentials/youtube-api-uploadvideo.json"), JSON_FACTORY);
 
         // 권한 코드 플로우를 설정합니다.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+        flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialStore(credentialStore).build();
 
         // 로컬 서버를 빌드하고 9000 포트에 바인드합니다.
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(9000).build();
-
-        // String url = flow.newAuthorizationUrl().setRedirectUri("http://localhost:9000/Callback").build();
+        localReceiver = new LocalServerReceiver.Builder().setPort(9000).build();
 
         // 인증합니다.
-        Credential credential=  new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
-
-        return credential;
+        return authorize(flow, localReceiver);
     }
 
+    /* 구글 권한 인증 (세부 페이지) */
+    private Credential authorize(GoogleAuthorizationCodeFlow flow, VerificationCodeReceiver localReceiver) throws IOException {
+        try {
+            Credential credential = flow.loadCredential("user");
+            if (credential != null
+                    && (credential.getRefreshToken() != null
+                    || credential.getExpiresInSeconds() == null
+                    || credential.getExpiresInSeconds() > 60)) {
+                return credential;
+            }
+            // open in browser
+            String redirectUri = localReceiver.getRedirectUri();
+            AuthorizationCodeRequestUrl authorizationUrl = flow.newAuthorizationUrl().setRedirectUri(redirectUri);
+
+            String url = authorizationUrl.build();
+            Preconditions.checkNotNull(url);
+            openBrowse(url);
+
+            // receive authorization code and exchange it for an access token
+            String code = localReceiver.waitForCode();
+            TokenResponse response = flow.newTokenRequest(code).setRedirectUri(redirectUri).execute();
+
+            // store credential and return it
+            return flow.createAndStoreCredential(response, "user");
+        } finally {
+            localReceiver.stop();
+        }
+    }
+
+    /* 자바로 기본 브라우저 새로운 탭 열기 */
+    public void openBrowse(String url) {
+        try {
+            if (Desktop.isDesktopSupported()) {
+                // java with desktop support
+                Desktop desktop = Desktop.getDesktop();
+                desktop.browse(new URI(url));
+            } else {
+                // no java desktop support
+                // fall back into dark ages
+                String osName = System.getProperty("os.name");
+
+                if (osName.toLowerCase().contains("linux")) {
+                    // probably linux/unix
+                    Runtime runtime = Runtime.getRuntime();
+                    runtime.exec("xdg-open " + url);
+                } else if (osName.toLowerCase().contains("windows")) {
+                    // older windows
+                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                } else if (osName.toLowerCase().contains("mac")) {
+                    // probably mac os
+                    Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null,
+                            url);
+                }
+            }
+        } catch (IOException | InternalError | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
+                 InvocationTargetException | URISyntaxException e) {
+            LOGGER.log(Level.WARNING, "Unable to open browser", e);
+        }
+    }
 }
