@@ -172,8 +172,7 @@
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small">이민규</span>
-        <img class="img-profile rounded-circle"
-             src="img/undraw_profile.svg"><%--유저 프로필 이미지 부분--%>
+        <img class="img-profile rounded-circle" src="img/undraw_profile.svg"><%--유저 프로필 이미지 부분--%>
       </a>
       <!-- 유저 프로필 드롭다운 부분 -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
