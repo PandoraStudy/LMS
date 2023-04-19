@@ -32,4 +32,9 @@
         SELECT LECT_PRGRS_RT
 		FROM ON_LECT_PROG
     </select>
+    
+    <select id="lectureListRate" resultType="HashMap">
+        SELECT ON_LECT_TM
+		FROM ON_LECT_INFO
+    </select>
 </mapper>

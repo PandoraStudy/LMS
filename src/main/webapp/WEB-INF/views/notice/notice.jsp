@@ -63,28 +63,28 @@
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
-
+    <%-- 네비게이션 바 --%>
+    <%@include file="../navbar.jsp" %>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- 메인 컨텐츠 -->
         <div id="content">
+            <%-- 탑 바 --%>
+            <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
-            <div class="container-fluid" style="width:1100px; height:750px;">
+            <div class="container-fluid" style="width:1200px; height:800px; margin-top:100px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-                    <h1 class="h3 mb-0 text-gray-800" style="font-weight:bold;">공지사항</h1>
+                    <h1 class=" mb-0 text-gray-800" style="font-weight:bold;">공지사항</h1>
                     <div>
                         <form action="" method="get" onsubmit="return search()">
-                            <select name="searchType" id="searchType">
+                            <select name="searchType" id="searchType" style="height:40px;">
                                 <option value="none">선택</option>
-                                <option value="title" <c:if test='${ pages.searchType eq "title"}'>selected</c:if>>제목
-                                </option>
-                                <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>
-                                    글쓴이
-                                </option>
+                                <option value="title" <c:if test='${ pages.searchType eq "title"}'>selected</c:if>>제목</option>
+                                <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>글쓴이</option>
                             </select>
-                            <input type="text" name="searchValue" id="searchValue" value="${pages.searchValue }">
-                            <button class="search_btn">검색</button>
+                            <input type="text" name="searchValue" id="searchValue" style="width:300px; height:40px; border-radius: 5px;" value="${pages.searchValue }">
+                            <button class="search_btn" style="height:40px;">검색</button>
                         </form>
                     </div><!--search-->
                 </div>
@@ -101,7 +101,9 @@
                         <c:forEach var="notice" items="${list }">
                             <tr>
                                 <td>${notice.rowNum }</td>
-                                <td class="title text-truncate" style="max-width:1px; text-align: left;"><a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a></td>
+                                <td class="title text-truncate" style="max-width:1px; text-align: left;">
+                                    <a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
+                                </td>
                                 <td>${notice.admin_id }</td>
                                 <td>${notice.notice_read }</td>
                                 <td>${notice.notice_date }</td>
@@ -135,6 +137,10 @@
                 <!--수정할 부분 끝-->
             </div>
         </div><!-- End of Main Content -->
+
+        <!-- footer -->
+        <%@include file="../footer.jsp" %>
+
     </div><!-- End of Content Wrapper -->
 </div> <!-- End of Page Wrapper -->
 </body>

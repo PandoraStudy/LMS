@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Notice List</title>
+    <title>Notice Write</title>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -53,19 +53,22 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-
+    <%-- 네비게이션 바 --%>
+    <%@include file="../navbar.jsp" %>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- 메인 컨텐츠 -->
         <div id="content">
+            <%-- 탑 바 --%>
+            <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid" style="width:1100px; height:750px;">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:100px; text-align: center;">
                     <!--수정할 부분 시작-->
-                    <h1 class="h3 mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
+                    <h1 class="mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
                         <c:choose>
-                            <c:when test="${noticeDetail.rowNum ne null }">수정</c:when>
-                            <c:otherwise> 신규 글쓰기 </c:otherwise>
+                            <c:when test="${noticeDetail.rowNum ne null }"> Update </c:when>
+                            <c:otherwise> Write </c:otherwise>
                         </c:choose>
                     </h1>
                     <div>
@@ -94,6 +97,8 @@
                 <!--수정할 부분 끝-->
             </div>
         </div><!-- End of Main Content -->
+        <!-- footer -->
+        <%@include file="../footer.jsp" %>
     </div><!-- End of Content Wrapper -->
 </div> <!-- End of Page Wrapper -->
 </body>

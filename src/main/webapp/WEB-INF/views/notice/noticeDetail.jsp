@@ -29,7 +29,9 @@
 </head>
 <style></style>
 <script>
-    function noticeUpdate(rowNum) { location.href = "/noticeUpdate?rowNum="+rowNum+"&totalCnt=${totalCnt}"; }
+    function noticeUpdate(rowNum) {
+        location.href = "/noticeUpdate?rowNum=" + rowNum + "&totalCnt=${totalCnt}";
+    }
 
     function noticeDelete(rowNum) {
         if (confirm("정말로 삭제하시겠습니까?")) {
@@ -43,53 +45,46 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-
+    <%-- 네비게이션 바 --%>
+    <%@include file="../navbar.jsp" %>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- 메인 컨텐츠 -->
         <div id="content">
-
+            <%-- 탑 바 --%>
+            <%@include file="../top.jsp" %>
+            <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid" style="width:1100px; height:750px;">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4"
-                     style=" margin-top:50px; text-align: center; ">
-                    <h1 class="text-truncate" style="font-weight:bold; width:1100px;">
-                        &nbsp;&nbsp; ${noticeDetail.notice_title }</h1>
-                    <div>
-
-
-                    </div><!--search-->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:100px; text-align: center; ">
+                    <h1 class="text-truncate" style="font-weight:bold; width:1100px;"> &nbsp;&nbsp; ${noticeDetail.notice_title }</h1>
                 </div>
                 <!--수정할 부분 시작-->
                 <div class="detailBox">
                     <div class="detailTop">
-                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_id }
-                        </div>
+                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_id }</div>
                         <div class="detailTop_item">${noticeDetail.notice_date }</div>
                     </div>
-                    <div class="detailMid">
-                        <div class="detailMid_item">${noticeDetail.notice_content }</div>
+                    <div class="detailMid">${noticeDetail.notice_content }</div><br><br>
+                    <div style="display: inline-block; ">
+                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>이전글</a>
+                    </div>
+                    <div style="display: inline-block; float:right;">
+                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}">다음글<i class="xi-angle-right xi-x"></i></a>
+                    </div>
+                    <br><br><br>
+                    <div>
+                        <%--                    <c:if test="${sessionScope.admin_id ne null }">--%>
+                        <button class="detailBtn" style="background-color: #ffc414;" onclick="noticeUpdate(${rowNum })">수정</button>
+                        <button class="detailBtn" style="background-color: #ff3d3d;" onclick="noticeDelete(${rowNum })">삭제</button>
+                        <%--                    </c:if>--%>
+                        <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
                     </div>
                 </div>
-                <div style="display: inline-block; "><a style="color:black; font-weight: bold;"href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>이전글</a></div>
-                <div style="display: inline-block; float:right;"><a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}">다음글<i class="xi-angle-right xi-x"></i></a></div>
-                <br><br>
-                <div>
-<%--                    <c:if test="${sessionScope.admin_id ne null }">--%>
-                        <button class="detailBtn" style="background-color: #ffc414;"
-                                onclick="noticeUpdate(${rowNum })">수정
-                        </button>
-                        <button class="detailBtn" style="background-color: #ff3d3d;"
-                                onclick="noticeDelete(${rowNum })">삭제
-                        </button>
-<%--                    </c:if>--%>
-                    <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
-                </div>
-            </div>
-        </div>
-        <!--수정할 부분 끝-->
-    </div>
-</div><!-- End of Main Content -->
-</div><!-- End of Content Wrapper -->
-</div> <!-- End of Page Wrapper -->
+            </div><!--수정할 부분 끝-->
+        </div><!-- End of Main Content -->
+        <!-- footer -->
+        <%@include file="../footer.jsp" %>
+    </div><!-- End of Content Wrapper -->
+</div><!-- End of Page Wrapper -->
 </body>
 </html>

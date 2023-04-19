@@ -3,12 +3,14 @@ package com.pandora.lms.controller;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.pandora.lms.dto.ZoomDTO;
 import com.pandora.lms.service.ZoomService;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -28,9 +30,14 @@ public class ZoomController {
     }
 
     @RequestMapping(value="/zoom/token" , method = {RequestMethod.GET, RequestMethod.POST})/*토큰 발급 받고 코드 값을 가져옴*/
-    public ModelAndView get_token(@RequestParam("code") String code, Model model) throws IOException {
+    @ResponseBody
+    public String get_token(@RequestParam("code") String code, Model model) throws IOException {
+        System.err.println("lll");
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
+        ZoomDTO zoomDTO = new ZoomDTO();
+        /**/
+        zoomDTO.setUser_id("1234");
 
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
@@ -69,46 +76,21 @@ public class ZoomController {
         System.err.println("엑세스 토큰 : "+accessToken);
 
         //회의 url 가져옴
-        String joinurl = zoomService.meeting(accessToken);
+        String join_url = zoomService.meeting(accessToken);
 
 
 
-        ModelAndView mv = new ModelAndView("zoom");
-        if(joinurl.contains("https://us05web.zoom.us/j/")){
-            mv.addObject("join",joinurl);
-            mv.addObject("accessToken",accessToken);
+        ZoomDTO result = zoomService.authority(zoomDTO);
+
+        System.err.println("컨트롤 "+result.getZOOM_NO());
+
+
+        if(join_url.contains("https://us05web.zoom.us/j/") && result.getZOOM_NO() == 1){
+
+            return "true";
+        }else{
+            return "false";
         }
-        return mv;
-    }
-
-   /* @GetMapping("/zoomwUsers")
-    public String zoomUserList( String accessToken, String meetingid ) throws IOException{
-        System.err.println("accessToken : "+accessToken);
-        System.err.println("meetingid : "+meetingid);
-        zoomService.userlist(accessToken,meetingid);
-        return "";
-    }*/
-
-    @GetMapping("/zoomUsers")
-    public String zoomUsers(String accessToken, String meeting_Id ) throws IOException{
-
-        OkHttpClient client = new OkHttpClient(); //통신을 위한 OkHttp
-
-        String zoomUrl = "https://api.zoom.us/v2/metrics/meetings/"+meeting_Id+"/participants"; //Access token 을 받는 zoom api 호출 url
-
-        Request zoomRequest = new Request.Builder()//http 요청 헤더를 만듬
-                .url(zoomUrl) // 호출 url
-                .addHeader("Content-Type", "application/x-www-form-urlencoded") // 공식 문서에 명시 된 type
-                .addHeader("Authorization", "Bearer "+accessToken) // Client_ID:Client_Secret 을  Base64-encoded 한 값
-                .build();
-
-        Response zoomResponse = client.newCall(zoomRequest).execute();
-
-        String zoomText = zoomResponse.body().string();
-
-        System.out.println(zoomText);
-
-        return "";
     }
 
 }

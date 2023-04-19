@@ -36,7 +36,7 @@ $(function(){
 
 			var playlists = playlists.items;
 			
-			var lectureInfo = ${lectureInfo };
+// 			var lectureInfo = ${lectureInfo };
 			var LECT_PRGRS_RT = ${LECT_PRGRS_RT };
 			var AjlectureInfo = lectureInfo.AjlectureInfo;
 			var AjLECT_PRGRS_RT = LECT_PRGRS_RT.AjLECT_PRGRS_RT;
@@ -51,10 +51,8 @@ $(function(){
 				var KORN_FLNM = AjlectureInfo[i].KORN_FLNM ;
 				var LECT_PRGRS_RT = AjLECT_PRGRS_RT[i].LECT_PRGRS_RT;
 				
-				let $tr = $("<tr style='height:70px; line-height:70px;'>");
-
-
 				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
+				let $tr = $("<tr style='height:70px; line-height:70px;'>");
 				$tr.append("<td class='text-center'><a onclick=location.href='lectureList?playlist_id=" + id + "'>"+ title + "</a>" + "</td>");
 				$tr.append("<td class='text-center'>" + SBJT_NM + "</td>");
 				$tr.append("<td class='text-center'>" + KORN_FLNM + "</td>");

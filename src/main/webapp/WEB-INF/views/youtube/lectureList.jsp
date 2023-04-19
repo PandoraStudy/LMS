@@ -44,7 +44,10 @@
                     let videoDuration = "";
                     let videoPlayTime = 0;
                     let videoTotalTime = "";
-
+                    
+                    var ON_LECT_TM_List = ${ON_LECT_TM };
+                    var AjON_LECT_TM = ON_LECT_TM_List.AjON_LECT_TM;
+                    var ON_LECT_TM = AjON_LECT_TM[i].ON_LECT_TM;
                     /* 동영상의 재생시간 가져오기 */
                     $.get({
                         url: "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=" + videoId + "&key=" + API_KEY,
@@ -57,14 +60,30 @@
                             /* ISO 8601 형식 썸네일 표시 위해 M:S 형태로 교체 */
                             videoTotalTime = durationToTotalTime(videoDuration);
 
+                    
                             /* 1번 포인트 */
                             console.log(videoId + "1st : " + totalTime);
-
+                            
+                    var attendance = totalTime-ON_LECT_TM;
+                    console.log(attendance + "=" + totalTime + "-" + ON_LECT_TM);
                             /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
-                            let $tr = $("<tr onclick=location.href='lectureDetail?video_id=" + videoId + "'>");
-                            $tr.append("<td class='text-center'><div class='video-thumnails'><img class='video-img' src='" + videoThumnails + "'><span class='total-time'>" + videoTotalTime + "</span></div></td>");
-                            $tr.append("<td><span>" + videoTitle + "(" + videoId + ")</span></td>");
+                            let $tr = $("<tr>");
+                            $tr.append("<td class='text-center'>"
+                            + "<div class='video-thumnails'>"
+                            + "<a onclick=location.href='lectureDetail?video_id=" + videoId + "'>"
+                            + "<img class='video-img' src='" + videoThumnails + "'></a>"
+                            + "<span class='total-time'>" + videoTotalTime + "</span></div></td>");
+                            $tr.append("<td><a onclick=location.href='lectureDetail?video_id=" + videoId + "'>"
+                            + "<span>" + videoTitle + "(" + videoId + ")</span></a></td>");
+					if(attendance > 0){//출석 미인정 + 과제제출여부까지 확인하기
+						$tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' onclick='return false;'></th>");
+                        $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' onclick='return false;'></th>");
+					} else{//출석 인정
                             $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
+                            $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
+						
+
+					}
                             $("#tb_lecture").append($tr);
                             $("#loading").hide();
                         },
@@ -201,8 +220,9 @@
                                         <thead class="table-light">
                                             <tr>
                                                 <th class="col-2 text-center">강의 이미지</th>
-                                                <th class="col-9">제목[강의자료]</th>
+                                                <th class="col-8 text-center">강의제목</th>
                                                 <th class="col-1 text-center">출석여부</th>
+                                                <th class="col-1 text-center">과제제출여부</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider" id="tb_lecture">

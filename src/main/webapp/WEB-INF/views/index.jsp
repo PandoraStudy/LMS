@@ -39,6 +39,30 @@
             calendar.render();
         });
 
+        $(function() {
+
+            $('#zoom_open').click(function (result){
+                alert("누름");
+                $.ajax({
+                    url: 'https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token',
+                    type: 'get',
+                    dataType: 'text',
+                    success : function(result) {
+                        if(result == "true"){
+                            alert("인증에 성공했습니다.");
+                        }else{
+                            alert("인증실패 관리자 문의 바람.");
+                        }
+                    },
+                    error : function(xhr) {
+                        alert(xhr);
+                        alert("요청 실패 재시도 바람.");
+                    }
+                });
+
+            });
+        });
+
     </script>
     <style>
         #calendar {
@@ -95,12 +119,11 @@
                 <!-- 페이지 헤드 부분 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">학생</h1>
-                    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    <a id="zoom_open" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                             class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
                 </div>
                 <!-- 컨텐츠 탑 부분 -->
                 <div class="main_content"><%--main_left--%>
-
                     <div class="main_left">
                         <!-- 학사 공지 -->
                         <div class="notice_card mb-4">
@@ -108,7 +131,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2" >
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">학사 공지</div><br>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">공지사항 최신글</div><br>
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 <table class="table">
                                                     <tr class="table_header">
@@ -136,7 +159,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- 학사일정 -->
                         <div class="schedule_card mb-4" style="margin-top:230px;">
                             <div class="card shadow mb-4">
@@ -152,14 +174,9 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                     <%--main_left--%>
-
-
                     <!-- 컨텐츠 탑 부분 끝 -->
-
                     <div class="row">
                         <!-- 캘린더 -->
                         <div class="main_right">

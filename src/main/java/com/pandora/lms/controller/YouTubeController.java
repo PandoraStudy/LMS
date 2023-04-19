@@ -32,16 +32,15 @@ public class YouTubeController {
     private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
 
-
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
     	ModelAndView mv = new ModelAndView("/youtube/lecture");
 
-    	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", userData);
-    	System.out.println(lectureInfo);
+    	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", mv);
+//    	System.out.println(lectureInfo);
     	
-    	List<Map<String, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", userData);
-    	System.out.println(LECT_PRGRS_RT);
+    	List<Map<Integer, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", mv);
+//    	System.out.println(LECT_PRGRS_RT);
     	
     	JSONArray AjlectureInfo = new JSONArray(lectureInfo);
     	JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
@@ -54,14 +53,19 @@ public class YouTubeController {
         mv.addObject("lectureInfo", json);
         mv.addObject("LECT_PRGRS_RT", json);
         
-        
-        
         return mv;
     }
 
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam(name = "playlist_id") String playlistId) {
         ModelAndView view = new ModelAndView();
+        
+        List<Map<String, Integer>> ON_LECT_TM = sqlSession.selectList("youtube.lectureListRate", view);
+        JSONArray AjON_LECT_TM = new JSONArray(ON_LECT_TM);
+        JSONObject json = new JSONObject();
+        json.put("AjON_LECT_TM", AjON_LECT_TM);
+        view.addObject("ON_LECT_TM", json);
+        
         view.addObject("playlistId", playlistId);
         view.setViewName("youtube/lectureList");
         System.out.println(playlistId);
