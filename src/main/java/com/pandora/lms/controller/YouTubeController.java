@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -82,13 +81,25 @@ public class YouTubeController {
     }
 
     @GetMapping("/uploadVideo")
-    public ModelAndView uploadVideo() {
+    public ModelAndView uploadVideo() throws Exception {
         ModelAndView view = new ModelAndView("youtube/uploadVideo");
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        Credential credential = oAuth.authorize(scopes, true);
+
+        if(credential != null) {
+            view.addObject("auth", true);
+        } else {
+            view.addObject("auth", false);
+        }
+
         return view;
     }
 
     @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name="video_file") MultipartFile videoFile) {
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) {
         System.out.println("동영상 정보 : " + videoInfo);
         System.out.println("동영상 파일 : " + videoFile);
 
@@ -97,19 +108,15 @@ public class YouTubeController {
 
     @PostMapping("/youtubeAccess")
     @ResponseBody
-    public String youtubeAccess() throws IOException {
+    public String youtubeAccess() throws Exception {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        try {
-            Credential credential = oAuth.authorize(scopes);
-            if(credential != null) {
-                return "인증이 완료 됐습니다.";
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        Credential credential = oAuth.authorize(scopes, false);
+        if (credential != null) {
+            return "인증이 완료 됐습니다.";
+        } else {
+            return null;
         }
     }
 

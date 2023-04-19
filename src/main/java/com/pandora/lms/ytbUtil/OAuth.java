@@ -52,7 +52,7 @@ public class OAuth {
      *
      * @param scopes YouTube 업로드에 필요한 범위(scope) 목록입니다.
      */
-    public Credential authorize(List<String> scopes) throws Exception {
+    public Credential authorize(List<String> scopes, boolean authScope) throws Exception {
         GoogleAuthorizationCodeFlow flow = null;
         VerificationCodeReceiver localReceiver = null;
 
@@ -82,11 +82,16 @@ public class OAuth {
         localReceiver = new LocalServerReceiver.Builder().setPort(9000).build();
 
         // 인증합니다.
-        return authorize(flow, localReceiver);
+        return authorize(flow, localReceiver, authScope);
     }
 
     /* 구글 권한 인증 (세부 페이지) */
-    private Credential authorize(GoogleAuthorizationCodeFlow flow, VerificationCodeReceiver localReceiver) throws IOException {
+    /*
+    * authScope
+    * - true : 인증 여부 파악 (인증 완료 : Credential 객체 반환, 인증 미완료 : null 반환)
+    * - false : 인증위한 url 출력
+    * */
+    private Credential authorize(GoogleAuthorizationCodeFlow flow, VerificationCodeReceiver localReceiver, boolean authScope) throws IOException {
         try {
             Credential credential = flow.loadCredential("user");
             if (credential != null
@@ -101,6 +106,9 @@ public class OAuth {
 
             String url = authorizationUrl.build();
             Preconditions.checkNotNull(url);
+            if(authScope) {
+                return null;
+            }
             openBrowse(url);
 
             // receive authorization code and exchange it for an access token

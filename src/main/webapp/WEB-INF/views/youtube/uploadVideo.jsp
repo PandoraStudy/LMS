@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -9,10 +10,12 @@
     <meta name="author" content="">
     <title>Pandora University - LMS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
@@ -21,46 +24,54 @@
 </head>
 <script>
     $(function () {
+        let auth = ${auth};
+
         $("#btn-access").click(function () {
-            $.post({
-                url: "/youtubeAccess",
-                dataType: "text",
-                success: function(response) {
-                    if(response != "") {
-                        $("#txt_code").text(response);
-                        $("#btn-upload").attr("disabled", false);
-                        $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
+            if (auth != true) {
+                $.post({
+                    url: "/youtubeAccess",
+                    dataType: "text",
+                    success: function (response) {
+                        if (response != "") {
+                            auth = true;
 
-                        $("#btn-upload").click(function() {
-                            let video_title = $("#video_title").val();
-                            let video_desc = $("#video_desc").val();
-                            let video_file = $("#video_file").val();
+                            $("#txt_code").text(response);
+                            $("#btn-upload").attr("disabled", false);
+                            $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
 
-                            if(video_title == "") {
-                                alert("제목이 비었습니다.");
-                                $("#video_title").focus();
-                                return false;
-                            }
+                            $("#btn-upload").click(function () {
+                                let video_title = $("#video_title").val();
+                                let video_desc = $("#video_desc").val();
+                                let video_file = $("#video_file").val();
 
-                            if(video_desc == "") {
-                                alert("내용이 비었습니다.");
-                                $("#video_desc").focus();
-                                return false;
-                            }
+                                if (video_title == "") {
+                                    alert("제목이 비었습니다.");
+                                    $("#video_title").focus();
+                                    return false;
+                                }
 
-                            if(video_file == "") {
-                                alert("파일이 없습니다.");
-                                $("#video_file").focus();
-                                return false;
-                            }
+                                if (video_desc == "") {
+                                    alert("내용이 비었습니다.");
+                                    $("#video_desc").focus();
+                                    return false;
+                                }
 
-                            $("#form-video").submit();
-                        });
-                    } else {
-                        $("#txt_code").text("인증이 완료 되지 않았습니다.");
+                                if (video_file == "") {
+                                    alert("파일이 없습니다.");
+                                    $("#video_file").focus();
+                                    return false;
+                                }
+
+                                $("#form-video").submit();
+                            });
+                        } else {
+                            $("#txt_code").text("인증 실패 했습니다.");
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                alert("이미 인증이 완료 됐습니다.");
+            }
         });
     });
 </script>
@@ -104,7 +115,8 @@
                             <div class="card-body">
                                 <div>
                                     <!-- 실제 구성은 이곳에서 진행합니다. -->
-                                    <form id="form-video" method="post" action="/uploadVideo" enctype="multipart/form-data">
+                                    <form id="form-video" method="post" action="/uploadVideo"
+                                          enctype="multipart/form-data">
                                         <table class="table">
                                             <thead>
                                             <tr>
@@ -116,7 +128,7 @@
                                             <tr>
                                                 <td>인증 여부</td>
                                                 <td>
-                                                    <span id="txt_code">인증 코드를 발급 받아주세요.</span>
+                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'><b>인증이 완료 됐습니다.</b></c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -134,14 +146,14 @@
                                             <tr>
                                                 <td>파일 등록</td>
                                                 <td>
-                                                    <input class="form-control form-control-sm" name="video_file" id="video_file" type="file">
+                                                    <input class="form-control form-control-md" name="video_file" id="video_file" type="file">
                                                 </td>
                                             </tr>
                                             </tbody>
                                         </table>
                                         <div class="div-btn">
-                                            <button class="btn btn-primary" type="button" id="btn-access">인증하기</button>
-                                            <button class="btn btn-secondary" type="button" id="btn-upload" disabled>동영상 등록</button>
+                                            <c:if test="${auth eq false}"><button class="btn btn-primary" type="button" id="btn-access">인증하기</button></c:if>
+                                            <button class="btn <c:choose><c:when test='${auth eq true}'>btn-primary</c:when><c:otherwise>btn-secondary</c:otherwise></c:choose>" type="button" id="btn-upload" <c:if test="${auth eq false}">disabled</c:if>>동영상 등록</button>
                                         </div>
                                     </form>
                                 </div>
@@ -180,5 +192,7 @@
 <!-- Page level custom scripts -->
 <script src="js/demo/chart-area-demo.js"></script>
 <script src="js/demo/chart-pie-demo.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 </html>
