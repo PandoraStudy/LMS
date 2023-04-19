@@ -128,7 +128,7 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">학생</h1>
                     <a id="zoom_open" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
+                            class="fas fa-download fa-sm text-white-50"></i>줌 수업 개설(위치 변경 필요)</a>
                     <input type="hidden" id="Join_URL" value="${Join_URL}">
                 </div>
                 <!-- 컨텐츠 탑 부분 -->
