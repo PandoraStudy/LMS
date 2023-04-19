@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,19 +27,33 @@ public class ZoomController {
 
     @GetMapping("/zoom")/*줌 관리 페이지 띄우기용*/
     public String zoom() {
+
         return "zoom";
     }
 
-    @RequestMapping(value="/zoom/token" , method = {RequestMethod.GET, RequestMethod.POST})/*토큰 발급 받고 코드 값을 가져옴*/
+  /*  @RequestMapping(value="/zoom/tokentest" , method = {RequestMethod.GET, RequestMethod.POST})*//*토큰 발급 받고 코드 값을 가져옴*/
+
+    @PostMapping("/zoom_open")
     @ResponseBody
-    public String get_token(@RequestParam("code") String code, Model model) throws IOException {
-        System.err.println("lll");
+    public String Zoom_open(){
+        ZoomDTO zoomDTO = new ZoomDTO();
+        zoomDTO.setUser_id("1234");/*임시 아이디*/
+
+        ZoomDTO result = zoomService.authority(zoomDTO);
+
+        if(result.getZOOM_NO() == 1){
+
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+
+    @GetMapping("/zoom/token")
+    public ModelAndView get_token(@RequestParam("code") String code, Model model) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
-        ZoomDTO zoomDTO = new ZoomDTO();
-        /**/
-        zoomDTO.setUser_id("1234");
-
+        ModelAndView mv = new ModelAndView("zoom");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/
@@ -60,7 +75,8 @@ public class ZoomController {
         String zoomText = zoomResponse.body().string();/*zoomResponse 응답 받은 내용을 문자열로 바꿔줌*/
 
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);/*위에서 생성한  ObjectMapper에 벨류값을 배열 타입으로 만들어줌*/
-        List<Object> list = mapper.readValue(zoomText, new TypeReference<List<Object>>() {});
+        List<Object> list = mapper.readValue(zoomText, new TypeReference<List<Object>>() {
+        });
 
         model.addAttribute("response", list.get(0));
         model.addAttribute("code", code);
@@ -71,26 +87,15 @@ public class ZoomController {
         String accessToken = (String) responseMap.get("access_token");
 
 
-        System.err.println("요청한 내용 : "+model.getAttribute("response"));
-        System.err.println("사용자 코드 : "+model.getAttribute("code"));
-        System.err.println("엑세스 토큰 : "+accessToken);
+        System.err.println("요청한 내용 : " + model.getAttribute("response"));
+        System.err.println("사용자 코드 : " + model.getAttribute("code"));
+        System.err.println("엑세스 토큰 : " + accessToken);
 
         //회의 url 가져옴
         String join_url = zoomService.meeting(accessToken);
+        mv.addObject("Join_URL",join_url);
 
-
-
-        ZoomDTO result = zoomService.authority(zoomDTO);
-
-        System.err.println("컨트롤 "+result.getZOOM_NO());
-
-
-        if(join_url.contains("https://us05web.zoom.us/j/") && result.getZOOM_NO() == 1){
-
-            return "true";
-        }else{
-            return "false";
-        }
+    return mv;
     }
 
 }

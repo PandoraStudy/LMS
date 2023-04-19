@@ -217,7 +217,7 @@
                                 <div>
                                     <!-- 실제 구성은 이곳에서 진행합니다. -->
                                     <table class="table table-sm" id="table_lecture">
-                                        <thead class="table-light">
+                                        <thead>
                                             <tr>
                                                 <th class="col-2 text-center">강의 이미지</th>
                                                 <th class="col-8 text-center">강의제목</th>

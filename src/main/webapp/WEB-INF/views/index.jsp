@@ -40,18 +40,24 @@
         });
 
         $(function() {
-
             $('#zoom_open').click(function (result){
-                alert("누름");
                 $.ajax({
-                    url: 'https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token',
-                    type: 'get',
+                    url: '/zoom_open',
+                    type: 'post',
                     dataType: 'text',
                     success : function(result) {
                         if(result == "true"){
                             alert("인증에 성공했습니다.");
+                            window.location.href = "https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token";
+
+
+
+                            /*   let joinUrl = $("#Join_URL").val();
+                               window.location.href = joinUrl;*/
+
                         }else{
                             alert("인증실패 관리자 문의 바람.");
+                            return false;
                         }
                     },
                     error : function(xhr) {
@@ -63,6 +69,15 @@
             });
         });
 
+        function Zoom(){
+
+            window.open("/zoom","Zoom","width=1100, height=800");
+
+
+        }
+
+
+
     </script>
     <style>
         #calendar {
@@ -72,28 +87,29 @@
         }
 
         .main_content {
-            width: 1400px;
+            width: 1500px;
             float: left;
         }
 
         .main_left {
-            width: 700px;
+            width: 800px;
             float: left;
         }
 
         .notice_card {
-            width: 885px;
+            width: 785px;
             height: 150px;
         }
 
         .schedule_card {
-            width: 885px;
+            width: 785px;
         }
 
         .main_right {
             width: 500px;
-            margin-left: 200px;
         }
+        .none{ font-size:14px; }
+        .none:hover{ background-color: #cccccc; }
 
     </style>
 </head>
@@ -120,7 +136,8 @@
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800">학생</h1>
                     <a id="zoom_open" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>
+                            class="fas fa-download fa-sm text-white-50"></i>줌 수업 개설(위치 변경 필요)</a>
+                    <input type="hidden" id="Join_URL" value="${Join_URL}">
                 </div>
                 <!-- 컨텐츠 탑 부분 -->
                 <div class="main_content"><%--main_left--%>
@@ -142,7 +159,7 @@
                                                         <td class="col-2" style="text-align: center;">등록일</td>
                                                     </tr>
                                                     <c:forEach var="notice" items="${list }">
-                                                        <tr>
+                                                        <tr class="none">
                                                             <td>${notice.rowNum }</td>
                                                             <td class="title text-truncate" style="max-width:1px; text-align: left;">
                                                                 <a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
@@ -168,8 +185,12 @@
                                 </div>
                                 <!-- A 본문 부분 -->
                                 <div class="card-body">
-                                    <div style="height: 345px;" class="chart-area">
-                                        <div>아아아 본문 내용은 여기에~~~</div>
+                                    <div style="height: 140px;" class="chart-area">
+                                        <div>
+
+                                            <button onclick="Zoom()" class="btn btn-primary">줌 수업 시작하기</button>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -205,25 +226,25 @@
 
                                     <div class="chart-pie pt-4 pb-2">
                                         <%--본문 내용 작성하는 부분--%>
-										<div id="calendar"></div>
+                                        <div id="calendar"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- C 카드 부분 -->
-                    <div class="row" style="margin-top:200px;">
+                    <!-- 진도율 카드 -->
+                    <div class="row">
                         <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-5 mb-4">
                             <!-- 진도율 -->
-                            <div class="card shadow mb-4" style="margin: 0px 300px 0px -713px;">
+                            <div class="card shadow mb-4" >
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">자바
-                                    <span class="float-right">20%</span></h4>
+                                        <span class="float-right">20%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
@@ -258,20 +279,18 @@
 
                         <div class="col-lg-6 mb-4">
                             <!-- 식단 -->
-                            <div class="card shadow mb-4" style="margin-left:-310px;">
+                            <div style="width: 655px;" class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
-                                <div class="card-body">
-                                    <div style="height: 294px;" class="text-center">
-                                        <img src="/img/pandora_rise.png">
-                                    </div>
+                                <div>
+                                    <img style="height: 329px; width: 655px; margin-left: -1px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div><!-- container-fluid -->
+                </div><!-- 메인 컨텐츠 끝 -->
 
             </div><!-- End of Main Content -->
 

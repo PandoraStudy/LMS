@@ -59,6 +59,9 @@
 
 </script>
 <style>
+    .none:hover{ background-color: #d3d3d3; }
+    .write_btn:hover{ background-color: #d3d3d3; }
+    .search_btn:hover{ background-color: #d3d3d3; }
 </style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -99,7 +102,7 @@
                         </tr>
 
                         <c:forEach var="notice" items="${list }">
-                            <tr>
+                            <tr class="none">
                                 <td>${notice.rowNum }</td>
                                 <td class="title text-truncate" style="max-width:1px; text-align: left;">
                                     <a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
@@ -143,5 +146,19 @@
 
     </div><!-- End of Content Wrapper -->
 </div> <!-- End of Page Wrapper -->
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+<!-- Page level plugins -->
+<script src="vendor/chart.js/Chart.min.js"></script>
+<!-- Page level custom scripts -->
+<script src="js/demo/chart-area-demo.js"></script>
+<script src="js/demo/chart-pie-demo.js"></script>
+
 </body>
 </html>

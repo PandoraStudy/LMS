@@ -2,28 +2,23 @@ package com.pandora.lms.controller;
 
 
 //github.com/PandoraStudy/LMS.git
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.pandora.lms.service.YoutubeService;
+import com.pandora.lms.ytbUtil.OAuth;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.pandora.lms.service.YoutubeService;
-import com.pandora.lms.ytbUtil.OAuth;
-
-import lombok.AllArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -34,6 +29,7 @@ public class YouTubeController {
 
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
+
     	ModelAndView mv = new ModelAndView("/youtube/lecture");
 
     	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", mv);
@@ -101,25 +97,43 @@ public class YouTubeController {
     }
 
     @GetMapping("/uploadVideo")
-    public String uploadVideo() {
-        return "youtube/uploadVideo";
+    public ModelAndView uploadVideo() throws Exception {
+        ModelAndView view = new ModelAndView("youtube/uploadVideo");
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        Credential credential = oAuth.authorize(scopes, true);
+
+        if(credential != null) {
+            view.addObject("auth", true);
+        } else {
+            view.addObject("auth", false);
+        }
+
+        return view;
     }
 
     @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestPart(value = "video_file") MultipartFile videoFile) {
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) {
+        System.out.println("동영상 정보 : " + videoInfo);
+        System.out.println("동영상 파일 : " + videoFile);
+
+        return "redirect:/uploadVideo";
+    }
+
+    @PostMapping("/youtubeAccess")
+    @ResponseBody
+    public String youtubeAccess() throws Exception {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
-        try {
-            Credential credential = oAuth.authorize(scopes);
-            youtubeService.uploadVideo(credential, videoFile);
-        } catch (Exception e) {
-            System.out.println("에러..");
-            throw new RuntimeException(e);
+
+        Credential credential = oAuth.authorize(scopes, false);
+        if (credential != null) {
+            return "인증이 완료 됐습니다.";
+        } else {
+            return null;
         }
-
-//        String url = flow.newAuthorizationUrl().setRedirectUri("http://localhost:9000/Callback").build();
-
-        return "index";
     }
 
 }
