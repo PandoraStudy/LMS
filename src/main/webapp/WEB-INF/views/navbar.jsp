@@ -33,7 +33,7 @@
         학사
     </div>
 
-    <!-- A카테고리 A탭 드롭다운-->
+    <!-- 학사 카테고리 학교 드롭다운 -->
     <li class="nav-item">
         <a style="height: 40px;" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
@@ -48,10 +48,10 @@
         </div>
     </li>
 
-    <!-- A카테고리 B탭 드롭다운 -->
+    <!-- 학사 카테고리 내 강의실 탭 -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="/lecture">
-            <i class="fas fa-fw fa-wrench"></i>
+            <i class="fas fa-fw fa-book"></i>
             <span>내 강의실</span>
         </a>
     </li>
