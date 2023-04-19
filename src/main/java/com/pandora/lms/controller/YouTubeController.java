@@ -3,39 +3,23 @@ package com.pandora.lms.controller;
 
 //github.com/PandoraStudy/LMS.git
 
-import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import lombok.Value;
+import com.google.api.client.auth.oauth2.Credential;
+import com.pandora.lms.service.YoutubeService;
+import com.pandora.lms.ytbUtil.OAuth;
+import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.pandora.lms.service.YoutubeService;
-import com.pandora.lms.ytbUtil.OAuth;
-
-import lombok.AllArgsConstructor;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -98,8 +82,17 @@ public class YouTubeController {
     }
 
     @GetMapping("/uploadVideo")
-    public String uploadVideo() {
-        return "youtube/uploadVideo";
+    public ModelAndView uploadVideo() {
+        ModelAndView view = new ModelAndView("youtube/uploadVideo");
+        return view;
+    }
+
+    @PostMapping("/uploadVideo")
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name="video_file") MultipartFile videoFile) {
+        System.out.println("동영상 정보 : " + videoInfo);
+        System.out.println("동영상 파일 : " + videoFile);
+
+        return "redirect:/uploadVideo";
     }
 
     @PostMapping("/youtubeAccess")
@@ -110,14 +103,11 @@ public class YouTubeController {
 
         try {
             Credential credential = oAuth.authorize(scopes);
-
             if(credential != null) {
-                System.out.println("결과 : " + credential.getAccessToken());
-                return credential.getAccessToken();
+                return "인증이 완료 됐습니다.";
             } else {
                 return null;
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

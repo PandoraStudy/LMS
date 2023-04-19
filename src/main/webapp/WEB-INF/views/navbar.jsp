@@ -74,9 +74,9 @@
 
     <!-- C 부분2 -->
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="/uploadVideo">
             <i class="fas fa-fw fa-table"></i>
-            <span>미정</span></a>
+            <span>동영상 업로드</span></a>
     </li>
 
     <!-- Divider -->
