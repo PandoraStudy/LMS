@@ -59,6 +59,9 @@
 
 </script>
 <style>
+    .none:hover{ background-color: #d3d3d3; }
+    .write_btn:hover{ background-color: #d3d3d3; }
+    .search_btn:hover{ background-color: #d3d3d3; }
 </style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -99,7 +102,7 @@
                         </tr>
 
                         <c:forEach var="notice" items="${list }">
-                            <tr>
+                            <tr class="none">
                                 <td>${notice.rowNum }</td>
                                 <td class="title text-truncate" style="max-width:1px; text-align: left;">
                                     <a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>

@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @AllArgsConstructor
 @Controller
-public class MessageControllor {
+public class MessageController {
 
-    @GetMapping("/Message")
+    @GetMapping("/message")
     public String message(){
         return "/message/message";
     }

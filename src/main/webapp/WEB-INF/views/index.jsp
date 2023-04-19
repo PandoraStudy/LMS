@@ -94,6 +94,8 @@
             width: 500px;
             margin-left: 200px;
         }
+        .none{ font-size:14px; }
+        .none:hover{ background-color: #cccccc; }
 
     </style>
 </head>
@@ -142,7 +144,7 @@
                                                         <td class="col-2" style="text-align: center;">등록일</td>
                                                     </tr>
                                                     <c:forEach var="notice" items="${list }">
-                                                        <tr>
+                                                        <tr class="none">
                                                             <td>${notice.rowNum }</td>
                                                             <td class="title text-truncate" style="max-width:1px; text-align: left;">
                                                                 <a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
