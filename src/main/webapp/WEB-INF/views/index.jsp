@@ -78,27 +78,26 @@
         }
 
         .main_content {
-            width: 1400px;
+            width: 1500px;
             float: left;
         }
 
         .main_left {
-            width: 700px;
+            width: 800px;
             float: left;
         }
 
         .notice_card {
-            width: 885px;
+            width: 785px;
             height: 150px;
         }
 
         .schedule_card {
-            width: 885px;
+            width: 785px;
         }
 
         .main_right {
             width: 500px;
-            margin-left: 200px;
         }
         .none{ font-size:14px; }
         .none:hover{ background-color: #cccccc; }
@@ -177,7 +176,7 @@
                                 </div>
                                 <!-- A 본문 부분 -->
                                 <div class="card-body">
-                                    <div style="height: 345px;" class="chart-area">
+                                    <div style="height: 140px;" class="chart-area">
                                         <div>아아아 본문 내용은 여기에~~~</div>
                                     </div>
                                 </div>
@@ -221,12 +220,12 @@
                         </div>
                     </div>
 
-                    <!-- C 카드 부분 -->
-                    <div class="row" style="margin-top:200px;">
+                    <!-- 진도율 카드 -->
+                    <div class="row">
                         <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
+                        <div class="col-lg-5 mb-4">
                             <!-- 진도율 -->
-                            <div class="card shadow mb-4" style="margin: 0px 300px 0px -713px;">
+                            <div class="card shadow mb-4" >
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
                                 </div>
@@ -267,20 +266,18 @@
 
                         <div class="col-lg-6 mb-4">
                             <!-- 식단 -->
-                            <div class="card shadow mb-4" style="margin-left:-310px;">
+                            <div style="width: 655px;" class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
-                                <div class="card-body">
-                                    <div style="height: 294px;" class="text-center">
-                                        <img src="/img/pandora_rise.png">
-                                    </div>
+                                    <div>
+                                        <img style="height: 329px; width: 655px; margin-left: -1px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                </div><!-- container-fluid -->
+                </div><!-- 메인 컨텐츠 끝 -->
 
             </div><!-- End of Main Content -->
 
