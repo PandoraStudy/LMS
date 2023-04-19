@@ -28,8 +28,7 @@ public class ZoomController {
     @GetMapping("/zoom")/*줌 관리 페이지 띄우기용*/
     public String zoom() {
 
-
-        return "";
+        return "zoom";
     }
 
   /*  @RequestMapping(value="/zoom/tokentest" , method = {RequestMethod.GET, RequestMethod.POST})*//*토큰 발급 받고 코드 값을 가져옴*/
@@ -54,7 +53,7 @@ public class ZoomController {
     public ModelAndView get_token(@RequestParam("code") String code, Model model) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
-        ModelAndView mv = new ModelAndView("index");
+        ModelAndView mv = new ModelAndView("zoom");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/

@@ -52,8 +52,8 @@
 
 
 
-                         /*   let joinUrl = $("#Join_URL").val();
-                            window.location.href = joinUrl;*/
+                            /*   let joinUrl = $("#Join_URL").val();
+                               window.location.href = joinUrl;*/
 
                         }else{
                             alert("인증실패 관리자 문의 바람.");
@@ -68,6 +68,15 @@
 
             });
         });
+
+        function Zoom(){
+
+            window.open("/zoom","Zoom","width=1100, height=800");
+
+
+        }
+
+
 
     </script>
     <style>
@@ -177,7 +186,11 @@
                                 <!-- A 본문 부분 -->
                                 <div class="card-body">
                                     <div style="height: 140px;" class="chart-area">
-                                        <div>아아아 본문 내용은 여기에~~~</div>
+                                        <div>
+
+                                            <button onclick="Zoom()" class="btn btn-primary">줌 수업 시작하기</button>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +226,7 @@
 
                                     <div class="chart-pie pt-4 pb-2">
                                         <%--본문 내용 작성하는 부분--%>
-										<div id="calendar"></div>
+                                        <div id="calendar"></div>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +244,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">자바
-                                    <span class="float-right">20%</span></h4>
+                                        <span class="float-right">20%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
@@ -270,8 +283,8 @@
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
-                                    <div>
-                                        <img style="height: 329px; width: 655px; margin-left: -1px" src="/img/pandora_rise.png">
+                                <div>
+                                    <img style="height: 329px; width: 655px; margin-left: -1px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
