@@ -10,7 +10,6 @@
                 AND
                     student_no = #{student_no}
     </select>
-
     <update id="playTimeSave" parameterType="HashMap">
         UPDATE lecture
             SET
@@ -20,17 +19,18 @@
         AND
             student_no = #{student_no}
     </update>
-    
-     <select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
+
+<!--      parameterType="HashMap" -->
+     <select id="lectureInfo" resultType="HashMap">
         SELECT *
-		FROM lectureView
+		FROM lectureview
         ORDER BY SBJCT_NM DESC
 		LIMIT 1, 9
     </select>
 
 	<select id="lectureRate" resultType="HashMap">
         SELECT LECT_PRGRS_RT
-		FROM ON_LECT_PROG
+		FROM ON_LECT_MAG
     </select>
     
     <select id="lectureListRate" resultType="HashMap">
