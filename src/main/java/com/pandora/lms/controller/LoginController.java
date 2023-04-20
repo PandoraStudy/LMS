@@ -31,6 +31,7 @@ public class LoginController {
 
         if(loginInfo != null) {
             HttpSession session = request.getSession();
+            session.setAttribute("user_no",loginInfo.getUSER_NO());
             session.setAttribute("id",loginInfo.getUSER_ID());
             session.setAttribute("pw",loginInfo.getPSWD());
             session.setAttribute("division",loginInfo.getUSER_GROUP_CD());

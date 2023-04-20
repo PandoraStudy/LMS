@@ -58,11 +58,7 @@
 
 
 </script>
-<style>
-    .none:hover{ background-color: #d3d3d3; }
-    .write_btn:hover{ background-color: #d3d3d3; }
-    .search_btn:hover{ background-color: #d3d3d3; }
-</style>
+<style></style>
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -87,7 +83,9 @@
                                 <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>글쓴이</option>
                             </select>
                             <input type="text" name="searchValue" id="searchValue" style="width:300px; height:40px; border-radius: 5px;" value="${pages.searchValue }">
-                            <button class="search_btn" style="height:40px;">검색</button>
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
                         </form>
                     </div><!--search-->
                 </div>
@@ -135,7 +133,7 @@
                 </div><!--paging end-->
                 <!-- 글쓰기 -->
                 <div class="write">
-                    <button class="write_btn" onclick="location.href='/noticeWrite'">글쓰기</button>
+                    <button class="btn btn-primary write_btn" onclick="location.href='/noticeWrite'">글쓰기</button>
                 </div>
                 <!--수정할 부분 끝-->
             </div>

@@ -82,8 +82,8 @@
                             <c:otherwise>"/noticeWrite"</c:otherwise>
                     </c:choose>
                     method="post" onsubmit="return check()" enctype="multipart/form-data">
-                    <input type="text" name="writeTitle" id="writeTitle" class="writeTitle" placeholder="제목을 입력하세요" maxlength="100" <c:if test="${noticeDetail.notice_title ne null }">value="${ noticeDetail.notice_title }"</c:if>>
-                    <textarea name="writeContent" id="writeContent"	class="writeContent" placeholder="내용을 입력하세요"><c:if test="${noticeDetail.notice_content ne null }">${ noticeDetail.notice_content }</c:if></textarea>
+                    <input type="text" name="writeTitle" id="writeTitle" class="writeTitle" placeholder="제목" maxlength="100" <c:if test="${noticeDetail.notice_title ne null }">value="${ noticeDetail.notice_title }"</c:if>>
+                    <textarea name="writeContent" id="writeContent"	class="writeContent" placeholder="내용"><c:if test="${noticeDetail.notice_content ne null }">${ noticeDetail.notice_content }</c:if></textarea>
                     <div class="btnBox">
                         <button class="writeBtn">
                             <c:choose>
