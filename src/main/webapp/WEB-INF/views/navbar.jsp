@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-
 <!-- 사이드 메뉴바 -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
@@ -19,7 +18,7 @@
         <a class="nav-link" href="index">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>
-                2023년도 1학기
+                <c:if test="${ sessionScope.id ne null }">${sessionScope.name} 님 환영합니다.</c:if>
             </span></a>
 
 
