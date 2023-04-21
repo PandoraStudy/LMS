@@ -1,4 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<script>
+  let user_id = "${ sessionScope.id }";
+  $.ajax({
+    type: "POST",
+    url: "/msgNew",
+    data: {'user_id': user_id },
+    dataType: "text",
+    success: function (msg) {
+      // alert(msg);
+      $(".msgCnt").text(msg);
+      // if (data == 1) {
+      //   alert("성공");
+      // }
+    },
+    error: function (xhr, status, error) {
+      alert("에러");
+    }
+  });
+
+</script>
 <!-- 탑 바 -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -59,9 +79,7 @@
       <!-- 알림 아이콘 드롭다운 -->
       <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
            aria-labelledby="alertsDropdown">
-        <h6 class="dropdown-header">
-          수정해라
-        </h6>
+        <h5 class="dropdown-header">알림</h5>
         <a class="dropdown-item d-flex align-items-center" href="#">
           <div class="mr-3">
             <div class="icon-circle bg-primary">
@@ -101,68 +119,69 @@
 
     <!-- 쪽지(메시지) 부분 -->
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link" href="/messageBox">
         <i class="fas fa-envelope fa-fw"></i>
         <!-- 메시지 카운트 부분 -->
-        <span class="badge badge-danger badge-counter">7</span>
+        <c:if test="${sessionScope.id ne null }">
+        <span class="badge badge-danger badge-counter msgCnt"></span>
+        </c:if>
       </a>
       <!-- 쪽지(메시지) 드롭 다운 부분 -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-           aria-labelledby="messagesDropdown">
-        <h6 class="dropdown-header">
-          메시지 보관함
-        </h6>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                 alt="...">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold">
-            <div class="text-truncate">Hi there! I am wondering if you can help me with a
-              problem I've been having.</div>
-            <div class="small text-gray-500">Emily Fowler Â· 58m</div>
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                 alt="...">
-            <div class="status-indicator"></div>
-          </div>
-          <div>
-            <div class="text-truncate">I have the photos that you ordered last month, how
-              would you like them sent to you?</div>
-            <div class="small text-gray-500">Jae Chun Â· 1d</div>
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                 alt="...">
-            <div class="status-indicator bg-warning"></div>
-          </div>
-          <div>
-            <div class="text-truncate">Last month's report looks great, I am very happy with
-              the progress so far, keep up the good work!</div>
-            <div class="small text-gray-500">Morgan Alvarez Â· 2d</div>
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                 alt="...">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div>
-            <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-              told me that people say this to all dogs, even if they aren't good...</div>
-            <div class="small text-gray-500">Chicken the Dog Â· 2w</div>
-          </div>
-        </a>
-        <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-      </div>
+<%--      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"--%>
+<%--           aria-labelledby="messagesDropdown">--%>
+<%--        <h6 class="dropdown-header">--%>
+<%--          메시지 보관함--%>
+<%--        </h6>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="dropdown-list-image mr-3">--%>
+<%--            <img class="rounded-circle" src="img/undraw_profile_1.svg"--%>
+<%--                 alt="...">--%>
+<%--            <div class="status-indicator bg-success"></div>--%>
+<%--          </div>--%>
+<%--          <div class="font-weight-bold">--%>
+<%--            <div class="text-truncate">Hi there! I am wondering if you can help me with a--%>
+<%--              problem I've been having.</div>--%>
+<%--            <div class="small text-gray-500">Emily Fowler Â· 58m</div>--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="dropdown-list-image mr-3">--%>
+<%--            <img class="rounded-circle" src="img/undraw_profile_2.svg"--%>
+<%--                 alt="...">--%>
+<%--            <div class="status-indicator"></div>--%>
+<%--          </div>--%>
+<%--          <div>--%>
+<%--            <div class="text-truncate">I have the photos that you ordered last month, how--%>
+<%--              would you like them sent to you?</div>--%>
+<%--            <div class="small text-gray-500">Jae Chun Â· 1d</div>--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="dropdown-list-image mr-3">--%>
+<%--            <img class="rounded-circle" src="img/undraw_profile_3.svg"--%>
+<%--                 alt="...">--%>
+<%--            <div class="status-indicator bg-warning"></div>--%>
+<%--          </div>--%>
+<%--          <div>--%>
+<%--            <div class="text-truncate">Last month's report looks great, I am very happy with--%>
+<%--              the progress so far, keep up the good work!</div>--%>
+<%--            <div class="small text-gray-500">Morgan Alvarez Â· 2d</div>--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="dropdown-list-image mr-3">--%>
+<%--            <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"--%>
+<%--                 alt="...">--%>
+<%--            <div class="status-indicator bg-success"></div>--%>
+<%--          </div>--%>
+<%--          <div>--%>
+<%--            <div class="text-truncate">Am I a good boy? The reason I ask is because someone--%>
+<%--              told me that people say this to all dogs, even if they aren't good...</div>--%>
+<%--            <div class="small text-gray-500">Chicken the Dog Â· 2w</div>--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>--%>
+<%--      </div>--%>
     </li>
 
     <div class="topbar-divider d-none d-sm-block"></div>
@@ -217,8 +236,8 @@
       </div>
       <div class="modal-body">정말로 로그아웃 하시겠습니까?</div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="/logout">Logout</a>
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+        <a class="btn btn-primary" href="/logout">로그아웃</a>
       </div>
     </div>
   </div>

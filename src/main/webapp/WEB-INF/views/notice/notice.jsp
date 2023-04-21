@@ -4,6 +4,7 @@
 <html lang="ko">
 <head>
     <title>Notice List</title>
+    <link rel="shortcut icon" href="img/pandora_logo.png" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -25,7 +26,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <style>
 
@@ -58,7 +59,8 @@
 
 
 </script>
-<style></style>
+<style>
+</style>
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -83,7 +85,7 @@
                                 <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>글쓴이</option>
                             </select>
                             <input type="text" name="searchValue" id="searchValue" style="width:300px; height:40px; border-radius: 5px;" value="${pages.searchValue }">
-                            <button class="btn btn-primary" type="button">
+                            <button class="btn btn-primary">
                                 <i class="fas fa-search fa-sm"></i>
                             </button>
                         </form>

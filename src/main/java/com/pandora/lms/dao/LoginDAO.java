@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface LoginDAO {
 
     LoginDTO login(LoginDTO loginInfo);
+
+    String instrNo(int userNo);
 }

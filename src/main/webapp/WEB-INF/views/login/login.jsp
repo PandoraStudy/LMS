@@ -34,9 +34,18 @@
     function loginck(){
         let id = document.getElementById("id");
         let pw = document.getElementById("pw");
-        if(id.value == ""){ alert("ID를 입력하세요");  return false; }
-        if(pw.value == ""){ alert("비밀번호를 입력하세요"); return false; }
+
+        if(id.value == ""){
+            alert("ID를 입력하세요");
+            id.focus();
+            return false;
+        }
+        if(pw.value == ""){
+            alert("비밀번호를 입력하세요");
+            pw.focus();
+            return false; }
     }
+
 
 </script>
 <body>

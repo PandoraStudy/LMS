@@ -9,7 +9,11 @@
                     USER_GROUP_CD = #{ USER_GROUP_CD }
                 AND USER_ID = #{ USER_ID }
                 AND PSWD = #{ PSWD }
-
     </select>
+
+    <select id="instrNo" parameterType="Integer" resultType="String">
+        SELECT INSTR_NO FROM INSTR_INFO WHERE USER_NO = #{ userNo }
+    </select>
+
 
 </mapper>

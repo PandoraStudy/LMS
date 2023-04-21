@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +58,7 @@ public class NoticeController {
         noticeService.noticeRead(notice_no);
         Map<String, Object> noticeDetail = noticeService.noticeDetail(notice_no);
         textChangeUtil.changeText((String)noticeDetail.get("notice_title"));
-        textChangeUtil.changeText((String)noticeDetail.get("notice_content"));
+//        textChangeUtil.changeText((String)noticeDetail.get("notice_content"));
         noticeDetail.put("notice_title", textChangeUtil.changeEnter((String)noticeDetail.get("notice_title")));
         noticeDetail.put("notice_content", textChangeUtil.changeEnter((String)noticeDetail.get("notice_content")));
         mv.addObject("noticeDetail",noticeDetail);
@@ -79,7 +78,7 @@ public class NoticeController {
         String notice_title = request.getParameter("writeTitle");
         notice_title = textChangeUtil.changeText(notice_title);
         String notice_content = request.getParameter("writeContent");
-        notice_content = textChangeUtil.changeText(notice_content);
+//        notice_content = textChangeUtil.changeText(notice_content);
         String rowNum = request.getParameter("rowNum");
         String totalCnt = request.getParameter("totalCnt");
         System.out.println("rowNum : "+rowNum);

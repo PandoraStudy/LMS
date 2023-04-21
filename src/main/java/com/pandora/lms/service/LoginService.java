@@ -12,4 +12,6 @@ public class LoginService {
     public LoginDTO login(LoginDTO loginInfo) {
         return loginDAO.login(loginInfo);
     }
+
+    public String instrNo(int userNo) { return loginDAO.instrNo(userNo); }
 }
