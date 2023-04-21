@@ -49,7 +49,7 @@
                     success : function(result) {
                         if(result == "true"){
                             alert("인증에 성공했습니다.");
-                            window.open("/zoom","Zoom","width=1100, height=800");
+                            window.open("/zoom_connect","Zoom","width=1400, height=700");
                         }else{
                             alert("인증실패 관리자 문의 바람.");
                             return false;
@@ -66,8 +66,6 @@
                 window.open("${Join_URL}","${Join_URL}","width=1100, height=800");
             }
         }
-
-
 
     </script>
     <style>

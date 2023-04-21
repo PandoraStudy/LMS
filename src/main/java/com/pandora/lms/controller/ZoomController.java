@@ -12,13 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,13 +26,11 @@ public class ZoomController {
 
     private final ZoomService zoomService;
 
-    @GetMapping("/zoom")/*줌 관리 페이지 띄우기용*/
+    @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
     public String zoom(HttpSession session) {
-        int user_num = (int) session.getAttribute("user_no");
 
-        return "zoom";
+        return "zoom_connect";
     }
-
 
     @PostMapping("/zoom_open")
     @ResponseBody
@@ -57,7 +53,7 @@ public class ZoomController {
     public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
-        ModelAndView mv = new ModelAndView("/zoom2");
+        ModelAndView mv = new ModelAndView("/zoom");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/
