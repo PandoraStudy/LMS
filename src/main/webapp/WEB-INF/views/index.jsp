@@ -39,35 +39,6 @@
             calendar.render();
         });
 
-        $(function() {
-            $('#zoom_open').click(function (result){
-                $.ajax({
-                    url: '/zoom_open',
-                    type: 'post',
-                    dataType: 'text',
-                    success : function(result) {
-                        if(result == "true"){
-                            alert("인증에 성공했습니다.");
-                            window.location.href = "https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token";
-
-
-
-                            /*   let joinUrl = $("#Join_URL").val();
-                               window.location.href = joinUrl;*/
-
-                        }else{
-                            alert("인증실패 관리자 문의 바람.");
-                            return false;
-                        }
-                    },
-                    error : function(xhr) {
-                        alert(xhr);
-                        alert("요청 실패 재시도 바람.");
-                    }
-                });
-
-            });
-        });
 
         function Zoom(){
 
@@ -132,13 +103,20 @@
             <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid">
 
+                <c:if test="${ division == 20 }">
                 <!-- 페이지 헤드 부분 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">학생</h1>
-                    <a id="zoom_open" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-download fa-sm text-white-50"></i>줌 수업 개설(위치 변경 필요)</a>
-                    <input type="hidden" id="Join_URL" value="${Join_URL}">
+                    <h1 class="h3 mb-0 text-gray-800">교수</h1>
                 </div>
+                </c:if>
+
+                <c:if test="${ division == 10 }">
+                    <!-- 페이지 헤드 부분 -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">학생</h1>
+                    </div>
+                </c:if>
+
                 <!-- 컨텐츠 탑 부분 -->
                 <div class="main_content"><%--main_left--%>
                     <div class="main_left">

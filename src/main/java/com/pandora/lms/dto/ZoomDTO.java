@@ -7,8 +7,7 @@ import lombok.Setter;
 @Setter
 public class ZoomDTO {
 
-    int ZOOM_NO;
+    int ZOOM_AUTH, user_no;
 
-    String user_id;
 
 }

@@ -87,9 +87,11 @@
                                             </c:if>
 
                                             <c:if test="${ Join_URL ne null }">
-                                                <a onclick="Zoom_Meeting()"class="btn btn-primary"><i class="fas fa-download fa-sm text-white"></i>줌 수업 이동</a>
+                                                <button onclick="Zoom_Meeting()"class="btn btn-primary"><i class="fas fa-download fa-sm text-white"></i>줌 수업 이동</button>
                                                 <button class="btn btn-primary"><i class="fas fa-download fa-sm text-white"></i>출석체크</button>
                                             </c:if>
+
+                                            <iframe src="${Join_URL}" width=1500" height="1500"></iframe>
                                         </div>
                                     </div>
                                 </div>

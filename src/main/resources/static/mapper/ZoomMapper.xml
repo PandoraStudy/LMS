@@ -3,9 +3,9 @@
 <mapper namespace="zoom">
 
     <select id="authority" parameterType="ZoomDTO" resultType="ZoomDTO"><!--닉네임 중복 검사-->
-        SELECT ZOOM_NO
+        SELECT ZOOM_AUTH
         FROM INSTR_INFO
-        WHERE USER_ID = #{user_id}
+        WHERE USER_NO = #{user_no}
     </select>
 
 </mapper>
