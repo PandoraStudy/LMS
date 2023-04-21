@@ -128,7 +128,7 @@
                                             <tr>
                                                 <td>인증 여부</td>
                                                 <td>
-                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'><b>인증이 완료 됐습니다.</b></c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
+                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'>인증이 완료 됐습니다.</c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -156,6 +156,13 @@
                                             <button class="btn <c:choose><c:when test='${auth eq true}'>btn-primary</c:when><c:otherwise>btn-secondary</c:otherwise></c:choose>" type="button" id="btn-upload" <c:if test="${auth eq false}">disabled</c:if>>동영상 등록</button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                            <!-- A 본문 부분 -->
+                            <div class="card-body">
+                                <div>
+                                    <!-- 실제 구성은 이곳에서 진행합니다. -->
+
                                 </div>
                             </div>
                         </div>

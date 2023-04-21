@@ -14,8 +14,6 @@ public class ZoomDAO {
 
 
     public ZoomDTO authority(ZoomDTO zoomDTO) {
-
-
         return sqlSession.selectOne("zoom.authority", zoomDTO);
     }
 }

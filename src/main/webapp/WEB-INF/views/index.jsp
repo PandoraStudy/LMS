@@ -41,10 +41,30 @@
 
 
         function Zoom(){
+            $(function() {
+                $.ajax({
+                    url: '/zoom_open',
+                    type: 'post',
+                    dataType: 'text',
+                    success : function(result) {
+                        if(result == "true"){
+                            alert("인증에 성공했습니다.");
+                            window.open("/zoom","Zoom","width=1100, height=800");
+                        }else{
+                            alert("인증실패 관리자 문의 바람.");
+                            return false;
+                        }
+                    },
+                    error : function(xhr) {
+                        alert(xhr);
+                        alert("요청 실패 재시도 바람.");
+                    }
+                });
+            });
 
-            window.open("/zoom","Zoom","width=1100, height=800");
-
-
+            function Zoom_Meeting(){
+                window.open("${Join_URL}","${Join_URL}","width=1100, height=800");
+            }
         }
 
 

@@ -57,7 +57,7 @@ public class ZoomController {
     public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
-        ModelAndView mv = new ModelAndView("zoom");
+        ModelAndView mv = new ModelAndView("/zoom2");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/

@@ -76,8 +76,6 @@ public class ZoomServiceImpl implements ZoomService {
 
     @Override
     public ZoomDTO authority(ZoomDTO zoomDTO) {
-
-
         return zoomDAO.authority(zoomDTO);
     }
 

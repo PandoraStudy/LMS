@@ -27,13 +27,6 @@
     <link href="css/logo.css" rel="stylesheet">
     <style>
     </style>
-    <script>
-        window.location.href = "https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token";
-
-        $(function() {
-
-        });
-    </script>
 </head>
 <body id="page-top">
 <div id="wrapper">
