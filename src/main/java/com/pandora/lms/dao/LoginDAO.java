@@ -10,4 +10,6 @@ public interface LoginDAO {
     LoginDTO login(LoginDTO loginInfo);
 
     String instrNo(int userNo);
+
+    String applNo(int userNo);
 }
