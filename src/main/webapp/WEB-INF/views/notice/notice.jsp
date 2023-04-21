@@ -13,6 +13,7 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript" src="/js/login/socket.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +32,10 @@
 <style>
 
 </style>
-<script>
+<script type="text/javascript">
+    ws.onopen = function(event) {
+        ws.send("여기서도 보내지나?");
+    };
     function moveNext(pageNo) {	//페이지 뒤쪽 버튼
         let searchType = document.getElementById("searchType");
         let searchValue = document.getElementById("searchValue");

@@ -39,10 +39,14 @@ public class LoginController {
             session.setAttribute("pw",loginInfo.getPSWD());
             session.setAttribute("division",loginInfo.getUSER_GROUP_CD());
             session.setAttribute("name",loginInfo.getKORN_FLNM());
-            if(loginInfo.getUSER_GROUP_CD().equals("0020") ){
+            if(loginInfo.getUSER_GROUP_CD().equals("20") ){
                 String instr = loginService.instrNo(loginInfo.getUSER_NO());
                 System.out.println("INSTR_NO : "+instr);
                 session.setAttribute("instr_no",instr);
+            }else if(loginInfo.getUSER_GROUP_CD().equals("10")){
+                String appl = loginService.applNo(loginInfo.getUSER_NO());
+                System.out.println("APPL_NO : "+appl);
+                session.setAttribute("appl_no",appl);
             }
             return "redirect:/index";
         }else{ return "redirect:/login"; }

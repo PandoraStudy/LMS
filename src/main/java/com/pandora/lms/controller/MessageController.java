@@ -80,6 +80,11 @@ public class MessageController {
         System.out.println("count : "+msg);
         return msg+"";
     }
+    @GetMapping("/socket")
+    public String socket(){
+
+        return "/message/socket";
+    }
 
 
 }

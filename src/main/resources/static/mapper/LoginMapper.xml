@@ -15,5 +15,9 @@
         SELECT INSTR_NO FROM INSTR_INFO WHERE USER_NO = #{ userNo }
     </select>
 
+    <select id="applNo" parameterType="Integer" resultType="String">
+        SELECT APPL_NO FROM APPL_INFO WHERE USER_NO = #{ userNo }
+    </select>
+
 
 </mapper>
