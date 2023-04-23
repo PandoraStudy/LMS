@@ -5,16 +5,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<title>Student</title>
+<title>Pandora University</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
-<!-- grid -->
-<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" /> -->
-<!-- <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 body{
 margin: 0;
 font-family: 'Nanum Gothic', sans-serif;
+color: #303030;
 min-width: 1245px;
 }
 .top_menu{
@@ -100,7 +98,7 @@ float: left;
 width: 100%;
 /* min-width: 1280px; */
 height: 40px;
-background-color: black;
+background-color: #303030;
 /* display: flex; */
 justify-content : right;
 position: relative;
@@ -141,7 +139,7 @@ text-decoration-line: underline;
 .tab_bar input:not(:checked) + label{
 /* 해당 메뉴가 선택된 상태인지 아닌지를 사용자에게 알려줄 수 있음 */
 color: gray;
-background-color: black;
+background-color: #303030;
 }
 /* .tabs{ */
 /* width: 112px; */
@@ -179,6 +177,9 @@ text-align: center;
 .side_menu_list{
 border: 1px solid #c7ced2;
 border-collapse: collapse;
+overflow-y: scroll;
+overflow-x: hidden;
+max-height: 580px;
 }
 .side_menu_list > ul{
 padding: 0;
@@ -195,6 +196,15 @@ float: right;
 box-sizing: border-box;
 padding-left: 19px;
 }
+.li_step3:hover{
+font-weight: 600;
+text-decoration: underline;
+}
+/* .li_step3:hover{ */
+/* background-color: #e1f1fb; */
+/* font: bold; */
+/* text-decoration: underline; */
+/* } */
 .side_submenu{
 padding: 0;
 margin: 0;
@@ -251,7 +261,7 @@ padding-bottom: 5px;
 width: 100%;
 /* min-width: 1040px; */
 height: 34px;
-border-bottom: 1px solid gray;
+border-bottom: 1px solid #c7ced2;
 font-size: 16px;
 font-weight: 600;
 display: flex;
@@ -268,12 +278,24 @@ height: 48px;
 position: relative;
 }
 .search_btn{
-position: absolute;
-right: 10px;
-top: 10px;
+margin-top: 10px;
+margin-bottom: 10px;
+margin-left: 1px;
+margin-right: 1px;
+position: relative;
 width: 50px;
 height: 28px;
+float: right;
+border: 1px solid #c7ced2;
+border-radius: 3px;
+background-color: #f7f6f6;
 }
+.search_btn:hover{
+background-color: #ffffff;
+text-decoration: underline;
+cursor: pointer;
+}
+
 .main_container_search{
 width: 100%;
 /* min-width: 1020px; */
@@ -284,9 +306,8 @@ box-sizing: border-box;
 background-color: #f3fafe;
 }
 .main_container_search > div{
-width: 119px;
+width: 140px;
 /* width: calc((100% / 3) * (1 - 0.62)); */
-min-width: 119px;
 height: 26px;
 line-height: 28px;
 font-size: 14px;
@@ -298,7 +319,7 @@ position: relative;
 top: 6px;
 }
 .main_container_search > input{
-width: 195px;
+width: 220px;
 /* width: calc((100% / 3) * (1 - 0.43)); */
 min-width: 190px;
 height: 23px;
@@ -307,7 +328,7 @@ position: relative;
 top: 5px;
 }
 .main_container_search > select{
-width: 195px;
+width: 230px;
 /* width: calc((100% / 3) * (1 - 0.41)); */
 min-width: 195px;
 height: 28px;
@@ -326,29 +347,33 @@ top: 5px;
 display: block;
 }
 .div_input_left{
-width: calc(100% * (1 - 0.55) - 30px);
+width: 80px;
 height: 23px;
 float: left;
 }
 .div_input_right{
-width: calc(100% * (1 - 0.45) - 30px);
+width: 95px;;
 height: 23px;
+float: left;
+}
+.div_select_right{
+width: 100px;
+height: 29px;
 float: left;
 }
 .magnifyingBtn{
 width: 28px;
 height: 28px;
-float: left;
-position: relative;
-left: 5px;
 }
 .main_container_subtitle{
+margin-right: 20px;
 position: relative;
 top: 20px;
-width: 92px;
+width: inherit;
 height: 20px;
 /* background-color: red; */
 font-size: 16px;
+font-weight: 600;
 float: left;
 }
 .blue_bar{
@@ -361,21 +386,25 @@ margin-right: 3px;
 }
 .main_content{
 width: 100%;
-min-height: 450px;
+height: 440px;
 /* min-height: calc(100vh - 400px;); */
 border: 1px solid #c7ced2;
 border-top: 2px solid blue;
+border-bottom: 2px solid #c7ced2;
 position: relative;
-top: 40px;
+top: 20px;
+overflow-y: auto;  /* 수직 스크롤바가 필요한 경우에만 표시 */
+overflow-x: hidden;/* 수평 스크롤바를 숨김 */
 }
 .main_table{
 width: 100%;
+/* max-height: 434px; */
 /* min-height: 450px; */
 /* min-height: calc(100vh - 400px;); */
 border: 1px solid #c7ced2;
 /* border-top: 2px solid blue; */
-position: relative;
-top: -20px;
+/* position: relative; */
+/* top: -20px; */
 font-size: 14px;
 text-align: center;
 line-height: inherit;
@@ -403,9 +432,64 @@ border-collapse: collapse;
 width: 13px;
 height: 13px;
 }
+.short{
+height: 280px;
+}
+.modify{
+height: 90px;
+position: relative;
+top: 60px;
+}
+.modal_opacity{
+display: none;
+width: 100%;
+height: 100vh;
+background-color: rgba(255, 255, 255, 0.8);
+z-index: 1;
+position: absolute;
+top: 0;
+left: 0;
+}
+.modal_department{
+width: 606px;
+height:610px;
+background-color: lightblue;
+position: absolute;
+top: calc(50vh - 303px);
+left: calc(50% - 305px);
+border: 1px solid #0060af;
+}
+.modal_top_bar{
+width: calc(100% - 10px);
+height: 29px;
+border-bottom: 1px solid #c7ced2;
+background-color: #f8f8f8;
+color: #303030;
+font-size: 14px;
+font-weight: 600;
+line-height: 29px;
+padding-left: 10px;
+}
+.modal_main{
+width: 100%;
+height: 580px;
+background-color: yellowgreen;
+padding: 10px;
+box-sizing: border-box;
+/* display: grid; */
+/* grid-template-columns: 1fr 1fr; /* Change to '1fr 1fr' for side-by-side layout */ */
+/* gap: 10px; */
+}
+.modal_main_btn{
+width: 100%;
+height: 38px;
+}
+.noMargin{
+margin: 0;
+}
 </style>
 <script type="text/javascript">
-//side_menu의 li toggle
+//side_menu의 메뉴 toggle
 $(document).ready( function() {
 $(".li_step1").click(function(e){
 // 	console.log("d");
@@ -428,31 +512,27 @@ $(document).ready( function() {
 	    e.stopPropagation();
 	});
 });
-// /* 테이블 grid */
-// $(document).ready( function () {
-//     $('#main_table').DataTable();
-// } );
 
 //1번탭 활성화
 $(document).ready( function() {
 	$("#tabs1, #li_content1").click(function(e){
 	    $("#main_container").css("display","block");
 	    $("#tabs1").attr("checked", "checked");
-	    
 	});
 });
+
 //test include
-$(document).ready( function() {
-	$("#studentList").click(function(e){
-		var id = $(this).attr("id");
-		//alert("테스트");
-// 		$("#tab_bar").load("/mainContentTest #tab1");
-		$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
-		$("#load_"+id).load("/studentList");
-	    $("#tabs1").attr("checked", "checked");
-	    showContent("load_" + id, id);
-	});
-});
+// $(document).ready( function() {
+// 	$("#studentList").click(function(e){
+// 		var id = $(this).attr("id");
+// 		//alert("테스트");
+// // 		$("#tab_bar").load("/mainContentTest #tab1");
+// 		$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
+// 		$("#load_"+id).load("/studentList");
+// 	    $("#tabs1").attr("checked", "checked");
+// 	    showContent("load_" + id, id);
+// 	});
+// });
 //test2 include
 $(document).ready( function() {
 	$("#mainContentTest2").click(function(e){
@@ -512,8 +592,19 @@ $(document).ready(function () {
             + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' id='tabs_"+id+"' onclick='close_tab(\""+id+"\")'></label>";
             $("#tab_bar").append(newTab);
         }
+        
+        //main_content에 load
+        load(id);
     });
 });
+
+//main_content에 load
+function load(id){
+	$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
+	$("#load_" + id).load("/"+id+"");
+	$("#tabs_" + id).attr("checked", "checked");
+	showContent("load_" + id, id);
+}
 
 //tab 닫기
 function close_tab(id){
@@ -521,10 +612,17 @@ function close_tab(id){
 	$("label[for='tabs_" + id + "']").remove();
 	$("#load_" + id).remove();
 }
+
+//close modal
+function close_modal(id){
+	$("#modal_opacity").css("display","none");
+	$("#" + id).remove();
+}
 </script>
 
 </head>
 <body>
+<div>
 <div class="top_menu">
 	<div class="banner"></div>
 	<div class="menu">
@@ -566,26 +664,11 @@ function close_tab(id){
 			<div class="side_menu_title">학사</div>
 			<div class="side_menu_list">
 				<ul>
-					<li class="li_step1">학생관리
-						<ul class="side_submenu" id="side_submenu">
-							<li class="li_step2">학생명단조회
-								<ul class="side_submenu_sub">
-									<li class="li_step3">학생명부조회</li>
-								</ul>
-							</li>
-							<li class="li_step2">학생성적조회
-								<ul class="side_submenu_sub">
-									<li class="li_step3">학생성적조회</li>
-									<li class="li_step3">학생성적조회</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
 					<li class="li_step1">수업관리
 						<ul class="side_submenu">
 							<li class="li_step2">학생관리
 								<ul class="side_submenu_sub">
-									<li class="li_step3" id="studentList">학생명부조회</li>
+									<li class="li_step3" title="학생명부조회" id="studentList">학생명부조회</li>
 									<li class="li_step3" id="li_content4">학생일정관리</li>
 									<li class="li_step3" id="li_content3">출결관리</li>
 									<li class="li_step3">강사일정관리</li>
@@ -607,9 +690,30 @@ function close_tab(id){
 							</li>
 							<li class="li_step2">강의출석관리
 								<ul class="side_submenu_sub">
-									<li class="li_step3">1주차</li>
-									<li class="li_step3">2주차</li>
+									<li class="li_step3">강의출결관리</li>
+									<li class="li_step3" title="출석부조회(학생용)" id="attendance">출석부조회(학생용)</li>
 									<li class="li_step3">3주차</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">교과관리
+						<ul class="side_submenu" id="side_submenu">
+							<li class="li_step2">교육과정관리
+								<ul class="side_submenu_sub">
+									<li class="li_step3" title="교육과정관리" id="subject">교육과정관리</li>
+								</ul>
+							</li>
+							<li class="li_step2">과목정보관리
+								<ul class="side_submenu_sub">
+									<li class="li_step3" title="일반교과목관리" id="insertYoutube">일반교과목관리</li>
+									<li class="li_step3">학생성적조회</li>
+								</ul>
+							</li>
+							<li class="li_step2">학생성적조회
+								<ul class="side_submenu_sub">
+									<li class="li_step3">학생성적조회</li>
+									<li class="li_step3">학생성적조회</li>
 								</ul>
 							</li>
 						</ul>
@@ -623,6 +727,339 @@ function close_tab(id){
 							</li>
 						</ul>
 					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="li_step1">empty1
+						<ul class="side_submenu">
+							<li class="li_step2">empty2
+								<ul class="side_submenu_sub">
+									<li class="li_step3">empty3</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -631,6 +1068,9 @@ function close_tab(id){
 <!-- main_container -->
 		<div class="main_container" id="main_container">
 		</div>
+</div>
+</div>
+<div id="modal_opacity" class="modal_opacity">
 </div>
 </body>
 </html>

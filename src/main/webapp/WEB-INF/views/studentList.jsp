@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 $(document).ready( function() {
-	$(".search_btn").click(
+	$("#search_btn").click(
 		function(e) {
 			e.preventDefault();
 			$.ajax({
 				url : "/search",
 				type : "POST",
 				dataType : "json",
-				data : $("#search-form").serialize(),
+				data : $("#search_form").serialize(),
 				success : function(data) {
 					$('#tableBody').empty();
-					$('#cnt').empty();
+					$('#cnt_list').empty();
 					var result = data;
 					var str = "";
 					$.each(result, function(i, info) {
@@ -31,7 +30,7 @@ $(document).ready( function() {
 								+ '</td></tr>';
 					});
 					$('#tableBody').append(str);
-					$('#cnt').append(result.length);
+					$('#cnt_list').append(result.length);
 				}
 			});
 		});
@@ -40,9 +39,8 @@ $(document).ready( function() {
 <script type="text/javascript">
 var columnSortingStates = {};
 
-function sortTable(n) {
-	  var table, rows, switching, i, x, y, shouldSwitch;
-	  table = document.getElementById("main_table");
+function sortTable(n, table) {
+	  var rows, switching, i, x, y, shouldSwitch;
 	  switching = true;
 
 	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
@@ -51,7 +49,8 @@ function sortTable(n) {
 	      columnSortingStates[key] = undefined;
 	    }
 	  }
-
+	
+	  // 오름차순, 내림차순, 정렬x 순으로 정렬
 	  if (columnSortingStates[n] === undefined) {
 	    columnSortingStates[n] = "asc";
 	  } else if (columnSortingStates[n] === "asc") {
@@ -106,12 +105,23 @@ function sortTable(n) {
 	}
 
 </script>
+<script type="text/javascript">
+function modalSearch() {
+    var modal = document.getElementById("modal_opacity");
+    if (modal.style.display === "none" || modal.style.display === "") {
+        modal.style.display = "block";
+        $("#modal_opacity").load("/studentListModal");
+    } else {
+        modal.style.display = "none";
+    }
+}
+</script>
 <div id="main_container_load">
 	<div class="main_container_title">
-		<img class="title_img" alt="title" src="/img/icon/title.png">학생명부조회{side_submenu_sub}
+		<img class="title_img" alt="title" src="/img/icon/title.png">학생명부조회
 	</div>
 
-	<form id="search-form">
+	<form id="search_form">
 		<div class="main_container_interspace">
 			<input type="button" value="조회" id="search_btn" class="search_btn">
 		</div>
@@ -129,41 +139,41 @@ function sortTable(n) {
 				<option value="유보">유보</option>
 			</select>
 			<div>소속학과</div>
-			<span class="div_input"> <input class="div_input_left"
-				disabled value=""><input class="div_input_right"
-				name="department"> <img alt="magnifyingBtn"
-				src="/img/icon/magnifyingBtn.png" class="magnifyingBtn">
+			<span class="div_input">
+			<input class="div_input_left" disabled value="">
+			<input class="div_input_right" name="department">
+			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch()">
 			</span>
 		</div>
 	</form>
 
 	<div class="main_container_subtitle">
 		<div class="blue_bar"></div>
-		학생정보
+		학생 정보
 	</div>
-	<div
-		style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
-		<span id="cnt"></span>건이 조회되었습니다.
+	<div style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
+		<span id="cnt_list"></span>건이 조회되었습니다.
 	</div>
 	<div class="main_content">
 		<table id="main_table" class="main_table">
 			<thead>
 				<tr>
-					<th onclick="sortTable(0)">과정</th>
-					<th onclick="sortTable(1)">입학</th>
-					<th onclick="sortTable(2)">학번</th>
-					<th onclick="sortTable(3)">이름</th>
-					<th onclick="sortTable(4)">생년월일</th>
-					<th onclick="sortTable(5)">성별</th>
-					<th onclick="sortTable(6)">소속학과</th>
-					<th onclick="sortTable(7)">주야</th>
-					<th onclick="sortTable(8)">학년</th>
-					<th onclick="sortTable(9)">분반</th>
-					<th onclick="sortTable(10)">학적상태</th>
-					<th onclick="sortTable(11)">입학일자</th>
+					<th onclick="sortTable(0, main_table)">과정</th>
+					<th onclick="sortTable(1, main_table)">입학</th>
+					<th onclick="sortTable(2, main_table)">학번</th>
+					<th onclick="sortTable(3, main_table)">이름</th>
+					<th onclick="sortTable(4, main_table)">생년월일</th>
+					<th onclick="sortTable(5, main_table)">성별</th>
+					<th onclick="sortTable(6, main_table)">소속학과</th>
+					<th onclick="sortTable(7, main_table)">주야</th>
+					<th onclick="sortTable(8, main_table)">학년</th>
+					<th onclick="sortTable(9, main_table)">분반</th>
+					<th onclick="sortTable(10, main_table)">학적상태</th>
+					<th onclick="sortTable(11, main_table)">입학일자</th>
 				</tr>
 			</thead>
 			<tbody id="tableBody">
+			
 			</tbody>
 		</table>
 	</div>

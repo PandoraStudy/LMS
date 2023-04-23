@@ -6,16 +6,30 @@
 		SELECT *
 		FROM student
 		<where>
-		<if test="name!=''">
+		<if test="name != ''">
 			name LIKE CONCAT('%',#{name},'%')
 		</if>
-		<if test="academic_status!=''">
+		<if test="academic_status != ''">
 			AND academic_status LIKE CONCAT('%',#{academic_status},'%')
 		</if>
-		<if test="department!=''">
+		<if test="department != ''">
 			AND department LIKE CONCAT('%',#{department},'%')
 		</if>
 		</where>
 	</select>
+	
+	<select id="onlectList" parameterType="OnLectNmDTO" resultType="OnLectNmDTO">
+		SELECT *
+		FROM ON_LECT_INFO
+		<where>
+			<if test="ON_LECT_NM != null">
+				ON_LECT_NM LIKE CONCAT('%',#{ON_LECT_NM},'%')
+			</if>
+		</where>
+	</select>
+	
+<!-- 	<insert id="insertYoutube"> -->
+<!-- 		INSERT INTO  -->
+<!-- 	</insert> -->
 	
 </mapper>

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pandora.lms.dto.AdminDTO;
+import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 import com.pandora.lms.service.AdminService;
 
@@ -25,6 +27,9 @@ public class AdminController {
 	@Autowired
 	SearchDTO searchDTO;
 	
+	@Autowired
+	OnLectNmDTO onlectnmDTO;
+	
 	@GetMapping("/admin")
 	public String admin() {
 //		ModelAndView mv = new ModelAndView("admin");
@@ -32,6 +37,11 @@ public class AdminController {
 //		mv.addObject("list", adminList);
 //		System.out.println(adminList.toString());
 		return "admin";
+	}
+	
+	@GetMapping("/studentList")
+	public String studentList() {
+	    return "studentList";
 	}
 	
 	@ResponseBody
@@ -50,6 +60,71 @@ public class AdminController {
 		
 		return searchList;
 	}
+
+	@ResponseBody
+	@PostMapping("/search/onlect")
+	public List<OnLectNmDTO> onlect(@RequestParam("ON_LECT_NM") String lect_name){
+		
+		OnLectNmDTO onLect = new OnLectNmDTO();
+		onLect.setON_LECT_NM(lect_name);
+		
+		List<OnLectNmDTO> onlectList = adminService.onlectList(onLect);
+		
+		System.out.println(onlectList);
+		
+		return onlectList;
+	}
+	
+	@GetMapping("/insertYoutube")
+	public String insertYoutube() {
+		return "insertYoutube";
+	}
+	
+	@ResponseBody
+	@PostMapping("/insertYoutube/save")
+	public List<OnLectNmDTO> insertYoutube(@RequestParam("ON_LECT_URL") String ON_LECT_URL
+											, @RequestParam("file_upload") MultipartFile fileUpload){
+		
+		OnLectNmDTO onLect = new OnLectNmDTO();
+		onLect.setON_LECT_URL(ON_LECT_URL);
+//		onLect.set
+		
+		List<OnLectNmDTO> insertYoutube = adminService.insertYoutube(onLect);
+		
+		return insertYoutube;
+	}
+	
+	@GetMapping("/attendance")
+	public String attendance() {
+		return "attendance";
+	}
+	
+	@GetMapping("/opacity")
+	public String opacity() {
+		return "opacity";
+	}
+	
+	@GetMapping("/studentListModal")
+	public String studentListModal() {
+		return "studentListModal";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@GetMapping("/mainContentTest2")
+	public String mainContentTest2() {
+		return "mainContentTest2";
+	}
+	
 	@ResponseBody
 	@PostMapping("/search2")
 	public List<AdminDTO> search2(@RequestParam("name") String name
@@ -65,13 +140,5 @@ public class AdminController {
 		List<AdminDTO> searchList = adminService.searchList(search);
 		
 		return searchList;
-	}
-	@GetMapping("/studentList")
-	public String studentList() {
-	    return "studentList";
-	}
-	@GetMapping("/mainContentTest2")
-	public String mainContentTest2() {
-		return "mainContentTest2";
 	}
 }
