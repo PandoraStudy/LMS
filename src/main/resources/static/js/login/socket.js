@@ -1,4 +1,4 @@
-    const ws = new WebSocket('ws:/localhost/user');
+    let ws = new WebSocket('ws:/localhost/user');
 
     ws.onopen = function(event) {
         console.log("WebSocket 연결이 열렸습니다.");
