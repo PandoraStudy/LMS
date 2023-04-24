@@ -33,9 +33,9 @@
 
 </style>
 <script type="text/javascript">
-    ws.onopen = function(event) {
-        ws.send("여기서도 보내지나?");
-    };
+    // ws.onopen = function(event) {
+    //     ws.send("여기서도 보내지나?");
+    // };
     function moveNext(pageNo) {	//페이지 뒤쪽 버튼
         let searchType = document.getElementById("searchType");
         let searchValue = document.getElementById("searchValue");

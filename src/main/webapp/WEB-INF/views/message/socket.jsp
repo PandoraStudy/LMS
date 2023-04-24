@@ -4,6 +4,7 @@
 <html lang="ko">
 <head>
     <title>socket 통신</title>
+
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -13,6 +14,7 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript" src="/js/login/socket.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,140 +30,8 @@
     <link href="css/logo.css" rel="stylesheet">
 
 </head>
-<style>
-    .container0 {
-        display: flex;
-        font-size: 12px;
-    }
-
-    .table {
-        width: 600px;
-        box-sizing: border-box;
-    }
-
-    .table-header {
-        width: 100px;
-    }
-
-    .msgBox_board {
-        width: 600px;
-    }
-
-    .msgBox_detail {
-        display: inline-block;
-        width: 600px;
-        height: 700px;
-        box-sizing: border-box;
-    }
-
-    .msg_detail {
-        display: inline-block;
-        width: 600px;
-        height: 42px;
-        line-height: 42px;
-        font-size: 15px;
-        font-weight: bold;
-        border: 1px solid #d3d3d3;
-        box-sizing: border-box;
-    }
-
-    .msg_content {
-        font-size: 20px;
-        width: 600px;
-        height: 550px;
-        /* 	border-radius: 5px; */
-        box-sizing: border-box;
-        font-weight: bold;
-        border: 1px solid #d3d3d3;
-        background-color: #fafafa;
-    }
-
-    .pagingBox {
-        width: 600px;
-    }
-
-    .write_btn {
-        width: 30px;
-        background-color: #ff3d3d;
-        height: 30px;
-    }
-
-</style>
-<script>
-    $(function () {
-        $("#msgBox_detail").hide();
-        let prev = -1;
-
-        $(".message").click(function () {
-            let msgNo = $(this).attr("value");
-            console.log($(".msg_content" + msgNo).val());
-            $("#msgBox_detail").val($(".msg_content" + msgNo).val());
-            $("#msg_content").val($(".msg_content" + msgNo).val());
-            if (msgNo == prev) {
-                $("#msgBox_detail").toggle();
-            } else {
-                $("#msgBox_detail").show();
-            }
-            prev = msgNo;
-            $.ajax({
-                type: "POST",
-                url: "/msgRead",
-                data: {'msgNo': msgNo},
-                dataType: "json",
-                success: function (data) {
-                    if (data == 1) {
-                        // document.location.reload();
-                        $(".msgread" + msgNo).load(location.href + " .msgread" + msgNo);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert("실패")
-                }
-            });
-
-        });
-        $(".del").click(function () {
-            if (confirm("삭제하시겠습니까?")) {
-                let del = $(this).val();
-                $.post({
-                    url: "msgDel",
-                    data: {'msgNo': del}
-                }).done(function (data) {
-                    document.location.reload();
-                }).fail(function (xhr, status, error) {
-                    alert("실패");
-                });
-            }
-        });
-    });
-
-    function moveNext(pageNo) {	//페이지 뒤쪽 버튼
-        let searchType = document.getElementById("searchType");
-        let searchValue = document.getElementById("searchValue");
-        let url = document.location.href.split("?", 1);
-
-        if (pageNo > ${pages.lastPage }) {
-            return false;
-        } else if (pageNo != ${pages.lastPage }) {
-
-            if ((searchType.value != null && searchType.value != "none") && searchValue.value != null) {
-                location.href = url + "?searchType=" + searchType.value + "&searchValue=" + searchValue.value + "&pageNo=" + (pageNo + 1);
-            } else {
-                location.href = "/notice?pageNo=" + (pageNo + 1);
-            }
-
-        } else if (pageNo == ${pages.lastPage }) {
-
-            if ((searchType.value != null && searchType.value != "none") && searchValue.value != null) {
-                location.href = url + "?searchType=" + searchType.value + "&searchValue=" + searchValue.value + "&pageNo=" + pageNo;
-            } else {
-                location.href = "/notice?pageNo=" + pageNo;
-            }
-        }
-    }
-
-
-</script>
+<style></style>
+<script></script>
 <style></style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -178,26 +48,9 @@
             <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:100px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-                    <script>
-                        const ws = new WebSocket('ws://localhost/SocketHandler');
-                        ws.send('Hello, Server!');
-                        ws.onopen = function(event) {
-                            console.log('WebSocket 연결이 열렸습니다.');
-                        };
-
-                        ws.onmessage = function(event) {
-                            console.log('WebSocket으로부터 수신된 메시지: ' + event.data);
-                        };
-
-                        ws.onclose = function(event) {
-                            console.log('WebSocket 연결이 닫혔습니다.');
-                        };
-
-                    </script>
-
-
-
-
+                    <button onclick="connect()">connect</button>
+                    <button onclick="disconnect()">disconnect</button>
+                    <script></script>
                     <!--수정할 부분 끝-->
                 </div>
             </div>

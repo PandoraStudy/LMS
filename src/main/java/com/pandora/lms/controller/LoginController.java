@@ -36,7 +36,6 @@ public class LoginController {
             HttpSession session = request.getSession();
             session.setAttribute("user_no",loginInfo.getUSER_NO());
             session.setAttribute("id",loginInfo.getUSER_ID());
-            session.setAttribute("pw",loginInfo.getPSWD());
             session.setAttribute("division",loginInfo.getUSER_GROUP_CD());
             session.setAttribute("name",loginInfo.getKORN_FLNM());
             if(loginInfo.getUSER_GROUP_CD().equals("20") ){
