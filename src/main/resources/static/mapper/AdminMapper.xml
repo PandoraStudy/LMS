@@ -31,5 +31,13 @@
 <!-- 	<insert id="insertYoutube"> -->
 <!-- 		INSERT INTO  -->
 <!-- 	</insert> -->
-	
+	<select id="studentsModal" parameterType="ApplInfoDTO" resultType="ApplInfoDTO">
+		SELECT *
+		FROM APPL_INFO
+		<where>
+			<if test="KORN_FLNM != null">
+				KORN_FLNM LIKE CONCAT('%',#{KORN_FLNM},'%')
+			</if>
+		</where>
+	</select>
 </mapper>

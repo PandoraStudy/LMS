@@ -8,7 +8,7 @@ $(document).ready( function() {
 				url : "/search",
 				type : "POST",
 				dataType : "json",
-				data : $("#search_form").serialize(),
+				data : $("#studentList_form").serialize(),
 				success : function(data) {
 					$('#tableBody').empty();
 					$('#cnt_list').empty();
@@ -36,92 +36,12 @@ $(document).ready( function() {
 		});
 	});
 </script>
-<script type="text/javascript">
-var columnSortingStates = {};
-
-function sortTable(n, table) {
-	  var rows, switching, i, x, y, shouldSwitch;
-	  switching = true;
-
-	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
-	  for (var key in columnSortingStates) {
-	    if (key != n) {
-	      columnSortingStates[key] = undefined;
-	    }
-	  }
-	
-	  // 오름차순, 내림차순, 정렬x 순으로 정렬
-	  if (columnSortingStates[n] === undefined) {
-	    columnSortingStates[n] = "asc";
-	  } else if (columnSortingStates[n] === "asc") {
-	    columnSortingStates[n] = "desc";
-	  } else if (columnSortingStates[n] === "desc") {
-	    columnSortingStates[n] = "none";
-	  } else if (columnSortingStates[n] === "none") {
-	    columnSortingStates[n] = "asc";
-	  }
-	  dir = columnSortingStates[n];
-
-	  // 모든 th 요소에서 기호를 제거하십시오.
-	  var thElements = table.getElementsByTagName("th");
-	  for (var j = 0; j < thElements.length; j++) {
-	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
-	  }
-
-	  while (switching) {
-	    switching = false;
-	    rows = table.rows;
-	    for (i = 1; i < (rows.length - 1); i++) {
-	      shouldSwitch = false;
-	      x = rows[i].getElementsByTagName("TD")[n];
-	      y = rows[i + 1].getElementsByTagName("TD")[n];
-
-	      if (dir === "asc") {
-	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "desc") {
-	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "none") {
-	        break;
-	      }
-	    }
-	    if (shouldSwitch) {
-	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	      switching = true;
-	    }
-	  }
-
-	  // 정렬된 요소에 기호를 추가합니다.
-	  if (dir === "asc") {
-	    thElements[n].innerHTML += " ▲";
-	  } else if (dir === "desc") {
-	    thElements[n].innerHTML += " ▼";
-	  }
-	}
-
-</script>
-<script type="text/javascript">
-function modalSearch() {
-    var modal = document.getElementById("modal_opacity");
-    if (modal.style.display === "none" || modal.style.display === "") {
-        modal.style.display = "block";
-        $("#modal_opacity").load("/studentListModal");
-    } else {
-        modal.style.display = "none";
-    }
-}
-</script>
 <div id="main_container_load">
 	<div class="main_container_title">
 		<img class="title_img" alt="title" src="/img/icon/title.png">학생명부조회
 	</div>
 
-	<form id="search_form">
+	<form id="studentList_form">
 		<div class="main_container_interspace">
 			<input type="button" value="조회" id="search_btn" class="search_btn">
 		</div>
@@ -142,7 +62,7 @@ function modalSearch() {
 			<span class="div_input">
 			<input class="div_input_left" disabled value="">
 			<input class="div_input_right" name="department">
-			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch()">
+			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('departmentModal')">
 			</span>
 		</div>
 	</form>
