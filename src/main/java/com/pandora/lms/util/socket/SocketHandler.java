@@ -16,17 +16,18 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String payload = "{ user : "+message.getPayload()+"}";
-        JSONObject json = new JSONObject(payload);
-        for (WebSocketSession s : sessions){
-            s.sendMessage(new TextMessage("Hi"+json.get("user")+"! How may I Help you?"));
+        //String payload = "{ user : "+message.getPayload()+"}";
+       // JSONObject json = new JSONObject(payload);
+        System.out.println("클라이언트에서 온 메시지 : "+message.getPayload());
+        for (WebSocketSession s : sessions){ //json.get("user")
+            s.sendMessage(new TextMessage(message.getPayload()));
         }
     }
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println("세션 연결 성공했습니다.");
+        System.out.println("세션 연결되었습니다.");
     }
 
     @Override

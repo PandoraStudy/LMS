@@ -30,8 +30,22 @@
     <link href="css/logo.css" rel="stylesheet">
 
 </head>
-<style></style>
-<script></script>
+<style>
+    .socketBtn{
+        width:100px;
+        height:40px;
+        color:white;
+        border:none;
+        border-radius: 5px;
+    }
+    .messageBody{
+        margin:5px;
+        font-weight: bold;
+    }
+</style>
+<script>
+    const name = "${sessionScope.name}";
+</script>
 <style></style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -48,12 +62,15 @@
             <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:100px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-                    <button onclick="connect()">connect</button>
-                    <button onclick="disconnect()">disconnect</button>
-                    <script></script>
+                    <div id="messageBox" style="text-align:left; width:1200px; height:500px; border:1px solid black;"></div>
                     <!--수정할 부분 끝-->
                 </div>
+                <input type="text" style="width:500px; height:40px;" id="msg">
+                <button class="socketBtn" style="background-color: #2a96a5;" onclick="msg_send()">전송</button>
+                <button class="socketBtn" onclick="disconnect()" style="background-color: darkred;">disconnect</button>
+                <script></script>
             </div>
+
         </div><!-- End of Main Content -->
         <!-- footer -->
         <%@include file="../footer.jsp" %>
