@@ -45,6 +45,12 @@
 </style>
 <script>
     const name = "${sessionScope.name}";
+    $(function(){
+        $("#msg").on('keypress', function(e){
+            if(e.keyCode == 13){ $("#msgsend").click(); }
+        });
+    });
+
 </script>
 <style></style>
 <body id="page-top">
@@ -66,7 +72,7 @@
                     <!--수정할 부분 끝-->
                 </div>
                 <input type="text" style="width:500px; height:40px;" id="msg">
-                <button class="socketBtn" style="background-color: #2a96a5;" onclick="msg_send()">전송</button>
+                <button id="msgsend"class="socketBtn" style="background-color: #2a96a5;" onclick="msg_send()">전송</button>
                 <button class="socketBtn" onclick="disconnect()" style="background-color: darkred;">disconnect</button>
                 <script></script>
             </div>
