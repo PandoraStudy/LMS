@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 //github.com/PandoraStudy/LMS.git
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.pandora.lms.dto.LoginDTO;
+import com.pandora.lms.dto.YouTubeDTO;
+import com.pandora.lms.service.LoginService;
 import com.pandora.lms.service.YoutubeService;
 import com.pandora.lms.ytbUtil.OAuth;
 
@@ -32,30 +38,53 @@ public class YouTubeController {
     private final OAuth oAuth;
     private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
-
-    @GetMapping("/lecture")
-    public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
-
-    	ModelAndView mv = new ModelAndView("/youtube/lecture");
-
-    	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", mv);
-//    	System.out.println(lectureInfo);
+    private final LoginService loginService;
+    
+	@GetMapping("/lecture")
+	public ModelAndView lecture(@RequestParam Map<String, Object> userData, HttpSession session) throws JSONException {
+		ModelAndView mv = new ModelAndView("/youtube/lecture");
+//		System.out.println("session : "+session);
+		
+		int appl = Integer.parseInt((String)session.getAttribute("appl_no"));
+		System.out.println("appl : " + appl);
+		YouTubeDTO youtubeDTO = new YouTubeDTO();
+		youtubeDTO.setAppl(appl);
+		
+		
+		List<Map<String, Object>> lecture = sqlSession.selectList("youtube.lecture", youtubeDTO);
+//		List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", mv);
+//		List<Map<Integer, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", mv);
+//		System.out.println(lectureInfo);
+//		System.out.println(LECT_PRGRS_RT);
+		
+//		JSONArray AjlectureInfo = new JSONArray(lectureInfo);
+//		JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
     	
-    	List<Map<Integer, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", mv);
-    	System.out.println(LECT_PRGRS_RT);
-    	
-    	JSONArray AjlectureInfo = new JSONArray(lectureInfo);
-    	JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
-    	
-        JSONObject json = new JSONObject();
-
-        json.put("AjlectureInfo", AjlectureInfo);
-        json.put("AjLECT_PRGRS_RT", AjLECT_PRGRS_RT);
-
-        mv.addObject("lectureInfo", json);
-//        mv.addObject("LECT_PRGRS_RT", json);
+//		JSONObject json = new JSONObject();
+		
+//		json.put("AjlectureInfo", AjlectureInfo);
+//		json.put("AjLECT_PRGRS_RT", AjLECT_PRGRS_RT);
+		
+		mv.addObject("lecture", lecture);
+//		mv.addObject("lectureInfo", json);
+//		mv.addObject("LECT_PRGRS_RT", json);
         
         return mv;
+    }
+    
+    @PostMapping("/youtubeData")
+    public String youtubeData(@RequestParam Map<String, Object> youtubeListData) {
+//    	System.out.println("youtubeListData : " + youtubeListData);
+    	
+    	YouTubeDTO youtubeDTO = new YouTubeDTO();
+    	youtubeDTO.setON_LECT_NM((String) youtubeListData.get("videoTitle"));
+//    	youtubeDTO.setLECT_MAX_TM(Integer.parseInt((String) youtubeListData.get("totalTime")));
+//    	youtubeDTO.setON_LECT_URL((String) youtubeListData.get("id"));
+    	System.out.println(youtubeDTO);
+    	String id = (String) youtubeListData.get("id");
+//    	sqlSession.insert("youtube.youtubeData", youtubeDTO);
+    	
+        return id;
     }
 
     @GetMapping("/lectureList")
@@ -73,7 +102,7 @@ public class YouTubeController {
         System.out.println(playlistId);
         return view;
     }
-
+    
     @GetMapping("/lectureDetail")
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userData) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");

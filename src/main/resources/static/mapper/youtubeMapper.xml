@@ -19,14 +19,27 @@
         AND
             student_no = #{student_no}
     </update>
-
-<!--      parameterType="HashMap" -->
-     <select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
-        SELECT *
-		FROM lectureview
-        ORDER BY SBJCT_NM DESC
-		LIMIT 1, 9
+	
+<!-- 	
+	<insert id="youtubeData" parameterType="HashMap">
+		INSERT INTO ON_LECT_INFO (ON_LECT_NM, ON_LECT_CN, ON_LECT_URL)
+		VALUES
+		(#{ON_LECT_NM}, #{ON_LECT_CN}, #{ON_LECT_URL})
+	</insert>
+		 -->
+	
+	<select id="lecture" resultType="HashMap">
+        SELECT UV.SBJCT_NM, UV.KORN_FLNM, UV.CRCLM_NM
+		FROM USER_APPL_VIEW AS UV
+		WHERE UV.APPL_NO = #{appl }
     </select>
+    
+	<select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
+		SELECT *
+		FROM lectureview
+		ORDER BY SBJCT_NM DESC
+		LIMIT 1, 9
+	</select>
 
 	<select id="lectureRate" resultType="HashMap">
         SELECT LECT_PRGRS_RT

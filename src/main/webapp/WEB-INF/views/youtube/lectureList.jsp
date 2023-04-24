@@ -19,9 +19,11 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
     <%-- API Key값 --%>
-    <script src="js/apikey.js"></script>
+<!--     <script src="js/apikey.js"></script> -->
+    <script src="js/YoutubeLectureList.js"></script>
 </head>
 <script>
+/*
     $(function () {
         // 로딩창 보여주기
         $('#loading').show();
@@ -33,11 +35,11 @@
             url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + API_KEY,
             dataType: "json",
             success: function (playlistItems) {
-                /* 플레이리스트에 있는 동영상 각각의 정보 */
+                // 플레이리스트에 있는 동영상 각각의 정보
                 let playlist = playlistItems.items;
 
                 for (var i = 0; i < playlist.length; i++) {
-                    /* 동영상 썸네일 이미지 URL, 제목, 동영상 URL, 동영상 총 재생시간, DB 저장된 재생시간, 썸네일 사용 총 재생시간 */
+                    // 동영상 썸네일 이미지 URL, 제목, 동영상 URL, 동영상 총 재생시간, DB 저장된 재생시간, 썸네일 사용 총 재생시간
                     let videoThumnails = playlist[i].snippet.thumbnails.medium.url
                     let videoTitle = playlist[i].snippet.title;
                     let videoId = playlist[i].snippet.resourceId.videoId;
@@ -48,25 +50,25 @@
 //                     var ON_LECT_TM_List = ${ON_LECT_TM };
 //                     var AjON_LECT_TM = ON_LECT_TM_List.AjON_LECT_TM;
 //                     var ON_LECT_TM = AjON_LECT_TM[i].ON_LECT_TM;
-                    /* 동영상의 재생시간 가져오기 */
+                    // 동영상의 재생시간 가져오기
                     $.get({
                         url: "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=" + videoId + "&key=" + API_KEY,
                         dataType: "json",
                         success: function (video) {
-                            /* 유튜브 API 제공하는 총 재생시간 ISO 8601 형식 */
+                            // 유튜브 API 제공하는 총 재생시간 ISO 8601 형식
                             videoDuration = video.items[0].contentDetails.duration;
-                            /* moment.js 라이브러리를 사용하여 ISO 8601 형식 duration 객체로 변환 */
+                            // moment.js 라이브러리를 사용하여 ISO 8601 형식 duration 객체로 변환
                             let totalTime = moment.duration(videoDuration).asSeconds();
-                            /* ISO 8601 형식 썸네일 표시 위해 M:S 형태로 교체 */
+                            // ISO 8601 형식 썸네일 표시 위해 M:S 형태로 교체
                             videoTotalTime = durationToTotalTime(videoDuration);
 
                     
-                            /* 1번 포인트 */
+                            // 1번 포인트
                             console.log(videoId + "1st : " + totalTime);
                             
 //                     var attendance = totalTime-ON_LECT_TM;
 //                     console.log(attendance + "=" + totalTime + "-" + ON_LECT_TM);
-                            /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
+                            // 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성
                             let $tr = $("<tr>");
                             $tr.append("<td class='text-center'>"
                             + "<div class='video-thumnails'>"
@@ -92,7 +94,7 @@
                             alert("유튜브 동영상 정보를 불러오는 도중 에러가 발생했습니다.");
                         }
                     });
-                } /* 반복문 종료 */
+                } // 반복문 종료
             },
             error: function () {
                 $("#loading").hide();
@@ -101,7 +103,7 @@
         });
     });
 
-    /* ISO 8601 형식을 썸네일 표시 위해 M:S 형태로 교체 */
+    // ISO 8601 형식을 썸네일 표시 위해 M:S 형태로 교체
     function durationToTotalTime(videoDuration) {
         videoDuration = videoDuration.replace("PT", "");
         videoDuration = videoDuration.replace("H", "시간 ");
@@ -110,6 +112,7 @@
 
         return videoDuration;
     }
+    */
 </script>
 <style>
     #loading {
