@@ -4,6 +4,7 @@
 <html lang="ko">
 <head>
     <title>Notice List</title>
+    <link rel="shortcut icon" href="img/pandora_logo.png" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -12,6 +13,7 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript" src="/js/login/socket.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,12 +27,15 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <style>
 
 </style>
-<script>
+<script type="text/javascript">
+    ws.onopen = function(event) {
+        ws.send("여기서도 보내지나?");
+    };
     function moveNext(pageNo) {	//페이지 뒤쪽 버튼
         let searchType = document.getElementById("searchType");
         let searchValue = document.getElementById("searchValue");
@@ -58,7 +63,8 @@
 
 
 </script>
-<style></style>
+<style>
+</style>
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -83,7 +89,7 @@
                                 <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>글쓴이</option>
                             </select>
                             <input type="text" name="searchValue" id="searchValue" style="width:300px; height:40px; border-radius: 5px;" value="${pages.searchValue }">
-                            <button class="btn btn-primary" type="button">
+                            <button class="btn btn-primary">
                                 <i class="fas fa-search fa-sm"></i>
                             </button>
                         </form>

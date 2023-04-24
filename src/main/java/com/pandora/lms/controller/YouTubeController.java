@@ -1,24 +1,30 @@
 package com.pandora.lms.controller;
 
 
-//github.com/PandoraStudy/LMS.git
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.pandora.lms.service.YoutubeService;
-import com.pandora.lms.ytbUtil.OAuth;
-import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+//github.com/PandoraStudy/LMS.git
+
+import com.google.api.client.auth.oauth2.Credential;
+import com.pandora.lms.service.YoutubeService;
+import com.pandora.lms.ytbUtil.OAuth;
+
+import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
@@ -40,14 +46,12 @@ public class YouTubeController {
     	
     	JSONArray AjlectureInfo = new JSONArray(lectureInfo);
     	JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
-//    	System.out.println(AjlectureInfo);
-//    	System.out.println(AjLECT_PRGRS_RT);
+    	
         JSONObject json = new JSONObject();
 
         json.put("AjlectureInfo", AjlectureInfo);
         json.put("AjLECT_PRGRS_RT", AjLECT_PRGRS_RT);
-//        System.out.println(json);
-    	
+
         mv.addObject("lectureInfo", json);
 //        mv.addObject("LECT_PRGRS_RT", json);
         
@@ -117,9 +121,14 @@ public class YouTubeController {
     }
 
     @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) {
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
         System.out.println("동영상 정보 : " + videoInfo);
         System.out.println("동영상 파일 : " + videoFile);
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        oAuth.authorize(scopes, true);
 
         return "redirect:/uploadVideo";
     }

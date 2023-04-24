@@ -46,11 +46,11 @@
 
     <update id="noticeUpdate" parameterType="HashMap">
         UPDATE NOTICE SET notice_title= '${notice_title}', notice_content = '${notice_content}'
-        WHERE notice_no = ${ notice_no }
+        WHERE notice_no = #{ notice_no }
     </update>
 
     <update id="noticeDelete" parameterType="String">
-        UPDATE NOTICE SET notice_status = 2 WHERE notice_no = ${ notice_no }
+        UPDATE NOTICE SET notice_del = 1 WHERE notice_no = #{ notice_no }
     </update>
 
     <select id="noticeNo" parameterType="String" resultType="Integer">

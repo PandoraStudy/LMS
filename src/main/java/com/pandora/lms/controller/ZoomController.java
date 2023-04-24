@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,23 +26,22 @@ public class ZoomController {
 
     private final ZoomService zoomService;
 
-    @GetMapping("/zoom")/*줌 관리 페이지 띄우기용*/
-    public String zoom() {
+    @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
+    public String zoom(HttpSession session) {
 
-        return "zoom";
+        return "zoom_connect";
     }
-
-  /*  @RequestMapping(value="/zoom/tokentest" , method = {RequestMethod.GET, RequestMethod.POST})*//*토큰 발급 받고 코드 값을 가져옴*/
 
     @PostMapping("/zoom_open")
     @ResponseBody
-    public String Zoom_open(){
+    public String Zoom_open(HttpSession session){
         ZoomDTO zoomDTO = new ZoomDTO();
-        zoomDTO.setUser_id("1234");/*임시 아이디*/
+        int user_no = (int) session.getAttribute("user_no");
+        zoomDTO.setUser_no(user_no);
 
         ZoomDTO result = zoomService.authority(zoomDTO);
 
-        if(result.getZOOM_NO() == 1){
+        if(result.getZOOM_AUTH() == 1){
 
             return "true";
         }else{
@@ -50,10 +50,10 @@ public class ZoomController {
     }
 
     @GetMapping("/zoom/token")
-    public ModelAndView get_token(@RequestParam("code") String code, Model model) throws IOException {
+    public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
-        ModelAndView mv = new ModelAndView("zoom");
+        ModelAndView mv = new ModelAndView("/zoom");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/
@@ -90,6 +90,8 @@ public class ZoomController {
         System.err.println("요청한 내용 : " + model.getAttribute("response"));
         System.err.println("사용자 코드 : " + model.getAttribute("code"));
         System.err.println("엑세스 토큰 : " + accessToken);
+
+
 
         //회의 url 가져옴
         String join_url = zoomService.meeting(accessToken);
