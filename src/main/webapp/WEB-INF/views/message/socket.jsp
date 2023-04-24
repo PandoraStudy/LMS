@@ -38,17 +38,46 @@
         border:none;
         border-radius: 5px;
     }
+    .BOX{
+        border: 10px solid #E8C48F;
+        padding: 20px;
+        width:1100px;
+        height:600px;
+
+    }
     .messageBody{
-        margin:5px;
-        font-weight: bold;
+        border:1px solid black;
+        border-radius: 5px;
+        min-width:10px;
+        margin-top:5px;
+        display: inline-block;
+        padding:0px 5px 0px 5px;
+        height:30px;
+        line-height: 30px;
     }
     #messageBox{
-        border: 25px solid #E8C48F;
-        padding: 20px;
         overflow-y:auto;
-        text-align:left;
-        width:1200px;
+        text-align:right;
+        width:1050px;
         height:500px;
+        box-sizing: border-box;
+        padding:0px 15px 0px 0px;
+    }
+    .messageName{
+        font-weight: bold;
+        margin-top:5px;
+    }
+    .messageText{
+        width:1080px;
+        height:60px;
+        margin-left:10px;
+        font-size:20px;
+        border:none;
+        background-color: #f6f6f6;
+    }
+    .none{
+        border-top:2px solid black;
+        margin-left:-20px;
     }
 </style>
 <script>
@@ -76,11 +105,14 @@
             <div class="container-fluid" style="width:1200px; min-height:600px; margin-top:100px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-                    <div id="messageBox"></div>
+                    <div class="BOX">
+                        <div id="messageBox"></div>
+                        <input type="text" class="messageText none" placeholder="입력하세요" id="msg" maxlength="200">
+                    </div>
                     <!--수정할 부분 끝-->
                 </div>
-                <input type="text" style="width:500px; height:40px;" id="msg" maxlength="200">
-                <button id="msgsend"class="socketBtn" style="background-color: #2a96a5;" onclick="msg_send()">전송</button>
+
+                <button id="msgsend"class="socketBtn" style="background-color: #2a96a5;" onclick="msg_send()">보내기</button>
                 <button class="socketBtn" onclick="disconnect()" style="background-color: darkred;">disconnect</button>
                 <script></script>
             </div>

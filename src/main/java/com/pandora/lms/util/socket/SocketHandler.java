@@ -18,7 +18,7 @@ public class SocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         //String payload = "{ user : "+message.getPayload()+"}";
        // JSONObject json = new JSONObject(payload);
-        System.out.println("클라이언트에서 온 메시지 : "+message.getPayload());
+        System.out.println(message.getPayload());
         for (WebSocketSession s : sessions){ //json.get("user")
             s.sendMessage(new TextMessage(message.getPayload()));
         }
@@ -33,6 +33,7 @@ public class SocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessions.remove(session);
+
         System.out.println("세션이 종료 되었습니다.");
     }
 

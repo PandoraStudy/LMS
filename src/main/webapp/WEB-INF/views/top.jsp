@@ -7,8 +7,13 @@
     data: {'user_id': user_id },
     dataType: "text",
     success: function (msg) {
-      // alert(msg);
-      $(".msgCnt").text(msg);
+      //alert(msg);
+      if(msg != "0"){
+        $(".msgCnt").text(msg);
+      }else{
+        $(".msgCnt").hide();
+      }
+
       // if (data == 1) {
       //   alert("성공");
       // }
@@ -126,7 +131,7 @@
       <a class="nav-link" href="/messageBox">
         <i class="fas fa-envelope fa-fw"></i>
         <!-- 메시지 카운트 부분 -->
-        <c:if test="${sessionScope.id ne null }">
+        <c:if test="${sessionScope.id ne null && msgCnt ne 0 }">
         <span class="badge badge-danger badge-counter msgCnt"></span>
         </c:if>
       </a>
@@ -212,7 +217,7 @@
         </a>
         <a class="dropdown-item" href="/socket">
           <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-          socket 통신
+          채팅
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
