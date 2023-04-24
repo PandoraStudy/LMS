@@ -17,11 +17,13 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
     <%-- API Key값 --%>
+<!--      type="module" -->
     <script src="js/apikey.js"></script>
+<!--     <script type="module" src="js/YoutubeApi.js"></script> -->
 </head>
 <script type="text/javascript">
 $(function(){
-
+	//alert(API_KEY);
 	var lectureInfo = ${lectureInfo};
 	console.log(lectureInfo);
 
@@ -35,42 +37,46 @@ $(function(){
 		success: function (playlists) {
 
 			var playlists = playlists.items;
-			console.log(playlists);
-// 			var lectureInfo = ${lectureInfo };
-			var LECT_PRGRS_RT = ${LECT_PRGRS_RT };
+// 			console.log(playlists);
+
+
+// 			var LECT_PRGRS_RT = ${LECT_PRGRS_RT };
 			var AjlectureInfo = lectureInfo.AjlectureInfo;
-			var AjLECT_PRGRS_RT = LECT_PRGRS_RT.AjLECT_PRGRS_RT;
+			var AjLECT_PRGRS_RT = lectureInfo.AjLECT_PRGRS_RT;
+			console.log(AjLECT_PRGRS_RT);
 			
 			for (var i = 0; i < playlists.length; i++) {
 				var playlist = playlists[i];
 				var title = playlist.snippet.title;
 				var description = playlist.snippet.description || "";
 				var id = playlist.id;
-				console.log(playlist);
+// 				console.log(playlist);
 				console.log(title);
-// 				var SBJT_NM = AjlectureInfo[i].SBJCT_NM;
-// 				var KORN_FLNM = AjlectureInfo[i].KORN_FLNM ;
-// 				var LECT_PRGRS_RT = AjLECT_PRGRS_RT[i].LECT_PRGRS_RT;
+				var SBJT_NM = AjlectureInfo[i].SBJCT_NM;
+				var KORN_FLNM = AjlectureInfo[i].KORN_FLNM ;
+				var LECT_PRGRS_RT = AjLECT_PRGRS_RT[i].LECT_PRGRS_RT;
+				
+				console.log(AjLECT_PRGRS_RT[i].LECT_PRGRS_RT);
 // 				console.log(SBJT_NM);
 // 				console.log(KORN_FLNM);
-// 				console.log(LECT_PRGRS_RT);
+				console.log(LECT_PRGRS_RT);
 				
 				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
 				let $tr = $("<tr style='height:70px; line-height:70px;'>");
 				
 				$tr.append("<td class='text-center'><a onclick=location.href='lectureList?playlist_id=" + id + "'>"+ title + "</a>" + "</td>");
-// 				$tr.append("<td class='text-center'>" + SBJT_NM + "</td>");
-// 				$tr.append("<td class='text-center'>" + KORN_FLNM + "</td>");
-// 				$tr.append("<td style='height:70px;'>"
-// 			            + "<div style='height:20px; line-height: 20px;'>&nbsp;<span class='float-right' style='height:20px; margin-right:45px;'>"
-// 			            + LECT_PRGRS_RT + "%"
-// 			            + "</span></div>"
-// 			            + "<div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>"
-// 			            + "<div class='progress-bar bg-success' role='progressbar' style='height:20px;"
-// 			            +" width: "+LECT_PRGRS_RT+"%'"
-// 			            + "aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>"
-// 			            + "</div>"
-// 			            + "</td>");
+				$tr.append("<td class='text-center'>" + SBJT_NM + "</td>");
+				$tr.append("<td class='text-center'>" + KORN_FLNM + "</td>");
+				$tr.append("<td style='height:70px;'>"
+			            + "<div style='height:20px; line-height: 20px;'>&nbsp;<span class='float-right' style='height:20px; margin-right:45px;'>"
+			            + LECT_PRGRS_RT + "%"
+			            + "</span></div>"
+			            + "<div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>"
+			            + "<div class='progress-bar bg-success' role='progressbar' style='height:20px;"
+			            +" width: "+LECT_PRGRS_RT+"%'"
+			            + "aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>"
+			            + "</div>"
+			            + "</td>");
 				$("#tb_lecture").append($tr);
 			}
 		}, error: function(jqXHR, textStatus, errorThrown) {
@@ -150,16 +156,11 @@ $(function(){
 </a>
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+<!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+<!-- <script src="js/sb-admin-2.min.js"></script> -->
 </body>
 </html>

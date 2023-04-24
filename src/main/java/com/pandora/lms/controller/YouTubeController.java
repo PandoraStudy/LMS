@@ -36,18 +36,20 @@ public class YouTubeController {
 //    	System.out.println(lectureInfo);
     	
     	List<Map<Integer, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", mv);
-//    	System.out.println(LECT_PRGRS_RT);
+    	System.out.println(LECT_PRGRS_RT);
     	
     	JSONArray AjlectureInfo = new JSONArray(lectureInfo);
     	JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
-    	
+//    	System.out.println(AjlectureInfo);
+//    	System.out.println(AjLECT_PRGRS_RT);
         JSONObject json = new JSONObject();
 
         json.put("AjlectureInfo", AjlectureInfo);
         json.put("AjLECT_PRGRS_RT", AjLECT_PRGRS_RT);
+//        System.out.println(json);
     	
         mv.addObject("lectureInfo", json);
-        mv.addObject("LECT_PRGRS_RT", json);
+//        mv.addObject("LECT_PRGRS_RT", json);
         
         return mv;
     }

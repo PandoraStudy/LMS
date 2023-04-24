@@ -21,7 +21,7 @@
     </update>
 
 <!--      parameterType="HashMap" -->
-     <select id="lectureInfo" resultType="HashMap">
+     <select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
         SELECT *
 		FROM lectureview
         ORDER BY SBJCT_NM DESC
