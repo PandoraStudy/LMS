@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pandora.lms.dto.AdminDTO;
+import com.pandora.lms.dto.ApplInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 import com.pandora.lms.service.AdminService;
@@ -104,12 +105,29 @@ public class AdminController {
 		return "opacity";
 	}
 	
-	@GetMapping("/studentListModal")
-	public String studentListModal() {
-		return "studentListModal";
+	@GetMapping("/departmentModal")
+	public String departmentModal() {
+		return "departmentModal";
 	}
 	
+	@GetMapping("/studentsModal")
+	public String studentsModal() {
+		return "studentsModal";
+	}
 	
+	@ResponseBody
+	@PostMapping("/search/studentsModal")
+	public List<ApplInfoDTO> studentsModal(@RequestParam("name") String name
+			) {
+		ApplInfoDTO appl = new ApplInfoDTO();
+		
+		appl.setKORN_FLNM(name);
+		
+		List<ApplInfoDTO> studentsModal = adminService.studentsModal(appl);
+		
+		System.out.println(studentsModal+"컨트롤러");
+		return studentsModal;
+	}
 	
 	
 	
