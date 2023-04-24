@@ -193,5 +193,21 @@ function sortTable(n, table) {
 		<input id="on_LECT_URL" name="ON_LECT_URL">
 		<div>파일 첨부</div>
   	    <input type="file" id="file_upload" accept="video/*" style="height: 24px; position: relative; top: 7px;">
+  	    <div>학년도</div>
+		<input id="years" name="years">
+		<div>학과코드</div>
+		<input type="text" id="departmentCd" name="departmentCd">
+		<div>편성학과</div>
+		<input type="text" id="departmentName" name="departmentName">
+		<div>편성학기</div>
+		<input type="text" id="semesterName" name="semesterName">
+		<div>교과구분</div>
+		<input type="text" id="major" name="major">
+		<div>과목코드</div>
+		<input type="text" id="subjectCd" name="subjectCd">
+		<div>과목명</div>
+		<input type="text" id="subjectName" name="subjectName">
+		<div>비고</div>
+		<input type="text" id="note" name="note">
 	</div>
 </div>

@@ -1,6 +1,7 @@
 package com.pandora.lms.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,11 @@ public class SubjectController {
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("status", "success");
 	    result.put("data", filteredData);
+	    for (Map<String, Object> map : filteredData) {
+	    	for( String key : map.keySet() ) {
+	    		System.out.println(key + " : " + map.get(key));
+	    	}
+		}
 	    return mapper.writeValueAsString(result);
 	}
 	

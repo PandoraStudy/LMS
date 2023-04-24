@@ -7,10 +7,10 @@ function search() {
   const departmentName = document.getElementById("department_name").value;
   
   const data = {
-    year: year,
-    semester: semester,
-    subjectName: subjectName,
-    departmentName : departmentName
+    "year": year,
+    "semester": semester,
+    "subjectName": subjectName,
+    "departmentName" : departmentName
   };
 
   const xhr = new XMLHttpRequest();
@@ -19,7 +19,7 @@ function search() {
       if (xhr.status === 200) {
         const result = document.getElementById("result").getElementsByTagName("tbody")[0];
         const response = JSON.parse(xhr.responseText);
-
+		console.log(response.data[0]);
         // 기존 테이블 내용 삭제
         result.innerHTML = "";
 
@@ -30,16 +30,19 @@ function search() {
           const categoryCell2 = row.insertCell(1);
           const subjectNameCell = row.insertCell(2);
           const departmentNameCell = row.insertCell(3);
-          categoryCell1.innerHTML = response.data[i].CRCLM_CYCL.substr(0,4)+"년도";
-          console.log(response.data[i].CRCLM_CYCL.substr(5));
-          if(response.data[i].CRCLM_CYCL.substr(5) !== '1' && response.data[i].CRCLM_CYCL.substr(5) !== '2'){
-        	  if(response.data[i].CRCLM_CYCL.substr(5) == '3'){
+          
+          let newText = document.createTextNode(response.data[i].CRCLM_CYCL.toString().substr(0,4) + "년도");
+      
+          categoryCell1.appendChild(newText);
+
+          if(response.data[i].CRCLM_CYCL.toString().substr(5) !== '1' && response.data[i].CRCLM_CYCL.toString().substr(5) !== '2'){
+        	  if(response.data[i].CRCLM_CYCL.toString().substr(5) == '3'){
         		categoryCell2.innerHTML = "하계 계절학기";
         	  }else{
         		categoryCell2.innerHTML = "동계 계절학기";
         	  }
           }else{
-          		categoryCell2.innerHTML = response.data[i].CRCLM_CYCL.substr(5)+"학기";        	  
+          		categoryCell2.innerHTML = response.data[i].CRCLM_CYCL.toString().substr(5)+"학기";        	  
           }
           subjectNameCell.innerHTML = response.data[i].SBJCT_NM;
           departmentNameCell.innerHTML = response.data[i].CRCLM_NM;
@@ -70,18 +73,25 @@ function search() {
 
 </script>
 <style>
+
+.modity {
+	display:flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+
+}
 .top{
 position: relative;
 top: 58px;
 float: none;
 }
 .modify > div{
-width: 100px;
+/* width: 100px; */
 margin: 5px;
 }
 .modify > input{
-width: 150px;
-min-width: 150px;
+/* width: 150px;
+min-width: 150px; */
 margin: 5px;
 }
 </style>
@@ -173,11 +183,11 @@ function sendAjax(rowData) {
 	          const data = response.data[0];
 	          //날짜
 	          const yearsInput = document.getElementById("years");
-	          yearsInput.value = data.CRCLM_CYCL.substr(0,4);
+	          yearsInput.value = data.CRCLM_CYCL.toString().substr(0,4);
 	          
 	          //학기 가공
-	          if(data.CRCLM_CYCL.substr(5) != '1' && data.CRCLM_CYCL.substr(5) != '2'){
-	        	  if(data.CRCLM_CYCL.substr(5) == '3'){
+	          if(data.CRCLM_CYCL.toString().substr(5) != '1' && data.CRCLM_CYCL.toString().substr(5) != '2'){
+	        	  if(data.CRCLM_CYCL.toString().substr(5) == '3'){
 	          		const semesterNameInput = document.getElementById("semesterName");
 	          		semesterNameInput.value = "하계 계절학기";
 	          	  }else{
@@ -186,7 +196,7 @@ function sendAjax(rowData) {
 	          	  }
 	          }else{
 	        	  	const semesterNameInput = document.getElementById("semesterName");
-	          		semesterNameInput.value = data.CRCLM_CYCL.substr(5)+"학기";
+	          		semesterNameInput.value = data.CRCLM_CYCL.toString().substr(5)+"학기";
 	          }
 	          //학과명
 	          const subjectNameInput = document.getElementById("subjectName");
@@ -201,7 +211,7 @@ function sendAjax(rowData) {
 	          const subjectCdInput = document.getElementById("subjectCd");
 	          subjectCdInput.value = data.SBJCT_NO;
 	          //전공구분
-	          if(data.SBJCT_NO.substr(1) == 'a'){
+	          if(data.SBJCT_NO.toString().substr(1) == 'a'){
 	        	  const majorInput = document.getElementById("major");
 	        	  majorInput.value = "교양";
 	          }else{
