@@ -2,6 +2,7 @@
 
     ws.onopen = function(event) {
         console.log("WebSocket 연결이 열렸습니다.");
+        ws.send("====="+name+"님이 들어오셨습니다. ======");
     };
 
     let result;
@@ -13,10 +14,7 @@
                     "<div class='messageBody'>"+
                     event.data+"</div>"
                 );
-                //alert(event.data);
-                //result = await JSON.parse(event.data);
-                //price = result[0];
-                //document.getElementById("messageBox").innerHTML = `$ ${price}`
+                $("#messageBox").scrollTop($("#messageBox")[0].scrollHeight);
             }
         } catch (err) {
             console.log(err);
