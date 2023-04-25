@@ -1,0 +1,70 @@
+package com.pandora.lms.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pandora.lms.service.CheckService;
+import com.pandora.lms.service.SubjectService;
+
+@Controller
+public class CheckController {
+
+	@Autowired
+	CheckService checkService;
+	
+	@GetMapping("/check")
+	public String subject() {
+		
+		return "check";
+	}
+	
+	@PostMapping("/studentCheck")
+	@ResponseBody
+	public String subjectFilter(@RequestBody Map<String, String> formData) throws JsonProcessingException {
+	    String year = formData.get("year");
+	    String semester = formData.get("semester");
+	    String studentNum = formData.get("studentNum");
+	    String departmentName = formData.get("departmentName");
+	    
+	    
+	    String Search01 = year+semester;
+	    System.out.println(Search01);
+	    System.out.println(studentNum);
+	    
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("Search01", Search01);
+	    paramMap.put("studentNum", studentNum);
+	    paramMap.put("departmentName", departmentName);
+	    
+	   
+	    
+	    // 필터링 로직 수행
+	    List<Map<String, Object>> filteredData = checkService.AjaxStudent(paramMap);
+	    
+	    System.out.println(filteredData);
+	    
+	    // 결과를 JSON 문자열로 변환하여 반환
+	    ObjectMapper mapper = new ObjectMapper();
+	    Map<String, Object> result = new HashMap<>();
+	    result.put("status", "success");
+	    result.put("data", filteredData);
+	    return mapper.writeValueAsString(result);
+	}
+	
+	
+	
+}

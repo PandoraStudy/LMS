@@ -1,7 +1,7 @@
 package com.pandora.lms.service;
 
-import org.springframework.stereotype.Service;
+import com.google.api.client.auth.oauth2.Credential;
+import org.springframework.web.multipart.MultipartFile;
 
-@Service
-interface YoutubeService {
+public interface YoutubeService {
 }

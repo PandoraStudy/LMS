@@ -1,41 +1,59 @@
 package com.pandora.lms.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.pandora.lms.dto.ZoomDTO;
 import com.pandora.lms.service.ZoomService;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
-import okhttp3.RequestBody;
-import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
+
 @AllArgsConstructor
 @Controller
 public class ZoomController {
 
     private final ZoomService zoomService;
 
-    @GetMapping("/zoom")/*줌 관리 페이지 띄우기용*/
-    public String zoom() {
-        return "zoom";
+    @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
+    public String zoom(HttpSession session) {
+
+        return "zoom_connect";
     }
 
-    @RequestMapping(value="/zoom/token" , method = {RequestMethod.GET, RequestMethod.POST})/*토큰 발급 받고 코드 값을 가져옴*/
-    public ModelAndView get_token(@RequestParam("code") String code, Model model) throws IOException {
+    @PostMapping("/zoom_open")
+    @ResponseBody
+    public String Zoom_open(HttpSession session){
+        ZoomDTO zoomDTO = new ZoomDTO();
+        int user_no = (int) session.getAttribute("user_no");
+        zoomDTO.setUser_no(user_no);
+
+        ZoomDTO result = zoomService.authority(zoomDTO);
+
+        if(result.getZOOM_AUTH() == 1){
+
+            return "true";
+        }else{
+            return "false";
+        }
+    }
+
+    @GetMapping("/zoom/token")
+    public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
-
+        ModelAndView mv = new ModelAndView("/zoom");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/
@@ -48,7 +66,7 @@ public class ZoomController {
         Request zoomRequest = new Request.Builder()/*http 요청 헤더를 만듬*/
                 .url(zoomUrl) // 호출 url
                 .addHeader("Content-Type", "application/x-www-form-urlencoded") // 공식 문서에 명시 된 type
-                .addHeader("Authorization", "Basic RVprd2w0U2tTY1NtcHBZR25aQWtkUTpqQ3NBMXYzNW9QZW5ST1FwTWE0VVh1N3RCdlU1MXNiZg==") // Client_ID:Client_Secret 을  Base64-encoded 한 값
+                .addHeader("Authorization", "Basic S3B2dThxakRTWkNFbkV0elo1OEtuQTpaUXVYQlRhYTlXTUFWVk82VFJMTG1kVG9vVlVsNkk5NQ==") // Client_ID:Client_Secret 을  Base64-encoded 한 값
                 .post(formBody)
                 .build();
 
@@ -57,7 +75,8 @@ public class ZoomController {
         String zoomText = zoomResponse.body().string();/*zoomResponse 응답 받은 내용을 문자열로 바꿔줌*/
 
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);/*위에서 생성한  ObjectMapper에 벨류값을 배열 타입으로 만들어줌*/
-        List<Object> list = mapper.readValue(zoomText, new TypeReference<List<Object>>() {});
+        List<Object> list = mapper.readValue(zoomText, new TypeReference<List<Object>>() {
+        });
 
         model.addAttribute("response", list.get(0));
         model.addAttribute("code", code);
@@ -68,22 +87,17 @@ public class ZoomController {
         String accessToken = (String) responseMap.get("access_token");
 
 
-        System.err.println("요청한 내용 : "+model.getAttribute("response"));
-        System.err.println("사용자 코드 : "+model.getAttribute("code"));
-        System.err.println("엑세스 토큰 : "+accessToken);
+        System.err.println("요청한 내용 : " + model.getAttribute("response"));
+        System.err.println("사용자 코드 : " + model.getAttribute("code"));
+        System.err.println("엑세스 토큰 : " + accessToken);
 
 
-// ------------------------------------------------------------------------------------------------------
 
-        String joinurl = zoomService.meeting(accessToken);
-        ModelAndView mv = new ModelAndView("zoom");
-        if(joinurl.contains("https://us05web.zoom.us/j/")){
-            System.err.println("join url : "+joinurl);
-            mv.addObject("join",joinurl);
-        }else{
-            System.out.println("Error: " + joinurl);
-        }
-        return mv;
+        //회의 url 가져옴
+        String join_url = zoomService.meeting(accessToken);
+        mv.addObject("Join_URL",join_url);
+
+    return mv;
     }
 
 }

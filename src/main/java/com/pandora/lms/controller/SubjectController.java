@@ -62,6 +62,8 @@ public class SubjectController {
 	    paramMap.put("departmentName", departmentName);
 	    
 	    System.out.println(Search01);
+	    System.out.println(subjectName);
+	    System.out.println(departmentName);
 	    
 	    // 필터링 로직 수행
 	    List<Map<String, Object>> filteredData = subjectService.AjaxSubject(paramMap);
@@ -127,5 +129,17 @@ public class SubjectController {
 		return result;
 	    }
 	
+	@PostMapping("/submitUpdate")
+	@ResponseBody
+	public Map<String, Object> SubmitUpdate(@RequestBody Map<String, String> data){
+		String departmentCd = data.get("departmentCd");
+		System.out.println("광표");
+		
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", "success");
+		
+		return result;
+	}
 	
 }

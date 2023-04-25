@@ -36,20 +36,23 @@ function search() {
           const categoryCell2 = row.insertCell(1);
           const subjectNameCell = row.insertCell(2);
           const departmentNameCell = row.insertCell(3);
-          categoryCell1.innerHTML = response.data[i].CRCLM_CYCL.substr(0,4)+"년도";
-          console.log(response.data[i].CRCLM_CYCL.substr(5));
-          if(response.data[i].CRCLM_CYCL.substr(5) !== '1' && response.data[i].CRCLM_CYCL.substr(5) !== '2'){
-        	  if(response.data[i].CRCLM_CYCL.substr(5) == '3'){
+          const esntlYn = row.insertCell(4);
+          const CRCLM_CYCL = response.data[i].CRCLM_CYCL.toString();
+          categoryCell1.innerHTML = CRCLM_CYCL.substr(0,4)+"년도";
+
+          if(CRCLM_CYCL.substr(5) !== '1' && CRCLM_CYCL.substr(5) !== '2'){
+        	  if(CRCLM_CYCL.substr(5) == '3'){
         		categoryCell2.innerHTML = "하계 계절학기";
         	  }else{
         		categoryCell2.innerHTML = "동계 계절학기";
         	  }
           }else{
-          		categoryCell2.innerHTML = response.data[i].CRCLM_CYCL.substr(5)+"학기";        	  
+          		categoryCell2.innerHTML = CRCLM_CYCL.substr(5)+"학기";        	  
           }
           subjectNameCell.innerHTML = response.data[i].SBJCT_NM;
           departmentNameCell.innerHTML = response.data[i].CRCLM_NM;
-       
+          esntlYn.innerHTML = response.data[i].ESNTL_YN;
+          
           // 이벤트 리스너 추가
           row.addEventListener('click', function() {
             const rowData = {
@@ -139,14 +142,16 @@ td{
 			<th>학기</th>
 			<th>교과목명</th>
 			<th>편성학과</th>
+			<th>교과구분</th>
     	</tr>
   	</thead>
   	<tbody></tbody>	
 </table>
 </div>
 ===========================================================================================
-<h1>과목정보</h1>
-
+<h1>과목정보</h1>&nbsp&nbsp&nbsp
+<form id="form">
+<button type="button" class="btn btn-success" style="float:right" id="submit">수정</button>
 학년도(2023)<input type="text" id="years" name="years"><br>
 학과코드(30101111)<input type="text" id="departmentCd" name="departmentCd"><br> 
 편성학과(경영학)<input type="text" id="departmentName" name="departmentName"><br>
@@ -155,6 +160,7 @@ td{
 과목코드<input type="text" id="subjectCd" name="subjectCd"><br>
 과목명<input type="text" id="subjectName" name="subjectName"><br> 
 비고(빈칸)<input type="text" id="note" name="note"><br>
+</form>
 
    
 </body>
@@ -173,11 +179,12 @@ function sendAjax(rowData) {
 	          const data = response.data[0];
 	          //날짜
 	          const yearsInput = document.getElementById("years");
-	          yearsInput.value = data.CRCLM_CYCL.substr(0,4);
+	          const CRCLM_CYCL = data.CRCLM_CYCL.toString();
+	          yearsInput.value = CRCLM_CYCL.substr(0,4);
 	          
 	          //학기 가공
-	          if(data.CRCLM_CYCL.substr(5) != '1' && data.CRCLM_CYCL.substr(5) != '2'){
-	        	  if(data.CRCLM_CYCL.substr(5) == '3'){
+	          if(CRCLM_CYCL.substr(5) != '1' && CRCLM_CYCL.substr(5) != '2'){
+	        	  if(CRCLM_CYCL.substr(5) == '3'){
 	          		const semesterNameInput = document.getElementById("semesterName");
 	          		semesterNameInput.value = "하계 계절학기";
 	          	  }else{
@@ -186,7 +193,7 @@ function sendAjax(rowData) {
 	          	  }
 	          }else{
 	        	  	const semesterNameInput = document.getElementById("semesterName");
-	          		semesterNameInput.value = data.CRCLM_CYCL.substr(5)+"학기";
+	          		semesterNameInput.value = CRCLM_CYCL.substr(5)+"학기";
 	          }
 	          //학과명
 	          const subjectNameInput = document.getElementById("subjectName");
@@ -201,14 +208,8 @@ function sendAjax(rowData) {
 	          const subjectCdInput = document.getElementById("subjectCd");
 	          subjectCdInput.value = data.SBJCT_NO;
 	          //전공구분
-	          if(data.SBJCT_NO.substr(1) == 'a'){
-	        	  const majorInput = document.getElementById("major");
-	        	  majorInput.value = "교양";
-	          }else{
-	        	  const majorInput = document.getElementById("major");
-	        	  majorInput.value = "전공";
-	          }
-	          
+	          const majorInput = document.getElementById("major");
+ 	          majorInput.value = data.ESNTL_YN;
 	          
 	      } else {
 	        console.error('Error:', xhr.statusText);
@@ -220,5 +221,32 @@ function sendAjax(rowData) {
 	  xhr.setRequestHeader('Content-Type', 'application/json');
 	  xhr.send(JSON.stringify(rowData));
 	}
+	//데이터 수정
+	 $(function(){
+        $('#submit').on("click",function () {
+            var form1 = $("#form").serialize();
+
+            console.log(form1);
+            var change = confirm("수정하시겠습니까?");
+            
+            $.ajax({
+                type: "post",
+                url: "submitUpdate",
+                data: form1,
+                dataType: 'json',
+                success: function (data) {
+                    alert("success");
+                    console.log(data);
+                },
+                error: function (request, status, error) {
+                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+                }
+            });
+        });
+    });
+    
+	
+	
 </script>
 </html>
