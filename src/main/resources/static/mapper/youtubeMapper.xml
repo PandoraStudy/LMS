@@ -10,6 +10,7 @@
                 AND
                     student_no = #{student_no}
     </select>
+
     <update id="playTimeSave" parameterType="HashMap">
         UPDATE lecture
             SET
@@ -19,35 +20,21 @@
         AND
             student_no = #{student_no}
     </update>
-	
-<!-- 	
-	<insert id="youtubeData" parameterType="HashMap">
-		INSERT INTO ON_LECT_INFO (ON_LECT_NM, ON_LECT_CN, ON_LECT_URL)
-		VALUES
-		(#{ON_LECT_NM}, #{ON_LECT_CN}, #{ON_LECT_URL})
-	</insert>
-		 -->
-	
-	<select id="lecture" resultType="HashMap">
-        SELECT UV.SBJCT_NM, UV.KORN_FLNM, UV.CRCLM_NM
-		FROM USER_APPL_VIEW AS UV
-		WHERE UV.APPL_NO = #{appl }
-    </select>
-    
-	<select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
-		SELECT *
-		FROM lectureview
-		ORDER BY SBJCT_NM DESC
-		LIMIT 1, 9
-	</select>
 
-	<select id="lectureRate" resultType="HashMap">
-        SELECT LECT_PRGRS_RT
-		FROM ON_LECT_MAG
+    <select id="lecture" resultType="HashMap">
+        SELECT UV.SBJCT_NO, UV.SBJCT_NM, UV.KORN_FLNM, UV.CRCLM_NM
+            FROM USER_APPL_VIEW as UV
+                WHERE UV.APPL_NO = #{appl_no }
     </select>
-    
-    <select id="lectureListRate" resultType="HashMap">
-        SELECT ON_LECT_TM
-		FROM ON_LECT_INFO
+
+    <select id="lectList" parameterType="HashMap" resultType="HashMap">
+        SELECT lti.LECT_YMD as 'LECT_YMD', lti.SBJCT_MTHD_CD as 'SBJCT_MTHD_CD', IFNULL(oli.ON_LECT_NM , 'ZOOM 수업') as 'ON_LECT_NM', IFNULL(oli.ON_LECT_URL, lmi.JOIN_URL) AS 'LECT_URL'
+            FROM LECT_TM_INFO lti
+                LEFT JOIN ON_LECT_INFO oli ON lti.LECT_YMD = oli.LECT_YMD
+                LEFT JOIN LECT_MEET_INFO lmi ON lti.LECT_YMD = lmi.LECT_YMD
+            WHERE
+                lti.SBJCT_NO = #{sbjct_no }
+        ORDER BY lti.LECT_YMD ASC
     </select>
+
 </mapper>

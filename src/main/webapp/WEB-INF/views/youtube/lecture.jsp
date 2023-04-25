@@ -134,7 +134,7 @@ $(function(){
 										</thead>
 										<tbody id="tb_lecture">
 											<c:forEach items="${lecture }" var="i">
-											<tr style='height:70px; line-height:70px;'>
+											<tr style='height:70px; line-height:70px;' onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">
 												<td class='text-center'>${i.SBJCT_NM }</td>
 												<td class='text-center'>${i.CRCLM_NM }</td>
 												<td class='text-center'>${i.KORN_FLNM }</td>

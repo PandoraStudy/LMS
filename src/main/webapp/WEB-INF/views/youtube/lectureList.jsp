@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,133 +19,28 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
-    <%-- API Key값 --%>
-<!--     <script src="js/apikey.js"></script> -->
-    <script src="js/YoutubeLectureList.js"></script>
 </head>
 <script>
-/*
-    $(function () {
-        // 로딩창 보여주기
-        $('#loading').show();
+    $(function() {
+        $(".week-select").click(function() {
+            $(this).children(".fas").toggleClass("fa-chevron-down fa-chevron-up");
+        });
 
-        let studentNo = 131;
-        let playlistId = "${playlistId}";
 
-        $.get({
-            url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + API_KEY,
-            dataType: "json",
-            success: function (playlistItems) {
-                // 플레이리스트에 있는 동영상 각각의 정보
-                let playlist = playlistItems.items;
+    $(".mthd").click(function() {
+            let url = $(this).attr("value");
 
-                for (var i = 0; i < playlist.length; i++) {
-                    // 동영상 썸네일 이미지 URL, 제목, 동영상 URL, 동영상 총 재생시간, DB 저장된 재생시간, 썸네일 사용 총 재생시간
-                    let videoThumnails = playlist[i].snippet.thumbnails.medium.url
-                    let videoTitle = playlist[i].snippet.title;
-                    let videoId = playlist[i].snippet.resourceId.videoId;
-                    let videoDuration = "";
-                    let videoPlayTime = 0;
-                    let videoTotalTime = "";
-                    
-//                     var ON_LECT_TM_List = ${ON_LECT_TM };
-//                     var AjON_LECT_TM = ON_LECT_TM_List.AjON_LECT_TM;
-//                     var ON_LECT_TM = AjON_LECT_TM[i].ON_LECT_TM;
-                    // 동영상의 재생시간 가져오기
-                    $.get({
-                        url: "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=" + videoId + "&key=" + API_KEY,
-                        dataType: "json",
-                        success: function (video) {
-                            // 유튜브 API 제공하는 총 재생시간 ISO 8601 형식
-                            videoDuration = video.items[0].contentDetails.duration;
-                            // moment.js 라이브러리를 사용하여 ISO 8601 형식 duration 객체로 변환
-                            let totalTime = moment.duration(videoDuration).asSeconds();
-                            // ISO 8601 형식 썸네일 표시 위해 M:S 형태로 교체
-                            videoTotalTime = durationToTotalTime(videoDuration);
-
-                    
-                            // 1번 포인트
-                            console.log(videoId + "1st : " + totalTime);
-                            
-//                     var attendance = totalTime-ON_LECT_TM;
-//                     console.log(attendance + "=" + totalTime + "-" + ON_LECT_TM);
-                            // 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성
-                            let $tr = $("<tr>");
-                            $tr.append("<td class='text-center'>"
-                            + "<div class='video-thumnails'>"
-                            + "<a onclick=location.href='lectureDetail?video_id=" + videoId + "'>"
-                            + "<img class='video-img' src='" + videoThumnails + "'></a>"
-                            + "<span class='total-time'>" + videoTotalTime + "</span></div></td>");
-                            $tr.append("<td><a onclick=location.href='lectureDetail?video_id=" + videoId + "'>"
-                            + "<span>" + videoTitle + "(" + videoId + ")</span></a></td>");
-// 					if(attendance > 0){//출석 미인정 + 과제제출여부까지 확인하기
-// 						$tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' onclick='return false;'></th>");
-//                         $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' onclick='return false;'></th>");
-// 					} else{//출석 인정
-//                             $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
-//                             $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
-						
-
-// 					}
-                            $("#tb_lecture").append($tr);
-                            $("#loading").hide();
-                        },
-                        error: function () {
-                            $("#loading").hide();
-                            alert("유튜브 동영상 정보를 불러오는 도중 에러가 발생했습니다.");
-                        }
-                    });
-                } // 반복문 종료
-            },
-            error: function () {
-                $("#loading").hide();
-                alert("유튜브 플레이리스트를 불러오는 도중 에러가 발생했습니다.");
+            if(url == "" || url == null) {
+                alert("회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
+            } else {
+                alert("해당 URL로 이동 합니다 : " + url);
             }
+
+
         });
     });
-
-    // ISO 8601 형식을 썸네일 표시 위해 M:S 형태로 교체
-    function durationToTotalTime(videoDuration) {
-        videoDuration = videoDuration.replace("PT", "");
-        videoDuration = videoDuration.replace("H", "시간 ");
-        videoDuration = videoDuration.replace("M", "분 ");
-        videoDuration = videoDuration.replace("S", "초");
-
-        return videoDuration;
-    }
-    */
 </script>
 <style>
-    #loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: white;
-        z-index: 9999;
-    }
-
-    .spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -50px;
-        margin-left: -50px;
-        width: 40px;
-        height: 40px;
-        border: 10px solid #fff;
-        border-radius: 50%;
-        border-top-color: red;
-        animation: spin 1s ease-in-out infinite;
-    }
-
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
     .video-thumnails {
         position: relative;
         width: 160px;
@@ -168,11 +64,14 @@
         color: white;
         background-color: black;
     }
+
+    .week {
+        width: 100%;
+        height: 40px;
+        background-color: #ccc;
+    }
 </style>
 <body id="page-top">
-<div id="loading">
-    <div class="spinner"></div>
-</div>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -219,19 +118,24 @@
                             <div class="card-body">
                                 <div>
                                     <!-- 실제 구성은 이곳에서 진행합니다. -->
-                                    <table class="table table-sm" id="table_lecture">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-2 text-center">강의 이미지</th>
-                                                <th class="col-8 text-center">강의제목</th>
-                                                <th class="col-1 text-center">출석여부</th>
-                                                <th class="col-1 text-center">과제제출여부</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider" id="tb_lecture">
                                         <!-- 강의 정보 추가 위치 -->
-                                        </tbody>
-                                    </table>
+                                    <c:set var="i" value="1"/>
+                                        <c:forEach items="${lectList}" var="lect">
+                                            <div class="week">
+                                                <div class="week-select form-control" data-toggle="collapse" data-target="#lect${i}">
+                                                    <i class="fas fa-chevron-down" value="down${i}"></i> <!-- 처음에는 아래 방향 화살표 아이콘 사용 -->
+                                                    ${i}주차
+                                                </div>
+                                            </div>
+                                            <div id="lect${i}" class="collapse">
+                                                <!-- 숨길 객체의 내용 -->
+                                                <div>
+                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="${lect.LECT_URL}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button></td>
+                                                    <span>${lect.ON_LECT_NM }</span>
+                                                </div>
+                                            </div>
+                                            <c:set var="i" value="${i + 1}"/>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
