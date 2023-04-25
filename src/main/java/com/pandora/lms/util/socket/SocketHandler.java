@@ -12,12 +12,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SocketHandler extends TextWebSocketHandler {
 
     private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
-    //session 객체를 컬렉션으로 관리함, 저장 모든 사용자에게 메시지 전달가능하게 함
+    //session 객체를 set 컬렉션으로 관리함, 저장 모든 사용자에게 메시지 전달가능하게 함
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        //String payload = "{ user : "+message.getPayload()+"}";
-       // JSONObject json = new JSONObject(payload);
         System.out.println(message.getPayload());
         for (WebSocketSession s : sessions){ //json.get("user")
             s.sendMessage(new TextMessage(message.getPayload()));

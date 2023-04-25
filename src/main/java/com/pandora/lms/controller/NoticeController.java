@@ -2,6 +2,7 @@ package com.pandora.lms.controller;
 
 import com.pandora.lms.service.NoticeService;
 import com.pandora.lms.util.TextChangeUtil;
+import com.pandora.lms.util.socket.AlarmHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +22,9 @@ public class NoticeController {
 
     private final NoticeService noticeService;
     private final TextChangeUtil textChangeUtil;
+    private final AlarmHandler alarmHandler;
+
+
     @GetMapping("/noticeIframe")
     public String noticeIframe(){ return "/notice/noticeIframe"; }
     @GetMapping("/notice")
@@ -71,10 +76,11 @@ public class NoticeController {
 //        if(session.getAttribute("id") == null) {
 //            return	"redirect:/notice";
 //        }
+
         return "/notice/noticeWrite";
     }
     @PostMapping("/noticeWrite")
-    public String noticeWrite(HttpServletRequest request, HttpSession session) {
+    public String noticeWrite(HttpServletRequest request, HttpSession session) throws IOException {
         String notice_title = request.getParameter("writeTitle");
         notice_title = textChangeUtil.changeText(notice_title);
         String notice_content = request.getParameter("writeContent");
@@ -91,6 +97,8 @@ public class NoticeController {
             map.put("notice_content", notice_content);
 //            map.put("admin_id", admin_id);
             noticeService.noticeWrite(map);
+            String notification = "공지사항이 업데이트되었습니다.";
+            alarmHandler.sendNotification(notification);
             return"redirect:/notice";
         }else {
             String notice_no = Integer.toString(noticeService.noticeNo(rowNum));

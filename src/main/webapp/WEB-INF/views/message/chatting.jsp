@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>socket 통신</title>
+    <title>Chatting Room</title>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -14,7 +14,7 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
-    <script type="text/javascript" src="/js/login/socket.js"></script>
+    <script type="text/javascript" src="/js/login/chatting.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -84,7 +84,16 @@
     const name = "${sessionScope.name}";
     $(function(){
         $("#msg").on('keypress', function(e){
-            if(e.keyCode == 13){ $("#msgsend").click(); }
+            if(e.keyCode == 13){
+                let message = document.getElementById("msg").value;
+                if(message==""){
+                    alert("글을 입력하세요");
+                    return false;
+                }else{
+                    ws.send(name+"님"+message);
+                    document.getElementById("msg").value = "";
+                }
+            }
         });
     });
 
@@ -103,17 +112,16 @@
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid" style="width:1200px; min-height:600px; margin-top:100px;">
+                <h1 style="font-weight: bold; text-align: center; width:1100px; margin-top:-30px;">Chatting Room</h1>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
+
                     <div class="BOX">
                         <div id="messageBox"></div>
-                        <input type="text" class="messageText none" placeholder="입력하세요" id="msg" maxlength="200">
+                        <input type="text" class="messageText none" placeholder="Press Enter for send message." id="msg" maxlength="200">
                     </div>
                     <!--수정할 부분 끝-->
                 </div>
-
-                <button id="msgsend"class="socketBtn" style="background-color: #2a96a5;" onclick="msg_send()">보내기</button>
-                <button class="socketBtn" onclick="disconnect()" style="background-color: darkred;">disconnect</button>
                 <script></script>
             </div>
 

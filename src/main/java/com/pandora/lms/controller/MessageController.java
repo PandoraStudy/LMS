@@ -80,10 +80,10 @@ public class MessageController {
         System.out.println("count : "+msg);
         return msg+"";
     }
-    @GetMapping("/socket")
-    public String socket(){
+    @GetMapping("/chatting")
+    public String chatting(){
 
-        return "/message/socket";
+        return "/message/chatting";
     }
 
 

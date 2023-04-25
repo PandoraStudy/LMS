@@ -12,7 +12,8 @@
                 let data_content = ls[1];
                 if(data_content === "이 들어오셨습니다."){
                     $("#messageBox").append(
-                        "<div class='messageName' style='text-align: left;'>"+event.data+"</div>"
+                        "<div class='messageName' style='text-align: left;'>"+event.data+"</div>"+
+                        "<div></div>"
                     );
                 }
                 else if(data_name===name && data_content !== "이 들어오셨습니다."){
@@ -38,16 +39,6 @@
     };
     function disconnect(){
         ws.close();
-    }
-    function msg_send(){
-        let message = document.getElementById("msg").value;
-        if(message==""){
-            alert("글을 입력하세요");
-            return false;
-        }else{
-            ws.send(name+"님"+message);
-            document.getElementById("msg").value = "";
-        }
     }
 
 
