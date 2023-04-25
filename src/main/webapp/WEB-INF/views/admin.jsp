@@ -704,7 +704,7 @@ function close_modal(id){
 									<li class="li_step3" title="교육과정관리" id="subject">교육과정관리</li>
 								</ul>
 							</li>
-							<li class="li_step2">과목정보관리
+							<li class="li_step2">온라인강의관리
 								<ul class="side_submenu_sub">
 									<li class="li_step3" title="일반교과목관리" id="insertYoutube">일반교과목관리</li>
 									<li class="li_step3">학생성적조회</li>

@@ -63,7 +63,9 @@ public class AdminController {
 
 	@ResponseBody
 	@PostMapping("/search/onlect")
-	public List<OnLectNmDTO> onlect(@RequestParam("ON_LECT_NM") String lect_name){
+	public List<OnLectNmDTO> onlect(@RequestParam("ON_SBJECT_NM") String sbject_no
+									,@RequestParam("ON_LECT_NM") String lect_name
+			){
 		
 		OnLectNmDTO onLect = new OnLectNmDTO();
 		onLect.setON_LECT_NM(lect_name);

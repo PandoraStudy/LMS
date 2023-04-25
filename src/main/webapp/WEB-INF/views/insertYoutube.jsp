@@ -158,6 +158,8 @@ function sortTable(n, table) {
 			<input type="submit" value="저장" id="insert_btn_inYou" class="search_btn">
 		</div>
 		<div class="main_container_search">
+			<div>과목명</div>
+			<input name="ON_SBJECT_NM">
 			<div>강의명</div>
 			<input name="ON_LECT_NM">
 		</div>
@@ -188,7 +190,7 @@ function sortTable(n, table) {
 		</table>
 	</div>
 	<div class="main_container_search" id="insert_btn_inYou">
-		<input type="hidden" id="">
+		<input type="hidden" id="">	
 		<div>강의URL</div>
 		<input id="on_LECT_URL" name="ON_LECT_URL">
 		<div>파일 첨부</div>
