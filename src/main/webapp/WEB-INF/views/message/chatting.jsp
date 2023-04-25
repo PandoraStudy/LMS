@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <title>Chatting Room</title>
-
+    <link rel="shortcut icon" href="img/pandora_logo.png" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -14,7 +14,6 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
-    <script type="text/javascript" src="/js/login/chatting.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,6 +28,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
 
+    <script type="text/javascript" src="/js/login/chatting.js"></script>
 </head>
 <style>
     .socketBtn{
@@ -112,7 +112,7 @@
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
             <div class="container-fluid" style="width:1200px; min-height:600px; margin-top:100px;">
-                <h1 style="font-weight: bold; text-align: center; width:1100px; margin-top:-30px;">Chatting Room</h1>
+                <h1 style="font-weight: bold; text-align: center; width:1100px; margin-top:-40px;">Chatting Room</h1>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
 
