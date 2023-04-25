@@ -366,10 +366,11 @@ width: 28px;
 height: 28px;
 }
 .main_container_subtitle{
-margin-right: 20px;
+margin-right: 12px;
 position: relative;
 top: 20px;
 width: inherit;
+min-width: 80px;
 height: 20px;
 /* background-color: red; */
 font-size: 16px;
@@ -453,7 +454,7 @@ left: 0;
 .modal_department{
 width: 606px;
 height:610px;
-background-color: lightblue;
+background-color: white;
 position: absolute;
 top: calc(50vh - 303px);
 left: calc(50% - 305px);
@@ -473,7 +474,6 @@ padding-left: 10px;
 .modal_main{
 width: 100%;
 height: 580px;
-background-color: yellowgreen;
 padding: 10px;
 box-sizing: border-box;
 /* display: grid; */
@@ -613,13 +613,95 @@ function close_tab(id){
 	$("#load_" + id).remove();
 }
 
-//close modal
+//modal창 닫기
 function close_modal(id){
 	$("#modal_opacity").css("display","none");
 	$("#" + id).remove();
 }
-</script>
 
+//modal 띄우기
+function modalSearch(id) {
+    var modal = document.getElementById("modal_opacity");
+    if (modal.style.display === "none" || modal.style.display === "") {
+        modal.style.display = "block";
+        $("#modal_opacity").load("/"+id);
+    } else {
+        modal.style.display = "none";
+    }
+}
+</script>
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript">
+var columnSortingStates = {};
+
+function sortTable(n, table) {
+	  var rows, switching, i, x, y, shouldSwitch;
+	  switching = true;
+
+	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
+	  for (var key in columnSortingStates) {
+	    if (key != n) {
+	      columnSortingStates[key] = undefined;
+	    }
+	  }
+	
+	  // 오름차순, 내림차순, 정렬x 순으로 정렬
+	  if (columnSortingStates[n] === undefined) {
+	    columnSortingStates[n] = "asc";
+	  } else if (columnSortingStates[n] === "asc") {
+	    columnSortingStates[n] = "desc";
+	  } else if (columnSortingStates[n] === "desc") {
+	    columnSortingStates[n] = "none";
+	  } else if (columnSortingStates[n] === "none") {
+	    columnSortingStates[n] = "asc";
+	  }
+	  dir = columnSortingStates[n];
+
+	  // 모든 th 요소에서 기호를 제거하십시오.
+	  var thElements = table.getElementsByTagName("th");
+	  for (var j = 0; j < thElements.length; j++) {
+	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
+	  }
+
+	  while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+	      shouldSwitch = false;
+	      x = rows[i].getElementsByTagName("TD")[n];
+	      y = rows[i + 1].getElementsByTagName("TD")[n];
+
+	      if (dir === "asc") {
+	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+	          shouldSwitch = true;
+	          break;
+	        }
+	      } else if (dir === "desc") {
+	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+	          shouldSwitch = true;
+	          break;
+	        }
+	      } else if (dir === "none") {
+	        break;
+	      }
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	    }
+	  }
+
+	  // 정렬된 요소에 기호를 추가합니다.
+	  if (dir === "asc") {
+	    thElements[n].innerHTML += " ▲";
+	  } else if (dir === "desc") {
+	    thElements[n].innerHTML += " ▼";
+	  }
+	}
+
+</script>
 </head>
 <body>
 <div>
