@@ -1,6 +1,8 @@
 package com.pandora.lms.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,8 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pandora.lms.dto.AdminDTO;
+import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 import com.pandora.lms.service.AdminService;
 
@@ -25,6 +32,9 @@ public class AdminController {
 	@Autowired
 	SearchDTO searchDTO;
 	
+	@Autowired
+	OnLectNmDTO onlectnmDTO;
+	
 	@GetMapping("/admin")
 	public String admin() {
 //		ModelAndView mv = new ModelAndView("admin");
@@ -32,6 +42,11 @@ public class AdminController {
 //		mv.addObject("list", adminList);
 //		System.out.println(adminList.toString());
 		return "admin";
+	}
+	
+	@GetMapping("/studentList")
+	public String studentList() {
+	    return "studentList";
 	}
 	
 	@ResponseBody
@@ -50,6 +65,96 @@ public class AdminController {
 		
 		return searchList;
 	}
+
+	@ResponseBody
+	@PostMapping("/search/onlect")
+	public List<Map<String, Object>> onlect(@RequestParam("ON_SBJECT_NM") String subject_no
+									,@RequestParam("ON_LECT_NM") String lect_name
+									,@RequestParam("ON_INSTR_NM") String instr_name
+			){
+		
+		OnLectNmDTO onLect = new OnLectNmDTO();
+		onLect.setON_LECT_NM(lect_name);
+		
+		List<Map<String, Object>> onlectList = adminService.onlectList(onLect);
+		
+
+		for (Map<String, Object> map : onlectList) {
+			System.out.println(map.toString());
+		}
+			
+	
+		
+		return onlectList;
+	}
+	
+	@GetMapping("/insertYoutube")
+	public String insertYoutube() {
+		return "insertYoutube";
+	}
+	
+	@ResponseBody
+	@PostMapping("/insertYoutube/save")
+	public List<OnLectNmDTO> insertYoutube(@RequestParam("ON_LECT_URL") String ON_LECT_URL
+											, @RequestParam("file_upload") MultipartFile fileUpload){
+		
+		OnLectNmDTO onLect = new OnLectNmDTO();
+		onLect.setON_LECT_URL(ON_LECT_URL);
+//		onLect.set
+		
+		List<OnLectNmDTO> insertYoutube = adminService.insertYoutube(onLect);
+		
+		return insertYoutube;
+	}
+	
+	@GetMapping("/attendance")
+	public String attendance() {
+		return "attendance";
+	}
+	
+	@GetMapping("/opacity")
+	public String opacity() {
+		return "opacity";
+	}
+	
+	@GetMapping("/departmentModal")
+	public String departmentModal() {
+		return "departmentModal";
+	}
+	
+	@GetMapping("/studentsModal")
+	public String studentsModal() {
+		return "studentsModal";
+	}
+	
+	@ResponseBody
+	@PostMapping("/search/studentsModal")
+	public List<ApplInfoDTO> studentsModal(@RequestParam("name") String name
+			) {
+		ApplInfoDTO appl = new ApplInfoDTO();
+		
+		appl.setKORN_FLNM(name);
+		
+		List<ApplInfoDTO> studentsModal = adminService.studentsModal(appl);
+		
+		System.out.println(studentsModal+"컨트롤러");
+		return studentsModal;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@GetMapping("/mainContentTest2")
+	public String mainContentTest2() {
+		return "mainContentTest2";
+	}
+	
 	@ResponseBody
 	@PostMapping("/search2")
 	public List<AdminDTO> search2(@RequestParam("name") String name
@@ -66,12 +171,6 @@ public class AdminController {
 		
 		return searchList;
 	}
-	@GetMapping("/studentList")
-	public String studentList() {
-	    return "studentList";
-	}
-	@GetMapping("/mainContentTest2")
-	public String mainContentTest2() {
-		return "mainContentTest2";
-	}
 }
+
+
