@@ -41,35 +41,48 @@
     });
 </script>
 <style>
-    .video-thumnails {
-        position: relative;
-        width: 160px;
-        height: 100px;
-        background-color: #cccccc;
-    }
-
-    .video-img {
-        width: 160px;
-        height: 100px;
-    }
-
-    .total-time {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        border-radius: 5px;
-        padding: 2px;
-        margin: 0 3px 3px 0;
+    .week-select {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 10px;
         box-sizing: border-box;
-        color: white;
-        background-color: black;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
     }
 
-    .week {
+    .select-last {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .week-content {
+        width: 100%;
+        height: auto;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 10px;
+        padding-top: 17px;
+        box-sizing: border-box;
+    }
+
+    .content-last {
+        border-top: 0;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .week-object {
         width: 100%;
         height: 40px;
-        background-color: #ccc;
     }
+
+    .btn {
+        width: 80px;
+        height: 30px;
+        line-height: 17px;
+    }
+
 </style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -99,42 +112,26 @@
                     <div class="col-xl-12 col-lg-7">
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
-                            <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">과목명</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">더보기</div>
-                                        <a class="dropdown-item" href="#">추가 메뉴</a>
-                                    </div>
-                                </div>
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">강의명</h6>
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
                                 <div>
-                                    <!-- 실제 구성은 이곳에서 진행합니다. -->
-                                        <!-- 강의 정보 추가 위치 -->
+                                    <!-- 강의 정보 추가 위치 -->
                                     <c:set var="i" value="1"/>
-                                        <c:forEach items="${lectList}" var="lect">
-                                            <div class="week">
-                                                <div class="week-select form-control" data-toggle="collapse" data-target="#lect${i}">
-                                                    <i class="fas fa-chevron-down" value="down${i}"></i> <!-- 처음에는 아래 방향 화살표 아이콘 사용 -->
-                                                    ${i}주차
-                                                </div>
+                                        <c:forEach items="${lectList}" var="lect" varStatus="status">
+                                        <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target="#lect${i}">
+                                            <i class="fas fa-chevron-down"></i> ${i}주차
+                                        </div>
+                                        <div id="lect${i}" class="collapse week-content ${status.last ? 'content-last' : ''}">
+                                            <!-- 숨길 객체의 내용 -->
+                                            <div class="week-object">
+                                                <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="${lect.LECT_URL}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button></td>
+                                                <span>${lect.ON_LECT_NM }</span>
                                             </div>
-                                            <div id="lect${i}" class="collapse">
-                                                <!-- 숨길 객체의 내용 -->
-                                                <div>
-                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="${lect.LECT_URL}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button></td>
-                                                    <span>${lect.ON_LECT_NM }</span>
-                                                </div>
-                                            </div>
-                                            <c:set var="i" value="${i + 1}"/>
+                                        </div>
+                                        <c:set var="i" value="${i + 1}"/>
                                     </c:forEach>
                                 </div>
                             </div>
