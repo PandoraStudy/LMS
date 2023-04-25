@@ -8,4 +8,33 @@
         WHERE USER_NO = #{user_no}
     </select>
 
+    <update id="join_url">
+        UPDATE LECT_MEET_INFO
+        SET JOIN_URL = #{join_url}
+        WHERE SBJCT_NO = #{sbjct_no}
+    </update>
+
+    <select id="student_list" parameterType="ZoomDTO" resultType="ZoomDTO"><!--닉네임 중복 검사-->
+        SELECT APPL_NO, USER_ID, KORN_FLNM
+        FROM SBJCT_STUDENT
+        WHERE SBJCT_NO = #{sbjct_no}
+    </select>
+
+    <select id="user_no" parameterType="ZoomDTO" resultType="ZoomDTO"><!--닉네임 중복 검사-->
+        SELECT USER_NO
+        FROM APPL_INFO
+        WHERE APPL_NO = #{appl_no}
+    </select>
+
+    <insert id="student_msg">
+        INSERT INTO message
+        SET
+        post_user_id = #{login_id},
+        message_title = '수업시작했다',
+        message_content = '수업시작했다',
+        read_or_not = 0,
+        get_user_id = #{user_id}
+    </insert>
+
+
 </mapper>

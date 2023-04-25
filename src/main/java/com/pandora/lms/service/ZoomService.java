@@ -12,4 +12,9 @@ public interface ZoomService {
     String meeting(String accessToken) throws IOException;
 
     ZoomDTO authority(ZoomDTO zoomDTO);
+
+
+    void join_url(ZoomDTO zoomDTO);
+
+    void meeting_msg(ZoomDTO zoomDTO);
 }
