@@ -1,5 +1,6 @@
 package com.pandora.lms.util.socket;
 
+import com.pandora.lms.util.TextChangeUtil;
 import org.json.JSONObject;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -10,6 +11,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SocketHandler extends TextWebSocketHandler {
+
+    private TextChangeUtil textChangeUtil;
 
     private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
     //session 객체를 set 컬렉션으로 관리함, 저장 모든 사용자에게 메시지 전달가능하게 함

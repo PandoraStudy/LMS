@@ -1,7 +1,7 @@
     let wsmsg = new WebSocket('ws:/172.30.1.89/user');
 
     wsmsg.onopen = function(event) {
-        console.log("WebSocket 연결이 열렸습니다.");
+        console.log("채팅이 열렸습니다.");
         wsmsg.send(name+"님이 들어오셨습니다.");
     };
     wsmsg.onmessage = async function(event) {
@@ -12,8 +12,7 @@
                 let data_content = ls[1];
                 if(data_content === "이 들어오셨습니다."){
                     $("#messageBox").append(
-                        "<div class='messageName' style='text-align: left;'>"+event.data+"</div>"+
-                        "<div></div>"
+                        "<div class='messageName' style='text-align: left;'>"+event.data+"</div>"
                     );
                 }
                 else if(data_name===name && data_content !== "이 들어오셨습니다."){
@@ -26,19 +25,12 @@
                         "<div class='messageName' style='text-align: left;'>"+data_name+"</div>"+
                         "<div class='messageBody' style='float:left;'>"+data_content+"</div><br><br>"
                     );
-
                 };
                 $("#messageBox").scrollTop($("#messageBox")[0].scrollHeight);
             }
-        } catch (err) {
-            console.log(err);
-        }
+        } catch (err) { console.log(err); }
     };
-    wsmsg.onclose = function(event) {
-        console.log('WebSocket 연결이 닫혔습니다.');
-    };
-    function disconnect(){
-        wsmsg.close();
-    }
+    wsmsg.onclose = function(event) { console.log('채팅이 닫혔습니다.'); };
+    function disconnect(){ wsmsg.close(); }
 
 

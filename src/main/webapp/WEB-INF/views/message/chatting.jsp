@@ -27,7 +27,6 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
-
     <script type="text/javascript" src="/js/login/chatting.js"></script>
 </head>
 <style>
@@ -90,7 +89,7 @@
                     alert("글을 입력하세요");
                     return false;
                 }else{
-                    ws.send(name+"님"+message);
+                    wsmsg.send(name+"님"+message);
                     document.getElementById("msg").value = "";
                 }
             }

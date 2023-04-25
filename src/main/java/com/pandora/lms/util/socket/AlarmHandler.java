@@ -22,13 +22,13 @@ public class AlarmHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println("세션 연결되었습니다.");
+        System.out.println("공지알람 세션이 연결되었습니다.");
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessions.remove(session);
-        System.out.println("세션이 종료 되었습니다.");
+        System.out.println("공지알람 세션이 종료되었습니다.");
     }
     public void sendNotification(String notification) throws IOException{
         for (WebSocketSession session : sessions) {
