@@ -2,25 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="youtube">
 
-    <select id="getPlayTime" parameterType="HashMap" resultType="Integer">
-        SELECT play_time
-            FROM lecture
-                WHERE
-                    video_id = #{video_id}
-                AND
-                    student_no = #{student_no}
-    </select>
-
-    <update id="playTimeSave" parameterType="HashMap">
-        UPDATE lecture
-            SET
-                play_time = #{curr_time}
-        WHERE
-            video_id = #{video_id}
-        AND
-            student_no = #{student_no}
-    </update>
-
     <select id="lecture" resultType="HashMap">
         SELECT UV.SBJCT_NO, UV.SBJCT_NM, UV.KORN_FLNM, UV.CRCLM_NM
             FROM USER_APPL_VIEW as UV
@@ -46,5 +27,39 @@
             lti.SBJCT_NO = #{sbjct_no }
         ORDER BY lti.LECT_YMD ASC
     </select>
+
+    <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
+        SELECT
+            olm.APPL_NO,
+            oli.ON_LECT_SN,
+            oli.ON_LECT_URL,
+            olm.LAST_PLAY_TM,
+            olm.LECT_MAX_TM,
+            olm.SBJCT_NO
+        FROM ON_LECT_MAG olm
+            JOIN ON_LECT_INFO oli ON olm.ON_LECT_SN = oli.ON_LECT_SN AND olm.APPL_NO = #{appl_no }
+        WHERE
+            oli.ON_LECT_SN = #{on_lect_sn }
+    </select>
+
+    <select id="getPlayTime" parameterType="HashMap" resultType="Integer">
+        SELECT
+            LAST_PLAY_TM
+        FROM ON_LECT_MAG
+        WHERE
+            ON_LECT_SN = #{on_lect_sn }
+        AND
+            APPL_NO = #{appl_no }
+    </select>
+
+    <update id="playTimeSave" parameterType="HashMap">
+        UPDATE ON_LECT_MAG
+        SET
+            LAST_PLAY_TM = #{curr_time }
+        WHERE
+            ON_LECT_SN = #{on_lect_sn }
+        AND
+            APPL_NO = #{appl_no }
+    </update>
 
 </mapper>

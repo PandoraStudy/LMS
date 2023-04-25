@@ -29,8 +29,6 @@
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    /* 학생 구분용 임시 번호 */
-    let student_no = 131;
     /* 유튜브 동영상 iframe 생성 객체, 그 안에 실행될 동영상 정보를 가져오고 상태 변화에 따른 이벤트를 발생 시킴 */
     var player;
     /* 인터벌 사용하기 위한 변수 선언 */
@@ -38,9 +36,9 @@
     /* 실제 동영상 재생 시간 위치 */
     let curr_time = 0;
     /* 동영상 주소 */
-    let video_id = "${videoId}";
+    let video_id = "${lectureInfo.ON_LECT_URL }";
     /* 학생이 실제 시청 시간 위치 */
-    let play_time = ${playTime};
+    let play_time = ${lectureInfo.LAST_PLAY_TM };
 
     /* 유튜브 Iframe 준비 상태 */
     function onYouTubeIframeAPIReady() {
@@ -81,7 +79,7 @@
             curr_time = Math.floor(player.getCurrentTime());
 
             /* 실시간 재생 시간과 저장된 재생 시간의 차이가 5보다 클 경우 저장된 위치로 옮깁니다. */
-            if ((curr_time - play_time) > 3) {
+            if ((curr_time - play_time) > 5) {
                 player.seekTo(play_time);
             }
 
@@ -145,7 +143,7 @@
             $.ajax({
                 type: "POST",
                 url: "/getPlayTime",
-                data: {"video_id": video_id, "student_no": student_no},
+                data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
                 dataType: "text",
                 success: function (playTime) {
                     console.log("[getPlayTime] " + playTime + "초");
@@ -164,7 +162,7 @@
             $.ajax({
                 type: "POST",
                 url: "/playTimeSave",
-                data: {"video_id": video_id, "curr_time": curr_time, "student_no": student_no},
+                data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN}, "curr_time" : curr_time},
                 dataType: "text",
                 success: function (result) {
                     console.log("[playTimeSave] " + result);

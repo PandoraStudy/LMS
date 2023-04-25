@@ -30,13 +30,26 @@
 
 
         $(".week-content").click(function() {
-                let url = $(this).find(".mthd").val();
-                let mthd
+                let lectureInfo = $(this).find(".mthd").val();
+                let snOrUrl = lectureInfo.split(",")[0];
+                let mthd = lectureInfo.split(",")[1];
 
-                if(url == "" || url == null) {
-                    alert("회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
+                if(mthd == 1) {
+                    location.href = "lectureDetail?on_lect_sn=" + snOrUrl;
                 } else {
-                    alert("해당 URL로 이동 합니다 : " + url);
+                    // 줌 담당자에게 어디로 보낼지 전달 받아야 합니다.
+                    $.ajax({
+                        type: "GET",
+                        url: "",
+                        data: {},
+                        dataType: "text",
+                        success: function() {
+
+                        },
+                        error: function () {
+
+                        }
+                    });
                 }
         });
 
@@ -132,7 +145,7 @@
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
+                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
                                                     <span>${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">

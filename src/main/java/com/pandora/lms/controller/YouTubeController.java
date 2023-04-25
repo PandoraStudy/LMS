@@ -68,7 +68,9 @@ public class YouTubeController {
         }
 
         userInfo.put("appl_no", session.getAttribute("appl_no"));
-        Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.getPlayTime", userInfo);
+        Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.lectDetail", userInfo);
+
+        System.out.println(lectureInfo);
         view.addObject("lectureInfo", lectureInfo);
 
         return view;
@@ -76,15 +78,19 @@ public class YouTubeController {
 
     @PostMapping("/getPlayTime")
     @ResponseBody
-    public Integer getPlayTime(@RequestParam Map<String, Object> userData) {
-        return sqlSession.selectOne("youtube.getPlayTime", userData);
+    public Integer getPlayTime(@RequestParam Map<String, Object> userInfo, HttpSession session) {
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+        System.out.println("조회 : " + userInfo);
+        return sqlSession.selectOne("youtube.getPlayTime", userInfo);
     }
 
     @PostMapping("/playTimeSave")
     @ResponseBody
-    public String playTimeSave(@RequestParam Map<String, Object> userData) {
-        int result = sqlSession.update("youtube.playTimeSave", userData);
-        String msg = (result == 1) ? userData.get("curr_time") + "초 저장 완료" : "저장 실패";
+    public String playTimeSave(@RequestParam Map<String, Object> userInfo, HttpSession session) {
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+        System.out.println("저장 : " + userInfo);
+        int result = sqlSession.update("youtube.playTimeSave", userInfo);
+        String msg = (result == 1) ? userInfo.get("curr_time") + "초 저장 완료" : "저장 실패";
 
         return msg;
     }
