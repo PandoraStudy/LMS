@@ -33,6 +33,7 @@
             lti.LECT_YMD AS 'LECT_YMD',
             lti.SBJCT_MTHD_CD AS 'SBJCT_MTHD_CD',
             IFNULL(oli.ON_LECT_NM, 'ZOOM 수업') AS 'ON_LECT_NM',
+            oli.ON_LECT_SN AS 'ON_LECT_SN',
             IFNULL(oli.ON_LECT_URL, lmi.JOIN_URL) AS 'LECT_URL',
             IFNULL(om.LECT_PRGRS_RT, 0) AS 'LECT_PRGRS_RT',
             IFNULL(lmm.ATTEND_STATUS, '결석') AS 'ATTENDANCE'

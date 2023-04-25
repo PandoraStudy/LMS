@@ -19,6 +19,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
     $(function() {
@@ -28,8 +29,9 @@
         });
 
 
-        $(".mthd").click(function() {
-                let url = $(this).attr("value");
+        $(".week-content").click(function() {
+                let url = $(this).find(".mthd").val();
+                let mthd
 
                 if(url == "" || url == null) {
                     alert("회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
@@ -129,25 +131,13 @@
                                         <div id="lect${i}" class="collapse week-content ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose>" data-delay="500">
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
-                                                <div style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="${lect.LECT_URL}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
+                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
                                                     <span>${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-                                                    <c:choose>
-                                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">
-                                                    <div style="margin-right: 10px;">진행률</div>
-                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'>
-                                                        <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${lect.LECT_PRGRS_RT}%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>
-                                                    </div>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <div style='height:15px; width: 200px; margin-top: -3px;'>
-                                                                    ${lect.ATTENDANCE}
-                                                            </div>
-
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}"><div style="margin-right: 10px;">진행률</div>
+                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'><div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${lect.LECT_PRGRS_RT}%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div></div></c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
                                                 </div>
                                             </div>
                                         </div>

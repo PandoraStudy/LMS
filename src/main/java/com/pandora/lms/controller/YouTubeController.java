@@ -28,7 +28,7 @@ public class YouTubeController {
     public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) throws JSONException {
         ModelAndView view = new ModelAndView("/youtube/lecture");
 
-        if(session.getAttribute("appl_no") == null) {
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
         }
@@ -44,12 +44,14 @@ public class YouTubeController {
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
 
-        if(session.getAttribute("appl_no") == null) {
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
         }
 
+        lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
+
         System.out.println(lectList);
         view.addObject("lectList", lectList);
 
@@ -57,14 +59,17 @@ public class YouTubeController {
     }
 
     @GetMapping("/lectureDetail")
-    public ModelAndView lectureDetail(@RequestParam Map<String, Object> userData) {
+    public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
-        /* 추후 세션이나 사용자 인증 아이디 값으로 변경 */
-        userData.put("student_no", "131");
-        userData.put("video_id", userData.get("video_id"));
-        int playTime = sqlSession.selectOne("youtube.getPlayTime", userData);
-        view.addObject("playTime", playTime);
-        view.addObject("videoId", userData.get("video_id"));
+
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
+            view.setViewName("redirect:/login");
+            return view;
+        }
+
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+        Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.getPlayTime", userInfo);
+        view.addObject("lectureInfo", lectureInfo);
 
         return view;
     }

@@ -17,6 +17,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <%-- API Key값 --%>
 <!--      type="module" -->
 <!--     <script src="js/apikey.js"></script> -->
