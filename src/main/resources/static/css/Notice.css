@@ -82,7 +82,8 @@ body{ margin:0; padding:0; }
     border-bottom: 1px solid gray;
     display: flex;
     flex-direction: column;
-    font-size: 22px;
+    font-size: 20px;
+    color:#4A2821;
 }
 .btnBox{
     margin:5px;

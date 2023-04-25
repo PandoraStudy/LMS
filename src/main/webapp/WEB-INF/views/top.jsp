@@ -26,6 +26,9 @@
 </script>
 <style>
   .msgCnt{
+    width:23px;
+    height:23px;
+    line-height: 15px;
   }
 </style>
 <!-- 탑 바 -->
@@ -79,60 +82,63 @@
 
     <!-- 알림 아이콘 부분 -->
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-bell fa-fw"></i>
-        <!-- 알림 카운트 부분 -->
-        <span class="badge badge-danger badge-counter">3+</span>
+      <a class="nav-link" href="/chatting">
+        <i class="xi-message-o xi-2x"></i>
       </a>
-      <!-- 알림 아이콘 드롭다운 -->
-      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-           aria-labelledby="alertsDropdown">
-        <h5 class="dropdown-header">알림</h5>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-            <div class="icon-circle bg-primary">
-              <i class="fas fa-file-alt text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">2023-04-14</div>
-            <span class="font-weight-bold">오늘은 자바 이민규 교수님 강의일 입니다.</span>
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-            <div class="icon-circle bg-success">
-              <i class="fas fa-donate text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">2023-04-15</div>
-            내일은 자바 이민규 교수님 강의 일정이 있습니다.
-          </div>
-        </a>
-        <a class="dropdown-item d-flex align-items-center" href="#">
-          <div class="mr-3">
-            <div class="icon-circle bg-warning">
-              <i class="fas fa-exclamation-triangle text-white"></i>
-            </div>
-          </div>
-          <div>
-            <div class="small text-gray-500">2023-04-15</div>
-            내일은 자바 레포트 제출 마감일 입니다.
-          </div>
-        </a>
-        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-      </div>
+<%--      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"--%>
+<%--         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
+<%--        <i class="fas fa-bell fa-fw"></i>--%>
+<%--        <!-- 알림 카운트 부분 -->--%>
+<%--        <span class="badge badge-danger badge-counter">3+</span>--%>
+<%--      </a>--%>
+<%--      <!-- 알림 아이콘 드롭다운 -->--%>
+<%--      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"--%>
+<%--           aria-labelledby="alertsDropdown">--%>
+<%--        <h5 class="dropdown-header">알림</h5>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="mr-3">--%>
+<%--            <div class="icon-circle bg-primary">--%>
+<%--              <i class="fas fa-file-alt text-white"></i>--%>
+<%--            </div>--%>
+<%--          </div>--%>
+<%--          <div>--%>
+<%--            <div class="small text-gray-500">2023-04-14</div>--%>
+<%--            <span class="font-weight-bold">오늘은 자바 이민규 교수님 강의일 입니다.</span>--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="mr-3">--%>
+<%--            <div class="icon-circle bg-success">--%>
+<%--              <i class="fas fa-donate text-white"></i>--%>
+<%--            </div>--%>
+<%--          </div>--%>
+<%--          <div>--%>
+<%--            <div class="small text-gray-500">2023-04-15</div>--%>
+<%--            내일은 자바 이민규 교수님 강의 일정이 있습니다.--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item d-flex align-items-center" href="#">--%>
+<%--          <div class="mr-3">--%>
+<%--            <div class="icon-circle bg-warning">--%>
+<%--              <i class="fas fa-exclamation-triangle text-white"></i>--%>
+<%--            </div>--%>
+<%--          </div>--%>
+<%--          <div>--%>
+<%--            <div class="small text-gray-500">2023-04-15</div>--%>
+<%--            내일은 자바 레포트 제출 마감일 입니다.--%>
+<%--          </div>--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>--%>
+<%--      </div>--%>
     </li>
 
     <!-- 쪽지(메시지) 부분 -->
     <li class="nav-item dropdown no-arrow mx-1">
       <a class="nav-link" href="/messageBox">
-        <i class="fas fa-envelope fa-fw"></i>
+        <i class="xi-mail xi-2x"></i>
         <!-- 메시지 카운트 부분 -->
         <c:if test="${sessionScope.id ne null && msgCnt ne 0 }">
-        <span class="badge badge-danger badge-counter msgCnt"></span>
+        &nbsp;<span class="badge badge-danger badge-counter msgCnt"></span>
         </c:if>
       </a>
       <!-- 쪽지(메시지) 드롭 다운 부분 -->
@@ -207,19 +213,19 @@
       <!-- 유저 프로필 드롭다운 부분 -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
            aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-          Profile
-        </a>
-        <a class="dropdown-item" href="#">
-          <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-          Settings
-        </a>
-        <a class="dropdown-item" href="/chatting">
-          <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-          채팅
-        </a>
-        <div class="dropdown-divider"></div>
+<%--        <a class="dropdown-item" href="#">--%>
+<%--          <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>--%>
+<%--          Profile--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item" href="#">--%>
+<%--          <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>--%>
+<%--          Settings--%>
+<%--        </a>--%>
+<%--        <a class="dropdown-item" href="/chatting">--%>
+<%--          <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>--%>
+<%--          채팅--%>
+<%--        </a>--%>
+<%--        <div class="dropdown-divider"></div>--%>
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
           <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
           로그아웃
