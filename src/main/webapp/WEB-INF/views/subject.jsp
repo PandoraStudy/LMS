@@ -100,7 +100,7 @@ margin: 5px;
 	<div class="main_container_title">
 		<img class="title_img" alt="title" src="/img/icon/title.png">교육과정관리
 	</div>
-	<div style="overflow-y: scroll; overflow-x: hidden; height: 580px;">
+	<div style="overflow-y: hidden; overflow-x: hidden; height: 580px;">
 	<form id="search-form">
 		<div class="main_container_interspace">
 			<input type="button" value="조회" class="search_btn" onclick="search()">

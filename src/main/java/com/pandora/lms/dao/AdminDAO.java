@@ -1,6 +1,7 @@
 package com.pandora.lms.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -16,7 +17,7 @@ public interface AdminDAO {
 	
 	public List<AdminDTO> searchList(SearchDTO search);
 
-	public List<OnLectNmDTO> onlectList(OnLectNmDTO onLect);
+	public List<Map<String, Object>> onlectList(OnLectNmDTO onLect);
 
 	public List<OnLectNmDTO> insertYoutube(OnLectNmDTO onLect);
 

@@ -1,6 +1,7 @@
 package com.pandora.lms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class AdminService {
 		return adminDAO.searchList(search);
 	}
 
-	public List<OnLectNmDTO> onlectList(OnLectNmDTO onLect) {
+	public List<Map<String, Object>> onlectList(OnLectNmDTO onLect) {
 		return adminDAO.onlectList(onLect);
 	}
 

@@ -18,9 +18,9 @@
 		</where>
 	</select>
 	
-	<select id="onlectList" parameterType="OnLectNmDTO" resultType="OnLectNmDTO">
+	<select id="onlectList" parameterType="OnLectNmDTO" resultType="HashMap">
 		SELECT *
-		FROM ON_LECT_INFO
+		FROM lectureview
 		<where>
 			<if test="ON_LECT_NM != null">
 				ON_LECT_NM LIKE CONCAT('%',#{ON_LECT_NM},'%')

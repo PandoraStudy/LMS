@@ -1,6 +1,8 @@
 package com.pandora.lms.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pandora.lms.dto.AdminDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
@@ -64,16 +68,22 @@ public class AdminController {
 
 	@ResponseBody
 	@PostMapping("/search/onlect")
-	public List<OnLectNmDTO> onlect(@RequestParam("ON_SBJECT_NM") String sbject_no
+	public List<Map<String, Object>> onlect(@RequestParam("ON_SBJECT_NM") String subject_no
 									,@RequestParam("ON_LECT_NM") String lect_name
+									,@RequestParam("ON_INSTR_NM") String instr_name
 			){
 		
 		OnLectNmDTO onLect = new OnLectNmDTO();
 		onLect.setON_LECT_NM(lect_name);
 		
-		List<OnLectNmDTO> onlectList = adminService.onlectList(onLect);
+		List<Map<String, Object>> onlectList = adminService.onlectList(onLect);
 		
-		System.out.println(onlectList);
+
+		for (Map<String, Object> map : onlectList) {
+			System.out.println(map.toString());
+		}
+			
+	
 		
 		return onlectList;
 	}
@@ -162,3 +172,5 @@ public class AdminController {
 		return searchList;
 	}
 }
+
+
