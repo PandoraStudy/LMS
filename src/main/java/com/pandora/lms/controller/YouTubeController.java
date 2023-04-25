@@ -52,7 +52,7 @@ public class YouTubeController {
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
 
-        System.out.println(lectList);
+        view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("lectList", lectList);
 
         return view;
@@ -70,7 +70,6 @@ public class YouTubeController {
         userInfo.put("appl_no", session.getAttribute("appl_no"));
         Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.lectDetail", userInfo);
 
-        System.out.println(lectureInfo);
         view.addObject("lectureInfo", lectureInfo);
 
         return view;

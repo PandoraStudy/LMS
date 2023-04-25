@@ -11,6 +11,7 @@
 
     <select id="lectList" parameterType="HashMap" resultType="HashMap">
         SELECT
+            es.SBJCT_NM as 'SBJCT_NM',
             IFNULL(om.APPL_NO, lmm.APPL_NO) as 'APPL_NO',
             lti.LECT_YMD AS 'LECT_YMD',
             lti.SBJCT_MTHD_CD AS 'SBJCT_MTHD_CD',
@@ -24,6 +25,7 @@
             LEFT JOIN LECT_MEET_INFO lmi ON lti.LECT_YMD = lmi.LECT_YMD
             LEFT JOIN ON_LECT_MAG om ON lti.SBJCT_NO = om.SBJCT_NO AND lti.LECT_YMD = om.LECT_YMD AND om.APPL_NO = #{appl_no }
             LEFT JOIN LECT_MEET_MAG lmm ON lti.LECT_YMD = lmm.LECT_YMD AND lmm.APPL_NO = #{appl_no }
+            LEFT JOIN ESTBL_SBJCT es ON es.SBJCT_NO = #{sbjct_no }
         WHERE
             lti.SBJCT_NO = #{sbjct_no }
         ORDER BY lti.LECT_YMD ASC

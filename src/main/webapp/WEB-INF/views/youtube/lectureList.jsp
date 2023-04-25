@@ -38,6 +38,7 @@
                     location.href = "lectureDetail?on_lect_sn=" + snOrUrl;
                 } else {
                     // 줌 담당자에게 어디로 보낼지 전달 받아야 합니다.
+                    alert("줌으로, 과목 번호 : " + ${sbjct_no});
                     $.ajax({
                         type: "GET",
                         url: "",
@@ -128,11 +129,43 @@
                     <!-- A카드 게시판 -->
                     <div class="col-xl-12 col-lg-7">
                         <div class="card shadow mb-4">
+                            <!-- 강의 본문 부분 -->
+                            <div class="card-body border-left-primary">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">${lectList[0].SBJCT_NM} 공지사항</div><br>
+                                <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <td class="col-1">번호</td>
+                                            <td class="col-4">제목</td>
+                                            <td class="col-2">작성자</td>
+                                            <td class="col-2">조회수</td>
+                                            <td class="col-2">등록일</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td class="title text-truncate" style="max-width:1px; text-align: left;">T1tle</td>
+                                            <td>INSTR01</td>
+                                            <td>11</td>
+                                            <td>10:33</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- A카드 게시판 -->
+                    <div class="col-xl-12 col-lg-7">
+                        <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">강의</h6>
                             </div>
-                            <!-- A 본문 부분 -->
+                            <!-- 강의 본문 부분 -->
                             <div class="card-body">
                                 <div>
                                     <!-- 강의 정보 추가 위치 -->
