@@ -32,13 +32,14 @@
         color: #333;
         font-size: 17px;
         font-weight: bold;
-        margin: 10px 0;
-        padding: 10px;
+        margin: 10px;
         position : fixed;
         bottom : 0px;
         /*width:223px;*/
         width:300px;
-        height:100px;
+        height:70px;
+        text-align: center;
+        line-height: 70px;
         z-index: 1;
     }
 </style>
