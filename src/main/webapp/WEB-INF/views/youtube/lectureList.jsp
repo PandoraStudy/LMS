@@ -119,7 +119,7 @@
 
                 <!-- 메인 페이지의 탑 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">내 강의실</h1>
+                    <h1 class="h3 mb-0 text-gray-800"></h1>
                     <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
 
@@ -129,7 +129,7 @@
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">강의명</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
