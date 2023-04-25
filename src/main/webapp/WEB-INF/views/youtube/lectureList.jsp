@@ -80,6 +80,7 @@
         padding: 10px;
         padding-top: 17px;
         box-sizing: border-box;
+        transition: 0s;
     }
 
     .content-last {
@@ -141,7 +142,7 @@
                                             <i class="fas fa-chevron-down"></i> ${i}주차
                                         </div>
                                         <!-- 콘텐츠 -->
-                                        <div id="lect${i}" class="collapse week-content ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose>" data-delay="500">
+                                        <div id="lect${i}" class="week-content ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose> collapse">
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
