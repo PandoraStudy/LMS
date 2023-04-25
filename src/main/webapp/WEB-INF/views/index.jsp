@@ -95,7 +95,7 @@
         }
 
         .main_right {
-            width: 500px;
+            width: 630px;
         }
         .none{ font-size:14px; }
         .none:hover{ background-color: #cccccc; }
@@ -275,12 +275,12 @@
 
                         <div class="col-lg-6 mb-4">
                             <!-- 식단 -->
-                            <div style="width: 655px;" class="card shadow mb-4">
+                            <div style="width: 785px;" class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div>
-                                    <img style="height: 329px; width: 655px; margin-left: -1px" src="/img/pandora_rise.png">
+                                    <img style="height: 329px; width: 785px; margin-left: -1px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
