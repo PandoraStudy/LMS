@@ -22,22 +22,22 @@
 </head>
 <script>
     $(function() {
+
         $(".week-select").click(function() {
             $(this).children(".fas").toggleClass("fa-chevron-down fa-chevron-up");
         });
 
 
-    $(".mthd").click(function() {
-            let url = $(this).attr("value");
+        $(".mthd").click(function() {
+                let url = $(this).attr("value");
 
-            if(url == "" || url == null) {
-                alert("회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
-            } else {
-                alert("해당 URL로 이동 합니다 : " + url);
-            }
-
-
+                if(url == "" || url == null) {
+                    alert("회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
+                } else {
+                    alert("해당 URL로 이동 합니다 : " + url);
+                }
         });
+
     });
 </script>
 <style>
@@ -78,9 +78,10 @@
     }
 
     .btn {
-        width: 80px;
+        width: 75px;
         height: 30px;
         line-height: 17px;
+        margin-right: 10px;
     }
 
 </style>
@@ -124,11 +125,30 @@
                                         <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target="#lect${i}">
                                             <i class="fas fa-chevron-down"></i> ${i}주차
                                         </div>
-                                        <div id="lect${i}" class="collapse week-content ${status.last ? 'content-last' : ''}">
+                                        <!-- 콘텐츠 -->
+                                        <div id="lect${i}" class="collapse week-content ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose>" data-delay="500">
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
-                                                <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="${lect.LECT_URL}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button></td>
-                                                <span>${lect.ON_LECT_NM }</span>
+                                                <div style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="${lect.LECT_URL}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
+                                                    <span>${lect.ON_LECT_NM }</span>
+                                                </div>
+                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
+                                                    <c:choose>
+                                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">
+                                                    <div style="margin-right: 10px;">진행률</div>
+                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'>
+                                                        <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${lect.LECT_PRGRS_RT}%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>
+                                                    </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <div style='height:15px; width: 200px; margin-top: -3px;'>
+                                                                    ${lect.ATTENDANCE}
+                                                            </div>
+
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
                                             </div>
                                         </div>
                                         <c:set var="i" value="${i + 1}"/>

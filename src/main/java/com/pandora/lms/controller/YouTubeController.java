@@ -50,6 +50,7 @@ public class YouTubeController {
         }
 
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
+        System.out.println(lectList);
         view.addObject("lectList", lectList);
 
         return view;
