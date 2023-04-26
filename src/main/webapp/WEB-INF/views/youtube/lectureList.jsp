@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -18,158 +19,90 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
-    <%-- API Key값 --%>
-    <script src="js/apikey.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
-    $(function () {
-        // 로딩창 보여주기
-        $('#loading').show();
+    $(function() {
 
-        let studentNo = 131;
-        let playlistId = "${playlistId}";
+        $(".week-select").click(function() {
+            $(this).children(".fas").toggleClass("fa-chevron-down fa-chevron-up");
+        });
 
-        $.get({
-            url: "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" + playlistId + "&key=" + API_KEY,
-            dataType: "json",
-            success: function (playlistItems) {
-                /* 플레이리스트에 있는 동영상 각각의 정보 */
-                let playlist = playlistItems.items;
 
-                for (var i = 0; i < playlist.length; i++) {
-                    /* 동영상 썸네일 이미지 URL, 제목, 동영상 URL, 동영상 총 재생시간, DB 저장된 재생시간, 썸네일 사용 총 재생시간 */
-                    let videoThumnails = playlist[i].snippet.thumbnails.medium.url
-                    let videoTitle = playlist[i].snippet.title;
-                    let videoId = playlist[i].snippet.resourceId.videoId;
-                    let videoDuration = "";
-                    let videoPlayTime = 0;
-                    let videoTotalTime = "";
-                    
-//                     var ON_LECT_TM_List = ${ON_LECT_TM };
-//                     var AjON_LECT_TM = ON_LECT_TM_List.AjON_LECT_TM;
-//                     var ON_LECT_TM = AjON_LECT_TM[i].ON_LECT_TM;
-                    /* 동영상의 재생시간 가져오기 */
-                    $.get({
-                        url: "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=" + videoId + "&key=" + API_KEY,
-                        dataType: "json",
-                        success: function (video) {
-                            /* 유튜브 API 제공하는 총 재생시간 ISO 8601 형식 */
-                            videoDuration = video.items[0].contentDetails.duration;
-                            /* moment.js 라이브러리를 사용하여 ISO 8601 형식 duration 객체로 변환 */
-                            let totalTime = moment.duration(videoDuration).asSeconds();
-                            /* ISO 8601 형식 썸네일 표시 위해 M:S 형태로 교체 */
-                            videoTotalTime = durationToTotalTime(videoDuration);
+        $(".week-content").click(function() {
+                let lectureInfo = $(this).find(".mthd").val();
+                let snOrUrl = lectureInfo.split(",")[0];
+                let mthd = lectureInfo.split(",")[1];
 
-                    
-                            /* 1번 포인트 */
-                            console.log(videoId + "1st : " + totalTime);
-                            
-//                     var attendance = totalTime-ON_LECT_TM;
-//                     console.log(attendance + "=" + totalTime + "-" + ON_LECT_TM);
-                            /* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
-                            let $tr = $("<tr>");
-                            $tr.append("<td class='text-center'>"
-                            + "<div class='video-thumnails'>"
-                            + "<a onclick=location.href='lectureDetail?video_id=" + videoId + "'>"
-                            + "<img class='video-img' src='" + videoThumnails + "'></a>"
-                            + "<span class='total-time'>" + videoTotalTime + "</span></div></td>");
-                            $tr.append("<td><a onclick=location.href='lectureDetail?video_id=" + videoId + "'>"
-                            + "<span>" + videoTitle + "(" + videoId + ")</span></a></td>");
-// 					if(attendance > 0){//출석 미인정 + 과제제출여부까지 확인하기
-// 						$tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' onclick='return false;'></th>");
-//                         $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' onclick='return false;'></th>");
-// 					} else{//출석 인정
-//                             $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
-//                             $tr.append("<th class='text-center'><input class='chk-lecture' type='checkbox' checked onclick='return false;'></th>");
-						
+                if(mthd == 1) {
+                    location.href = "lectureDetail?on_lect_sn=" + snOrUrl;
+                } else {
+                    // 줌 담당자에게 어디로 보낼지 전달 받아야 합니다.
+                    alert("줌으로, 과목 번호 : " + ${sbjct_no});
+                    $.ajax({
+                        type: "GET",
+                        url: "",
+                        data: {},
+                        dataType: "text",
+                        success: function() {
 
-// 					}
-                            $("#tb_lecture").append($tr);
-                            $("#loading").hide();
                         },
                         error: function () {
-                            $("#loading").hide();
-                            alert("유튜브 동영상 정보를 불러오는 도중 에러가 발생했습니다.");
+
                         }
                     });
-                } /* 반복문 종료 */
-            },
-            error: function () {
-                $("#loading").hide();
-                alert("유튜브 플레이리스트를 불러오는 도중 에러가 발생했습니다.");
-            }
+                }
         });
+
     });
-
-    /* ISO 8601 형식을 썸네일 표시 위해 M:S 형태로 교체 */
-    function durationToTotalTime(videoDuration) {
-        videoDuration = videoDuration.replace("PT", "");
-        videoDuration = videoDuration.replace("H", "시간 ");
-        videoDuration = videoDuration.replace("M", "분 ");
-        videoDuration = videoDuration.replace("S", "초");
-
-        return videoDuration;
-    }
 </script>
 <style>
-    #loading {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: white;
-        z-index: 9999;
-    }
-
-    .spinner {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-top: -50px;
-        margin-left: -50px;
-        width: 40px;
-        height: 40px;
-        border: 10px solid #fff;
-        border-radius: 50%;
-        border-top-color: red;
-        animation: spin 1s ease-in-out infinite;
-    }
-
-    @keyframes spin {
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    .video-thumnails {
-        position: relative;
-        width: 160px;
-        height: 100px;
-        background-color: #cccccc;
-    }
-
-    .video-img {
-        width: 160px;
-        height: 100px;
-    }
-
-    .total-time {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        border-radius: 5px;
-        padding: 2px;
-        margin: 0 3px 3px 0;
+    .week-select {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 10px;
         box-sizing: border-box;
-        color: white;
-        background-color: black;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
     }
+
+    .select-last {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .week-content {
+        width: 100%;
+        height: auto;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 10px;
+        padding-top: 17px;
+        box-sizing: border-box;
+        transition: 0s;
+    }
+
+    .content-last {
+        border-top: 0;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .week-object {
+        width: 100%;
+        height: 40px;
+    }
+
+    .btn {
+        width: 75px;
+        height: 30px;
+        line-height: 17px;
+        margin-right: 10px;
+    }
+
 </style>
 <body id="page-top">
-<div id="loading">
-    <div class="spinner"></div>
-</div>
 <!-- Page Wrapper -->
 <div id="wrapper">
 
@@ -188,7 +121,7 @@
 
                 <!-- 메인 페이지의 탑 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">내 강의실</h1>
+                    <h1 class="h3 mb-0 text-gray-800"></h1>
                     <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
 
@@ -196,39 +129,67 @@
                     <!-- A카드 게시판 -->
                     <div class="col-xl-12 col-lg-7">
                         <div class="card shadow mb-4">
-                            <!-- A 카드 설정 버튼 부분 -->
-                            <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">과목명</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">더보기</div>
-                                        <a class="dropdown-item" href="#">추가 메뉴</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- A 본문 부분 -->
-                            <div class="card-body">
-                                <div>
-                                    <!-- 실제 구성은 이곳에서 진행합니다. -->
-                                    <table class="table table-sm" id="table_lecture">
+                            <!-- 강의 본문 부분 -->
+                            <div class="card-body border-left-primary">
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">${lectList[0].SBJCT_NM} 공지사항</div><br>
+                                <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
+                                    <table class="table">
                                         <thead>
-                                            <tr>
-                                                <th class="col-2 text-center">강의 이미지</th>
-                                                <th class="col-8 text-center">강의제목</th>
-                                                <th class="col-1 text-center">출석여부</th>
-                                                <th class="col-1 text-center">과제제출여부</th>
-                                            </tr>
+                                        <tr>
+                                            <td class="col-1">번호</td>
+                                            <td class="col-4">제목</td>
+                                            <td class="col-2">작성자</td>
+                                            <td class="col-2">조회수</td>
+                                            <td class="col-2">등록일</td>
+                                        </tr>
                                         </thead>
-                                        <tbody class="table-group-divider" id="tb_lecture">
-                                        <!-- 강의 정보 추가 위치 -->
+                                        <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td class="title text-truncate" style="max-width:1px; text-align: left;">T1tle</td>
+                                            <td>INSTR01</td>
+                                            <td>11</td>
+                                            <td>10:33</td>
+                                        </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- A카드 게시판 -->
+                    <div class="col-xl-12 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <!-- A 카드 설정 버튼 부분 -->
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">강의</h6>
+                            </div>
+                            <!-- 강의 본문 부분 -->
+                            <div class="card-body">
+                                <div>
+                                    <!-- 강의 정보 추가 위치 -->
+                                    <c:set var="i" value="1"/>
+                                        <c:forEach items="${lectList}" var="lect" varStatus="status">
+                                        <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target="#lect${i}">
+                                            <i class="fas fa-chevron-down"></i> ${i}주차
+                                        </div>
+                                        <!-- 콘텐츠 -->
+                                        <div id="lect${i}" class="week-content ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose> collapse">
+                                            <!-- 숨길 객체의 내용 -->
+                                            <div class="week-object">
+                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
+                                                    <span>${lect.ON_LECT_NM }</span>
+                                                </div>
+                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
+                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}"><div style="margin-right: 10px;">진행률</div>
+                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'><div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${lect.LECT_PRGRS_RT}%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div></div></c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <c:set var="i" value="${i + 1}"/>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>

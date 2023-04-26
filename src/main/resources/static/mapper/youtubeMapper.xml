@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="youtube">
 
-
      <select id="test" resultType="Integer">
         SELECT b_like
             FROM board
@@ -14,32 +13,70 @@
                     video_id = #{video_id}
                 AND
                     student_no = #{student_no}
+                    </select>
+
+    <select id="lecture" resultType="HashMap">
+        SELECT UV.SBJCT_NO, UV.SBJCT_NM, UV.KORN_FLNM, UV.CRCLM_NM
+            FROM USER_APPL_VIEW as UV
+                WHERE UV.APPL_NO = #{appl_no }
+        ORDER BY SBJCT_NO ASC
+
     </select>
-    <update id="playTimeSave" parameterType="HashMap">
-        UPDATE lecture
-            SET
-                play_time = #{curr_time}
+
+    <select id="lectList" parameterType="HashMap" resultType="HashMap">
+        SELECT
+            es.SBJCT_NM as 'SBJCT_NM',
+            IFNULL(om.APPL_NO, lmm.APPL_NO) as 'APPL_NO',
+            lti.LECT_YMD AS 'LECT_YMD',
+            lti.SBJCT_MTHD_CD AS 'SBJCT_MTHD_CD',
+            IFNULL(oli.ON_LECT_NM, 'ZOOM 수업') AS 'ON_LECT_NM',
+            oli.ON_LECT_SN AS 'ON_LECT_SN',
+            IFNULL(oli.ON_LECT_URL, lmi.JOIN_URL) AS 'LECT_URL',
+            IFNULL(om.LECT_PRGRS_RT, 0) AS 'LECT_PRGRS_RT',
+            IFNULL(lmm.ATTEND_STATUS, '결석') AS 'ATTENDANCE'
+        FROM LECT_TM_INFO lti
+            LEFT JOIN ON_LECT_INFO oli ON lti.LECT_YMD = oli.LECT_YMD
+            LEFT JOIN LECT_MEET_INFO lmi ON lti.LECT_YMD = lmi.LECT_YMD
+            LEFT JOIN ON_LECT_MAG om ON lti.SBJCT_NO = om.SBJCT_NO AND lti.LECT_YMD = om.LECT_YMD AND om.APPL_NO = #{appl_no }
+            LEFT JOIN LECT_MEET_MAG lmm ON lti.LECT_YMD = lmm.LECT_YMD AND lmm.APPL_NO = #{appl_no }
+            LEFT JOIN ESTBL_SBJCT es ON es.SBJCT_NO = #{sbjct_no }
         WHERE
-            video_id = #{video_id}
+            lti.SBJCT_NO = #{sbjct_no }
+        ORDER BY lti.LECT_YMD ASC
+    </select>
+
+    <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
+        SELECT
+            olm.APPL_NO,
+            oli.ON_LECT_SN,
+            oli.ON_LECT_URL,
+            olm.LAST_PLAY_TM,
+            olm.LECT_MAX_TM,
+            olm.SBJCT_NO
+        FROM ON_LECT_MAG olm
+            JOIN ON_LECT_INFO oli ON olm.ON_LECT_SN = oli.ON_LECT_SN AND olm.APPL_NO = #{appl_no }
+        WHERE
+            oli.ON_LECT_SN = #{on_lect_sn }
+    </select>
+
+    <select id="getPlayTime" parameterType="HashMap" resultType="Integer">
+        SELECT
+            LAST_PLAY_TM
+        FROM ON_LECT_MAG
+        WHERE
+            ON_LECT_SN = #{on_lect_sn }
         AND
-            student_no = #{student_no}
+            APPL_NO = #{appl_no }
+    </select>
+
+    <update id="playTimeSave" parameterType="HashMap">
+        UPDATE ON_LECT_MAG
+        SET
+            LAST_PLAY_TM = #{curr_time }
+        WHERE
+            ON_LECT_SN = #{on_lect_sn }
+        AND
+            APPL_NO = #{appl_no }
     </update>
 
-<!--      parameterType="HashMap" -->
-     <select id="lectureInfo" parameterType="HashMap" resultType="HashMap">
-        SELECT *
-		FROM lectureview
-        ORDER BY SBJCT_NM DESC
-		LIMIT 1, 9
-    </select>
-
-	<select id="lectureRate" resultType="HashMap">
-        SELECT LECT_PRGRS_RT
-		FROM ON_LECT_MAG
-    </select>
-    
-    <select id="lectureListRate" resultType="HashMap">
-        SELECT ON_LECT_TM
-		FROM ON_LECT_INFO
-    </select>
 </mapper>

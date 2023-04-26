@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -16,12 +17,14 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <%-- API Key값 --%>
 <!--      type="module" -->
-    <script src="js/apikey.js"></script>
-<!--     <script type="module" src="js/YoutubeApi.js"></script> -->
+<!--     <script src="js/apikey.js"></script> -->
+    <script src="js/YoutubeLecture.js"></script>
 </head>
 <script type="text/javascript">
+/*
 $(function(){
 	//alert(API_KEY);
 	var lectureInfo = ${lectureInfo};
@@ -61,7 +64,7 @@ $(function(){
 // 				console.log(KORN_FLNM);
 // 				console.log(LECT_PRGRS_RT);
 				
-				/* 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성 */
+				// 실제 사용자에게 보여주기 위해 append 처리할 <tr> 생성
 				let $tr = $("<tr style='height:70px; line-height:70px;'>");
 				
 				$tr.append("<td class='text-center'><a onclick=location.href='lectureList?playlist_id=" + id + "'>"+ title + "</a>" + "</td>");
@@ -84,6 +87,7 @@ $(function(){
 		  }
 	})
 });
+*/
 </script>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -129,7 +133,27 @@ $(function(){
 												<th class="col-3 text-center">진도율</th>
 											</tr>
 										</thead>
-										<tbody id="tb_lecture"></tbody>
+										<tbody id="tb_lecture">
+											<c:forEach items="${lecture }" var="i">
+											<tr style='height:70px; line-height:70px;' onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">
+												<td class='text-center'>${i.SBJCT_NM }</td>
+												<td class='text-center'>${i.CRCLM_NM }</td>
+												<td class='text-center'>${i.KORN_FLNM }</td>
+												<td>
+													<div style='height:20px; line-height: 20px;'>&nbsp;
+														<span class='float-right' style='height:20px; margin-right:45px;'>
+														진도율%
+														</span>
+													</div>
+													<div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>
+														<div class='progress-bar bg-success' role='progressbar' style='height:20px;'
+															width: '진도율%' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+														</div>
+													</div>
+												</td>
+											</tr>
+											</c:forEach>
+										</tbody>
 									</table>
 								</div>
                             </div>
@@ -155,12 +179,12 @@ $(function(){
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
-<!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-<!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-<!-- Core plugin JavaScript-->
-<!-- <script src="vendor/jquery-easing/jquery.easing.min.js"></script> -->
-<!-- Custom scripts for all pages-->
-<!-- <script src="js/sb-admin-2.min.js"></script> -->
+<!-- Bootstrap core JavaScript -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript -->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages -->
+<script src="js/sb-admin-2.min.js"></script>
 </body>
 </html>

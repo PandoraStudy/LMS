@@ -1,5 +1,48 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<script>
+    $(function(){
+       $("#alarm").hide();
+    });
 
+    let ws = new WebSocket("ws://172.30.1.89/noticeAlarm");
+    ws.onopen = function(event) {
+        console.log("WebSocket 열렸습니다.");
+    };
+    ws.onmessage = function(event) {
+        console.log(event.data);
+        // document.getElementById("alarm").text(event.data);
+        $(function(){
+            $("#alarm").text(event.data);
+            $("#alarm").fadeIn(3000,'linear');
+            $("#alarm").fadeOut(3000,'linear');
+        });
+    };
+    ws.onclose = function(event) {
+        console.log('WebSocket 연결이 닫혔습니다.');
+    };
+
+</script>
+<style>
+    #alarm {
+        background-color: #fafafa; /*#405dc6;*/
+        /*opacity: 0.5;*/
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        color: #333;
+        font-size: 17px;
+        font-weight: bold;
+        margin: 10px;
+        position : fixed;
+        bottom : 0px;
+        /*width:223px;*/
+        width:300px;
+        height:70px;
+        text-align: center;
+        line-height: 70px;
+        z-index: 1;
+    }
+</style>
 <!-- 사이드 메뉴바 -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
@@ -92,5 +135,6 @@
         <p class="text-center mb-2"><strong>로켓트!</strong> 날라가유~ 두번 날라가유~</p>
         <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">응애 나 애기 밍규</a>
     </div>--%>
+    <div id="alarm"></div>
 </ul>
 <!-- End of Sidebar -->

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,10 +17,12 @@ public class LoginController {
 
     private final LoginService loginService;
     @GetMapping("/login")
-    public String login(){
-        //if(session.getAttribute("id").equals("")){ return "login/login"; }
-       // else{ return "redirect:/index";  }
-        return "login/login";
+    public String login(HttpSession session){
+        if (session.getAttribute("user_no") == null) {
+            return "login/login";
+        } else {
+            return "redirect:/index";
+        }
     }
 
     @PostMapping("/login")
@@ -39,7 +42,7 @@ public class LoginController {
             session.setAttribute("division",loginInfo.getUSER_GROUP_CD());
             session.setAttribute("name",loginInfo.getKORN_FLNM());
             if(loginInfo.getUSER_GROUP_CD().equals("20") ){
-                String instr = loginService.instrNo(loginInfo.getUSER_NO());
+                int instr = Integer.parseInt(loginService.instrNo(loginInfo.getUSER_NO()));
                 System.out.println("INSTR_NO : "+instr);
                 session.setAttribute("instr_no",instr);
             }else if(loginInfo.getUSER_GROUP_CD().equals("10")){

@@ -1,30 +1,21 @@
 package com.pandora.lms.controller;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.session.SqlSession;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-//github.com/PandoraStudy/LMS.git
-
 import com.google.api.client.auth.oauth2.Credential;
 import com.pandora.lms.service.YoutubeService;
 import com.pandora.lms.ytbUtil.OAuth;
-
 import lombok.AllArgsConstructor;
+import org.apache.ibatis.session.SqlSession;
+import org.json.JSONException;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -34,70 +25,71 @@ public class YouTubeController {
     private final SqlSession sqlSession;
 
     @GetMapping("/lecture")
-    public ModelAndView lecture(@RequestParam Map<String, Object> userData) throws JSONException {
+    public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) throws JSONException {
+        ModelAndView view = new ModelAndView("/youtube/lecture");
 
-    	ModelAndView mv = new ModelAndView("/youtube/lecture");
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
+            view.setViewName("redirect:/login");
+            return view;
+        }
 
-    	List<Map<String, Object>> lectureInfo = sqlSession.selectList("youtube.lectureInfo", mv);
-//    	System.out.println(lectureInfo);
-    	
-    	List<Map<Integer, Object>> LECT_PRGRS_RT = sqlSession.selectList("youtube.lectureRate", mv);
-    	System.out.println(LECT_PRGRS_RT);
-    	
-    	JSONArray AjlectureInfo = new JSONArray(lectureInfo);
-    	JSONArray AjLECT_PRGRS_RT = new JSONArray(LECT_PRGRS_RT);
-    	
-        JSONObject json = new JSONObject();
+        userInfo.put("appl_no", Integer.parseInt((String) session.getAttribute("appl_no")) );
+        List<Map<String, Object>> lecture = sqlSession.selectList("youtube.lecture", userInfo);
 
-        json.put("AjlectureInfo", AjlectureInfo);
-        json.put("AjLECT_PRGRS_RT", AjLECT_PRGRS_RT);
-
-        mv.addObject("lectureInfo", json);
-//        mv.addObject("LECT_PRGRS_RT", json);
-        
-        return mv;
+        view.addObject("lecture", lecture);
+        return view;
     }
 
     @GetMapping("/lectureList")
-    public ModelAndView youtubeList(@RequestParam(name = "playlist_id") String playlistId) {
-        ModelAndView view = new ModelAndView();
-        
-        List<Map<String, Integer>> ON_LECT_TM = sqlSession.selectList("youtube.lectureListRate", view);
-        JSONArray AjON_LECT_TM = new JSONArray(ON_LECT_TM);
-        JSONObject json = new JSONObject();
-        json.put("AjON_LECT_TM", AjON_LECT_TM);
-        view.addObject("ON_LECT_TM", json);
-        
-        view.addObject("playlistId", playlistId);
-        view.setViewName("youtube/lectureList");
-        System.out.println(playlistId);
+    public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
+        ModelAndView view = new ModelAndView("youtube/lectureList");
+
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
+            view.setViewName("redirect:/login");
+            return view;
+        }
+
+        lectureInfo.put("appl_no", session.getAttribute("appl_no"));
+        List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
+
+        view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
+        view.addObject("lectList", lectList);
+
         return view;
     }
 
     @GetMapping("/lectureDetail")
-    public ModelAndView lectureDetail(@RequestParam Map<String, Object> userData) {
+    public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
-        /* 추후 세션이나 사용자 인증 아이디 값으로 변경 */
-        userData.put("student_no", "131");
-        userData.put("video_id", userData.get("video_id"));
-        int playTime = sqlSession.selectOne("youtube.getPlayTime", userData);
-        view.addObject("playTime", playTime);
-        view.addObject("videoId", userData.get("video_id"));
+
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
+            view.setViewName("redirect:/login");
+            return view;
+        }
+
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+        Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.lectDetail", userInfo);
+
+        view.addObject("lectureInfo", lectureInfo);
 
         return view;
     }
 
     @PostMapping("/getPlayTime")
     @ResponseBody
-    public Integer getPlayTime(@RequestParam Map<String, Object> userData) {
-        return sqlSession.selectOne("youtube.getPlayTime", userData);
+    public Integer getPlayTime(@RequestParam Map<String, Object> userInfo, HttpSession session) {
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+        System.out.println("조회 : " + userInfo);
+        return sqlSession.selectOne("youtube.getPlayTime", userInfo);
     }
 
     @PostMapping("/playTimeSave")
     @ResponseBody
-    public String playTimeSave(@RequestParam Map<String, Object> userData) {
-        int result = sqlSession.update("youtube.playTimeSave", userData);
-        String msg = (result == 1) ? userData.get("curr_time") + "초 저장 완료" : "저장 실패";
+    public String playTimeSave(@RequestParam Map<String, Object> userInfo, HttpSession session) {
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+        System.out.println("저장 : " + userInfo);
+        int result = sqlSession.update("youtube.playTimeSave", userInfo);
+        String msg = (result == 1) ? userInfo.get("curr_time") + "초 저장 완료" : "저장 실패";
 
         return msg;
     }
@@ -111,7 +103,7 @@ public class YouTubeController {
 
         Credential credential = oAuth.authorize(scopes, true);
 
-        if(credential != null) {
+        if (credential != null) {
             view.addObject("auth", true);
         } else {
             view.addObject("auth", false);

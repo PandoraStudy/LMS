@@ -67,9 +67,13 @@ public class MessageController {
     }
     @ResponseBody
     @PostMapping("/msgDel")
-    public String msgDel(@RequestParam String msgNo){
-        int result = messageService.msgDel(msgNo);
-        return result+"";
+    public String msgDel(@RequestParam String msgNo,HttpSession session){
+        if(session.getAttribute("user_no") == null) return "redirect:/login";
+        else{
+            int result = messageService.msgDel(msgNo);
+            return result+"";
+        }
+
     }
     @ResponseBody
     @PostMapping("/msgNew")
@@ -80,10 +84,10 @@ public class MessageController {
         System.out.println("count : "+msg);
         return msg+"";
     }
-    @GetMapping("/socket")
-    public String socket(){
-
-        return "/message/socket";
+    @GetMapping("/chatting")
+    public String chatting(HttpSession session){
+        if(session.getAttribute("user_no") == null) return "redirect:/login";
+        else { return "/message/chatting"; }
     }
 
 

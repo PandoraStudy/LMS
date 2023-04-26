@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -95,7 +96,7 @@
         }
 
         .main_right {
-            width: 500px;
+            width: 630px;
         }
         .none{ font-size:14px; }
         .none:hover{ background-color: #cccccc; }
@@ -275,12 +276,12 @@
 
                         <div class="col-lg-6 mb-4">
                             <!-- 식단 -->
-                            <div style="width: 655px;" class="card shadow mb-4">
+                            <div style="width: 785px;" class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div>
-                                    <img style="height: 329px; width: 655px; margin-left: -1px" src="/img/pandora_rise.png">
+                                    <img style="height: 329px; width: 785px; margin-left: -1px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>

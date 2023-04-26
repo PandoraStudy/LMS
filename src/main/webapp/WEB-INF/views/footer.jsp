@@ -3,7 +3,7 @@
 <footer class="sticky-footer bg-white" >
   <div class="container my-auto" >
     <div class="copyright text-center my-auto" >
-      <div style="text-align: center;">Copyright &copy; Your Website 2021</div>
+      <div style="text-align: center;">Copyright &copy; Pandora Website 2023</div>
     </div>
   </div>
 </footer>

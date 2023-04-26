@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>socket 통신</title>
-
+    <title>Chatting Room</title>
+    <link rel="shortcut icon" href="img/pandora_logo.png" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -14,7 +14,6 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
-    <script type="text/javascript" src="/js/login/socket.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,10 +27,76 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
-
+    <script type="text/javascript" src="/js/login/chatting.js"></script>
 </head>
-<style></style>
-<script></script>
+<style>
+    .socketBtn{
+        width:100px;
+        height:40px;
+        color:white;
+        border:none;
+        border-radius: 5px;
+    }
+    .BOX{
+        border: 10px solid #E8C48F;
+        padding: 20px;
+        width:1100px;
+        height:600px;
+
+    }
+    .messageBody{
+        border:1px solid black;
+        border-radius: 5px;
+        min-width:10px;
+        margin-top:5px;
+        display: inline-block;
+        padding:0px 5px 0px 5px;
+        height:30px;
+        line-height: 30px;
+    }
+    #messageBox{
+        overflow-y:auto;
+        text-align:right;
+        width:1050px;
+        height:500px;
+        box-sizing: border-box;
+        padding:0px 15px 0px 0px;
+    }
+    .messageName{
+        font-weight: bold;
+        margin-top:5px;
+    }
+    .messageText{
+        width:1080px;
+        height:60px;
+        margin-left:10px;
+        font-size:20px;
+        border:none;
+        background-color: #f6f6f6;
+    }
+    .none{
+        border-top:2px solid black;
+        margin-left:-20px;
+    }
+</style>
+<script>
+    const name = "${sessionScope.name}";
+    $(function(){
+        $("#msg").on('keypress', function(e){
+            if(e.keyCode == 13){
+                let message = document.getElementById("msg").value;
+                if(message==""){
+                    alert("글을 입력하세요");
+                    return false;
+                }else{
+                    wsmsg.send(name+"님"+message);
+                    document.getElementById("msg").value = "";
+                }
+            }
+        });
+    });
+
+</script>
 <style></style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -45,15 +110,20 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
-            <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:100px;">
+            <div class="container-fluid" style="width:1200px; min-height:600px; margin-top:100px;">
+                <h1 style="font-weight: bold; text-align: center; width:1100px; margin-top:-40px;">Chatting Room</h1>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-                    <button onclick="connect()">connect</button>
-                    <button onclick="disconnect()">disconnect</button>
-                    <script></script>
+
+                    <div class="BOX">
+                        <div id="messageBox"></div>
+                        <input type="text" class="messageText none" placeholder="Press Enter for send message." id="msg" maxlength="200">
+                    </div>
                     <!--수정할 부분 끝-->
                 </div>
+                <script></script>
             </div>
+
         </div><!-- End of Main Content -->
         <!-- footer -->
         <%@include file="../footer.jsp" %>

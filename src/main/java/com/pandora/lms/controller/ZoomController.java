@@ -41,6 +41,13 @@ public class ZoomController {
 
         ZoomDTO result = zoomService.authority(zoomDTO);
 
+        /*========================*/
+        int instr_no = (int) session.getAttribute("instr_no");
+        zoomDTO.setLogin_id((String) session.getAttribute("id"));
+        zoomDTO.setInstr_no(instr_no);
+        zoomService.meeting_msg(zoomDTO);
+        /*========================*/
+
         if(result.getZOOM_AUTH() == 1){
 
             return "true";
@@ -50,9 +57,10 @@ public class ZoomController {
     }
 
     @GetMapping("/zoom/token")
-    public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request) throws IOException {
+    public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request, HttpSession session) throws IOException {
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
+        ZoomDTO zoomDTO = new ZoomDTO();
         ModelAndView mv = new ModelAndView("/zoom");
         String zoomUrl = "https://zoom.us/oauth/token"; //Access token 을 받는 zoom api 호출 url
 
@@ -93,10 +101,16 @@ public class ZoomController {
 
 
 
-        //회의 url 가져옴
-        String join_url = zoomService.meeting(accessToken);
-        mv.addObject("Join_URL",join_url);
 
+        String join_url = zoomService.meeting(accessToken);/*화의 개설*/
+
+        zoomDTO.setJoin_url(join_url);
+        zoomDTO.setSbjct_no(1);
+        zoomService.join_url(zoomDTO);/*DB에 join_url 삽입*/
+
+        /*====================================================*/
+
+        mv.addObject("Join_URL",join_url);
     return mv;
     }
 
