@@ -89,7 +89,6 @@ $(document).ready(function() {
 
   // inYou_table의 tbody에서 tr 클릭 이벤트 등록
   $("#inYou_table").on("click", "tbody tr", function() {
-    alert("d");
 
     // 클릭한 행에서 on_LECT_URL 값을 가져오기
     var on_LECT_URL = $(this).find(".on_LECT_URL").val();
@@ -101,8 +100,6 @@ $(document).ready(function() {
     var KORN_FLNM = $(this).find(".KORN_FLNM").text();
     var LECT_YMD = $(this).find(".LECT_YMD").text();
     var ON_LECT_TM = $(this).find(".ON_LECT_TM").text();
-
-    alert(on_LECT_URL);
 
     // 가져온 값을 #on_LECT_URL input 엘리먼트에 설정하기
     $("#on_LECT_URL").val(on_LECT_URL);

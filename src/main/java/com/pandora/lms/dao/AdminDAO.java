@@ -17,7 +17,7 @@ public interface AdminDAO {
 	
 	public List<AdminDTO> searchList(SearchDTO search);
 
-	public List<Map<String, Object>> onlectList(OnLectNmDTO onLect);
+	public List<Map<String, Object>> onlectList(Map<String, String> formData);
 
 	public List<OnLectNmDTO> insertYoutube(OnLectNmDTO onLect);
 

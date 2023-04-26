@@ -1,8 +1,8 @@
 package com.pandora.lms.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pandora.lms.dto.AdminDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
@@ -68,24 +66,14 @@ public class AdminController {
 
 	@ResponseBody
 	@PostMapping("/search/onlect")
-	public List<Map<String, Object>> onlect(@RequestParam("ON_SBJECT_NM") String subject_no
-									,@RequestParam("ON_LECT_NM") String lect_name
-									,@RequestParam("ON_INSTR_NM") String instr_name
-			){
-		
-		OnLectNmDTO onLect = new OnLectNmDTO();
-		onLect.setON_LECT_NM(lect_name);
-		
-		List<Map<String, Object>> onlectList = adminService.onlectList(onLect);
-		
-
-		for (Map<String, Object> map : onlectList) {
+	public List<Map<String, Object>> onlect(@RequestParam Map<String,String> formData){
+		System.out.println(formData.toString());
+		//{year=2023, department_name=, ON_SBJECT_NM=컴퓨터, ON_LECT_NM=, ON_INSTR_NM=}
+		List<Map<String, Object>> rsl = adminService.onlectList(formData);
+		for (Map<String, Object> map : rsl) {
 			System.out.println(map.toString());
 		}
-			
-	
-		
-		return onlectList;
+		return rsl;
 	}
 	
 	@GetMapping("/insertYoutube")

@@ -22,8 +22,8 @@ public class AdminService {
 		return adminDAO.searchList(search);
 	}
 
-	public List<Map<String, Object>> onlectList(OnLectNmDTO onLect) {
-		return adminDAO.onlectList(onLect);
+	public List<Map<String, Object>> onlectList(Map<String, String> formData) {
+		return adminDAO.onlectList(formData);
 	}
 
 	public List<OnLectNmDTO> insertYoutube(OnLectNmDTO onLect) {
