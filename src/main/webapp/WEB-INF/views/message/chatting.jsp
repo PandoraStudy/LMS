@@ -85,11 +85,11 @@
         $("#msg").on('keypress', function(e){
             if(e.keyCode == 13){
                 let message = document.getElementById("msg").value;
-                if(message==""){
+                if(message.replace(/ /gi,"") == ""){
                     alert("글을 입력하세요");
                     return false;
                 }else{
-                    wsmsg.send(name+"님"+message);
+                    wsmsg.send(name+":"+message);
                     document.getElementById("msg").value = "";
                 }
             }
