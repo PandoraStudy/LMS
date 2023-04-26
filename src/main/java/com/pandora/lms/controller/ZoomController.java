@@ -39,6 +39,7 @@ public class ZoomController {
         ZoomDTO zoomDTO = new ZoomDTO();
         int user_no = (int) session.getAttribute("user_no");
         zoomDTO.setUser_no(user_no);
+        zoomDTO.setSbjct_no(sbjct_no);
         System.out.println("과목 번호 : " + sbjct_no);
         ZoomDTO result = zoomService.authority(zoomDTO);
 
