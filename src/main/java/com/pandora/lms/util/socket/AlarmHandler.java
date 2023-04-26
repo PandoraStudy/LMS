@@ -5,7 +5,11 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,6 +26,8 @@ public class AlarmHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
+        System.err.println("추가 세션 : "+session);
+        System.err.println("현재 세션들 : "+sessions);
         System.out.println("공지알람 세션이 연결되었습니다.");
     }
 
@@ -35,5 +41,11 @@ public class AlarmHandler extends TextWebSocketHandler {
             session.sendMessage(new TextMessage(notification));
         }
     }
+    public void sendMessage(String message) throws IOException{
+        for (WebSocketSession session : sessions) {
+            session.sendMessage(new TextMessage(message));
+        }
+    }
+
 
 }

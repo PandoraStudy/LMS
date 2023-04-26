@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.pandora.lms.dto.ZoomDTO;
 import com.pandora.lms.service.ZoomService;
+import com.pandora.lms.util.socket.AlarmHandler;
 import lombok.AllArgsConstructor;
 import okhttp3.*;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import java.util.Map;
 public class ZoomController {
 
     private final ZoomService zoomService;
+    private final AlarmHandler alarmHandler;
 
     @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
     public ModelAndView zoom(HttpSession session, @RequestParam Integer sbjct_no) {
@@ -35,7 +37,7 @@ public class ZoomController {
 
     @PostMapping("/zoom_open")
     @ResponseBody
-    public String Zoom_open(HttpSession session, @RequestParam Integer sbjct_no) {
+    public String Zoom_open(HttpSession session, @RequestParam Integer sbjct_no) throws IOException{
         ZoomDTO zoomDTO = new ZoomDTO();
         int user_no = (int) session.getAttribute("user_no");
         zoomDTO.setUser_no(user_no);
@@ -49,7 +51,9 @@ public class ZoomController {
         zoomDTO.setInstr_no(instr_no);
         zoomService.meeting_msg(zoomDTO);
         /*========================*/
-
+        String message = "회의가 개설되었습니다.";    
+        alarmHandler.sendMessage(message);  // 쪽지 알람
+        /*========================*/
         if(result.getZOOM_AUTH() == 1){
             return sbjct_no.toString();
         }else{
