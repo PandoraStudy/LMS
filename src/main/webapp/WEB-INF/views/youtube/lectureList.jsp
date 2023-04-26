@@ -52,6 +52,10 @@
             alert(file);
         });
 
+        $(".week-assign").click(function() {
+            alert("과제를 제출했습니다.");
+        });
+
     });
 </script>
 <style>
@@ -83,6 +87,18 @@
     }
 
     .week-file {
+        width: 100%;
+        height: auto;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 10px;
+        padding-top: 17px;
+        box-sizing: border-box;
+        transition: 0s;
+    }
+
+    .week-assign {
         width: 100%;
         height: auto;
         border-top: 1px solid #ccc;
@@ -215,11 +231,11 @@
                                             </c:forEach>
                                         </c:if>
                                         <!-- 과제 -->
-                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
+                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="mthd btn btn-warning">과제</button>
+                                                    <button class="assign btn btn-warning">과제</button>
                                                     <span>${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
