@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pandora.lms.dto.AdminDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 import com.pandora.lms.service.AdminService;
@@ -48,7 +49,7 @@ public class AdminController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/search")
+	@PostMapping("/search/studentList")
 	public List<AdminDTO> search(@RequestParam("name") String name
 							, @RequestParam("academic_status") String academic_status
 							, @RequestParam("department") String department
@@ -129,8 +130,28 @@ public class AdminController {
 		return studentsModal;
 	}
 	
-	
-	
+	@ResponseBody
+	@PostMapping("/search/departmentModal")
+	public List<CrclmInfoDTO> departmentModal(@RequestParam("department") String department
+			) {
+		CrclmInfoDTO crclm = new CrclmInfoDTO();
+		System.out.println("ddddd");
+		crclm.setCRCLM_NM(department);
+		
+		List<CrclmInfoDTO> departmentModal = adminService.departmentModal(crclm);
+		
+		for (CrclmInfoDTO crclmInfo : departmentModal) {
+		    int crclmCd = crclmInfo.getCRCLM_CD();
+		    int thirdDigit = (crclmCd / 1000) % 10;
+System.out.println(crclmCd + "ddd");
+		    if (thirdDigit == 0) {
+		        crclmInfo.setDepartment("학부");
+		    } else {
+		        crclmInfo.setDepartment("학과");
+		    }
+		}
+		return departmentModal;
+	}
 	
 	
 	

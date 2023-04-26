@@ -5,7 +5,7 @@ $(document).ready( function() {
 		function(e) {
 			e.preventDefault();
 			$.ajax({
-				url : "/search",
+				url : "/search/studentList",
 				type : "POST",
 				dataType : "json",
 				data : $("#studentList_form").serialize(),
@@ -60,8 +60,8 @@ $(document).ready( function() {
 			</select>
 			<div>소속학과</div>
 			<span class="div_input">
-			<input class="div_input_left" disabled value="">
-			<input class="div_input_right" name="department">
+			<input class="div_input_left" value="" name="crclm_CD" id="crclm_CD_disabled_input" disabled>
+			<input class="div_input_right" name="department" id="crclm_NM_readonly_input">
 			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('departmentModal')">
 			</span>
 		</div>

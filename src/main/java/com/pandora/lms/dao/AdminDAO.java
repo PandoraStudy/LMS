@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pandora.lms.dto.AdminDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 
@@ -22,5 +23,7 @@ public interface AdminDAO {
 	public List<OnLectNmDTO> insertYoutube(OnLectNmDTO onLect);
 
 	public List<ApplInfoDTO> studentsModal(ApplInfoDTO appl);
+
+	public List<CrclmInfoDTO> departmentModal(CrclmInfoDTO crclm);
 
 }

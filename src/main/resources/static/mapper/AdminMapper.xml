@@ -39,4 +39,14 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="departmentModal" parameterType="CrclmInfoDTO" resultType="CrclmInfoDTO">
+		SELECT *
+		FROM CRCLM_INFO
+		<where>
+			<if test="CRCLM_NM != null">
+				CRCLM_NM LIKE CONCAT('%',#{CRCLM_NM},'%')
+			</if>
+		</where>
+	</select>
 </mapper>

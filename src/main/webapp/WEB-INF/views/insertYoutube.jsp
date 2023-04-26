@@ -86,7 +86,9 @@ $(document).ready(function() {
       }
     });
   });
-
+	$("#inYou_table").on("click", "tbody tr", function() {
+		  // 클릭한 행에서 on_LECT_URL 가져오기
+		  var on_LECT_URL = $(this).find(".on_LECT_URL").val();
   // inYou_table의 tbody에서 tr 클릭 이벤트 등록
   $("#inYou_table").on("click", "tbody tr", function() {
 
@@ -114,6 +116,9 @@ $(document).ready(function() {
     $('#lectime').val(ON_LECT_TM);
     $('#on_LECT_URL').val(on_LECT_URL);
   });
+		  // 추가 데이터를 해당 입력 요소로 설정
+		  $("#on_LECT_URL").val(on_LECT_URL);
+		});
 });
 </script>
 <script type="text/javascript">

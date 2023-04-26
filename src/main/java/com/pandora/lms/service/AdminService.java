@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pandora.lms.dao.AdminDAO;
 import com.pandora.lms.dto.AdminDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 
@@ -32,5 +33,9 @@ public class AdminService {
 
 	public List<ApplInfoDTO> studentsModal(ApplInfoDTO appl) {
 		return adminDAO.studentsModal(appl);
+	}
+
+	public List<CrclmInfoDTO> departmentModal(CrclmInfoDTO crclm) {
+		return adminDAO.departmentModal(crclm);
 	}
 }

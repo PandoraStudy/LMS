@@ -1,15 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <title>Pandora University</title>
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 body {
@@ -157,11 +154,10 @@ body {
 .tab_bar label:hover {
 	text-decoration-line: underline;
 }
-
-.tab_bar input:not(:checked)+label {
-	/* 해당 메뉴가 선택된 상태인지 아닌지를 사용자에게 알려줄 수 있음 */
-	color: gray;
-	background-color: #303030;
+.tab_bar input:not(:checked) + label{
+/* 해당 메뉴가 선택된 상태인지 아닌지를 사용자에게 알려줄 수 있음 */
+color: gray;
+background-color: #303030;
 }
 /* .tabs{ */
 /* width: 112px; */
@@ -559,240 +555,213 @@ body {
 }
 </style>
 <script type="text/javascript">
-	//side_menu의 메뉴 toggle
-	$(document).ready(function() {
-		$(".li_step1").click(function(e) {
-			// 	console.log("d");
-			$(this).find(".li_step2").toggle();
-			// 	$(this).find('.dd').toggle();
-			e.stopPropagation();
-			e.preventDefault();
-		});
+//side_menu의 메뉴 toggle
+$(document).ready( function() {
+$(".li_step1").click(function(e){
+// 	console.log("d");
+	$(this).find(".li_step2").toggle();
+// 	$(this).find('.dd').toggle();
+    e.stopPropagation();
+    e.preventDefault();
 	});
-	$(document).ready(function() {
-		$(".li_step2").click(function(e) {
-			$(this).find('.li_step3').toggle();
-			e.stopPropagation(); //e.stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
-			e.preventDefault(); //e.preventDefault는 고유 동작을 중단시킨다.
-		});
+});
+$(document).ready( function() {
+$(".li_step2").click(function(e){
+	$(this).find('.li_step3').toggle();
+    e.stopPropagation();								//e.stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
+    e.preventDefault();									//e.preventDefault는 고유 동작을 중단시킨다.
 	});
-	$(document).ready(function() {
-		$(".li_step3").click(function(e) {
-			alert("li_step3");
-			e.stopPropagation();
-		});
-	});
-
-	//1번탭 활성화
-	$(document).ready(function() {
-		$("#tabs1, #li_content1").click(function(e) {
-			$("#main_container").css("display", "block");
-			$("#tabs1").attr("checked", "checked");
-		});
+});
+$(document).ready( function() {
+	$(".li_step3").click(function(e){
+		alert("li_step3");
+	    e.stopPropagation();
 	});
 
-	//test include
-	// $(document).ready( function() {
-	// 	$("#studentList").click(function(e){
-	// 		var id = $(this).attr("id");
-	// 		//alert("테스트");
-	// // 		$("#tab_bar").load("/mainContentTest #tab1");
-	// 		$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
-	// 		$("#load_"+id).load("/studentList");
-	// 	    $("#tabs1").attr("checked", "checked");
-	// 	    showContent("load_" + id, id);
-	// 	});
-	// });
-	//test2 include
-	$(document)
-			.ready(
-					function() {
-						$("#mainContentTest2")
-								.click(
-										function(e) {
-											alert("테스트2");
-											// 		$("#tab_bar").load("/mainContentTest2 #tab2");
-											$("#main_container")
-													.append(
-															"<div id='load_mainContentTest2' class='content'></div>");
-											$("#load_mainContentTest2").load(
-													"/mainContentTest2");
-											$("#tabs2").attr("checked",
-													"checked");
-											var id = $(this).attr("id");
-											showContent(
-													"load_mainContentTest2", id);
-										});
-					});
+//1번탭 활성화
+$(document).ready( function() {
+	$("#tabs1, #li_content1").click(function(e){
+	    $("#main_container").css("display","block");
+	    $("#tabs1").attr("checked", "checked");
+	});
 
-	//li를 클릭했을 때 탭과 main_content 활성화
-	function showContent(c_id, id) {
-		// 공통 클래스 'content'를 가진 모든 컨텐츠를 숨깁니다.
-		$(".content").hide();
-		// 선택한 컨텐츠만 보입니다.
-		$("#" + c_id).show();
-		// if 조건에 맞는 input[name=tabs]의 checked 속성을 설정합니다.
-		$("input[name=tabs]").each(function() {
-			if ("tabs_" + id == $(this).attr("id")) {
-				$(this).prop("checked", true);
-			} else {
-				$(this).prop("checked", false);
-			}
-		});
-	}
+//test include
+// $(document).ready( function() {
+// 	$("#studentList").click(function(e){
+// 		var id = $(this).attr("id");
+// 		//alert("테스트");
+// // 		$("#tab_bar").load("/mainContentTest #tab1");
+// 		$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
+// 		$("#load_"+id).load("/studentList");
+// 	    $("#tabs1").attr("checked", "checked");
+// 	    showContent("load_" + id, id);
+// 	});
+// });
+//test2 include
+$(document).ready( function() {
+	$("#mainContentTest2").click(function(e){
+		alert("테스트2");
+// 		$("#tab_bar").load("/mainContentTest2 #tab2");
+		$("#main_container").append("<div id='load_mainContentTest2' class='content'></div>");
+		$("#load_mainContentTest2").load("/mainContentTest2");
+	    $("#tabs2").attr("checked", "checked");
+	    var id = $(this).attr("id");
+	    showContent("load_mainContentTest2", id);
+	});
+});
 
-	//tab을 클릭했을 때 main_content 활성화
-	function tabs(id) {
-		// 	alert(id);
-		$(".content").hide();
-		$("#load_" + id).show();
-	}
+//li를 클릭했을 때 탭과 main_content 활성화
+function showContent(c_id, id) {
+    // 공통 클래스 'content'를 가진 모든 컨텐츠를 숨깁니다.
+    $(".content").hide();
+    // 선택한 컨텐츠만 보입니다.
+    $("#" + c_id).show();
+    // if 조건에 맞는 input[name=tabs]의 checked 속성을 설정합니다.
+    $("input[name=tabs]").each(function() {
+        if ("tabs_" + id == $(this).attr("id")) {
+            $(this).prop("checked", true);
+        } else {
+            $(this).prop("checked", false);
+        }
+    });
+}
 
-	//탭 추가
-	$(document)
-			.ready(
-					function() {
-						$(".li_step3")
-								.click(
-										function(e) {
-											var id = $(this).attr('id');
-											var title = $(this).text();
-											var tabs = $("#tab_bar label");
-											var isDuplicate = false;
+//tab을 클릭했을 때 main_content 활성화
+function tabs(id){
+// 	alert(id);
+	$(".content").hide();
+	$("#load_" + id).show();
+}
 
-											// 기존 탭들의 텍스트를 확인하여 중복되는 것이 있는지 확인합니다.
-											tabs.each(function() {
-												if ($(this).text() === title) {
-													isDuplicate = true;
-													return false; // 중복되는 경우, each() 반복을 종료합니다.
-												}
-											});
+//탭 추가
+$(document).ready(function () {
+    $(".li_step3").click(function (e) {
+    	var id = $(this).attr('id');
+        var title = $(this).text();
+        var tabs = $("#tab_bar label");
+        var isDuplicate = false;
 
-											// 중복되는 탭이 없을 때만 새로운 탭을 추가합니다.
-											if (!isDuplicate) {
-												var newTab = "<input type='radio' name='tabs' id='tabs_" 
-            + id + "' checked><label for='tabs_"
-														+ id
-														+ "' onclick='tabs(\""
-														+ id
-														+ "\")'>"
-														+ title
-														+ "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' id='tabs_"
-														+ id
-														+ "' onclick='close_tab(\""
-														+ id + "\")'></label>";
-												$("#tab_bar").append(newTab);
-											}
+        // 기존 탭들의 텍스트를 확인하여 중복되는 것이 있는지 확인합니다.
+        tabs.each(function () {
+            if ($(this).text() === title) {
+                isDuplicate = true;
+                return false; // 중복되는 경우, each() 반복을 종료합니다.
+            }
+        });
 
-											//main_content에 load
-											load(id);
-										});
-					});
+        // 중복되는 탭이 없을 때만 새로운 탭을 추가합니다.
+        if (!isDuplicate) {
+            var newTab = "<input type='radio' name='tabs' id='tabs_" 
+            + id + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" 
+            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' id='tabs_"+id+"' onclick='close_tab(\""+id+"\")'></label>";
+            $("#tab_bar").append(newTab);
+        }
+        
+        //main_content에 load
+        load(id);
+    });
+});
 
-	//main_content에 load
-	function load(id) {
-		$("#main_container").append(
-				"<div id='load_"+id+"' class='content'></div>");
-		$("#load_" + id).load("/" + id + "");
-		$("#tabs_" + id).attr("checked", "checked");
-		showContent("load_" + id, id);
-	}
+//main_content에 load
+function load(id){
+	$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
+	$("#load_" + id).load("/"+id+"");
+	$("#tabs_" + id).attr("checked", "checked");
+	showContent("load_" + id, id);
+}
 
-	//tab 닫기
-	function close_tab(id) {
-		$("#tabs_" + id).remove();
-		$("label[for='tabs_" + id + "']").remove();
-		$("#load_" + id).remove();
-	}
+//tab 닫기
+function close_tab(id){
+	$("#tabs_" + id).remove();
+	$("label[for='tabs_" + id + "']").remove();
+	$("#load_" + id).remove();
+}
 
-	//modal창 닫기
-	function close_modal(id) {
-		$("#modal_opacity").css("display", "none");
-		$("#" + id).remove();
-	}
+//modal창 닫기
+function close_modal(id){
+	$("#modal_opacity").css("display","none");
+	$("#" + id).remove();
+}
 
-	//modal 띄우기
-	function modalSearch(id) {
-		var modal = document.getElementById("modal_opacity");
-		if (modal.style.display === "none" || modal.style.display === "") {
-			modal.style.display = "block";
-			$("#modal_opacity").load("/" + id);
-		} else {
-			modal.style.display = "none";
-		}
-	}
+//modal 띄우기
+function modalSearch(id) {
+    var modal = document.getElementById("modal_opacity");
+    if (modal.style.display === "none" || modal.style.display === "") {
+        modal.style.display = "block";
+        $("#modal_opacity").load("/"+id);
+    } else {
+        modal.style.display = "none";
+    }
+}
 </script>
 <script type="text/javascript">
+var columnSortingStates = {};
+
+function sortTable(n, table) {
+	  var rows, switching, i, x, y, shouldSwitch;
+	  switching = true;
+
+	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
+	  for (var key in columnSortingStates) {
+	    if (key != n) {
+	      columnSortingStates[key] = undefined;
+	    }
+	  }
 	
-</script>
-<script type="text/javascript">
-	var columnSortingStates = {};
+	  // 오름차순, 내림차순, 정렬x 순으로 정렬
+	  if (columnSortingStates[n] === undefined) {
+	    columnSortingStates[n] = "asc";
+	  } else if (columnSortingStates[n] === "asc") {
+	    columnSortingStates[n] = "desc";
+	  } else if (columnSortingStates[n] === "desc") {
+	    columnSortingStates[n] = "none";
+	  } else if (columnSortingStates[n] === "none") {
+	    columnSortingStates[n] = "asc";
+	  }
+	  dir = columnSortingStates[n];
 
-	function sortTable(n, table) {
-		var rows, switching, i, x, y, shouldSwitch;
-		switching = true;
+	  // 모든 th 요소에서 기호를 제거하십시오.
+	  var thElements = table.getElementsByTagName("th");
+	  for (var j = 0; j < thElements.length; j++) {
+	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
+	  }
 
-		// 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
-		for ( var key in columnSortingStates) {
-			if (key != n) {
-				columnSortingStates[key] = undefined;
-			}
-		}
+	  while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+	      shouldSwitch = false;
+	      x = rows[i].getElementsByTagName("TD")[n];
+	      y = rows[i + 1].getElementsByTagName("TD")[n];
 
-		// 오름차순, 내림차순, 정렬x 순으로 정렬
-		if (columnSortingStates[n] === undefined) {
-			columnSortingStates[n] = "asc";
-		} else if (columnSortingStates[n] === "asc") {
-			columnSortingStates[n] = "desc";
-		} else if (columnSortingStates[n] === "desc") {
-			columnSortingStates[n] = "none";
-		} else if (columnSortingStates[n] === "none") {
-			columnSortingStates[n] = "asc";
-		}
-		dir = columnSortingStates[n];
+	      if (dir === "asc") {
+	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+	          shouldSwitch = true;
+	          break;
+	        }
+	      } else if (dir === "desc") {
+	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+	          shouldSwitch = true;
+	          break;
+	        }
+	      } else if (dir === "none") {
+	        break;
+	      }
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	    }
+	  }
 
-		// 모든 th 요소에서 기호를 제거하십시오.
-		var thElements = table.getElementsByTagName("th");
-		for (var j = 0; j < thElements.length; j++) {
-			thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "")
-					.replace("▼", "");
-		}
-
-		while (switching) {
-			switching = false;
-			rows = table.rows;
-			for (i = 1; i < (rows.length - 1); i++) {
-				shouldSwitch = false;
-				x = rows[i].getElementsByTagName("TD")[n];
-				y = rows[i + 1].getElementsByTagName("TD")[n];
-
-				if (dir === "asc") {
-					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-						shouldSwitch = true;
-						break;
-					}
-				} else if (dir === "desc") {
-					if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-						shouldSwitch = true;
-						break;
-					}
-				} else if (dir === "none") {
-					break;
-				}
-			}
-			if (shouldSwitch) {
-				rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-				switching = true;
-			}
-		}
-
-		// 정렬된 요소에 기호를 추가합니다.
-		if (dir === "asc") {
-			thElements[n].innerHTML += " ▲";
-		} else if (dir === "desc") {
-			thElements[n].innerHTML += " ▼";
-		}
+	  // 정렬된 요소에 기호를 추가합니다.
+	  if (dir === "asc") {
+	    thElements[n].innerHTML += " ▲";
+	  } else if (dir === "desc") {
+	    thElements[n].innerHTML += " ▼";
+	  }
 	}
+
 </script>
 </head>
 <body>
