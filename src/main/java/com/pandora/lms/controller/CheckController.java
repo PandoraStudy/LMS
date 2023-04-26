@@ -18,17 +18,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pandora.lms.service.CheckService;
+import com.pandora.lms.service.NoticeService;
 import com.pandora.lms.service.SubjectService;
+import com.pandora.lms.util.TextChangeUtil;
+
+import lombok.AllArgsConstructor;
+
 
 @Controller
 public class CheckController {
-
-	@Autowired
+	@Autowired	
 	CheckService checkService;
 	
 	@GetMapping("/check")
-	public String subject() {
-		
+	public String subject() {	
 		return "check";
 	}
 	

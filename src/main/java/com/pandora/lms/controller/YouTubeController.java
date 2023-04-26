@@ -7,6 +7,7 @@ import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +23,8 @@ import java.util.Map;
 public class YouTubeController {
     private final OAuth oAuth;
     private final YoutubeService youtubeService;
-    private final SqlSession sqlSession;
+    @Autowired
+    private  SqlSession sqlSession;
 
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) throws JSONException {
