@@ -77,6 +77,18 @@
         transition: 0s;
     }
 
+    .week-file {
+        width: 100%;
+        height: auto;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 10px;
+        padding-top: 17px;
+        box-sizing: border-box;
+        transition: 0s;
+    }
+
     .content-last {
         border-top: 0;
         border-bottom: 1px solid #ccc;
@@ -164,11 +176,11 @@
                                     <!-- 강의 정보 추가 위치 -->
                                     <c:set var="i" value="1"/>
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
-                                        <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target="#lect${i}">
+                                        <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down"></i> ${i}주차
                                         </div>
-                                        <!-- 콘텐츠 -->
-                                        <div id="lect${i}" class="week-content ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose> collapse">
+                                        <!-- 강의 -->
+                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger</c:when><c:otherwise>border-left-primary</c:otherwise></c:choose> collapse">
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
@@ -181,6 +193,22 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <c:if test="${lect.FILE_SN ne null}">
+                                            <c:set var="file_cnt" value="0"/>
+                                            <c:forEach begin="1" end="${lect.FILE_LENGTH}">
+                                            <!-- 파일 -->
+                                            <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} border-left-secondary collapse">
+                                                <!-- 숨길 객체의 내용 -->
+                                                <div class="week-object">
+                                                    <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                        <button class="btn btn-secondary">파일</button>
+                                                        <span>${lect.PHYS_FILE_NM_LS[file_cnt]}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <c:set var="file_cnt" value="${file_cnt + 1}"/>
+                                            </c:forEach>
+                                        </c:if>
                                         <c:set var="i" value="${i + 1}"/>
                                     </c:forEach>
                                 </div>

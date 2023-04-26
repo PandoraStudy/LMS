@@ -65,12 +65,22 @@ public class YouTubeController {
                 FILE_EXTN_NM = String.valueOf(lectInfo.get("FILE_EXTN_NM")).split(",");
                 FILE_SZ = String.valueOf(lectInfo.get("FILE_SZ")).split(",");
 
+                List<String> PHYS_FILE_NM_LS = new ArrayList<>();
+                List<String> FILE_SN_SEQ_LS = new ArrayList<>();
+                List<String> FILE_EXTN_NM_LS = new ArrayList<>();
+                List<String> FILE_SZ_LS  = new ArrayList<>();
+
+                lectInfo.put("FILE_LENGTH", FILE_LENGTH);
                 for(int i = 0; i < FILE_LENGTH; i++) {
-                    lectInfo.put("PHYS_FILE_NM" + i, PHYS_FILE_NM[0]);
-                    lectInfo.put("FILE_SN_SEQ" + i, FILE_SN_SEQ[0]);
-                    lectInfo.put("FILE_EXTN_NM" + i, FILE_EXTN_NM[0]);
-                    lectInfo.put("FILE_SZ" + i, FILE_SZ[0]);
+                    PHYS_FILE_NM_LS.add(PHYS_FILE_NM[i]);
+                    FILE_SN_SEQ_LS.add(FILE_SN_SEQ[i]);
+                    FILE_EXTN_NM_LS.add(FILE_EXTN_NM[i]);
+                    FILE_SZ_LS.add(FILE_SZ[i]);
                 }
+                lectInfo.put("PHYS_FILE_NM_LS", PHYS_FILE_NM_LS);
+                lectInfo.put("FILE_SN_SEQ_LS", FILE_SN_SEQ_LS);
+                lectInfo.put("FILE_EXTN_NM_LS", FILE_EXTN_NM_LS);
+                lectInfo.put("FILE_SZ_LS", FILE_SZ_LS);
 
                 lectInfo.remove("PHYS_FILE_NM");
                 lectInfo.remove("FILE_SN_SEQ");
@@ -80,7 +90,7 @@ public class YouTubeController {
         }
 
 
-        System.out.println(lectList);
+        System.out.println(lectList.get(0));
 
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("lectList", lectList);
