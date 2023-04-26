@@ -89,9 +89,6 @@ public class YouTubeController {
             }
         }
 
-
-        System.out.println(lectList.get(0));
-
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("lectList", lectList);
 
@@ -119,7 +116,6 @@ public class YouTubeController {
     @ResponseBody
     public Integer getPlayTime(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         userInfo.put("appl_no", session.getAttribute("appl_no"));
-        System.out.println("조회 : " + userInfo);
         return sqlSession.selectOne("youtube.getPlayTime", userInfo);
     }
 
@@ -127,7 +123,6 @@ public class YouTubeController {
     @ResponseBody
     public String playTimeSave(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         userInfo.put("appl_no", session.getAttribute("appl_no"));
-        System.out.println("저장 : " + userInfo);
         int result = sqlSession.update("youtube.playTimeSave", userInfo);
         String msg = (result == 1) ? userInfo.get("curr_time") + "초 저장 완료" : "저장 실패";
 

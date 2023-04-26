@@ -105,6 +105,7 @@
                 }
                 /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
                 else {
+                    console.log()
                     player.seekTo(play_time);
                 }
             }

@@ -214,6 +214,19 @@
                                             <c:set var="file_cnt" value="${file_cnt + 1}"/>
                                             </c:forEach>
                                         </c:if>
+                                        <!-- 과제 -->
+                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
+                                            <!-- 숨길 객체의 내용 -->
+                                            <div class="week-object">
+                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <button class="mthd btn btn-warning">과제</button>
+                                                    <span>${lect.ON_LECT_NM }</span>
+                                                </div>
+                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
+                                                    <div style='height:15px; width: 200px; margin-top: -3px;'><b>미제출</b></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <c:set var="i" value="${i + 1}"/>
                                     </c:forEach>
                                 </div>
