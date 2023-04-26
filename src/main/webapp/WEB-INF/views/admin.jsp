@@ -631,9 +631,6 @@ function modalSearch(id) {
 }
 </script>
 <script type="text/javascript">
-
-</script>
-<script type="text/javascript">
 var columnSortingStates = {};
 
 function sortTable(n, table) {
