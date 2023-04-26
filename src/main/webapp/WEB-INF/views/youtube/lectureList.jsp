@@ -47,6 +47,11 @@
                 }
         });
 
+        $(".week-file").click(function() {
+            let file = $(this).find(".file").val();
+            alert(file);
+        });
+
     });
 </script>
 <style>
@@ -197,11 +202,11 @@
                                             <c:set var="file_cnt" value="0"/>
                                             <c:forEach begin="1" end="${lect.FILE_LENGTH}">
                                             <!-- 파일 -->
-                                            <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} border-left-secondary collapse">
+                                            <div class="week-file week-content${i} ${status.last ? 'content-last' : ''} border-left-secondary collapse">
                                                 <!-- 숨길 객체의 내용 -->
                                                 <div class="week-object">
                                                     <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                        <button class="btn btn-secondary">파일</button>
+                                                        <button class="file btn btn-secondary" value="${lect.PHYS_FILE_NM_LS[file_cnt]}">파일</button>
                                                         <span>${lect.PHYS_FILE_NM_LS[file_cnt]}</span>
                                                     </div>
                                                 </div>
