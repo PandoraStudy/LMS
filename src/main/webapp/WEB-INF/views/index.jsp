@@ -46,6 +46,7 @@
                 $.ajax({
                     url: '/zoom_open',
                     type: 'post',
+                    data: { "sbjct_no" : 1 },
                     dataType: 'text',
                     success : function(result) {
                         if(result == "true"){

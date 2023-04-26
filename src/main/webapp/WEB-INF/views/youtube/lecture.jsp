@@ -19,15 +19,15 @@
     <link href="css/logo.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <%-- API Key값 --%>
-<!--      type="module" -->
-<!--     <script src="js/apikey.js"></script> -->
+    <!--      type="module" -->
+    <!--     <script src="js/apikey.js"></script> -->
     <script src="js/YoutubeLecture.js"></script>
 </head>
 <script type="text/javascript">
-/*
-$(function(){
-	//alert(API_KEY);
-	var lectureInfo = ${lectureInfo};
+    /*
+    $(function(){
+        //alert(API_KEY);
+        var lectureInfo = ${lectureInfo};
 	console.log(lectureInfo);
 
 	let channelId = "UCx6jsZ02B4K3SECUrkgPyzg";//놀면뭐하니
@@ -122,54 +122,52 @@ $(function(){
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
-								<div>
-									<!-- 실제 구성은 이곳에서 진행합니다. -->
-									<table class="table table-sm"  id="table_lecture">
-										<thead>
-											<tr>
-												<th class="col-2 text-center">수강신청 목록</th>
-												<th class="col-2 text-center">학과</th>
-												<th class="col-2 text-center">교수</th>
-												<th class="col-3 text-center">진도율</th>
-											</tr>
-										</thead>
-										<tbody id="tb_lecture">
-											<c:forEach items="${lecture }" var="i">
-											<tr style='height:70px; line-height:70px;' onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">
-												<td class='text-center'>${i.SBJCT_NM }</td>
-												<td class='text-center'>${i.CRCLM_NM }</td>
-												<td class='text-center'>${i.KORN_FLNM }</td>
-												<td>
-													<div style='height:20px; line-height: 20px;'>&nbsp;
-														<span class='float-right' style='height:20px; margin-right:45px;'>
-														진도율%
-														</span>
-													</div>
-													<div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>
-														<div class='progress-bar bg-success' role='progressbar' style='height:20px;'
-															width: '진도율%' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
-														</div>
-													</div>
-												</td>
-											</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-								</div>
+                                <div>
+                                    <!-- 실제 구성은 이곳에서 진행합니다. -->
+                                    <table class="table table-sm" id="table_lecture">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-2 text-center">수강신청 목록</th>
+                                            <th class="col-2 text-center">학과</th>
+                                            <th class="col-2 text-center">교수</th>
+                                            <th class="col-3 text-center">진도율</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="tb_lecture">
+                                        <c:forEach items="${lecture }" var="i">
+                                        <tr style='height:70px; line-height:70px;'
+                                            onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">
+                                            <td class='text-center'>${i.SBJCT_NM }</td>
+                                            <td class='text-center'>${i.CRCLM_NM }</td>
+                                            <td class='text-center'>${i.KORN_FLNM }</td>
+                                            <td>
+                                                <div style='height:20px; line-height: 20px;'>&nbsp;
+                                                    <span class='float-right' style='height:20px; margin-right:45px;'>진도율%</span>
+                                                </div>
+                                                <div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>
+                                                    <div class='progress-bar bg-success' role='progressbar' style='height:20px;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+                                                </div>
+                                </div>
+                                </td>
+                                </tr>
+                                </c:forEach>
+                                </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 디테일 화면 종료 -->
         </div>
-        <!-- 메인 콘텐츠 종료 -->
-
-        <!-- Footer -->
-        <%@include file="../footer.jsp" %>
-
+        <!-- 디테일 화면 종료 -->
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- 메인 콘텐츠 종료 -->
+
+    <!-- Footer -->
+    <%@include file="../footer.jsp" %>
+
+</div>
+<!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->

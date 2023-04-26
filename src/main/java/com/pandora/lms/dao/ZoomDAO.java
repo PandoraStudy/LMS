@@ -26,7 +26,6 @@ public class ZoomDAO {
     }
 
     public void meeting_msg(ZoomDTO zoomDTO) {
-        zoomDTO.setSbjct_no(3);/*임시로 강제로 넣음*/
         List<ZoomDTO> student_list = sqlSession.selectList("zoom.student_list", zoomDTO);
         System.err.println("로그인한 ID : "+zoomDTO.getLogin_id());
 

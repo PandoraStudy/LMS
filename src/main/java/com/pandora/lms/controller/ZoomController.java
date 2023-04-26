@@ -34,11 +34,11 @@ public class ZoomController {
 
     @PostMapping("/zoom_open")
     @ResponseBody
-    public String Zoom_open(HttpSession session){
+    public String Zoom_open(HttpSession session, @RequestParam Integer sbjct_no) {
         ZoomDTO zoomDTO = new ZoomDTO();
         int user_no = (int) session.getAttribute("user_no");
         zoomDTO.setUser_no(user_no);
-
+        System.out.println("과목 번호 : " + sbjct_no);
         ZoomDTO result = zoomService.authority(zoomDTO);
 
         /*========================*/
@@ -49,7 +49,6 @@ public class ZoomController {
         /*========================*/
 
         if(result.getZOOM_AUTH() == 1){
-
             return "true";
         }else{
             return "false";

@@ -35,22 +35,15 @@
                 let mthd = lectureInfo.split(",")[1];
 
                 if(mthd == 1) {
-                    location.href = "lectureDetail?on_lect_sn=" + snOrUrl;
+                    location.href = "/lectureDetail?on_lect_sn=" + snOrUrl;
                 } else {
                     // 줌 담당자에게 어디로 보낼지 전달 받아야 합니다.
-                    alert("줌으로, 과목 번호 : " + ${sbjct_no});
-                    $.ajax({
-                        type: "GET",
-                        url: "",
-                        data: {},
-                        dataType: "text",
-                        success: function() {
+                    if(snOrUrl != "") {
+                        window.open(snOrUrl, "수업명", "menubar=no, toolbar=no, fullscreen=yes");
+                    } else {
+                        alert("아직 회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
+                    }
 
-                        },
-                        error: function () {
-
-                        }
-                    });
                 }
         });
 
