@@ -28,7 +28,7 @@
     <style>
     </style>
     <script>
-        window.location.href = "https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token";
+        window.location.href = "https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + ${sbjct_no};
     </script>
 </head>
 <body>

@@ -17,18 +17,27 @@
             lti.LECT_YMD AS 'LECT_YMD',
             lti.SBJCT_MTHD_CD AS 'SBJCT_MTHD_CD',
             IFNULL(oli.ON_LECT_NM, 'ZOOM 수업') AS 'ON_LECT_NM',
-            oli.ON_LECT_SN AS 'ON_LECT_SN',
+            IFNULL(oli.ON_LECT_SN, lmi.MEET_ID) AS 'ON_LECT_SN',
             IFNULL(oli.ON_LECT_URL, lmi.JOIN_URL) AS 'LECT_URL',
             IFNULL(om.LECT_PRGRS_RT, 0) AS 'LECT_PRGRS_RT',
-            IFNULL(lmm.ATTEND_STATUS, '결석') AS 'ATTENDANCE'
+            IFNULL(lmm.ATTEND_STATUS, '결석') AS 'ATTENDANCE',
+            fi.FILE_SN as 'FILE_SN',
+            GROUP_CONCAT(fi.FILE_SN_SEQ ORDER BY fi.FILE_SN_SEQ SEPARATOR ',') AS 'FILE_SN_SEQ',
+            GROUP_CONCAT(fi.PHYS_FILE_NM  ORDER BY fi.PHYS_FILE_NM  SEPARATOR ',') AS 'PHYS_FILE_NM',
+            GROUP_CONCAT(fi.FILE_EXTN_NM  ORDER BY fi.FILE_EXTN_NM  SEPARATOR ',') AS 'FILE_EXTN_NM',
+            GROUP_CONCAT(fi.FILE_PATH_NM  ORDER BY fi.FILE_PATH_NM  SEPARATOR ',') AS 'FILE_PATH_NM',
+            GROUP_CONCAT(fi.FILE_SZ ORDER BY fi.FILE_SZ  SEPARATOR ',') AS 'FILE_SZ'
         FROM LECT_TM_INFO lti
             LEFT JOIN ON_LECT_INFO oli ON lti.LECT_YMD = oli.LECT_YMD
             LEFT JOIN LECT_MEET_INFO lmi ON lti.LECT_YMD = lmi.LECT_YMD
-            LEFT JOIN ON_LECT_MAG om ON lti.SBJCT_NO = om.SBJCT_NO AND lti.LECT_YMD = om.LECT_YMD AND om.APPL_NO = #{appl_no }
-            LEFT JOIN LECT_MEET_MAG lmm ON lti.LECT_YMD = lmm.LECT_YMD AND lmm.APPL_NO = #{appl_no }
-            LEFT JOIN ESTBL_SBJCT es ON es.SBJCT_NO = #{sbjct_no }
+            LEFT JOIN ON_LECT_MAG om ON lti.SBJCT_NO = om.SBJCT_NO AND lti.LECT_YMD = om.LECT_YMD AND om.APPL_NO = #{appl_no}
+            LEFT JOIN LECT_MEET_MAG lmm ON lti.LECT_YMD = lmm.LECT_YMD AND lmm.APPL_NO = #{appl_no}
+            LEFT JOIN ESTBL_SBJCT es ON es.SBJCT_NO = #{sbjct_no}
+            LEFT JOIN FILE_INFO fi ON fi.FILE_SN = oli.LECT_FILE_SN
         WHERE
-            lti.SBJCT_NO = #{sbjct_no }
+            lti.SBJCT_NO = #{sbjct_no}
+        GROUP BY
+            lti.LECT_YMD
         ORDER BY lti.LECT_YMD ASC
     </select>
 

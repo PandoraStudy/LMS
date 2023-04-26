@@ -49,9 +49,9 @@
                     data: { "sbjct_no" : 1 },
                     dataType: 'text',
                     success : function(result) {
-                        if(result == "true"){
+                        if(result != ""){
                             alert("인증에 성공했습니다.");
-                            window.open("/zoom_connect","Zoom","width=1400, height=700");
+                            window.open("/zoom_connect?sbjct_no=" + result, "Zoom", "width=1400, height=700");
                         }else{
                             alert("인증실패 관리자 문의 바람.");
                             return false;

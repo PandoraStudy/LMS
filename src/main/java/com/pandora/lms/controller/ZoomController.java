@@ -27,9 +27,10 @@ public class ZoomController {
     private final ZoomService zoomService;
 
     @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
-    public String zoom(HttpSession session) {
-
-        return "zoom_connect";
+    public ModelAndView zoom(HttpSession session, @RequestParam Integer sbjct_no) {
+        ModelAndView mv = new ModelAndView("zoom_connect");
+        mv.addObject("sbjct_no", sbjct_no);
+        return mv;
     }
 
     @PostMapping("/zoom_open")
@@ -49,14 +50,16 @@ public class ZoomController {
         /*========================*/
 
         if(result.getZOOM_AUTH() == 1){
-            return "true";
+            return sbjct_no.toString();
         }else{
-            return "false";
+            return "";
         }
     }
 
     @GetMapping("/zoom/token")
-    public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request, HttpSession session) throws IOException {
+    public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request, HttpSession session, @RequestParam Integer sbjct_no) throws IOException {
+        System.out.println("넘어온 과목 번호 [줌토큰] :" + sbjct_no);
+
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
         ZoomDTO zoomDTO = new ZoomDTO();
@@ -66,7 +69,7 @@ public class ZoomController {
         FormBody formBody = new FormBody.Builder()/*http 요청 바디를 만듬*/
                 .add("code", code) // 1단계에서 받은 code 값
                 .add("grant_type", "authorization_code") // 문서에 명시 된 grant_type
-                .add("redirect_uri", "http://localhost/zoom/token") //등록 된 uri
+                .add("redirect_uri", "http://localhost/zoom/token?sbjct_no=" + sbjct_no) //등록 된 uri
                 /*.add("code_verifier", DecEncUtil.encode(code))*/ // 나중에 시간이 된다면 code를 SHA-256 방식으로 암호화하여 전달할 예정
                 .build();
 

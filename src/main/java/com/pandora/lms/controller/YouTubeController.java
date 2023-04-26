@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,33 @@ public class YouTubeController {
 
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
+
+        for(Map<String, Object> lectInfo : lectList) {
+            if( lectInfo.get("FILE_SN") != null ) {
+                int FILE_LENGTH = String.valueOf(lectInfo.get("FILE_SN_SEQ")).split(",").length;
+                String[] PHYS_FILE_NM, FILE_SN_SEQ, FILE_EXTN_NM, FILE_SZ;
+
+                FILE_SN_SEQ = String.valueOf(lectInfo.get("FILE_SN_SEQ")).split(",");
+                PHYS_FILE_NM = String.valueOf(lectInfo.get("PHYS_FILE_NM")).split(",");
+                FILE_EXTN_NM = String.valueOf(lectInfo.get("FILE_EXTN_NM")).split(",");
+                FILE_SZ = String.valueOf(lectInfo.get("FILE_SZ")).split(",");
+
+                for(int i = 0; i < FILE_LENGTH; i++) {
+                    lectInfo.put("PHYS_FILE_NM" + i, PHYS_FILE_NM[0]);
+                    lectInfo.put("FILE_SN_SEQ" + i, FILE_SN_SEQ[0]);
+                    lectInfo.put("FILE_EXTN_NM" + i, FILE_EXTN_NM[0]);
+                    lectInfo.put("FILE_SZ" + i, FILE_SZ[0]);
+                }
+
+                lectInfo.remove("PHYS_FILE_NM");
+                lectInfo.remove("FILE_SN_SEQ");
+                lectInfo.remove("FILE_EXTN_NM");
+                lectInfo.remove("FILE_SZ");
+            }
+        }
+
+
+        System.out.println(lectList);
 
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("lectList", lectList);
