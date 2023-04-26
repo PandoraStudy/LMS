@@ -16,6 +16,7 @@ public class CheckService {
 	CheckDAO checkDAO;
 
 	public List<Map<String, Object>> AjaxStudent(Map<String, Object> paramMap) {
+		
 		return checkDAO.AjaxStudent(paramMap);
 	}
 

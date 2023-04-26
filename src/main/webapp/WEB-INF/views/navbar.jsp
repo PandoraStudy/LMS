@@ -4,7 +4,7 @@
        $("#alarm").hide();
     });
 
-    let ws = new WebSocket("ws://172.30.1.89/noticeAlarm");
+    let ws = new WebSocket("ws://172.30.1.9/noticeAlarm");
     ws.onopen = function(event) {
         console.log("WebSocket 열렸습니다.");
     };
