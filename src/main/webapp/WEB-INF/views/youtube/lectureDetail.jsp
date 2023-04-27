@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -39,6 +40,8 @@
     let video_id = "${lectureInfo.ON_LECT_URL }";
     /* 학생이 실제 시청 시간 위치 */
     let play_time = ${lectureInfo.LAST_PLAY_TM };
+    /* 동영상 총 재생시간 */
+    let lect_max_tm = ${lectureInfo.LECT_MAX_TM};
 
     /* 유튜브 Iframe 준비 상태 */
     function onYouTubeIframeAPIReady() {
@@ -66,53 +69,94 @@
 
         /* 동영상 버퍼링 상태 */
         if (event.data === YT.PlayerState.BUFFERING) {
-            console.log("동영상 버퍼링");
+            console.log("동영상 버퍼링 [BUFFERING]");
         }
 
         if (event.data === YT.PlayerState.CUED) {
-            alert("비디오 로드 완료");
+            console.log("비디오 로드 완료 [CUED]");
         }
 
         /* 동영상 재생 상태 */
         if (event.data === YT.PlayerState.PLAYING) {
-            getPlayTime();
-            curr_time = Math.floor(player.getCurrentTime());
+            $(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/getPlayTime",
+                    data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                    dataType: "text",
+                    success: function (playTime) {
+                        console.log("[getPlayTime] " + playTime + "초");
+                        play_time = playTime;
 
-            /* 실시간 재생 시간과 저장된 재생 시간의 차이가 5보다 클 경우 저장된 위치로 옮깁니다. */
-            if ((curr_time - play_time) > 5) {
-                player.seekTo(play_time);
-            }
 
-            /* 초마다 재생 시간을 검사합니다 */
-            if (timer == null) {
-                timer = setInterval(checkVideoTime, 1000);
-            }
+                        curr_time = Math.floor(player.getCurrentTime());
+
+                        console.log("[멈춰야할 시간] : " + (lect_max_tm - 10));
+
+                        /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다.  */
+                        if(curr_time == (lect_max_tm - 10)) {
+                            player.stopVideo();
+                            alert("강의를 수강하셨습니다.");
+
+                            return false;
+                        }
+
+                        /* 실시간 재생 시간과 저장된 재생 시간의 차이가 3보다 클 경우 저장된 위치로 옮깁니다. */
+                        if ((curr_time - play_time) > 3) {
+                            player.seekTo(play_time);
+                        }
+
+                        /* 초마다 재생 시간을 검사합니다 */
+                        if (timer == null) {
+                            timer = setInterval(checkVideoTime, 1000);
+                        }
+                    },
+                    error: function () {
+                        alert("저장된 재생 시간을 불러오지 못했습니다.");
+                    }
+                });
+            });
         }
 
         /* 동영상 일시정지 상태 */
         if (event.data === YT.PlayerState.PAUSED) {
-            getPlayTime();
-            curr_time = Math.floor(player.getCurrentTime());
+            $(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/getPlayTime",
+                    data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                    dataType: "text",
+                    success: function (playTime) {
+                        console.log("[getPlayTime] " + playTime + "초");
+                        play_time = playTime;
 
-            /*
-                재생 시간이 저장된 재생 시간보다 클 경우 실행합니다.
-            */
-            if (curr_time > play_time) {
-                /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 이하일 경우는 정상 */
-                if ((curr_time - play_time) <= 5) {
-                    console.log("일시정지로 저장");
-                    playTimeSave();
-                }
-                /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
-                else {
-                    console.log()
-                    player.seekTo(play_time);
-                }
-            }
+                        curr_time = Math.floor(player.getCurrentTime());
 
-            /* 반복되는 인터벌을 클리어 합니다. */
-            clearInterval(timer);
-            timer = null;
+                        /*
+                            재생 시간이 저장된 재생 시간보다 클 경우 실행합니다.
+                        */
+                        if (curr_time > play_time) {
+                            /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 이하일 경우는 정상 */
+                            if ((curr_time - play_time) <= 5) {
+                                console.log("일시정지로 저장");
+                                playTimeSave();
+                            }
+                            /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
+                            else {
+                                console.log()
+                                player.seekTo(play_time);
+                            }
+                        }
+
+                        /* 반복되는 인터벌을 클리어 합니다. */
+                        clearInterval(timer);
+                        timer = null;
+                    },
+                    error: function () {
+                        alert("저장된 재생 시간을 불러오지 못했습니다.");
+                    }
+                });
+            });
         }
 
         /* 동영상 종료 상태 */
@@ -128,18 +172,29 @@
         count += 1;
         curr_time = Math.floor(player.getCurrentTime());
 
-        /* 재생 위치를 5초마다 저장합니다. */
-        if ((count % 5) == 0) {
-            /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
-            if (curr_time > play_time) {
-                console.log("5초마다 저장")
-                playTimeSave();
-            }
-        }
-    }
+        console.log("재생 시간 [현재] : " + curr_time);
 
-    /* 학생의 해당되는 강의에 저장돤 재생 시간을 가져옵니다. */
-    function getPlayTime() {
+        /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다. *재생중일 경우 완강 시 타이머 종료 후 저장합니다.  */
+        if(curr_time == (lect_max_tm - 10)) {
+            player.stopVideo();
+            clearInterval(timer);
+            timer = null;
+            playTimeSave();
+            /* 수강 완료 출석 관련 데이터 삽입 */
+            $.post({
+                url: "/applATNDInsert",
+                data: { "sbjct_no" : ${lectureInfo.SBJCT_NO}, "on_lect_sn" : ${lectureInfo.ON_LECT_SN} },
+                dataType: "text",
+                success: function(result) {
+                    alert(result + ", 강의를 수강하셨습니다.");
+                },
+                error: function() {
+                    alert("에러 발생\n잠시 후 다시 시도해주세요.");
+                }
+            });
+            return false;
+        }
+
         $(function () {
             $.ajax({
                 type: "POST",
@@ -147,14 +202,24 @@
                 data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
                 dataType: "text",
                 success: function (playTime) {
-                    console.log("[getPlayTime] " + playTime + "초");
-                    play_time = playTime;
+                    /* 재생 위치를 5초마다 저장합니다. */
+                    if ((count % 5) == 0) {
+                        /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
+                        if (curr_time > playTime) {
+                            if ((curr_time - play_time) <= 5) {
+                                console.log("5초마다 저장")
+                                playTimeSave();
+                            }
+                        }
+                    }
                 },
                 error: function () {
                     alert("저장된 재생 시간을 불러오지 못했습니다.");
                 }
             });
         });
+
+
     }
 
     /* 재생 시간을 저장합니다. */
@@ -254,17 +319,6 @@
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
-                                <div class="dropdown no-arrow">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                         aria-labelledby="dropdownMenuLink">
-                                        <div class="dropdown-header">더보기</div>
-                                        <a class="dropdown-item" href="#">추가 메뉴</a>
-                                    </div>
-                                </div>
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">
@@ -272,19 +326,9 @@
                                     <!-- 실제 구성은 이곳에서 진행합니다. -->
                                     <div class="youtube-player" id="youtubePlayer"></div>
                                     <div class="lecture-info">
-                                        <div class="lecture-progress">
-                                            <span>
-                                                <span>학습 진행 상황 : 8분 4초(100%)</span>
-                                                <span>
-                                                    <input type="checkbox" checked onclick="return false;">
-                                                    <result>완료</result>
-                                                    <button class="btn btn-primary" type="button">출석</button>
-                                                </span>
-                                            </span>
-
-                                        </div>
                                         <div class="lecture-page-btn">
                                             <span>
+                                                <button class="btn btn-primary" onclick="location.href='/lectureList?sbjct_no=${lectureInfo.SBJCT_NO}'">목록</button>
                                                 <!-- 강의 진도율이 100프로가 아닐 시 제어합시다. -->
                                                 <button class="btn btn-secondary">이전 학습</button>
                                                 <button class="btn btn-primary">다음 학습</button>
@@ -341,17 +385,8 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+
 </body>
 </html>

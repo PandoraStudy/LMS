@@ -10,6 +10,7 @@
                 let ls = event.data.split(":",1);
                 let data_name = ls[0];
                 let data_content = event.data.substring(ls[0].length + 1);
+                data_content = data_content.replace(/</g,"&lt;").replace(/>/g,"&gt;");
                 if(data_name === name+"님이 들어오셨습니다."){
                     $("#messageBox").append(
                         "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+data_name+"</div>"

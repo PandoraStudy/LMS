@@ -7,7 +7,6 @@
             FROM USER_APPL_VIEW as UV
                 WHERE UV.APPL_NO = #{appl_no }
         ORDER BY SBJCT_NO ASC
-
     </select>
 
     <select id="lectList" parameterType="HashMap" resultType="HashMap">
@@ -48,7 +47,8 @@
             oli.ON_LECT_URL,
             olm.LAST_PLAY_TM,
             olm.LECT_MAX_TM,
-            olm.SBJCT_NO
+            olm.SBJCT_NO,
+            olm.LECT_PRGRS_RT
         FROM ON_LECT_MAG olm
             JOIN ON_LECT_INFO oli ON olm.ON_LECT_SN = oli.ON_LECT_SN AND olm.APPL_NO = #{appl_no }
         WHERE
@@ -74,5 +74,37 @@
         AND
             APPL_NO = #{appl_no }
     </update>
+
+    <select id="getLectInfo" parameterType="HashMap" resultType="HashMap">
+        SELECT
+            olm.APPL_NO as 'appl_no',
+            lti.CRCLM_CD as 'crclm_cd',
+            lti.CRCLM_CYCL as 'crclm_cycl',
+            lti.LECT_YMD as 'lect_ymd',
+            lti.SBJCT_NO as 'sbjct_no',
+            lti.SBJCT_MTHD_CD as 'sbjct_mthd_cd'
+        FROM ON_LECT_MAG olm
+            LEFT JOIN LECT_TM_INFO lti ON olm.LECT_YMD = lti.LECT_YMD
+        WHERE
+            olm.APPL_NO = #{appl_no }
+        AND
+            olm.SBJCT_NO = #{sbjct_no }
+        AND
+            olm.ON_LECT_SN = #{on_lect_sn }
+        AND
+            olm.LECT_PRGRS_RT >= 90;
+    </select>
+
+    <insert id="applATNDInsert" parameterType="HashMap">
+        INSERT INTO APPL_ATND
+            SET
+                APPL_NO = #{appl_no },
+                SBJCT_NO = #{sbjct_no },
+                LECT_YMD = #{lect_ymd },
+                CRCLM_CYCL = #{crclm_cycl },
+                CRCLM_CD = #{crclm_cd },
+                SBJCT_MTHD_CD = #{sbjct_mthd_cd },
+                ATND_CD = 1
+    </insert>
 
 </mapper>
