@@ -104,28 +104,43 @@
 
         /* 동영상 일시정지 상태 */
         if (event.data === YT.PlayerState.PAUSED) {
-            getPlayTime();
-            curr_time = Math.floor(player.getCurrentTime());
+            $(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/getPlayTime",
+                    data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                    dataType: "text",
+                    success: function (playTime) {
+                        console.log("[getPlayTime] " + playTime + "초");
+                        play_time = playTime;
 
-            /*
-                재생 시간이 저장된 재생 시간보다 클 경우 실행합니다.
-            */
-            if (curr_time > play_time) {
-                /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 이하일 경우는 정상 */
-                if ((curr_time - play_time) <= 5) {
-                    console.log("일시정지로 저장");
-                    playTimeSave();
-                }
-                /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
-                else {
-                    console.log()
-                    player.seekTo(play_time);
-                }
-            }
+                        curr_time = Math.floor(player.getCurrentTime());
 
-            /* 반복되는 인터벌을 클리어 합니다. */
-            clearInterval(timer);
-            timer = null;
+                        /*
+                            재생 시간이 저장된 재생 시간보다 클 경우 실행합니다.
+                        */
+                        if (curr_time > play_time) {
+                            /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 이하일 경우는 정상 */
+                            if ((curr_time - play_time) <= 5) {
+                                console.log("일시정지로 저장");
+                                playTimeSave();
+                            }
+                            /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
+                            else {
+                                console.log()
+                                player.seekTo(play_time);
+                            }
+                        }
+
+                        /* 반복되는 인터벌을 클리어 합니다. */
+                        clearInterval(timer);
+                        timer = null;
+                    },
+                    error: function () {
+                        alert("저장된 재생 시간을 불러오지 못했습니다.");
+                    }
+                });
+            });
         }
 
         /* 동영상 종료 상태 */
