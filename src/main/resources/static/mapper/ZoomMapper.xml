@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="zoom">
 
-    <select id="authority" parameterType="ZoomDTO" resultType="ZoomDTO"><!--닉네임 중복 검사-->
+    <select id="authority" parameterType="ZoomDTO" resultType="ZoomDTO">
         SELECT ZOOM_AUTH
         FROM INSTR_INFO
         WHERE USER_NO = #{user_no}
@@ -14,13 +14,13 @@
         WHERE SBJCT_NO = #{sbjct_no}
     </update>
 
-    <select id="student_list" parameterType="ZoomDTO" resultType="ZoomDTO"><!--닉네임 중복 검사-->
+    <select id="student_list" parameterType="ZoomDTO" resultType="ZoomDTO">
         SELECT APPL_NO, USER_ID, KORN_FLNM
         FROM SBJCT_STUDENT
         WHERE SBJCT_NO = #{sbjct_no}
     </select>
 
-    <select id="user_no" parameterType="ZoomDTO" resultType="ZoomDTO"><!--닉네임 중복 검사-->
+    <select id="user_no" parameterType="ZoomDTO" resultType="ZoomDTO">
         SELECT USER_NO
         FROM APPL_INFO
         WHERE APPL_NO = #{appl_no}
@@ -35,6 +35,20 @@
         read_or_not = 0,
         get_user_id = #{user_id}
     </insert>
+
+    <update id="zoom_exit">
+        UPDATE LECT_MEET_INFO
+        SET JOIN_URL = NULL
+        WHERE SBJCT_NO = #{sbjct_no}
+    </update>
+
+    <select id="zoom_join" parameterType="ZoomDTO" resultType="ZoomDTO">
+        SELECT JOIN_URL
+        FROM LECT_MEET_INFO
+        WHERE SBJCT_NO = #{sbjct_no}
+    </select>
+
+
 
 
 </mapper>

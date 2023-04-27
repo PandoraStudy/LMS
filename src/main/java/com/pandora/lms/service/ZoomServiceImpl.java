@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Service
@@ -88,6 +87,18 @@ public class ZoomServiceImpl implements ZoomService {
     @Override
     public void meeting_msg(ZoomDTO zoomDTO) {
         zoomDAO.meeting_msg(zoomDTO);
+    }
+
+    @Override
+    public int zoom_exit(ZoomDTO zoomDTO) {
+
+        return zoomDAO.zoom_exit(zoomDTO);
+    }
+
+    @Override
+    public ZoomDTO zoom_join(ZoomDTO zoomDTO) {
+
+        return zoomDAO.zoom_join(zoomDTO);
     }
 
 

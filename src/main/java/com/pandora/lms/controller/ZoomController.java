@@ -27,7 +27,6 @@ public class ZoomController {
 
     private final ZoomService zoomService;
     private final AlarmHandler alarmHandler;
-
     @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
     public ModelAndView zoom(HttpSession session, @RequestParam Integer sbjct_no) {
         ModelAndView mv = new ModelAndView("zoom_connect");
@@ -41,19 +40,9 @@ public class ZoomController {
         ZoomDTO zoomDTO = new ZoomDTO();
         int user_no = (int) session.getAttribute("user_no");
         zoomDTO.setUser_no(user_no);
-        zoomDTO.setSbjct_no(sbjct_no);
-        System.out.println("과목 번호 : " + sbjct_no);
         ZoomDTO result = zoomService.authority(zoomDTO);
 
-        /*========================*/
-        int instr_no = (int) session.getAttribute("instr_no");
-        zoomDTO.setLogin_id((String) session.getAttribute("id"));
-        zoomDTO.setInstr_no(instr_no);
-        zoomService.meeting_msg(zoomDTO);
-        /*========================*/
-        String message = "회의가 개설되었습니다.";    
-        alarmHandler.sendMessage(message);  // 쪽지 알람
-        /*========================*/
+
         if(result.getZOOM_AUTH() == 1){
             return sbjct_no.toString();
         }else{
@@ -63,8 +52,6 @@ public class ZoomController {
 
     @GetMapping("/zoom/token")
     public ModelAndView get_token(@RequestParam("code") String code, Model model, HttpServletRequest request, HttpSession session, @RequestParam Integer sbjct_no) throws IOException {
-        System.out.println("넘어온 과목 번호 [줌토큰] :" + sbjct_no);
-
         OkHttpClient client = new OkHttpClient(); /*통신을 위한 OkHttp*/
         ObjectMapper mapper = new ObjectMapper();/*Json 처리를 위하여 생성*/
         ZoomDTO zoomDTO = new ZoomDTO();
@@ -100,7 +87,7 @@ public class ZoomController {
         Object responseObj = model.getAttribute("response");
         Map<String, Object> responseMap = (Map<String, Object>) responseObj;
         String accessToken = (String) responseMap.get("access_token");
-
+        session.setAttribute("sbjct_no",sbjct_no);
 
         System.err.println("요청한 내용 : " + model.getAttribute("response"));
         System.err.println("사용자 코드 : " + model.getAttribute("code"));
@@ -115,10 +102,53 @@ public class ZoomController {
         zoomDTO.setSbjct_no(1);
         zoomService.join_url(zoomDTO);/*DB에 join_url 삽입*/
 
-        /*====================================================*/
-
+        /*========================*/
+        zoomDTO.setSbjct_no(sbjct_no);
+        int instr_no = (int) session.getAttribute("instr_no");
+        zoomDTO.setLogin_id((String) session.getAttribute("id"));
+        zoomDTO.setInstr_no(instr_no);
+        zoomService.meeting_msg(zoomDTO);
+        /*========================*/
+        String message = "회의가 개설되었습니다.";
+        alarmHandler.sendMessage(message);  // 쪽지 알람
+        /*========================*/
         mv.addObject("Join_URL",join_url);
+
     return mv;
+    }
+
+
+
+    @PostMapping("/zoom_exit")
+    @ResponseBody
+    public int zoom_exit(HttpSession session){
+        ZoomDTO zoomDTO = new ZoomDTO();
+
+        zoomDTO.setSbjct_no((Integer) session.getAttribute("sbjct_no"));
+        System.err.println("과목 번호 : "+ zoomDTO.getSbjct_no());
+
+        int result = zoomService.zoom_exit(zoomDTO);
+        System.err.println(result);
+
+       return result;
+    }
+
+    @PostMapping("/zoom_join")
+    @ResponseBody
+    public String zoom_join(@RequestParam Integer sbjct_no){
+        ZoomDTO zoomDTO = new ZoomDTO();
+        ModelAndView mv = new ModelAndView("zoom_join");
+        zoomDTO.setSbjct_no(sbjct_no);
+
+
+        ZoomDTO zoom_url = zoomService.zoom_join(zoomDTO);
+        String join_url = zoom_url.getJoin_url();
+
+        if (join_url.contains("https://us05web.zoom.us/j")) {
+            return join_url;
+        }else {
+            return "";
+        }
     }
 
 }

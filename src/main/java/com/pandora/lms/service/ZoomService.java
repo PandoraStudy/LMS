@@ -17,4 +17,8 @@ public interface ZoomService {
     void join_url(ZoomDTO zoomDTO);
 
     void meeting_msg(ZoomDTO zoomDTO);
+
+    int zoom_exit(ZoomDTO zoomDTO);
+
+    ZoomDTO zoom_join(ZoomDTO zoomDTO);
 }

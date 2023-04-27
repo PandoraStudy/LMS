@@ -27,35 +27,10 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
 
-<script>
 
-    function zoom_exit(){
-        $(function() {
-            $.ajax({
-                url: '/zoom_exit',
-                type: 'post',
-                success : function(result) {
-                    if(result = 1){
-                        window.close();
-                    }else{
-                        alert("요청 실패 관리자 문의 바람.");
-                        return false;
-                    }
-                },
-                error : function(xhr) {
-                    alert(xhr);
-                    alert("요청 실패 재시도 바람.");
-                }
-            });
-        });
-    };
-
-
-
-</script>
     <style>
         .all_place{
-            width: 1350px;
+            width: 1540px;
             height: 796px;
             float: left;
         }
@@ -67,36 +42,65 @@
         }
 
         .check_place{
-            width:200px;
+            width:390px;
             height: 796px;
             float: left;
-            text-align: center;
-            background-color: black;
         }
 
-        .exit_btn{
-            margin-top: 10px;
-            width: 150px;
-            height: 40px;
-            border-radius: 5px;
-            background-color: #007bff;
-            border: none;
-            color: white;
+        .save_btn{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
         }
+
+        .check_box{
+            margin-left: 11px;
+        }
+
     </style>
 </head>
 <body>
 <div class="all_place">
 
     <div class="zoom_place"><%--줌 수업 공간--%>
-    <iframe  src="${Join_URL}" width="1150" height="796"></iframe>
-    </div>
-    <div class="check_place">
-
-        <input onclick="zoom_exit()" type="button" value="수업 종료" class="exit_btn">
-
+    <iframe src="${Join_URL}" width="1150" height="796"></iframe>
     </div>
 
+    <div class="check_place"><%--출석 체크 공간--%>
+        <div class="check">
+                <div class="card shadow mt-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">출석체크</h6>
+                    </div>
+                    <div style="margin:5px; padding:0; height: 700px;" class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <%--본문 내용 작성하는 부분--%>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>이름</th>
+                                        <th>출석</th>
+                                        <th>지각</th>
+                                        <th>결석</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>이민규</th>
+                                        <th><input class="check_box" type="checkbox"></th>
+                                        <th><input class="check_box" type="checkbox"></th>
+                                        <th><input class="check_box" type="checkbox"></th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            <button class="btn btn-primary save_btn">저장하기</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        </div>
+    </div>
 
 </div>
     <!-- Bootstrap core JavaScript-->

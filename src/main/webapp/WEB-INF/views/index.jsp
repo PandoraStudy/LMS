@@ -32,7 +32,7 @@
     <%-- ==================full캘린더================== --%>
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth'
@@ -51,7 +51,7 @@
                     success : function(result) {
                         if(result != ""){
                             alert("인증에 성공했습니다.");
-                            window.open("/zoom_connect?sbjct_no=" + result, "Zoom", "width=1400, height=700");
+                            window.open("/zoom_connect?sbjct_no=" + result, "Zoom", "width=1350, height=790");
                         }else{
                             alert("인증실패 관리자 문의 바람.");
                             return false;
@@ -64,10 +64,32 @@
                 });
             });
 
-            function Zoom_Meeting(){
-                window.open("${Join_URL}","${Join_URL}","width=1100, height=800");
-            }
         }
+
+    function Zoom_Join(){
+        $(function() {
+            $.ajax({
+                url: '/zoom_join',
+                type: 'post',
+                data: { "sbjct_no" : 1 },
+                dataType: 'text',
+                success : function(result) {
+                    if(result != ""){
+                        alert(성공);
+
+                    }else{
+                        alert("수업 시작 안함");
+                        return false;
+                    }
+                },
+                error : function(xhr) {
+                    alert(xhr);
+                    alert("요청 실패 재시도 바람.");
+                }
+            });
+        });
+
+    }
 
     </script>
     <style>
@@ -172,7 +194,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-+------------------------------------------
                         </div>
                         <!-- 학사일정 -->
                         <div class="schedule_card mb-4" style="margin-top:230px;">
@@ -187,6 +209,9 @@
                                         <div>
 
                                             <button onclick="Zoom()" class="btn btn-primary">줌 수업 시작하기</button>
+
+
+                                            <button onclick="Zoom_Join()" class="btn btn-google">줌 수업 참여하기</button>
 
                                         </div>
                                     </div>

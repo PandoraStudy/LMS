@@ -5,7 +5,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -33,5 +32,16 @@ public class ZoomDAO {
             stdt_list.setLogin_id(zoomDTO.getLogin_id());
             sqlSession.insert("zoom.student_msg", stdt_list);
         }
+    }
+
+    public int zoom_exit(ZoomDTO zoomDTO) {
+
+        return sqlSession.update("zoom.zoom_exit",zoomDTO);
+    }
+
+    public ZoomDTO zoom_join(ZoomDTO zoomDTO) {
+
+
+        return sqlSession.selectOne("zoom.zoom_join",zoomDTO);
     }
 }
