@@ -35,18 +35,12 @@
         font-size: 12px;
     }
 
-    .table {
-        width: 600px;
-        box-sizing: border-box;
-    }
+    /*.table {*/
+    /*    width: 600px;*/
+    /*    box-sizing: border-box;*/
+    /*}*/
 
-    .table-header {
-        width: 100px;
-    }
-
-    .msgBox_board {
-        width: 600px;
-    }
+    /*.msgBox_board { width: 600px; }*/
 
     .msgBox_detail {
         display: inline-block;
@@ -57,7 +51,7 @@
 
     .msg_detail {
         display: inline-block;
-        width: 600px;
+        width: 100%;
         height: 42px;
         line-height: 42px;
         font-size: 15px;
@@ -68,7 +62,7 @@
 
     .msg_content {
         font-size: 20px;
-        width: 600px;
+        width: 100%;
         height: 550px;
         /* 	border-radius: 5px; */
         box-sizing: border-box;
@@ -77,15 +71,14 @@
         background-color: #fafafa;
     }
 
-    .pagingBox {
-        width: 600px;
-    }
+    .pagingBox { width: 600px; }
 
     .write_btn {
         width: 30px;
         background-color: #ff3d3d;
         height: 30px;
     }
+    .title{ text-align: left; }
 
 </style>
 <script>
@@ -190,12 +183,12 @@
 <%--                        <h1 style="width:630px;">쪽지함</h1>--%>
                         <div class="container0">
                             <div class="msgBox_board">
-                                <table class="table">
+                                <table class="table" style="color:black;">
                                     <tr class="table-header">
                                         <th class="col-1">번호</th>
                                         <th class="col-2">보낸사람</th>
                                         <th class="col-3">제목</th>
-                                        <th class="col-3">날짜</th>
+                                        <th class="col-2">날짜</th>
                                         <th class="col-1">읽음</th>
                                         <th class="col-1">삭제</th>
                                     </tr>
@@ -274,17 +267,17 @@
 </div> <!-- End of Page Wrapper -->
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
+<%--<script src="vendor/jquery/jquery.min.js"></script>--%>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<%--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>--%>
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
 <!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
+<%--<script src="vendor/chart.js/Chart.min.js"></script>--%>
 <!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+<%--<script src="js/demo/chart-area-demo.js"></script>--%>
+<%--<script src="js/demo/chart-pie-demo.js"></script>--%>
 
 </body>
 </html>
