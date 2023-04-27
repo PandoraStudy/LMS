@@ -13,7 +13,7 @@
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
-    <script type="text/javascript" src="/js/search.js"></script>
+<%--    <script type="text/javascript" src="/js/search.js"></script>--%>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -250,7 +250,7 @@
                                         <select name="searchType">
                                             <option value="title">제목</option>
                                             <option value="writer"
-                                                    <c:if test='${searchType eq "writer"}'>selected</c:if>>글쓴이
+                                                    <c:if test='${searchType eq "writer"}'>selected</c:if>>보낸사람
                                             </option>
                                         </select> <input type="text" name="searchValue" value="${searchValue }">
                                         <button class="search_btn">검색</button>

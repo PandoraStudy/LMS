@@ -12,7 +12,7 @@
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
-    <script type="text/javascript" src="/js/search.js"></script>
+<%--    <script type="text/javascript" src="/js/search.js"></script>--%>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,11 +87,10 @@
                     <!--수정할 부분 시작-->
                     <div></div>
                     <div>
-                        <form action="" method="get" onsubmit="return search()">
+                        <form action="" method="get">
                             <select name="searchType" id="searchType" style="height:40px;">
-                                <option value="none">선택</option>
-                                <option value="title" <c:if test='${ pages.searchType eq "title"}'>selected</c:if>>제목</option>
-                                <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>글쓴이</option>
+                                <option value="title">제목</option>
+<%--                                <option value="writer" <c:if test='${ pages.searchType eq "writer"}'>selected</c:if>>글쓴이</option>--%>
                             </select>
                             <input type="text" name="searchValue" id="searchValue" style="width:300px; height:40px; border-radius: 5px;" value="${pages.searchValue }">
                             <button class="btn btn-primary" style="margin-top:-5px;">
@@ -103,22 +102,24 @@
                 <div>
                     <table class="table">
                         <tr class="table_header">
-                            <td class="col-2" style="text-align: center;">번호</td>
-                            <td class="col-6" style="text-align: center;">제목</td>
-                            <td class="col-1" style="text-align: center;">작성자</td>
+                            <td class="col-1" style="text-align: center;">등록일</td>
+<%--                            <td class="col-2" style="text-align: center;">번호</td>--%>
+                            <td class="col-5" style="text-align: center;">제목</td>
+<%--                            <td class="col-1" style="text-align: center;">작성자</td>--%>
                             <td class="col-1" style="text-align: center;">조회수</td>
-                            <td class="col-2" style="text-align: center;">등록일</td>
+
                         </tr>
 
                         <c:forEach var="notice" items="${list }">
                             <tr class="none">
-                                <td>${notice.rowNum }</td>
+                                <td>${notice.notice_date }</td>
+<%--                                <td>${notice.rowNum }</td>--%>
                                 <td class="title text-truncate" style="max-width:1px; text-align: left;">
                                     <a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
                                 </td>
-                                <td>${notice.admin_id }</td>
+<%--                                <td>${notice.admin_id }</td>--%>
                                 <td>${notice.notice_read }</td>
-                                <td>${notice.notice_date }</td>
+
                             </tr>
                         </c:forEach>
                     </table>

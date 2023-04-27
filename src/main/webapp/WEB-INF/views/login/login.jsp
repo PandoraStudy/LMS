@@ -60,11 +60,11 @@
 					</span>
                 <span class="login100-form-title p-b-20">
 						<i class="zmdi zmdi-font"></i>
-                    <label style="font-size:20px;">
+                    <label style="font-size:20px; cursor:pointer;">
                         <input type="radio" name="division" value="0010" checked >
                         <span>student</span>
                     </label> &nbsp;&nbsp;
-                    <label style="font-size:20px;">
+                    <label style="font-size:20px; cursor:pointer;">
                         <input type="radio" name="division" value="0020">
                         <span>professor</span>
                     </label>

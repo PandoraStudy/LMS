@@ -67,11 +67,11 @@
                         <div class="detailTop_item">${noticeDetail.notice_date }</div>
                     </div>
                     <div class="detailMid"><br>${noticeDetail.notice_content }<br><br></div><br><br>
-                    <div style="display: inline-block; ">
-                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>이전글</a>
+                    <div style="display: inline-block;">
+                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>다음글</a>
                     </div>
                     <div style="display: inline-block; float:right;">
-                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}">다음글<i class="xi-angle-right xi-x"></i></a>
+                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}">이전글<i class="xi-angle-right xi-x"></i></a>
                     </div>
                     <br><br><br>
                     <div>

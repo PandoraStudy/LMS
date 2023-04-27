@@ -53,6 +53,7 @@
         padding:0px 5px 0px 5px;
         height:30px;
         line-height: 30px;
+        color:black;
     }
     #messageBox{
         overflow-y:auto;

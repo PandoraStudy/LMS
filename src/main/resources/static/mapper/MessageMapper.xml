@@ -17,7 +17,7 @@
 
     <select id="msgList"  parameterType="HashMap"  resultType="HashMap">
         SELECT * , row_number() over(ORDER BY message_no) as rowNum
-        FROM message
+        FROM messageview
         WHERE get_user_id = #{ user_id }
         <if test="searchType != null">
             AND
