@@ -142,10 +142,9 @@
                                             <td class='text-center'>${i.KORN_FLNM }</td>
                                             <td>
                                                 <div style='height:20px; line-height: 20px;'>&nbsp;
-                                                    <span class='float-right' style='height:20px; margin-right:45px;'>진도율%</span>
                                                 </div>
-                                                <div class='progress mb-4' style='height:20px; margin:5px 45px 24px 0;'>
-                                                    <div class='progress-bar bg-success' role='progressbar' style='height:20px;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+                                                <div class='progress mb-4' style='height:20px; margin:5px 30px 25px 45px;'>
+                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: 50%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
                                                 </div>
                                 </div>
                                 </td>
@@ -177,12 +176,7 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript -->
-<script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript -->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Custom scripts for all pages -->
 <script src="js/sb-admin-2.min.js"></script>
 </body>
 </html>
