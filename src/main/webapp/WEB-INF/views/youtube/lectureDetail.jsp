@@ -88,7 +88,6 @@
                         console.log("[getPlayTime] " + playTime + "초");
                         play_time = playTime;
 
-
                         curr_time = Math.floor(player.getCurrentTime());
 
                         console.log("[멈춰야할 시간] : " + (lect_max_tm - 10));
@@ -101,14 +100,14 @@
                             return false;
                         }
 
-                        /* 실시간 재생 시간과 저장된 재생 시간의 차이가 5보다 클 경우 저장된 위치로 옮깁니다. */
-                        if ((curr_time - play_time) > 5) {
+                        /* 실시간 재생 시간과 저장된 재생 시간의 차이가 3보다 클 경우 저장된 위치로 옮깁니다. */
+                        if ((curr_time - play_time) > 3) {
                             player.seekTo(play_time);
                         }
 
                         /* 초마다 재생 시간을 검사합니다 */
                         if (timer == null) {
-                            timer = setInterval(checkVideoTime, 1000);
+                            timer = setInterval(checkVideoTime(play_time), 1000);
                         }
                     },
                     error: function () {
@@ -168,7 +167,7 @@
     /* 초 단위로 재생 위치를 알아옵니다. */
     var count = 0;
 
-    function checkVideoTime() {
+    function checkVideoTime(play_time) {
         count += 1;
         curr_time = Math.floor(player.getCurrentTime());
 
@@ -203,25 +202,6 @@
                 playTimeSave();
             }
         }
-    }
-
-    /* 학생의 해당되는 강의에 저장돤 재생 시간을 가져옵니다. */
-    function getPlayTime() {
-        $(function () {
-            $.ajax({
-                type: "POST",
-                url: "/getPlayTime",
-                data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
-                dataType: "text",
-                success: function (playTime) {
-                    console.log("[getPlayTime] " + playTime + "초");
-                    play_time = playTime;
-                },
-                error: function () {
-                    alert("저장된 재생 시간을 불러오지 못했습니다.");
-                }
-            });
-        });
     }
 
     /* 재생 시간을 저장합니다. */
