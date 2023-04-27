@@ -86,18 +86,17 @@ $(document).ready(function() {
       }
     });
   });
-	$("#inYou_table").on("click", "tbody tr", function() {
+
+  $("#inYou_table").on("click", "tbody tr", function() {
 		  // 클릭한 행에서 on_LECT_URL 가져오기
 		  var on_LECT_URL = $(this).find(".on_LECT_URL").val();
-  // inYou_table의 tbody에서 tr 클릭 이벤트 등록
-  $("#inYou_table").on("click", "tbody tr", function() {
 
-    // 클릭한 행에서 on_LECT_URL 값을 가져오기
-    var on_LECT_URL = $(this).find(".on_LECT_URL").val();
+
+    
     var CRCLM_NM = $(this).find(".CRCLM_NM").text();
     var CRCLM_CYCL = $(this).find(".CRCLM_CYCL").text();
     var SBJCT_NM = $(this).find(".SBJCT_NM").text();
-    //var major = $(this).find(".필수").val();
+    //var major = $(this).find(".필수").val()	;
     var ON_LECT_NM = $(this).find(".ON_LECT_NM").text();
     var KORN_FLNM = $(this).find(".KORN_FLNM").text();
     var LECT_YMD = $(this).find(".LECT_YMD").text();
@@ -105,6 +104,7 @@ $(document).ready(function() {
 
     // 가져온 값을 #on_LECT_URL input 엘리먼트에 설정하기
     $("#on_LECT_URL").val(on_LECT_URL);
+    
     $('#years').val(CRCLM_CYCL);
     $('#semesterName').val(CRCLM_NM);
     $('#departmentName').val(CRCLM_NM);
@@ -116,9 +116,7 @@ $(document).ready(function() {
     $('#lectime').val(ON_LECT_TM);
     $('#on_LECT_URL').val(on_LECT_URL);
   });
-		  // 추가 데이터를 해당 입력 요소로 설정
-		  $("#on_LECT_URL").val(on_LECT_URL);
-		});
+
 });
 </script>
 <script type="text/javascript">
