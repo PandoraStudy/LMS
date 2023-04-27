@@ -577,14 +577,14 @@ $(document).ready( function() {
 		alert("li_step3");
 	    e.stopPropagation();
 	});
-
+});
 //1번탭 활성화
 $(document).ready( function() {
 	$("#tabs1, #li_content1").click(function(e){
 	    $("#main_container").css("display","block");
 	    $("#tabs1").attr("checked", "checked");
 	});
-
+});
 //test include
 // $(document).ready( function() {
 // 	$("#studentList").click(function(e){
