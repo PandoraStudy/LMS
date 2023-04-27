@@ -78,28 +78,44 @@
 
         /* 동영상 재생 상태 */
         if (event.data === YT.PlayerState.PLAYING) {
-            getPlayTime();
-            curr_time = Math.floor(player.getCurrentTime());
+            $(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/getPlayTime",
+                    data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                    dataType: "text",
+                    success: function (playTime) {
+                        console.log("[getPlayTime] " + playTime + "초");
+                        play_time = playTime;
 
-            console.log("[멈춰야할 시간] : " + (lect_max_tm - 10));
 
-            /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다.  */
-            if(curr_time == (lect_max_tm - 10)) {
-                player.stopVideo();
-                alert("강의를 수강하셨습니다.");
+                        curr_time = Math.floor(player.getCurrentTime());
 
-                return false;
-            }
+                        console.log("[멈춰야할 시간] : " + (lect_max_tm - 10));
 
-            /* 실시간 재생 시간과 저장된 재생 시간의 차이가 5보다 클 경우 저장된 위치로 옮깁니다. */
-            if ((curr_time - play_time) > 5) {
-                player.seekTo(play_time);
-            }
+                        /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다.  */
+                        if(curr_time == (lect_max_tm - 10)) {
+                            player.stopVideo();
+                            alert("강의를 수강하셨습니다.");
 
-            /* 초마다 재생 시간을 검사합니다 */
-            if (timer == null) {
-                timer = setInterval(checkVideoTime, 1000);
-            }
+                            return false;
+                        }
+
+                        /* 실시간 재생 시간과 저장된 재생 시간의 차이가 5보다 클 경우 저장된 위치로 옮깁니다. */
+                        if ((curr_time - play_time) > 5) {
+                            player.seekTo(play_time);
+                        }
+
+                        /* 초마다 재생 시간을 검사합니다 */
+                        if (timer == null) {
+                            timer = setInterval(checkVideoTime, 1000);
+                        }
+                    },
+                    error: function () {
+                        alert("저장된 재생 시간을 불러오지 못했습니다.");
+                    }
+                });
+            });
         }
 
         /* 동영상 일시정지 상태 */
