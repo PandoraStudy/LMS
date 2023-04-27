@@ -22,7 +22,7 @@
         <if test="searchType != null">
             AND
             <choose>
-                <when test="searchType == 'title'">notice_title</when>
+                <when test="searchType == 'title'">message_title</when>
                 <when test="searchType == 'writer'">post_user_id</when>
             </choose>
             LIKE CONCAT('%', #{searchValue }, '%')
@@ -31,10 +31,10 @@
         LIMIT #{startPage}, 10
     </select>
     <update id="msgRead" parameterType="String">
-        UPDATE message SET read_or_not = 1 WHERE message_no = '${msgNo}'
+        UPDATE message SET read_or_not = 1 WHERE message_no = #{msgNo}
     </update>
     <delete id="msgDel" parameterType="String">
-        DELETE FROM message WHERE message_no = '${msgNo}'
+        DELETE FROM message WHERE message_no = #{msgNo}
     </delete>
     <select id="msgNew" parameterType="String" resultType="Integer">
         SELECT COUNT(read_or_not) as msg FROM message WHERE get_user_id = '${ userId }' AND read_or_not = 0

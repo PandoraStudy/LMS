@@ -129,6 +129,7 @@
                     data: {'msgNo': del}
                 }).done(function (data) {
                     document.location.reload();
+                    $(".table").load(location.href+" .table");
                 }).fail(function (xhr, status, error) {
                     alert("실패");
                 });
@@ -176,13 +177,17 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
+            <div style="background-color: #2a96a5; width:100%; height:200px;">
+                <div style="width:1200px;height:200px; margin:0 auto; text-align: center;">
+                    <h1 class="mb-0" style="width:1200px;height:200px;font-weight:bold; color:white; line-height: 200px;">쪽지함</h1>
+                </div>
+            </div>
             <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:100px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4"
                      style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-
                     <div class="content">
-                        <h1 style="width:630px;">쪽지함</h1>
+<%--                        <h1 style="width:630px;">쪽지함</h1>--%>
                         <div class="container0">
                             <div class="msgBox_board">
                                 <table class="table">

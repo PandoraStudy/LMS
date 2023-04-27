@@ -14,7 +14,7 @@
         $(function(){
             $("#alarm").text(event.data);
             $("#alarm").fadeIn(3000,'linear');
-            $("#alarm").fadeOut(3000,'linear');
+            $("#alarm").delay(1000).fadeOut(3000,'linear');
         });
     };
     ws.onclose = function(event) {

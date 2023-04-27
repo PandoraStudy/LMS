@@ -40,8 +40,8 @@
     </select>
 
     <insert id="noticeWrite" parameterType="HashMap">
-        INSERT INTO NOTICE(admin_id,notice_title, notice_content)
-        VALUES('ADMIN', #{notice_title}, #{notice_content})
+        INSERT INTO NOTICE(admin_id,notice_title, notice_content,category)
+        VALUES('ADMIN', #{notice_title}, #{notice_content},1)
     </insert>
 
     <update id="noticeUpdate" parameterType="HashMap">
