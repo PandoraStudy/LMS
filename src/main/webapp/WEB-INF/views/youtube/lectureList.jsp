@@ -209,8 +209,8 @@
                                                     <span>${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}"><div style="margin-right: 10px;">진행률${lect.FILE_SN_SEQ}</div>
-                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'><div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${lect.LECT_PRGRS_RT}%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div></div></c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
+                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}"><div style="margin-right: 10px;">진행</div>
+                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'><div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: <c:choose><c:when test="${90 lt lect.LECT_PRGRS_RT}">100%;</c:when><c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise></c:choose>' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div></div></c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,17 +269,8 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<script src="vendor/chart.js/Chart.min.js"></script>
-<!-- Page level custom scripts -->
-<script src="js/demo/chart-area-demo.js"></script>
-<script src="js/demo/chart-pie-demo.js"></script>
+
 </body>
 </html>

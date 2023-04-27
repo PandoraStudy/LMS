@@ -107,6 +107,16 @@ public class YouTubeController {
         userInfo.put("appl_no", session.getAttribute("appl_no"));
         Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.lectDetail", userInfo);
 
+        int seconds = (Integer) lectureInfo.get("LAST_PLAY_TM");
+        int minutes = seconds / 60;
+        int remainingSeconds = seconds % 60;
+        String LAST_PLAY_TM2 = minutes + "분 " + remainingSeconds + "초";
+
+        lectureInfo.replace("LECT_PRGRS_RT", Math.ceil((Float) lectureInfo.get("LECT_PRGRS_RT")) );
+        lectureInfo.put("LAST_PLAY_TM2", LAST_PLAY_TM2);
+
+        System.out.println(lectureInfo);
+
         view.addObject("lectureInfo", lectureInfo);
 
         return view;
@@ -128,6 +138,21 @@ public class YouTubeController {
 
         return msg;
     }
+
+    @PostMapping("/applATNDInsert")
+    @ResponseBody
+    public String applATNDInsert(@RequestParam Map<String, Object> userInfo, HttpSession session) {
+        if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
+            return "fail";
+        }
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
+
+        Map<String, Object> lectInfo = sqlSession.selectOne("youtube.getLectInfo", userInfo);
+        int result = sqlSession.insert("youtube.applATNDInsert", lectInfo);
+
+        return "success";
+    }
+
 
     @GetMapping("/uploadVideo")
     public ModelAndView uploadVideo() throws Exception {
