@@ -88,6 +88,7 @@
                         console.log("[getPlayTime] " + playTime + "초");
                         play_time = playTime;
 
+
                         curr_time = Math.floor(player.getCurrentTime());
 
                         console.log("[멈춰야할 시간] : " + (lect_max_tm - 10));
@@ -107,7 +108,7 @@
 
                         /* 초마다 재생 시간을 검사합니다 */
                         if (timer == null) {
-                            timer = setInterval(checkVideoTime(play_time), 1000);
+                            timer = setInterval(checkVideoTime, 1000);
                         }
                     },
                     error: function () {
@@ -167,7 +168,7 @@
     /* 초 단위로 재생 위치를 알아옵니다. */
     var count = 0;
 
-    function checkVideoTime(play_time) {
+    function checkVideoTime() {
         count += 1;
         curr_time = Math.floor(player.getCurrentTime());
 
@@ -194,14 +195,31 @@
             return false;
         }
 
-        /* 재생 위치를 5초마다 저장합니다. */
-        if ((count % 5) == 0) {
-            /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
-            if (curr_time > play_time) {
-                console.log("5초마다 저장")
-                playTimeSave();
-            }
-        }
+        $(function () {
+            $.ajax({
+                type: "POST",
+                url: "/getPlayTime",
+                data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                dataType: "text",
+                success: function (playTime) {
+                    /* 재생 위치를 5초마다 저장합니다. */
+                    if ((count % 5) == 0) {
+                        /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
+                        if (curr_time > playTime) {
+                            if ((curr_time - play_time) <= 5) {
+                                console.log("5초마다 저장")
+                                playTimeSave();
+                            }
+                        }
+                    }
+                },
+                error: function () {
+                    alert("저장된 재생 시간을 불러오지 못했습니다.");
+                }
+            });
+        });
+
+
     }
 
     /* 재생 시간을 저장합니다. */
