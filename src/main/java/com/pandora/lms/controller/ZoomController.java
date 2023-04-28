@@ -137,7 +137,7 @@ public class ZoomController {
     @ResponseBody
     public String zoom_join(@RequestParam Integer sbjct_no){
         ZoomDTO zoomDTO = new ZoomDTO();
-        ModelAndView mv = new ModelAndView("zoom_join");
+        ModelAndView mv = new ModelAndView("zoom_student");
         zoomDTO.setSbjct_no(sbjct_no);
 
 
@@ -151,5 +151,14 @@ public class ZoomController {
         }
     }
 
+    @GetMapping("/zoom_student")
+    public ModelAndView zoom_student(@RequestParam String join_url){
+        ModelAndView mv = new ModelAndView("zoom_student");
+        mv.addObject("Join_URL", join_url);
+
+
+
+        return mv;
+    }
 }
 
