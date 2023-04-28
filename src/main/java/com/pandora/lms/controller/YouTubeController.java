@@ -36,8 +36,31 @@ public class YouTubeController {
             return view;
         }
 
-        userInfo.put("appl_no", Integer.parseInt((String) session.getAttribute("appl_no")) );
-        List<Map<String, Object>> lecture = sqlSession.selectList("youtube.lecture", userInfo);
+        List<Map<String, Object>> lecture = null;
+
+        if(session.getAttribute("appl_no") != null) {
+            userInfo.put("appl_no", session.getAttribute("appl_no"));
+            lecture = sqlSession.selectList("youtube.lecture", userInfo);
+
+            for(Map<String, Object> data : lecture) {
+                Float TOTAL_LECT_CNT = Float.parseFloat(String.valueOf(data.get("TOTAL_LECT_CNT")));
+                Float APPL_ATND_CNT = Float.parseFloat(String.valueOf(data.get("APPL_ATND_CNT")));
+
+                data.replace("TOTAL_LECT_CNT", TOTAL_LECT_CNT);
+                data.replace("APPL_ATND_CNT", APPL_ATND_CNT);
+
+                if(APPL_ATND_CNT != 0) {
+                    Integer LECT_MAG = (int) ((APPL_ATND_CNT / TOTAL_LECT_CNT) * 100);
+                    data.put("LECT_MAG", LECT_MAG);
+                } else {
+                    data.put("LECT_MAG", 0);
+                }
+            }
+        } else if(session.getAttribute("instr_no") != null) {
+            userInfo.put("instr_no", session.getAttribute("instr_no"));
+            lecture = sqlSession.selectList("youtube.lecture", userInfo);
+        }
+
 
         view.addObject("lecture", lecture);
         return view;
