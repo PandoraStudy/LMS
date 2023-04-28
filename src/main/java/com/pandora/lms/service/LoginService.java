@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.pandora.lms.dao.LoginDAO;
 import com.pandora.lms.dto.LoginDTO;
 import com.pandora.lms.dto.UserInfoDto;
@@ -26,20 +27,27 @@ public class LoginService implements UserDetailsService{
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	System.out.println("메소드명 : loadUserByUsername");
         UserInfoDto user = loginDAO.findByUsername(username);
+        
         securityinfo newone = new securityinfo(user);
+        
         newone.setUserno(user.getUSER_NO());
-        int no;
+        newone.setDivision(String.valueOf(user.getUSER_GROUP_CD()));
+        newone.setUser_name(user.getKORN_FLNM());
+        newone.setUser_id(user.getUSER_ID());
+        
+        
         if(user.getUSER_GROUP_CD() == 20 ) {
-    		no = loginDAO.getINSTR(user.getUSER_NO());
+    		int no = loginDAO.getINSTR(user.getUSER_NO());
     		System.out.println("no는?"+no);
     		newone.setINSTR_NO(no);
     	} else if (user.getUSER_GROUP_CD() == 10) {
-    		no = loginDAO.getAPPL(user.getUSER_NO());
+    		int no = loginDAO.getAPPL(user.getUSER_NO());
     		System.out.println("no는?"+no);
     		newone.setAPPL_NO(no);
-    	}					
-        System.out.println("메소드명 : loadUserByUsername");
+    	}		
+        
         return newone;
     }
 

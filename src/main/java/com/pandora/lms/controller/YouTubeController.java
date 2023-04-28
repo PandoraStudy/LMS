@@ -36,7 +36,7 @@ public class YouTubeController {
             return view;
         }
 
-        userInfo.put("appl_no", Integer.parseInt((String) session.getAttribute("appl_no")) );
+        userInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lecture = sqlSession.selectList("youtube.lecture", userInfo);
 
         view.addObject("lecture", lecture);
