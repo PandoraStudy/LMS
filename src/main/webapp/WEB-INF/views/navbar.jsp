@@ -3,11 +3,8 @@
     $(function(){
        $("#alarm").hide();
     });
-
     let ws = new WebSocket("ws://172.30.1.9/noticeAlarm");
-    ws.onopen = function(event) {
-        console.log("WebSocket 열렸습니다.");
-    };
+    ws.onopen = function(event) { console.log("알림감지가 작동되고 있습니다."); };
     ws.onmessage = function(event) {
         console.log(event.data);
         // document.getElementById("alarm").text(event.data);
@@ -17,15 +14,11 @@
             $("#alarm").delay(1000).fadeOut(3000,'linear');
         });
     };
-    ws.onclose = function(event) {
-        console.log('WebSocket 연결이 닫혔습니다.');
-    };
-
+    ws.onclose = function(event) { console.log("알림감지가 꺼졌습니다."); };
 </script>
 <style>
     #alarm {
         background-color: #fafafa; /*#405dc6;*/
-        /*opacity: 0.5;*/
         border: none;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
@@ -35,7 +28,6 @@
         margin: 10px;
         position : fixed;
         bottom : 0px;
-        /*width:223px;*/
         width:300px;
         height:70px;
         text-align: center;
@@ -52,10 +44,8 @@
             <div class="logo_big_text">PANDORA</div>
             <sup class="logo_small_text">university</sup></div>
     </a>
-
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
     <!-- 학생정보 -->
     <li class="nav-item active">
         <a class="nav-link" href="index">
@@ -63,17 +53,13 @@
             <span>
                 <c:if test="${ sessionScope.id ne null }">${sessionScope.name} 님 환영합니다.</c:if>
             </span></a>
-
-
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- A 카테고리 -->
-    <div class="sidebar-heading">
-        학사
-    </div>
+    <div class="sidebar-heading">학사</div>
 
     <!-- 학사 카테고리 학교 드롭다운 -->
     <li class="nav-item">
@@ -102,10 +88,7 @@
     <hr class="sidebar-divider line">
 
     <!-- B 카테고리 -->
-    <div class="sidebar-heading">
-        추가적인 기능(이름수정필요)
-    </div>
-
+    <div class="sidebar-heading">추가적인 기능(이름수정필요)</div>
 
     <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">

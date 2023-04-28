@@ -64,8 +64,14 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
+                <div style="background-color: #2a96a5; width:100%; height:200px;">
+                    <div style="width:1200px;height:200px; margin:0 auto;">
+                        <h1 class="mb-0" style="font-weight:bold; color:white; padding:50px 0px 0px 20px;">공지사항</h1><br>
+                        <h5 style="color:white; margin-left:20px;">Pandora 대학에 다양한 소식을 알려드립니다.</h5>
+                    </div>
+                </div>
             <div class="container-fluid" style="width:1100px; height:750px;">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:100px; text-align: center;">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
                     <h1 class="mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
                         <c:choose>

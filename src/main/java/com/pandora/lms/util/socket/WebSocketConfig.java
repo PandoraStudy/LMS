@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler( new SocketHandler(), "/user");
+        registry.addHandler( new ChattingHandler(), "/user");
 
         registry.addHandler(AlarmHandler(), "/noticeAlarm");
         //.setAllowedOrigins("*")      //cors 설정   cors 허용시켜줌
