@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
-//    private final LoginService loginService;
+    //private final LoginService loginService;
     @GetMapping("/login")
     public String login(HttpSession session){
     	System.out.println("Controller - GET - login");
@@ -23,6 +23,7 @@ public class LoginController {
     		return "/index";
     	}
          return "/login/login";
+
     }
 //
 //    @PostMapping("/login")

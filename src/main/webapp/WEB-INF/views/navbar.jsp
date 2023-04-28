@@ -3,11 +3,8 @@
     $(function(){
        $("#alarm").hide();
     });
-
     let ws = new WebSocket("ws://172.30.1.9/noticeAlarm");
-    ws.onopen = function(event) {
-        console.log("WebSocket 열렸습니다.");
-    };
+    ws.onopen = function(event) { console.log("알림감지가 작동되고 있습니다."); };
     ws.onmessage = function(event) {
         console.log(event.data);
         // document.getElementById("alarm").text(event.data);
@@ -17,15 +14,11 @@
             $("#alarm").delay(1000).fadeOut(3000,'linear');
         });
     };
-    ws.onclose = function(event) {
-        console.log('WebSocket 연결이 닫혔습니다.');
-    };
-
+    ws.onclose = function(event) { console.log("알림감지가 꺼졌습니다."); };
 </script>
 <style>
     #alarm {
         background-color: #fafafa; /*#405dc6;*/
-        /*opacity: 0.5;*/
         border: none;
         border-radius: 5px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
@@ -35,7 +28,6 @@
         margin: 10px;
         position : fixed;
         bottom : 0px;
-        /*width:223px;*/
         width:300px;
         height:70px;
         text-align: center;
@@ -50,31 +42,22 @@
         <div class="logo_img"><img src="/img/pandora_logo.png"></div>
         <div class="sidebar-brand-text mx-3">
             <div class="logo_big_text">PANDORA</div>
-            <sup class="logo_small_text">university</sup></div>
+            <sup class="logo_small_text">university</sup>
+        </div>
     </a>
-
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
-
     <!-- 학생정보 -->
     <li class="nav-item active">
         <a class="nav-link" href="index">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>
-                <c:if test="${ sessionScope.id ne null }">${sessionScope.name} 님 환영합니다.</c:if>
-            </span></a>
-
-
+            <span><c:if test="${ sessionScope.id ne null }">${sessionScope.name} 님 환영합니다.</c:if></span>
+        </a>
     </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
-
     <!-- A 카테고리 -->
-    <div class="sidebar-heading">
-        학사
-    </div>
-
+    <div class="sidebar-heading">학사</div>
     <!-- 학사 카테고리 학교 드롭다운 -->
     <li class="nav-item">
         <a style="height: 40px;" class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -89,7 +72,6 @@
             </div>
         </div>
     </li>
-
     <!-- 학사 카테고리 내 강의실 탭 -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="/lecture">
@@ -102,25 +84,21 @@
     <hr class="sidebar-divider line">
 
     <!-- B 카테고리 -->
-    <div class="sidebar-heading">
-        추가적인 기능(이름수정필요)
-    </div>
-
-
+    <div class="sidebar-heading">추가적인 기능(이름수정필요)</div>
     <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">
         <a style="height: 40px;" class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>캘린더</span></a>
+            <span>캘린더</span>
+        </a>
     </li>
-
     <!-- C 부분2 -->
     <li class="nav-item">
         <a class="nav-link" href="/uploadVideo">
             <i class="fas fa-fw fa-table"></i>
-            <span>동영상 업로드</span></a>
+            <span>동영상 업로드</span>
+        </a>
     </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
@@ -129,12 +107,7 @@
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
 
-    <!-- 사이드바 메시지 -->
-    <%--<div class="sidebar-card d-none d-lg-flex">
-        <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-        <p class="text-center mb-2"><strong>로켓트!</strong> 날라가유~ 두번 날라가유~</p>
-        <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">응애 나 애기 밍규</a>
-    </div>--%>
+    <!-- Alarm-->
     <div id="alarm"></div>
 </ul>
 <!-- End of Sidebar -->

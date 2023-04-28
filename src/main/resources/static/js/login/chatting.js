@@ -24,7 +24,6 @@
                 }else if(data_name !==name){
                     $("#messageBox").append(
                         "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+data_name+"</div>"
-
                     );
                     if(data_content !== "") {
                         $("#messageBox").append(
@@ -36,7 +35,11 @@
             }
         } catch (err) { console.log(err); }
     };
-    wsmsg.onclose = function(event) { console.log('채팅이 닫혔습니다.'); };
-    function disconnect(){ wsmsg.close(); }
+    wsmsg.onclose = function(event) {
+        $("#messageBox").append(
+            "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+name+"님이 나가셨습니다.</div>"
+        );
+        console.log('채팅이 닫혔습니다.'); };
+
 
 

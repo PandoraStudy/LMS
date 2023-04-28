@@ -10,16 +10,13 @@
 <style>
 </style>
 <script>
-
     $(function(){
-// 		$("#member_name").change(function(){
+
         $("#id_check").click(function() {
             $.ajax({
                 url : "/messageIdCheck", //데이터를 전송할 url
                 type : "POST",
-                data : {
-                    'member_name' : $("#member_name").val()
-                }, //서버에 전송할 데이터, key/value형태의 객체
+                data : { 'member_name' : $("#member_name").val() }, //서버에 전송할 데이터, key/value형태의 객체
                 dataType : "json",
                 success : function(data) {
                     if(data==1){
@@ -27,18 +24,11 @@
                         $("#id_check").attr("disabled","disabled");
                         $("#member_name").attr("readonly","readonly");
                         $("#member_name").css("background-color", "#e2e2e2");
-                    }else{
-                        alert("닉네임을 확인해주세요");
-                    }
+                    }else alert("닉네임을 확인해주세요");
                 },
-                error : function(xhr, status, error) {
-                    alert("실패");
-                }
+                error : function(xhr, status, error) { alert("error"); }
             });
-
-// 			});
         });
-
     });
 
     function null_ck(){
@@ -46,12 +36,10 @@
         let msg_title = document.getElementById("msg_title");
         let msg_content = document.getElementById("msg_content");
 
-        if(member_name.value == ""){ alert("닉네임을 확인해주세요"); return false; }
-        if(msg_title.value == ""){ alert("제목을 입력해주세요"); return false; }
-        if(msg_content.value == ""){ alert("내용을 입력해주세요"); return false; }
-        if(member_name.getAttribute("readonly") != "readonly"){ alert("ID를 확인해주세요"); return false; }
-
-
+        if(member_name.value == "") alert("닉네임을 확인해주세요"); return false;
+        if(msg_title.value == "") alert("제목을 입력해주세요"); return false;
+        if(msg_content.value == "") alert("내용을 입력해주세요"); return false;
+        if(member_name.getAttribute("readonly") != "readonly") alert("ID를 확인해주세요"); return false;
     }
 </script>
 <body>

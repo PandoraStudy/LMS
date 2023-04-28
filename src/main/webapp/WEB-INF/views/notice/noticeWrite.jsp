@@ -46,13 +46,11 @@
             writeContent.focus();
             return false;
         }
-
     }
 </script>
 <style>
 </style>
 <body id="page-top">
-
 <!-- Page Wrapper -->
 <div id="wrapper">
     <%-- 네비게이션 바 --%>
@@ -64,8 +62,14 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
-            <div class="container-fluid" style="width:1100px; height:750px;">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:100px; text-align: center;">
+                <div style="background-color: #2a96a5; width:100%; height:200px;">
+                    <div style="width:1200px;height:200px; margin:0 auto;">
+                        <h1 class="mb-0" style="font-weight:bold; color:white; padding:50px 0px 0px 20px;">공지사항</h1><br>
+                        <h5 style="color:white; margin-left:20px;">Pandora 대학에 다양한 소식을 알려드립니다.</h5>
+                    </div>
+                </div>
+            <div class="container-fluid" style="width:1200px; height:750px;">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
                     <h1 class="mb-0 text-gray-800 text-truncate" style="font-weight:bold;">
                         <c:choose>
@@ -73,47 +77,37 @@
                             <c:otherwise> Write </c:otherwise>
                         </c:choose>
                     </h1>
-                    <div>
-                        <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
-                    </div><!--search-->
+                    <div><button class="detailBtn boardList" onclick="location.href='/notice'">목록</button></div>
                 </div>
                 <div class="writeBox">
                     <form action=
                     <c:choose>
-                            <c:when test="${noticeDetail.rowNum ne null }">"/noticeWrite?rowNum=${ noticeDetail.rowNum }&totalCnt=${ totalCnt }"</c:when>
-                            <c:otherwise>"/noticeWrite"</c:otherwise>
+                        <c:when test="${noticeDetail.rowNum ne null }">"/noticeWrite?rowNum=${ noticeDetail.rowNum }&totalCnt=${ totalCnt }"</c:when>
+                        <c:otherwise>"/noticeWrite"</c:otherwise>
                     </c:choose>
                     method="post" onsubmit="return check()" enctype="multipart/form-data">
-                    <input type="text" name="writeTitle" id="writeTitle" class="writeTitle" placeholder="제목" maxlength="100" <c:if test="${noticeDetail.notice_title ne null }">value="${ noticeDetail.notice_title }"</c:if>>
-                    <textarea name="writeContent" id="writeContent"	class="writeContent" placeholder="내용"><c:if test="${noticeDetail.notice_content ne null }">${ noticeDetail.notice_content }</c:if></textarea>
-                    <div class="btnBox">
-                        <button class="writeBtn">
-                            <c:choose>
-                                <c:when test="${noticeDetail.rowNum ne null }">수정</c:when>
-                                <c:otherwise>저장</c:otherwise>
-                            </c:choose>
-                        </button>
-                    </div>
+                        <input type="text" name="writeTitle" id="writeTitle" class="writeTitle" placeholder="제목" maxlength="100" <c:if test="${noticeDetail.notice_title ne null }">value="${ noticeDetail.notice_title }"</c:if>>
+                        <textarea name="writeContent" id="writeContent"	class="writeContent" placeholder="내용"><c:if test="${noticeDetail.notice_content ne null }">${ noticeDetail.notice_content }</c:if></textarea>
+                        <div class="btnBox">
+                            <button class="writeBtn">
+                                <c:choose>
+                                    <c:when test="${noticeDetail.rowNum ne null }">수정</c:when>
+                                    <c:otherwise>저장</c:otherwise>
+                                </c:choose>
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <!--수정할 부분 끝-->
-            </div>
+            </div><!-- End of Container -->
         </div><!-- End of Main Content -->
         <!-- footer -->
         <%@include file="../footer.jsp" %>
     </div><!-- End of Content Wrapper -->
 </div> <!-- End of Page Wrapper -->
-<!-- Bootstrap core JavaScript-->
-<%--<script src="vendor/jquery/jquery.min.js"></script>--%>
+
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<%--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>--%>
-<!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<%--<script src="vendor/chart.js/Chart.min.js"></script>--%>
-<!-- Page level custom scripts -->
-<%--<script src="js/demo/chart-area-demo.js"></script>--%>
-<%--<script src="js/demo/chart-pie-demo.js"></script>--%>
+
 </body>
 </html>

@@ -75,8 +75,7 @@
                 dataType: 'text',
                 success : function(result) {
                     if(result != ""){
-                        alert(성공);
-
+                        window.open("/zoom_student?join_url=" + result, "Zoom_join", "width=1350, height=790");
                     }else{
                         alert("수업 시작 안함");
                         return false;

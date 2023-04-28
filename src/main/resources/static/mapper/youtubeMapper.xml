@@ -3,10 +3,42 @@
 <mapper namespace="youtube">
 
     <select id="lecture" resultType="HashMap">
-        SELECT UV.SBJCT_NO, UV.SBJCT_NM, UV.KORN_FLNM, UV.CRCLM_NM
-            FROM USER_APPL_VIEW as UV
-                WHERE UV.APPL_NO = #{appl_no }
-        ORDER BY SBJCT_NO ASC
+        <choose>
+            <when test="appl_no != null">
+                SELECT
+                    ac.SBJCT_NO,
+                    es.SBJCT_NM,
+                    ci.CRCLM_NM,
+                    (SELECT ii.KORN_FLNM  FROM INSTR_INFO ii WHERE ii.INSTR_NO = si.INSTR_NO) as 'KORN_FLNM',
+                    (SELECT COUNT(LECT_YMD) FROM LECT_TM_INFO lti WHERE lti.SBJCT_NO = ac.APPL_NO) as 'TOTAL_LECT_CNT',
+                    COUNT(aa.LECT_YMD) as 'APPL_ATND_CNT'
+                FROM APPL_CLS ac
+                    LEFT JOIN ESTBL_SBJCT es ON ac.SBJCT_NO = es.SBJCT_NO
+                    LEFT JOIN CRCLM_INFO ci ON ac.CRCLM_CD = ci.CRCLM_CD
+                    LEFT JOIN SBJCT_INSTR si ON ac.SBJCT_NO = si.SBJCT_NO
+                    LEFT JOIN APPL_ATND aa ON ac.SBJCT_NO = aa.SBJCT_NO
+                WHERE
+                    ac.APPL_NO = #{appl_no }
+                GROUP BY ac.SBJCT_NO
+                ORDER BY ac.SBJCT_NO
+            </when>
+            <when test="instr_no != null">
+                SELECT
+                    si.SBJCT_NO,
+                    es.SBJCT_NM,
+                    ci.CRCLM_NM,
+                    (SELECT ii.KORN_FLNM  FROM INSTR_INFO ii WHERE ii.INSTR_NO = si.INSTR_NO) as 'KOR_FLNM'
+                FROM SBJCT_INSTR si
+                    LEFT JOIN ESTBL_SBJCT es ON si.SBJCT_NO = es.SBJCT_NO
+                    LEFT JOIN CRCLM_INFO ci ON si.CRCLM_CD = ci.CRCLM_CD
+                    LEFT JOIN APPL_ATND aa ON si.SBJCT_NO = aa.SBJCT_NO
+                WHERE
+                    si.INSTR_NO = #{instr_no }
+                GROUP BY si.SBJCT_NO
+                ORDER BY si.SBJCT_NO
+            </when>
+        </choose>
+
     </select>
 
     <select id="lectList" parameterType="HashMap" resultType="HashMap">
@@ -15,6 +47,8 @@
             IFNULL(om.APPL_NO, lmm.APPL_NO) as 'APPL_NO',
             lti.LECT_YMD AS 'LECT_YMD',
             lti.SBJCT_MTHD_CD AS 'SBJCT_MTHD_CD',
+            lti.BGNG_CLS_CD AS 'BGNG_CLS_CD',
+            lti.END_CLS_CD AS 'END_CLS_CD',
             IFNULL(oli.ON_LECT_NM, 'ZOOM 수업') AS 'ON_LECT_NM',
             IFNULL(oli.ON_LECT_SN, lmi.MEET_ID) AS 'ON_LECT_SN',
             IFNULL(oli.ON_LECT_URL, lmi.JOIN_URL) AS 'LECT_URL',

@@ -144,7 +144,7 @@
                                                 <div style='height:20px; line-height: 20px;'>&nbsp;
                                                 </div>
                                                 <div class='progress mb-4' style='height:20px; margin:5px 30px 25px 45px;'>
-                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: 50%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${i.LECT_MAG }%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
                                                 </div>
                                 </div>
                                 </td>

@@ -96,10 +96,13 @@
             }
         });
     });
-
+    function disconnect(){
+        wsmsg.send(name+"님이 나가셨습니다.");
+        wsmsg.close();
+    }
 </script>
 <style></style>
-<body id="page-top">
+<body id="page-top" onbeforeunload="return disconnect()"><!-- 페이지이동 이벤트 감지 -->
 <!-- Page Wrapper -->
 <div id="wrapper">
     <%-- 네비게이션 바 --%>
@@ -115,34 +118,20 @@
                 <h1 style="font-weight: bold; text-align: center; width:1100px; margin-top:-40px;">Chatting Room</h1>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
-
                     <div class="BOX">
                         <div id="messageBox"></div>
-                        <input type="text" class="messageText none" placeholder="Press Enter for send message." id="msg" maxlength="200">
+                        <input type="text" class="messageText none" placeholder="Press Enter for send message.( 100 characters )" id="msg" maxlength="100">
                     </div>
-                    <!--수정할 부분 끝-->
-                </div>
-                <script></script>
-            </div>
-
+                </div><!--수정할 부분 끝-->
+            </div><!--End of container -->
         </div><!-- End of Main Content -->
         <!-- footer -->
         <%@include file="../footer.jsp" %>
     </div><!-- End of Content Wrapper -->
 </div> <!-- End of Page Wrapper -->
 
-<!-- Bootstrap core JavaScript-->
-<%--<script src="vendor/jquery/jquery.min.js"></script>--%>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<%--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>--%>
-<!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<%--<script src="vendor/chart.js/Chart.min.js"></script>--%>
-<!-- Page level custom scripts -->
-<%--<script src="js/demo/chart-area-demo.js"></script>--%>
-<%--<script src="js/demo/chart-pie-demo.js"></script>--%>
 
 </body>
 </html>

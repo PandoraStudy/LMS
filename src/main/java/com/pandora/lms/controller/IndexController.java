@@ -2,6 +2,7 @@ package com.pandora.lms.controller;
 
 import com.pandora.lms.service.NoticeService;
 import com.pandora.lms.util.TextChangeUtil;
+import com.pandora.lms.util.socket.IPGetter;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class IndexController {
 
     private final NoticeService noticeService;
     private final TextChangeUtil textChangeUtil;
+    private final IPGetter ipGetter;
   
     @GetMapping("/")
     public ModelAndView main(HttpSession session){
@@ -28,8 +30,10 @@ public class IndexController {
             for (Map<String, Object> m : list) {
                 m.put("notice_title", textChangeUtil.changeText((String) m.get("notice_title")));
             }
+            System.err.println(ipGetter.getIP());
             mv.addObject("list", list);
             mv.addObject("totalCount", totalCount);
+            mv.addObject("myIp",ipGetter.getIP());
             return mv;
    }
 
@@ -42,8 +46,10 @@ public class IndexController {
             for (Map<String, Object> m : list) {
                 m.put("notice_title", textChangeUtil.changeText((String) m.get("notice_title")));
             }
+            System.err.println(ipGetter.getIP());
             mv.addObject("list", list);
             mv.addObject("totalCount", totalCount);
+            mv.addObject("myIp",ipGetter.getIP());
             return mv;
       
     }
