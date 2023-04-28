@@ -127,10 +127,10 @@
                                     <table class="table table-sm" id="table_lecture">
                                         <thead>
                                         <tr>
-                                            <th class="col-2 text-center">수강신청 목록</th>
+                                            <th class="col-2 text-center"><c:choose><c:when test="${sessionScope.appl_no != null}">수강목록</c:when><c:otherwise>강의목록</c:otherwise></c:choose></th>
                                             <th class="col-2 text-center">학과</th>
                                             <th class="col-2 text-center">교수</th>
-                                            <th class="col-3 text-center">진도율</th>
+                                            <c:if test="${sessionScope.appl_no != null}"><th class="col-3 text-center">진도율</th></c:if>
                                         </tr>
                                         </thead>
                                         <tbody id="tb_lecture">
@@ -140,14 +140,14 @@
                                             <td class='text-center'>${i.SBJCT_NM }</td>
                                             <td class='text-center'>${i.CRCLM_NM }</td>
                                             <td class='text-center'>${i.KORN_FLNM }</td>
-                                            <td>
+                                            <c:if test="${sessionScope.appl_no != null}"><td>
                                                 <div style='height:20px; line-height: 20px;'>&nbsp;
                                                 </div>
                                                 <div class='progress mb-4' style='height:20px; margin:5px 30px 25px 45px;'>
                                                     <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: ${i.LECT_MAG }%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
                                                 </div>
-                                </div>
-                                </td>
+                                            </div>
+                                            </td></c:if>
                                 </tr>
                                 </c:forEach>
                                 </tbody>

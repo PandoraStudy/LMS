@@ -27,7 +27,7 @@
                     si.SBJCT_NO,
                     es.SBJCT_NM,
                     ci.CRCLM_NM,
-                    (SELECT ii.KORN_FLNM  FROM INSTR_INFO ii WHERE ii.INSTR_NO = si.INSTR_NO) as 'KOR_FLNM'
+                    (SELECT ii.KORN_FLNM  FROM INSTR_INFO ii WHERE ii.INSTR_NO = si.INSTR_NO) as 'KORN_FLNM'
                 FROM SBJCT_INSTR si
                     LEFT JOIN ESTBL_SBJCT es ON si.SBJCT_NO = es.SBJCT_NO
                     LEFT JOIN CRCLM_INFO ci ON si.CRCLM_CD = ci.CRCLM_CD
