@@ -34,7 +34,6 @@ public class MessageController {
         if(user_id != null) {
             pages.put("user_id",user_id);
             if (searchType != null && searchValue != null) {
-                pages.put("user_id",user_id);
                 pages.put("searchType", searchType);
                 pages.put("searchValue", searchValue);
             }

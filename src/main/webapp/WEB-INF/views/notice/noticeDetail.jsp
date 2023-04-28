@@ -6,11 +6,8 @@
     <title>Notice Detail</title>
     <link rel="shortcut icon" href="img/pandora_logo.png" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
@@ -27,24 +24,15 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="css/logo.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
 </head>
 <style></style>
 <script>
-    function noticeUpdate(rowNum) {
-        location.href = "/noticeUpdate?rowNum=" + rowNum + "&totalCnt=${totalCnt}";
-    }
-
-    function noticeDelete(rowNum) {
-        if (confirm("정말로 삭제하시겠습니까?")) {
-            location.href = "/noticeDelete?rowNum=" + rowNum;
-        }
-    }
+    function noticeUpdate(rowNum) { location.href = "/noticeUpdate?rowNum=" + rowNum + "&totalCnt=${totalCnt}"; }
+    function noticeDelete(rowNum) { if (confirm("정말로 삭제하시겠습니까?")) location.href = "/noticeDelete?rowNum=" + rowNum; }
 </script>
 <style>
 </style>
 <body id="page-top">
-
 <!-- Page Wrapper -->
 <div id="wrapper">
     <%-- 네비게이션 바 --%>
@@ -62,15 +50,15 @@
                         <h5 style="color:white; margin-left:20px;">Pandora 대학에 다양한 소식을 알려드립니다.</h5>
                     </div>
                 </div>
-            <div class="container-fluid" style="width:1100px; height:750px;">
+            <div class="container-fluid" style="width:1200px; height:750px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style="margin-top:50px; text-align: center; ">
-                    <h1 class="text-truncate" style="font-weight:bold; width:1100px; color:black;"> ${noticeDetail.notice_title } </h1>
+                    <h1 class="text-truncate" style="font-weight:bold; width:1200px; color:black;"> ${noticeDetail.notice_title } </h1>
                 </div>
                 <!--수정할 부분 시작-->
                 <div class="detailBox">
                     <div class="detailTop">
-                        <div class="detailTop_item"><input type="hidden" id="detailWriter">${noticeDetail.admin_id }</div>
-                        <div class="detailTop_item">${noticeDetail.notice_date }</div>
+                        <div class="detailTop_item"><input type="hidden" id="detailWriter">작성자 : ${noticeDetail.admin_id }&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                        <div class="detailTop_item">등록일 : ${noticeDetail.notice_date }&nbsp;&nbsp;</div>
                     </div>
                     <div class="detailMid"><br>${noticeDetail.notice_content }<br><br></div><br><br>
                     <div style="display: inline-block;">
@@ -81,30 +69,22 @@
                     </div>
                     <br><br><br>
                     <div>
-                        <%--                    <c:if test="${sessionScope.admin_id ne null }">--%>
+                        <c:if test="${sessionScope.id eq 'dudu' }">
                         <button class="detailBtn" style="background-color: #ffc414;" onclick="noticeUpdate(${rowNum })">수정</button>
                         <button class="detailBtn" style="background-color: #ff3d3d;" onclick="noticeDelete(${rowNum })">삭제</button>
-                        <%--                    </c:if>--%>
+                        </c:if>
                         <button class="detailBtn boardList" onclick="location.href='/notice'">목록</button>
                     </div>
-                </div>
-            </div><!--수정할 부분 끝-->
+                </div><!--수정할 부분 끝-->
+            </div><!-- End of Container -->
         </div><!-- End of Main Content -->
         <!-- footer -->
         <%@include file="../footer.jsp" %>
     </div><!-- End of Content Wrapper -->
 </div><!-- End of Page Wrapper -->
-<!-- Bootstrap core JavaScript-->
-<%--<script src="vendor/jquery/jquery.min.js"></script>--%>
+
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<%--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>--%>
-<!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<%--<script src="vendor/chart.js/Chart.min.js"></script>--%>
-<!-- Page level custom scripts -->
-<%--<script src="js/demo/chart-area-demo.js"></script>--%>
-<%--<script src="js/demo/chart-pie-demo.js"></script>--%>
+
 </body>
 </html>

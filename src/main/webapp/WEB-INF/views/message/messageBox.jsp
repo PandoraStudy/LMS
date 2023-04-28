@@ -34,21 +34,12 @@
         display: flex;
         font-size: 12px;
     }
-
-    /*.table {*/
-    /*    width: 600px;*/
-    /*    box-sizing: border-box;*/
-    /*}*/
-
-    /*.msgBox_board { width: 600px; }*/
-
     .msgBox_detail {
         display: inline-block;
         width: 600px;
         height: 700px;
         box-sizing: border-box;
     }
-
     .msg_detail {
         display: inline-block;
         width: 100%;
@@ -59,7 +50,6 @@
         border: 1px solid #d3d3d3;
         box-sizing: border-box;
     }
-
     .msg_content {
         font-size: 20px;
         width: 100%;
@@ -70,19 +60,17 @@
         border: 1px solid #d3d3d3;
         background-color: #fafafa;
     }
-
     .pagingBox { width: 600px; }
-
     .write_btn {
         width: 30px;
         background-color: #ff3d3d;
         height: 30px;
     }
     .title{ text-align: left; }
-
 </style>
 <script>
     $(function () {
+
         $("#msgBox_detail").hide();
         let prev = -1;
 
@@ -91,67 +79,47 @@
             console.log($(".msg_content" + msgNo).val());
             $("#msgBox_detail").val($(".msg_content" + msgNo).val());
             $("#msg_content").val($(".msg_content" + msgNo).val());
-            if (msgNo == prev) {
-                $("#msgBox_detail").toggle();
-            } else {
-                $("#msgBox_detail").show();
-            }
+            if (msgNo == prev) $("#msgBox_detail").toggle();
+            else $("#msgBox_detail").show();
             prev = msgNo;
+
             $.ajax({
                 type: "POST",
                 url: "/msgRead",
-                data: {'msgNo': msgNo},
+                data: {'msgNo': msgNo },
                 dataType: "json",
                 success: function (data) {
-                    if (data == 1) {
-                        // document.location.reload();
-                        $(".msgread" + msgNo).load(location.href + " .msgread" + msgNo);
-                    }
+                    if (data == 1) $(".msgread" + msgNo).load(location.href + " .msgread" + msgNo);
                 },
-                error: function (xhr, status, error) {
-                    alert("실패")
-                }
+                error: function (xhr, status, error) { alert("실패"); }
             });
-
         });
         $(".del").click(function () {
             if (confirm("삭제하시겠습니까?")) {
                 let del = $(this).val();
                 $.post({
                     url: "msgDel",
-                    data: {'msgNo': del}
-                }).done(function (data) {
-                    document.location.reload();
-                    $(".table").load(location.href+" .table");
-                }).fail(function (xhr, status, error) {
-                    alert("실패");
-                });
+                    data: {'msgNo': del }
+                }).done(function (data) { document.location.reload();
+                }).fail(function (xhr, status, error) { alert("실패"); });
             }
         });
     });
-
     function moveNext(pageNo) {	//페이지 뒤쪽 버튼
         let searchType = document.getElementById("searchType");
         let searchValue = document.getElementById("searchValue");
         let url = document.location.href.split("?", 1);
 
-        if (pageNo > ${pages.lastPage }) {
-            return false;
-        } else if (pageNo != ${pages.lastPage }) {
-
+        if (pageNo > ${pages.lastPage })return false;
+        else if (pageNo != ${pages.lastPage }) {
             if ((searchType.value != null && searchType.value != "none") && searchValue.value != null) {
                 location.href = url + "?searchType=" + searchType.value + "&searchValue=" + searchValue.value + "&pageNo=" + (pageNo + 1);
-            } else {
-                location.href = "/notice?pageNo=" + (pageNo + 1);
-            }
+            } else location.href = "/notice?pageNo=" + (pageNo + 1);
 
         } else if (pageNo == ${pages.lastPage }) {
-
             if ((searchType.value != null && searchType.value != "none") && searchValue.value != null) {
                 location.href = url + "?searchType=" + searchType.value + "&searchValue=" + searchValue.value + "&pageNo=" + pageNo;
-            } else {
-                location.href = "/notice?pageNo=" + pageNo;
-            }
+            } else location.href = "/notice?pageNo=" + pageNo;
         }
     }
 
@@ -171,16 +139,13 @@
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
             <div style="background-color: #2a96a5; width:100%; height:200px;">
-                <div style="width:1200px;height:200px; margin:0 auto; text-align: center;">
-                    <h1 class="mb-0" style="width:1200px;height:200px;font-weight:bold; color:white; line-height: 200px;">쪽지함</h1>
-                </div>
+                <div style="width:1200px;height:200px; margin:0 auto; text-align: center;"><h1 class="mb-0" style="width:1200px;height:200px;font-weight:bold; color:white; line-height: 200px;">쪽지함</h1></div>
             </div>
             <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:100px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4"
                      style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
                     <div class="content">
-<%--                        <h1 style="width:630px;">쪽지함</h1>--%>
                         <div class="container0">
                             <div class="msgBox_board">
                                 <table class="table" style="color:black;">
@@ -200,19 +165,14 @@
                                             <td>${msg.message_time }</td>
                                             <td>
                                                 <c:choose>
-                                                    <c:when test="${msg.read_or_not eq  'false' }"><b
-                                                            class="msgread${msg.message_no }"
-                                                            style="color:red;">x</b></c:when>
-                                                    <c:otherwise><b class="msgread${msg.message_no }"
-                                                                    style="color:blue; text-align: center;">o</b></c:otherwise>
+                                                    <c:when test="${msg.read_or_not eq  'false' }"><b class="msgread${msg.message_no }" style="color:red;">x</b></c:when>
+                                                    <c:otherwise><b class="msgread${msg.message_no }" style="color:blue; text-align: center;">o</b></c:otherwise>
                                                 </c:choose>
                                             </td>
                                             <td>
-                                                <button class="write_btn del" value="${msg.message_no }"><i
-                                                        class="xi-trash-o xi-x"></i></button>
+                                                <button class="write_btn del" value="${msg.message_no }"><i class="xi-trash-o xi-x"></i></button>
                                             </td>
-                                            <input type="hidden" class="msg_content${msg.message_no }"
-                                                   value="${msg.message_content }">
+                                            <input type="hidden" class="msg_content${msg.message_no }" value="${msg.message_content }">
                                         </tr>
                                     </c:forEach>
                                 </table>
@@ -220,64 +180,45 @@
                                 <!--페이징 -->
                                 <div class="pagingBox">
                                     <ul class="pagingList">
-                                        <li class="pageNo page_btn" onclick="moveBefore(1)"><i
-                                                class="xi-backward xi-x"></i></li>
-                                        <li class="pageNo page_btn" onclick="moveBefore(${pageNo})"><i
-                                                class="xi-step-backward xi-x"></i></li>
-                                        <c:forEach var="i" begin="${Math.floor((pageNo-1)/10)*10+1 }"
-                                                   end="${Math.floor((pageNo-1)/10)*10 +10 gt pages.lastPage ? pages.lastPage : Math.floor((pageNo-1)/10)*10 +10}">
-                                            <li class="pageNo" onclick="move(${i })"
-                                                <c:if test="${pageNo eq i }">style="color:red; font-weight: bold;"</c:if>>${i }</li>
+                                        <li class="pageNo page_btn" onclick="moveBefore(1)"><i class="xi-backward xi-x"></i></li>
+                                        <li class="pageNo page_btn" onclick="moveBefore(${pageNo})"><i class="xi-step-backward xi-x"></i></li>
+                                        <c:forEach var="i" begin="${Math.floor((pageNo-1)/10)*10+1 }" end="${Math.floor((pageNo-1)/10)*10 +10 gt pages.lastPage ? pages.lastPage : Math.floor((pageNo-1)/10)*10 +10}">
+                                            <li class="pageNo" onclick="move(${i })" <c:if test="${pageNo eq i }">style="color:red; font-weight: bold;"</c:if>>${i }</li>
                                         </c:forEach>
-                                        <li class="pageNo page_btn" onclick="moveNext(${pageNo})"><i
-                                                class="xi-step-forward xi-x"></i>
-                                        </li>
-                                        <li class="pageNo page_btn" onclick="moveNext(${pages.lastPage })"><i
-                                                class="xi-forward xi-x"></i></li>
+                                        <li class="pageNo page_btn" onclick="moveNext(${pageNo})"><i class="xi-step-forward xi-x"></i></li>
+                                        <li class="pageNo page_btn" onclick="moveNext(${pages.lastPage })"><i class="xi-forward xi-x"></i></li>
                                     </ul>
                                 </div>
                                 <!-- 페이징 끝 -->
                                 <br>
                                 <div class="searchForm">
-                                    <form action="/messageBox" method="get" id="searchForm">
-                                        <select name="searchType">
+                                    <form action="" method="get" id="searchForm">
+                                        <select name="searchType" id="searchType">
                                             <option value="title">제목</option>
-                                            <option value="writer"
-                                                    <c:if test='${searchType eq "writer"}'>selected</c:if>>보낸사람
-                                            </option>
-                                        </select> <input type="text" name="searchValue" value="${searchValue }">
+                                            <option value="writer" <c:if test='${pages.searchType eq "writer"}'>selected</c:if>>보낸사람</option>
+                                        </select>
+                                        <input type="text" name="searchValue" id="searchValue" value="${pages.searchValue }">
                                         <button class="search_btn">검색</button>
                                     </form>
                                 </div>
                             </div>
                             <div class="msgBox_detail" id="msgBox_detail">
                                 <span class="msg_detail">내용</span>
-                                <textarea style="border-radius: 0px 0px 20px 20px;" readonly="readonly"
-                                          class="msg_content" id="msg_content"></textarea>
+                                <textarea style="border-radius: 0px 0px 20px 20px;" readonly="readonly" class="msg_content" id="msg_content"></textarea>
                             </div>
-                        </div><!-- container -->
-                    </div><!-- content -->
+                        </div>
+                    </div><!-- End of content -->
                     <!--수정할 부분 끝-->
                 </div>
-            </div>
+            </div><!-- End of container -->
         </div><!-- End of Main Content -->
         <!-- footer -->
         <%@include file="../footer.jsp" %>
     </div><!-- End of Content Wrapper -->
 </div> <!-- End of Page Wrapper -->
 
-<!-- Bootstrap core JavaScript-->
-<%--<script src="vendor/jquery/jquery.min.js"></script>--%>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<%--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>--%>
-<!-- Custom scripts for all pages-->
 <script src="js/sb-admin-2.min.js"></script>
-<!-- Page level plugins -->
-<%--<script src="vendor/chart.js/Chart.min.js"></script>--%>
-<!-- Page level custom scripts -->
-<%--<script src="js/demo/chart-area-demo.js"></script>--%>
-<%--<script src="js/demo/chart-pie-demo.js"></script>--%>
 
 </body>
 </html>

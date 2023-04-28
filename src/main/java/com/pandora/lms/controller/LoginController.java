@@ -18,11 +18,8 @@ public class LoginController {
     private final LoginService loginService;
     @GetMapping("/login")
     public String login(HttpSession session){
-        if (session.getAttribute("user_no") == null) {
-            return "login/login";
-        } else {
-            return "redirect:/index";
-        }
+        if (session.getAttribute("user_no") == null) return "login/login";
+        else return "redirect:/index";
     }
 
     @PostMapping("/login")

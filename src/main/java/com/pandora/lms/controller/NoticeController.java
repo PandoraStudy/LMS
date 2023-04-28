@@ -25,11 +25,8 @@ public class NoticeController {
     private final TextChangeUtil textChangeUtil;
     private final AlarmHandler alarmHandler;
 
-
     @GetMapping("/noticeIframe")
-    public String noticeIframe() {
-        return "/notice/noticeIframe";
-    }
+    public String noticeIframe() { return "/notice/noticeIframe"; }
 
     @GetMapping("/notice")
     public ModelAndView noticeList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, HttpServletRequest request, HttpSession session) {
@@ -49,9 +46,7 @@ public class NoticeController {
             pages.put("startPage", startPage);
             pages.put("lastPage", lastPage);
             List<Map<String, Object>> list = noticeService.noticeList(pages);
-            for (Map<String, Object> m : list) {
-                m.put("notice_title", textChangeUtil.changeText((String) m.get("notice_title")));
-            }
+            for (Map<String, Object> m : list) { m.put("notice_title", textChangeUtil.changeText((String) m.get("notice_title"))); }
             mv.addObject("pages", pages);
             mv.addObject("list", list);
             mv.addObject("pageNo", pageNo);
@@ -70,19 +65,14 @@ public class NoticeController {
             ModelAndView mv = new ModelAndView("/notice/noticeDetail");
             String rowNum = request.getParameter("rowNum");
             String totalCnt = request.getParameter("totalCnt");
-            if (Integer.parseInt(rowNum) >= Integer.parseInt(totalCnt)) {
-                rowNum = totalCnt;
-            } else if (Integer.parseInt(rowNum) < 1) {
-                rowNum = "1";
-            }
+
+            if (Integer.parseInt(rowNum) >= Integer.parseInt(totalCnt)) rowNum = totalCnt;
+            else if (Integer.parseInt(rowNum) < 1) rowNum = "1";
+
             String notice_no = Integer.toString(noticeService.noticeNo(rowNum));
-            System.out.println("rowNum : " + rowNum);
-            System.out.println("totalCnt : " + totalCnt);
-            System.out.println("notice_no : " + notice_no);
             noticeService.noticeRead(notice_no);
             Map<String, Object> noticeDetail = noticeService.noticeDetail(notice_no);
             textChangeUtil.changeText((String) noticeDetail.get("notice_title"));
-//        textChangeUtil.changeText((String)noticeDetail.get("notice_content"));
             noticeDetail.put("notice_title", textChangeUtil.changeEnter((String) noticeDetail.get("notice_title")));
             noticeDetail.put("notice_content", textChangeUtil.changeEnter((String) noticeDetail.get("notice_content")));
             mv.addObject("noticeDetail", noticeDetail);
@@ -105,20 +95,16 @@ public class NoticeController {
             String notice_title = request.getParameter("writeTitle");
             notice_title = textChangeUtil.changeText(notice_title);
             String notice_content = request.getParameter("writeContent");
-//        notice_content = textChangeUtil.changeText(notice_content);
             String rowNum = request.getParameter("rowNum");
             String totalCnt = request.getParameter("totalCnt");
             System.out.println("rowNum : " + rowNum);
             System.out.println("totalCnt : " + totalCnt);
-//        String admin_id = (String)session.getAttribute("id");
             if (rowNum == null) {
-//			String member_no = request.getParameter("member_no");
                 Map<String, Object> map = new HashMap<String, Object>();
                 map.put("notice_title", notice_title);
                 map.put("notice_content", notice_content);
-//            map.put("admin_id", admin_id);
                 noticeService.noticeWrite(map);
-                String notification = "공지사항이 업데이트되었습니다.";
+                String notification = "공지사항이 업데이트 되었습니다.";
                 alarmHandler.sendNotification(notification);
                 return "redirect:/notice";
             } else {
@@ -160,6 +146,4 @@ public class NoticeController {
             return "redirect:/notice";
         }
     }
-
-
 }
