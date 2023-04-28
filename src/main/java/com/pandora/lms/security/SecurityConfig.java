@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private LoginService loginService;
-
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	http.csrf().disable();
@@ -34,8 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/js/**").permitAll()
         	.antMatchers("/img/**").permitAll()
         	.antMatchers("/join").permitAll()
-        	.antMatchers("/register").permitAll()
-            .anyRequest().permitAll()
+        	.antMatchers("/resources/**").permitAll()
+            .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/login")
@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .loginProcessingUrl("/login")
             .successHandler(authenticationSuccessHandler)
             .permitAll();
+        
             http
             .sessionManagement()
             .sessionFixation().changeSessionId()

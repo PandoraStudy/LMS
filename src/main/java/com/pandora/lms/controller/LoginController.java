@@ -19,11 +19,10 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpSession session){
     	System.out.println("Controller - GET - login");
-        if (session.getAttribute("user_no") == null) {
-            return "login/login";
-        } else {
-            return "redirect:/index";
-        }
+    	if(session.getAttribute("username") != null) {
+    		return "/index";
+    	}
+         return "/login/login";
     }
 //
 //    @PostMapping("/login")
