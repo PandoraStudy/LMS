@@ -26,8 +26,6 @@ public class AlarmHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.err.println("추가 세션 : "+session);
-        System.err.println("현재 세션들 : "+sessions);
         System.out.println("공지알람 세션이 연결되었습니다.");
     }
 

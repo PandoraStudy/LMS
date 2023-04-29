@@ -3,15 +3,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>Chatting Room</title>
+    <title>Chatting</title>
     <link rel="shortcut icon" href="img/pandora_logo.png" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
     <script type="text/javascript" src="/js/search.js"></script>
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
@@ -30,6 +27,7 @@
     <script type="text/javascript" src="/js/login/chatting.js"></script>
 </head>
 <style>
+    body{ overflow-x:scroll; }
     .socketBtn{
         width:100px;
         height:40px;
@@ -62,6 +60,13 @@
         height:500px;
         box-sizing: border-box;
         padding:0px 15px 0px 0px;
+    }
+    #messageList{
+        overflow-y:auto;
+        width:100%;
+        hieght:100%;
+        box-sizing: border-box;
+        padding-left:22px;
     }
     .messageName{
         font-weight: bold;
@@ -99,6 +104,9 @@
     function disconnect(){
         wsmsg.send(name+"님이 나가셨습니다.");
         wsmsg.close();
+        wslist.send(name+"님이 나가셨습니다.");
+        wslist.close();
+
     }
 </script>
 <style></style>
@@ -114,15 +122,24 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
-            <div class="container-fluid" style="width:1200px; min-height:600px; margin-top:100px;">
-                <h1 style="font-weight: bold; text-align: center; width:1100px; margin-top:-40px;">Chatting Room</h1>
+            <div class="container-fluid" style="width:1300px; min-height:600px; margin-top:100px;">
+                <h1 style="font-weight: bold; text-align: center; width:1200px; margin-top:-40px;">Chatting Room</h1>
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
+
+                    <!-- 채팅 box -->
                     <div class="BOX">
                         <div id="messageBox"></div>
                         <input type="text" class="messageText none" placeholder="Press Enter for send message.( 100 characters )" id="msg" maxlength="100">
                     </div>
-                </div><!--수정할 부분 끝-->
+                    <!-- 참여인원 box -->
+                    <div style="width:200px; height:600px; border: 10px solid #E8C48F; border-left:none; overflow-y:auto;">
+                        <div style="font-size: 17px; font-weight: bold;padding:5px 0px; border-bottom: 10px solid #E8C48F;">현재 참여인원</div>
+                        <div id="messageList"></div>
+                    </div>
+
+                    <!--수정할 부분 끝-->
+                </div>
             </div><!--End of container -->
         </div><!-- End of Main Content -->
         <!-- footer -->
