@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .successHandler(authenticationSuccessHandler)
             .permitAll();
         
+        
             http
             .sessionManagement()
             .sessionFixation().changeSessionId()
