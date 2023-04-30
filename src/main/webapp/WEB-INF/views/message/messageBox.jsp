@@ -30,21 +30,19 @@
 
 </head>
 <style>
-    .container0 {
-        display: flex;
-        font-size: 12px;
-    }
+    .container0 { display: flex; font-size: 12px; }
+    /*.table{ min-height:500px; }*/
     .msgBox_detail {
         display: inline-block;
-        width: 600px;
-        height: 700px;
+        width: 400px;
+        height: 600px;
         box-sizing: border-box;
     }
     .msg_detail {
         display: inline-block;
         width: 100%;
-        height: 42px;
-        line-height: 42px;
+        height: 47px;
+        line-height: 47px;
         font-size: 15px;
         font-weight: bold;
         border: 1px solid #d3d3d3;
@@ -54,13 +52,12 @@
         font-size: 20px;
         width: 100%;
         height: 550px;
-        /* 	border-radius: 5px; */
         box-sizing: border-box;
         font-weight: bold;
         border: 1px solid #d3d3d3;
         background-color: #fafafa;
     }
-    .pagingBox { width: 600px; }
+    .pagingBox { width: 100%; }
     .write_btn {
         width: 30px;
         background-color: #ff3d3d;
@@ -122,10 +119,7 @@
             } else location.href = "/notice?pageNo=" + pageNo;
         }
     }
-
-
 </script>
-<style></style>
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -139,16 +133,18 @@
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
             <div style="background-color: #2a96a5; width:100%; height:200px;">
-                <div style="width:1200px;height:200px; margin:0 auto; text-align: center;"><h1 class="mb-0" style="width:1200px;height:200px;font-weight:bold; color:white; line-height: 200px;">쪽지함</h1></div>
+                <div style="width:1200px;height:200px; margin:0 auto; text-align: center;">
+                    <h1 class="mb-0" style="width:1200px;height:200px;font-weight:bold; color:white; line-height: 200px;">쪽지함</h1>
+                </div>
             </div>
-            <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:100px;">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4"
-                     style=" margin-top:50px; text-align: center;">
+            <div class="container-fluid" style="width:1200px; min-height:800px; margin-top:50px;">
+                <div class="d-sm-flex align-items-center justify-content-between mb-4" style=" margin-top:50px; text-align: center;">
                     <!--수정할 부분 시작-->
                     <div class="content">
                         <div class="container0">
                             <div class="msgBox_board">
-                                <table class="table" style="color:black;">
+
+                                <table class="table" style="color:black; font-size: 15px; width:800px;s">
                                     <tr class="table-header">
                                         <th class="col-1">번호</th>
                                         <th class="col-2">보낸사람</th>
@@ -177,7 +173,7 @@
                                     </c:forEach>
                                 </table>
                                 <br><br>
-                                <!--페이징 -->
+                                <!-- 페이징 -->
                                 <div class="pagingBox">
                                     <ul class="pagingList">
                                         <li class="pageNo page_btn" onclick="moveBefore(1)"><i class="xi-backward xi-x"></i></li>
@@ -193,21 +189,22 @@
                                 <br>
                                 <div class="searchForm">
                                     <form action="" method="get" id="searchForm">
-                                        <select name="searchType" id="searchType">
+                                        <select name="searchType" id="searchType" style="height:30px;">
                                             <option value="title">제목</option>
                                             <option value="writer" <c:if test='${pages.searchType eq "writer"}'>selected</c:if>>보낸사람</option>
                                         </select>
-                                        <input type="text" name="searchValue" id="searchValue" value="${pages.searchValue }">
+                                        <input type="text" name="searchValue" id="searchValue" style=" font-size:15px; width:350px; height:30px;" value="${pages.searchValue }">
                                         <button class="search_btn">검색</button>
                                     </form>
                                 </div>
                             </div>
+                            <!-- message content -->
                             <div class="msgBox_detail" id="msgBox_detail">
                                 <span class="msg_detail">내용</span>
                                 <textarea style="border-radius: 0px 0px 20px 20px;" readonly="readonly" class="msg_content" id="msg_content"></textarea>
                             </div>
                         </div>
-                    </div><!-- End of content -->
+                    </div>
                     <!--수정할 부분 끝-->
                 </div>
             </div><!-- End of container -->
