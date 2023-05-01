@@ -13,7 +13,7 @@
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
             crossorigin="anonymous"></script>
     <script type="text/javascript" src="/js/NoticePaging.js"></script>
-<%--    <script type="text/javascript" src="/js/search.js"></script>--%>
+<!-- <%--    <script type="text/javascript" src="/js/search.js"></script>--%> -->
     <link type="text/css" rel="stylesheet" href="css/Notice.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -74,7 +74,6 @@
         $(".message").click(function () {
             let msgNo = $(this).attr("value");
             console.log($(".msg_content" + msgNo).val());
-            $("#msgBox_detail").val($(".msg_content" + msgNo).val());
             $("#msg_content").val($(".msg_content" + msgNo).val());
             if (msgNo == prev) $("#msgBox_detail").toggle();
             else $("#msgBox_detail").show();
@@ -107,7 +106,7 @@
         let searchValue = document.getElementById("searchValue");
         let url = document.location.href.split("?", 1);
 
-        if (pageNo > ${pages.lastPage })return false;
+        if (pageNo > ${pages.lastPage }) return false;
         else if (pageNo != ${pages.lastPage }) {
             if ((searchType.value != null && searchType.value != "none") && searchValue.value != null) {
                 location.href = url + "?searchType=" + searchType.value + "&searchValue=" + searchValue.value + "&pageNo=" + (pageNo + 1);
@@ -144,7 +143,7 @@
                         <div class="container0">
                             <div class="msgBox_board">
 
-                                <table class="table" style="color:black; font-size: 15px; width:800px;s">
+                                <table class="table" style="color:black; font-size: 15px; width:800px;">
                                     <tr class="table-header">
                                         <th class="col-1">번호</th>
                                         <th class="col-2">보낸사람</th>
