@@ -1,5 +1,5 @@
-    let wsmsg = new WebSocket('ws:/192.168.219.105/user');  //채팅용 소켓
-    let wslist = new WebSocket('ws:/192.168.219.105/list'); //참여인원 소켓
+    let wsmsg = new WebSocket('ws:/172.30.1.93/user');  //채팅용 소켓
+    let wslist = new WebSocket('ws:/172.30.1.93/list'); //참여인원 소켓
 
     wsmsg.onopen = function(event) {
         console.log("채팅이 열렸습니다.");
@@ -43,7 +43,7 @@
         wslist.send(name);
     };
     wslist.onmessage = async function(event) {
-        try {<!--style='width:30px; height:30px; margin-right:3px;'-->
+        try { // style="width:30px; height:30px; margin-right:3px;"
             if (event !== null && event !== undefined) {
                 $("#messageList").empty();  // 새로고침하거나 페이지 이동하면 갱신되게끔 하기위해서 append한 div 제거하고 새로 출력
                 let list = event.data.split(" ");

@@ -3,7 +3,7 @@
     $(function(){
        $("#alarm").hide();
     });
-    let ws = new WebSocket("ws://172.30.1.9/noticeAlarm");
+    let ws = new WebSocket("ws://172.30.1.93/noticeAlarm");
     ws.onopen = function(event) { console.log("알림감지가 작동되고 있습니다."); };
     ws.onmessage = function(event) {
         console.log(event.data);
