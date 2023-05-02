@@ -12,11 +12,11 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler( new ChattingHandler(), "/user");
+        registry.addHandler( new ChattingHandler(), "/user");   //Chatting
 
-        registry.addHandler( new ChattingListHandler(), "/list");
+        registry.addHandler( new ChattingListHandler(), "/list");   //Chatting List
 
-        registry.addHandler(AlarmHandler(), "/noticeAlarm");
+        registry.addHandler(AlarmHandler(), "/noticeAlarm");    //Alarm
         //.setAllowedOrigins("*")      //cors 설정   cors 허용시켜줌
         //.withSockJS();                      //sockJS도 사용가능하게 함
     }

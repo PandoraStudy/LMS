@@ -3,36 +3,41 @@
 
     wsmsg.onopen = function(event) {
         console.log("채팅이 열렸습니다.");
-        wsmsg.send(name+"님이 들어오셨습니다.");
+        var json = {
+            "type" : "message",
+            "userName" : name,
+            "msg": ""
+        }
+        wsmsg.send(JSON.stringify(json));
     };
     wsmsg.onmessage = async function(event) {
-        try {
+        var eventData = event.data;
             if (event !== null && event !== undefined) {
-                let ls = event.data.split(":",1);
-                let data_name = ls[0];
-                let data_content = event.data.substring(ls[0].length + 1);
-                data_content = data_content.replace(/</g,"&lt;").replace(/>/g,"&gt;");
-                if(data_name === name+"님이 들어오셨습니다."){
+                var msg = JSON.parse(eventData);
+                msg.msg = msg.msg.replace(/</g,"&lt;").replace(/>/g,"&gt;");    //tag 적용시키지 않도록 <> 변환
+                if(msg.msg===""){
                     $("#messageBox").append(
-                        "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+data_name+"</div>"
+                        "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+msg.userName+"님이 들어오셨습니다.</div>"
                     );
                 }
-                else if(data_name===name){
+                else if(msg.msg===" "){
                     $("#messageBox").append(
-                        "<div class='messageName'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+data_name+"</div>"+
-                        "<div class='messageBody'>"+data_content+"</div><br><br>"
+                        "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+msg.userName+"님이 나가셨습니다.</div>"
                     );
-                }else if(data_name !==name){
+                }
+                else if(msg.userName===name){
                     $("#messageBox").append(
-                        "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+data_name+"</div>"
+                        "<div class='messageName'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>나</div>"+
+                        "<div class='time'>"+msg.time+"</div><div class='messageBody'>"+msg.msg+"</div><br><br>"
                     );
-                    if(data_content !== "") {
-                        $("#messageBox").append("<div class='messageBody' style='float:left;'>"+data_content+"</div><br><br>");
-                    }
-                };
+                }else if(msg.userName !==name){
+                    $("#messageBox").append(
+                        "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+msg.userName+"</div>"+
+                        "<div class='messageBody' style='float:left;'>"+msg.msg+"</div><div class='time' style='float: left; padding-top:10px;'>"+msg.time+"</div><br><br>"
+                    );
+                }
                 $("#messageBox").scrollTop($("#messageBox")[0].scrollHeight);
             }
-        } catch (err) { console.log(err); }
     };
     wsmsg.onclose = function(event) { console.log('채팅이 닫혔습니다.'); };
 

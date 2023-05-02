@@ -18,9 +18,7 @@ public class ChattingListHandler extends TextWebSocketHandler {
 //        System.out.println(message.getPayload());
         if(message.getPayload().contains("님이 나가셨습니다.")){
             String msg = message.getPayload().replace("님이 나가셨습니다.","");
-            System.err.println("name : "+msg);
             list = list.replace(msg,"");
-            System.err.println("list : "+list);
         } else { list += message.getPayload()+" "; }
         for (WebSocketSession s : sessions){
             s.sendMessage(new TextMessage(list));
@@ -30,13 +28,13 @@ public class ChattingListHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         sessions.add(session);
-        System.out.println("list socket start");
+        System.out.println("Chatting List On");
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessions.remove(session);
-        System.out.println("list socket end");
+        System.out.println("Chatting List Off");
     }
 
 }
