@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
+    /* 오늘 날짜를 대신합니다. */
+    let today = 2;
+
     /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
     var tag = document.createElement('script');
 
@@ -39,9 +42,13 @@
     /* 동영상 주소 */
     let video_id = "${lectureInfo.ON_LECT_URL }";
     /* 학생이 실제 시청 시간 위치 */
-    let play_time = ${lectureInfo.LAST_PLAY_TM };
+    let play_time = "${lectureInfo.LAST_PLAY_TM }";
     /* 동영상 총 재생시간 */
-    let lect_max_tm = ${lectureInfo.LECT_MAX_TM};
+    let lect_max_tm = "${lectureInfo.LECT_MAX_TM}";
+    /* 해당 강의 번호 */
+    let on_lect_sn = "${lectureInfo.ON_LECT_SN}";
+    /* 해당 과목 번호 */
+    let sbjct_no = "${lectureInfo.SBJCT_NO}";
 
     /* 유튜브 Iframe 준비 상태 */
     function onYouTubeIframeAPIReady() {
@@ -82,7 +89,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/getPlayTime",
-                    data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                    data: {"on_lect_sn": on_lect_sn },
                     dataType: "text",
                     success: function (playTime) {
                         console.log("[getPlayTime] " + playTime + "초");
@@ -124,7 +131,7 @@
                 $.ajax({
                     type: "POST",
                     url: "/getPlayTime",
-                    data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
+                    data: {"on_lect_sn": on_lect_sn },
                     dataType: "text",
                     success: function (playTime) {
                         console.log("[getPlayTime] " + playTime + "초");
@@ -143,7 +150,6 @@
                             }
                             /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
                             else {
-                                console.log()
                                 player.seekTo(play_time);
                             }
                         }
@@ -183,7 +189,7 @@
             /* 수강 완료 출석 관련 데이터 삽입 */
             $.post({
                 url: "/applATNDInsert",
-                data: { "sbjct_no" : ${lectureInfo.SBJCT_NO}, "on_lect_sn" : ${lectureInfo.ON_LECT_SN} },
+                data: { "sbjct_no" : sbjct_no, "on_lect_sn" : on_lect_sn },
                 dataType: "text",
                 success: function(result) {
                     alert(result + ", 강의를 수강하셨습니다.");
@@ -195,30 +201,14 @@
             return false;
         }
 
-        $(function () {
-            $.ajax({
-                type: "POST",
-                url: "/getPlayTime",
-                data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN} },
-                dataType: "text",
-                success: function (playTime) {
-                    /* 재생 위치를 5초마다 저장합니다. */
-                    if ((count % 5) == 0) {
-                        /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
-                        if (curr_time > playTime) {
-                            if ((curr_time - play_time) <= 5) {
-                                console.log("5초마다 저장")
-                                playTimeSave();
-                            }
-                        }
-                    }
-                },
-                error: function () {
-                    alert("저장된 재생 시간을 불러오지 못했습니다.");
-                }
-            });
-        });
-
+        /* 재생 위치를 5초마다 저장합니다. */
+        if ((count % 5) == 0) {
+            /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
+            if (curr_time > play_time) {
+                console.log("5초마다 저장")
+                playTimeSave();
+            }
+        }
 
     }
 
@@ -228,10 +218,14 @@
             $.ajax({
                 type: "POST",
                 url: "/playTimeSave",
-                data: {"on_lect_sn": ${lectureInfo.ON_LECT_SN}, "curr_time" : curr_time},
+                data: {"on_lect_sn": on_lect_sn, "curr_time" : curr_time, "today" : today},
                 dataType: "text",
                 success: function (result) {
-                    console.log("[playTimeSave] " + result);
+                    if(result == "success") {
+                        console.log("[playTimeSave] " + curr_time + "초 저장");
+                    } else if(result == "fail") {
+                        player.seekTo(play_time);
+                    }
                 },
                 error: function () {
                     alert("재생 시간을 저장하지 못했습니다.");
@@ -314,7 +308,7 @@
 
                 <div class="row">
                     <!-- A카드 게시판 -->
-                    <div class="col-xl-10 col-lg-7">
+                    <div class="col-xl-12 col-lg-7">
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -335,31 +329,6 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-2">
-                        <!-- 동영상 본문 사이드 메뉴 -->
-                        <div>
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">강의 목록</h6>
-                                </div>
-                                <div class="card-body" style="height: auto;">
-                                    test
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">과제</h6>
-                                </div>
-                                <div class="card-body" style="height: auto;">
-                                    test
                                 </div>
                             </div>
                         </div>

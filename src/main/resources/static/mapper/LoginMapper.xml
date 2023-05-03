@@ -6,9 +6,8 @@
         SELECT USER_NO, USER_ID, PSWD, KORN_FLNM, USER_GROUP_CD
         FROM USER_INFO
             WHERE
-                    USER_GROUP_CD = #{ USER_GROUP_CD }
-                AND USER_ID = #{ USER_ID }
-                AND PSWD = #{ PSWD }
+               USER_ID = #{ USER_ID }
+
     </select>
 
     <select id="instrNo" parameterType="Integer" resultType="String">
@@ -18,6 +17,36 @@
     <select id="applNo" parameterType="Integer" resultType="String">
         SELECT APPL_NO FROM APPL_INFO WHERE USER_NO = #{ userNo }
     </select>
-
+	
+	<select id="findByUsername" parameterType="String" resultType="UserInfoDto">
+        SELECT *
+        FROM USER_INFO
+        WHERE USER_ID = #{ username }
+    </select>
+    
+    <select id="getAPPL" parameterType="Integer" resultType="Integer">
+        SELECT APPL_NO
+        FROM APPL_INFO
+        WHERE USER_NO = #{ userNo }
+    </select>
+    
+    <select id="getINSTR" parameterType="Integer" resultType="Integer">
+        SELECT INSTR_NO
+        FROM INSTR_INFO
+        WHERE USER_NO = #{ userNo }
+    </select>
+    
+     <insert id="save" parameterType="UserInfoDto">
+        INSERT INTO USER_INFO (
+            USER_NO, USER_ID, PSWD, KORN_FLNM, USER_BRDT,
+            EML_ADDR, TELNO, PSWD_CHG_YN, PSWD_CHG_DT,
+            PSWD_ERR_NMTM, USER_GROUP_CD
+        )
+        VALUES (
+            19, #{USER_ID}, #{PSWD}, #{KORN_FLNM}, #{USER_BRDT},
+            #{EML_ADDR}, #{TELNO}, #{PSWD_CHG_YN}, #{PSWD_CHG_DT},
+            #{PSWD_ERR_NMTM}, #{USER_GROUP_CD}
+        )
+    </insert>
 
 </mapper>

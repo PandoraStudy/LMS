@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Pandora University - LMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <%-- ISO 8601 변환 시 사용하기 위한 라이브러리 --%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -22,7 +23,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
-    let today = 3;
+    /* 오늘 날짜를 대신합니다. */
+    let today = 2;
 
     $(function() {
 
@@ -67,8 +69,57 @@
         });
 
         $(".week-upload").click(function() {
+            let sbjct_mthd = $(this).find("#sbjct_mthd").val();
+            $("#sbjct_mthd_cd").val(sbjct_mthd);
+            let lect_ymd_org = $(this).find("#lect_ymd_org").val();
+            $("#lect_ymd").val(lect_ymd_org);
+
             let on_lect_sn = $(this).find(".upload").val();
-            alert(on_lect_sn + " 파일 업로드");
+            $("#on_lect_sn").val(on_lect_sn);
+            $(".modal-title").html(on_lect_sn + "주차 추가");
+            $(".upload-modal").modal("show");
+        });
+
+        $("#upload-select").change(function() {
+            let upload_select = $("#upload-select").val();
+
+            if(upload_select == "assign") {
+                $(".upload-title").html("과제명");
+                $(".upload-title-td").html("<input class='form-control' name='title' type='text'>");
+                $(".upload-content").html("과제");
+                $(".upload-content-td").html("<input class='form-control' name='content' type='text'>");
+            } else if(upload_select == "file") {
+                $(".upload-title").html("파일명");
+                $(".upload-title-td").html("<input class='form-control' name='title' type='text'>");
+                $(".upload-content").html("파일");
+                $(".upload-content-td").html("<input class='form-control' name='file' type='file'>");
+            }
+        });
+
+        $(".modal-submit").click(function() {
+            let frm_modal = $("#frm-modal")[0];
+            let frmData = new FormData(frm_modal);
+
+            $.ajax({
+                type: "post",
+                url: "/modalUpload",
+                data: frmData,
+                contentType : false,
+                processData : false,
+                success: function(result) {
+                    if(result == "empty_file") {
+                        alert("선택된 파일이 없습니다.");
+                    } else if(result == "success") {
+                        alert("등록 완료.");
+                        location.reload();
+                    } else if(result == "error") {
+                        alert("파일 등록중 문제가 발생했습니다.\n잠시후 다시 시도해주세요.");
+                    }
+                },
+                error: function () {
+                    alert("파일 등록중 문제가 발생했습니다.\n잠시후 다시 시도해주세요.");
+                }
+            });
         });
 
     });
@@ -152,6 +203,11 @@
         height: 30px;
         line-height: 17px;
         margin-right: 10px;
+    }
+
+    .assign-tr {
+        line-height: 40px;
+        text-align: center;
     }
 
 </style>
@@ -303,14 +359,16 @@
                                                 </c:if>
                                             </div>
                                         </div>
-                                        <c:if test="${sessionScope.instr_no != null}">
+                                        <c:if test="${sessionScope.instr_no != null && lect.SBJCT_MTHD_CD ne 2}">
                                         <!-- 추가 -->
                                         <div class="week-upload week-content${i} ${status.last ? 'content-last' : ''} border-left-success collapse">
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <input type="hidden" id="sbjct_mthd" value="${lect.SBJCT_MTHD_CD}">
+                                                    <input type="hidden" id="lect_ymd_org" value="${lect.LECT_YMD}">
                                                     <button class="upload btn btn-success" value="${lect.ON_LECT_SN}">추가</button>
-                                                    <span>추가</span><span style="font-size: 12px; margin-left: 10px;"><b style="color: red;">*</b>동영상, 파일, 과제를 추가합니다.</span>
+                                                    <span>추가</span><span style="font-size: 12px; margin-left: 10px;"><b style="color: red;">*</b>파일, 과제를 추가합니다.</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -327,6 +385,52 @@
         </div>
         <!-- 메인 콘텐츠 종료 -->
 
+        <!-- Modal -->
+        <form id="frm-modal">
+            <div class="modal upload-modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="on_lect_sn" name="on_lect_sn">
+                            <input type="hidden" id="sbjct_mthd_cd" name="sbjct_mthd_cd">
+                            <input type="hidden" id="lect_ymd" name="lect_ymd">
+                            <table class="table table-bordered">
+                                <tr class="assign-tr">
+                                    <th>유형</th>
+                                    <td>
+                                        <select class="form-select" name="upload-select" id="upload-select">
+                                            <option value="assign" selected>과제</option>
+                                            <option value="file">파일</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="assign-tr">
+                                    <th class="upload-title">과제명</th>
+                                    <td class="upload-title-td">
+                                        <input class="form-control" type="text">
+                                    </td>
+                                </tr>
+                                <tr class="assign-tr">
+                                    <th class="upload-content">과제</th>
+                                    <td class="upload-content-td">
+                                        <input class="form-control" type="text">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-primary modal-submit">추가</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
         <!-- Footer -->
         <%@include file="../footer.jsp" %>
 
@@ -340,7 +444,7 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="js/sb-admin-2.min.js"></script>
 

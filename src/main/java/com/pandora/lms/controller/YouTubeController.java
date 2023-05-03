@@ -7,6 +7,7 @@ import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONException;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -130,15 +129,15 @@ public class YouTubeController {
         userInfo.put("appl_no", session.getAttribute("appl_no"));
         Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.lectDetail", userInfo);
 
-        int seconds = (Integer) lectureInfo.get("LAST_PLAY_TM");
-        int minutes = seconds / 60;
-        int remainingSeconds = seconds % 60;
-        String LAST_PLAY_TM2 = minutes + "분 " + remainingSeconds + "초";
+        if(session.getAttribute("appl_no") != null) {
+            int seconds = (Integer) lectureInfo.get("LAST_PLAY_TM");
+            int minutes = seconds / 60;
+            int remainingSeconds = seconds % 60;
+            String LAST_PLAY_TM2 = minutes + "분 " + remainingSeconds + "초";
 
-        lectureInfo.replace("LECT_PRGRS_RT", Math.ceil((Float) lectureInfo.get("LECT_PRGRS_RT")) );
-        lectureInfo.put("LAST_PLAY_TM2", LAST_PLAY_TM2);
-
-        System.out.println(lectureInfo);
+            lectureInfo.replace("LECT_PRGRS_RT", Math.ceil((Float) lectureInfo.get("LECT_PRGRS_RT")) );
+            lectureInfo.put("LAST_PLAY_TM2", LAST_PLAY_TM2);
+        }
 
         view.addObject("lectureInfo", lectureInfo);
 
@@ -156,9 +155,30 @@ public class YouTubeController {
     @ResponseBody
     public String playTimeSave(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         userInfo.put("appl_no", session.getAttribute("appl_no"));
-        int result = sqlSession.update("youtube.playTimeSave", userInfo);
-        String msg = (result == 1) ? userInfo.get("curr_time") + "초 저장 완료" : "저장 실패";
 
+        // 종료 교시 코드 가져오기
+        Map<String, Integer> clsCd = sqlSession.selectOne("youtube.getClsCd", userInfo);
+
+        Integer today = Integer.parseInt(String.valueOf(userInfo.get("today")));
+        Integer BGNG_CLS_CD = clsCd.get("BGNG_CLS_CD");
+        Integer END_CLS_CD = clsCd.get("END_CLS_CD");
+
+        // (1 <= 2) && (2 >= 2)
+        if( (BGNG_CLS_CD <= today) && (END_CLS_CD >= today) ) {
+
+        }
+
+        int playTime = sqlSession.selectOne("youtube.getPlayTime", userInfo);
+        int saveTime = Integer.parseInt(String.valueOf(userInfo.get("curr_time")));
+
+        String msg;
+
+        if ( (saveTime - playTime) > 5 ) {
+            msg = "fail";
+        } else {
+            int result = sqlSession.update("youtube.playTimeSave", userInfo);
+            msg = (result == 1) ? "success" : "fail";
+        }
         return msg;
     }
 
@@ -193,6 +213,41 @@ public class YouTubeController {
         }
 
         return view;
+    }
+
+    @PostMapping("/modalUpload")
+    @ResponseBody
+    public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) {
+        String uploadSelect = (String) modalInfo.get("upload-select");
+        String result = null;
+
+        if(uploadSelect.equals("assign")) {
+            System.out.println("과제 등록");
+            result = "success";
+        } else if(uploadSelect.equals("file")) {
+            if(file.getSize() == 0) {
+                result = "empty_file";
+            } else {
+                Map<String, Object> fileInfo = new HashMap<>();
+                fileInfo.put("FILE_SN", modalInfo.get("on_lect_sn"));
+                Integer FILE_SN_SEQ = (Integer) sqlSession.selectOne("youtube.getFileSnSeq", modalInfo);
+                if(FILE_SN_SEQ != null) fileInfo.put("FILE_SN_SEQ",  FILE_SN_SEQ + 1);
+                else fileInfo.put("FILE_SN_SEQ",  1);
+                fileInfo.put("PHYS_FILE_NM", modalInfo.get("title"));
+                fileInfo.put("ORGNL_FILE_NM", FilenameUtils.getBaseName(file.getOriginalFilename()));
+                fileInfo.put("FILE_PATH_NM", null);
+                fileInfo.put("FILE_EXTN_NM", FilenameUtils.getExtension(file.getOriginalFilename()));
+                fileInfo.put("FILE_SZ", file.getSize());
+
+                System.out.println(fileInfo);
+                int file_result = sqlSession.insert("youtube.insertFileInfo", fileInfo);
+
+                if(file_result == 1) result = "success";
+                else result = "error";
+            }
+        }
+
+        return result;
     }
 
     @PostMapping("/uploadVideo")
