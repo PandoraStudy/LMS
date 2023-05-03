@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -38,7 +39,7 @@
             $(this).children(".fas").toggleClass("fa-chevron-down fa-chevron-up");
         });
 
-        $(".week-content").click(function() {
+        $(".week-title").click(function() {
                 let lectureInfo = $(this).find(".mthd").val();
                 let snOrUrl = lectureInfo.split(",")[0];
                 let mthd = lectureInfo.split(",")[1];
@@ -287,6 +288,27 @@
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
                                         <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
+                                            <div style="float:right; margin-right:20px">
+                                            <!-- 완료 미완료 버튼 -->
+                                            	<c:choose>
+													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
+														<button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
+													</c:when>
+													<c:otherwise>
+														<button style="width:108px;" class="btn btn-outline-danger">과제미제출</button>
+													</c:otherwise>
+												</c:choose>
+                                            </div>
+                                            <div style="float:right; margin-right:10px">
+                                            	<c:choose>
+													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
+														<button style="width:90px;" class="btn btn-outline-primary">수강완료</button>
+													</c:when>
+													<c:otherwise>
+														<button style="width:90px;" class="btn btn-outline-success">수강중</button>
+													</c:otherwise>
+												</c:choose>
+                                            </div>
                                         </div>
                                         <!-- 강의 -->
                                         <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
@@ -297,32 +319,31 @@
                                         </c:otherwise>
                                         </c:choose> collapse">
 <!-- collapse여기부분 수정 -->
-
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
-                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
                                                     <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
 <!-- 여기도 수정 -->
-                                                    <span>${lect.ON_LECT_NM }</span>
+                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <c:if test="${sessionScope.appl_no != null}">
-                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}"><div style="margin-right: 10px;">
-                                                    진행율&nbsp
-                                                    <span class='float-right' style='height:20px; margin-right:45px;'>
-													${lect.LECT_PRGRS_RT} %
-													</span>
+                                                <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
+                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
+                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 10px 24px 0;'>
+	                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
+	                                                    width: 
+		                                                    <c:choose>
+			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%;</c:when>
+			                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
+		                                                    </c:choose>' 
+		                                                    aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+	                                                    </div>
                                                     </div>
-                                                    <!-- 여기부분 -->
-                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 45px 24px 0;'>
-                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; width: 
-                                                    <c:choose>
-                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%;</c:when>
-                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
-                                                    </c:choose>' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
-                                                    </div>
-                                                    </div>
-                                                    <!-- 여기부분 -->
+                                                    <div style='height:20px; line-height: 20px;'>&nbsp;
+														<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
+														<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+														</span>
+													</div>
                                                     </c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
                                                 </div>
                                                 </c:if>
@@ -354,7 +375,16 @@
                                                 </div>
                                                 <c:if test="${sessionScope.appl_no != null}">
                                                 <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-                                                    <div style='height:15px; width: 200px; margin-top: -3px;'><b>미제출</b></div>
+                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+                                                    	<c:choose>
+                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90}">
+                                                    			<b>제출</b>
+                                                    		</c:when>
+                                                    		<c:otherwise>
+                                                    			<b>미제출</b>
+                                                    		</c:otherwise>
+                                                    	</c:choose>
+                                                    </div>
                                                 </div>
                                                 </c:if>
                                             </div>

@@ -69,16 +69,17 @@
                                             <td class='text-center' onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">${i.SBJCT_NM }</td>
                                             <td class='text-center'>${i.CRCLM_NM }</td>
                                             <td class='text-center'>${i.KORN_FLNM }</td>
-                                            <c:if test="${sessionScope.appl_no != null}"><td>
-                                                <div style='height:20px; line-height: 20px;'>&nbsp;
-													<span class='float-right' style='height:20px; margin-right:45px;'>
-													${i.LECT_MAG }%
-													</span>
-												</div>
-                                                <div class='progress mb-4' style='height:20px; margin:5px 30px 25px 45px;'>
-                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
-                                                    width: ${i.LECT_MAG }%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>
-	                                            </div>
+                                            <c:if test="${sessionScope.appl_no != null}">
+	                                            <td>
+	                                                <div style='height:20px; line-height: 20px;'>&nbsp;
+														<span class='float-right' style='height:20px; margin-right:45px;'>
+														${i.LECT_MAG }%
+														</span>
+													</div>
+	                                                <div class='progress mb-4' style='height:20px; margin:5px 30px 25px 45px;'>
+	                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
+	                                                    width: ${i.LECT_MAG }%;' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'></div>
+		                                            </div>
 	                                            </td>
                                             </c:if>
 										</tr>
