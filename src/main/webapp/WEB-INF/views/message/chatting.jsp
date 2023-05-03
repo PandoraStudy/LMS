@@ -64,7 +64,7 @@
     #messageList{
         overflow-y:auto;
         width:100%;
-        hieght:100%;
+        min-height:400px;
         box-sizing: border-box;
         padding-left:22px;
     }
@@ -84,25 +84,39 @@
         border-top:2px solid black;
         margin-left:-20px;
     }
+    .time{ display: inline-block; margin:0px 5px;}
 </style>
 <script>
     const name = "${sessionScope.name}";
     $(function(){
         $("#msg").on('keypress', function(e){
             if(e.keyCode == 13){
-                let message = document.getElementById("msg").value;
-                if(message.replace(/ /gi,"") == ""){
+                let msg = document.getElementById("msg").value;
+                if(msg.replace(/ /gi,"") == ""){
                     alert("글을 입력하세요");
                     return false;
                 }else{
-                    wsmsg.send(name+":"+message);
+                    let date = new Date();
+                    var json = {
+                        "type":"message",
+                        "userName":name,
+                        "msg":msg,
+                        "time":date.getHours()+":"+date.getMinutes()
+                    }
+                    wsmsg.send(JSON.stringify(json));
+                    // wsmsg.send(name+":"+msg);
                     document.getElementById("msg").value = "";
                 }
             }
         });
     });
     function disconnect(){
-        wsmsg.send(name+"님이 나가셨습니다.");
+        var json = {
+            "type":"message",
+            "userName":name,
+            "msg" : " "
+        }
+        wsmsg.send(JSON.stringify(json));
         wsmsg.close();
         wslist.send(name+"님이 나가셨습니다.");
         wslist.close();

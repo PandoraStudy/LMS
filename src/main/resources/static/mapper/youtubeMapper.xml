@@ -56,10 +56,10 @@
             IFNULL(lmm.ATTEND_STATUS, '결석') AS 'ATTENDANCE',
             fi.FILE_SN as 'FILE_SN',
             GROUP_CONCAT(fi.FILE_SN_SEQ ORDER BY fi.FILE_SN_SEQ SEPARATOR ',') AS 'FILE_SN_SEQ',
-            GROUP_CONCAT(fi.PHYS_FILE_NM  ORDER BY fi.PHYS_FILE_NM  SEPARATOR ',') AS 'PHYS_FILE_NM',
-            GROUP_CONCAT(fi.FILE_EXTN_NM  ORDER BY fi.FILE_EXTN_NM  SEPARATOR ',') AS 'FILE_EXTN_NM',
-            GROUP_CONCAT(fi.FILE_PATH_NM  ORDER BY fi.FILE_PATH_NM  SEPARATOR ',') AS 'FILE_PATH_NM',
-            GROUP_CONCAT(fi.FILE_SZ ORDER BY fi.FILE_SZ  SEPARATOR ',') AS 'FILE_SZ'
+            GROUP_CONCAT(fi.PHYS_FILE_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'PHYS_FILE_NM',
+            GROUP_CONCAT(fi.FILE_EXTN_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'FILE_EXTN_NM',
+            GROUP_CONCAT(fi.FILE_PATH_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'FILE_PATH_NM',
+            GROUP_CONCAT(fi.FILE_SZ ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'FILE_SZ'
         FROM LECT_TM_INFO lti
             LEFT JOIN ON_LECT_INFO oli ON lti.LECT_YMD = oli.LECT_YMD
             LEFT JOIN LECT_MEET_INFO lmi ON lti.LECT_YMD = lmi.LECT_YMD
@@ -139,6 +139,24 @@
                 CRCLM_CD = #{crclm_cd },
                 SBJCT_MTHD_CD = #{sbjct_mthd_cd },
                 ATND_CD = 1
+    </insert>
+
+    <select id="getFileSnSeq" parameterType="HashMap" resultType="Integer">
+        SELECT MAX(FILE_SN_SEQ)
+            FROM FILE_INFO
+                WHERE
+                    FILE_SN = #{on_lect_sn }
+    </select>
+
+    <insert id="insertFileInfo" parameterType="HashMap">
+        INSERT INTO FILE_INFO
+            SET
+                FILE_SN = #{FILE_SN },
+                FILE_SN_SEQ = #{FILE_SN_SEQ },
+                PHYS_FILE_NM = #{PHYS_FILE_NM },
+                ORGNL_FILE_NM = #{ORGNL_FILE_NM },
+                FILE_EXTN_NM = #{FILE_EXTN_NM },
+                FILE_SZ = #{FILE_SZ }
     </insert>
 
 </mapper>

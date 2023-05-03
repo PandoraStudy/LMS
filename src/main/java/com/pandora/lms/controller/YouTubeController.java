@@ -7,6 +7,7 @@ import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONException;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -138,8 +137,6 @@ public class YouTubeController {
         lectureInfo.replace("LECT_PRGRS_RT", Math.ceil((Float) lectureInfo.get("LECT_PRGRS_RT")) );
         lectureInfo.put("LAST_PLAY_TM2", LAST_PLAY_TM2);
 
-        System.out.println(lectureInfo);
-
         view.addObject("lectureInfo", lectureInfo);
 
         return view;
@@ -193,6 +190,41 @@ public class YouTubeController {
         }
 
         return view;
+    }
+
+    @PostMapping("/modalUpload")
+    @ResponseBody
+    public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) {
+        String uploadSelect = (String) modalInfo.get("upload-select");
+        String result = null;
+
+        if(uploadSelect.equals("assign")) {
+            System.out.println("과제 등록");
+            result = "success";
+        } else if(uploadSelect.equals("file")) {
+            if(file.getSize() == 0) {
+                result = "empty_file";
+            } else {
+                Map<String, Object> fileInfo = new HashMap<>();
+                fileInfo.put("FILE_SN", modalInfo.get("on_lect_sn"));
+                Integer FILE_SN_SEQ = (Integer) sqlSession.selectOne("youtube.getFileSnSeq", modalInfo);
+                if(FILE_SN_SEQ != null) fileInfo.put("FILE_SN_SEQ",  FILE_SN_SEQ + 1);
+                else fileInfo.put("FILE_SN_SEQ",  1);
+                fileInfo.put("PHYS_FILE_NM", modalInfo.get("title"));
+                fileInfo.put("ORGNL_FILE_NM", FilenameUtils.getBaseName(file.getOriginalFilename()));
+                fileInfo.put("FILE_PATH_NM", null);
+                fileInfo.put("FILE_EXTN_NM", FilenameUtils.getExtension(file.getOriginalFilename()));
+                fileInfo.put("FILE_SZ", file.getSize());
+
+                System.out.println(fileInfo);
+                int file_result = sqlSession.insert("youtube.insertFileInfo", fileInfo);
+
+                if(file_result == 1) result = "success";
+                else result = "error";
+            }
+        }
+
+        return result;
     }
 
     @PostMapping("/uploadVideo")

@@ -107,9 +107,11 @@
                     </ul>
                 </div><!-- 페이징 끝 -->
                 <!-- 글쓰기 -->
+                <c:if test="${sessionScope.id eq 'dudu'}">
                 <div class="write">
                     <button class="btn btn-primary write_btn" onclick="location.href='/noticeWrite'">글쓰기</button>
                 </div>
+                </c:if>
                 <!--수정할 부분 끝-->
             </div><!-- End of Container -->
         </div><!-- End of Main Content -->
