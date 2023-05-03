@@ -48,7 +48,7 @@
         wslist.send(name);
     };
     wslist.onmessage = async function(event) {
-        try { // style="width:30px; height:30px; margin-right:3px;"
+        try {
             if (event !== null && event !== undefined) {
                 $("#messageList").empty();  // 새로고침하거나 페이지 이동하면 갱신되게끔 하기위해서 append한 div 제거하고 새로 출력
                 let list = event.data.split(" ");

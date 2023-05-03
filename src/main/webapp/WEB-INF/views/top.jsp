@@ -32,21 +32,6 @@
   <!-- Topbar Navbar -->
   <ul class="navbar-nav ml-auto">
 
-    <!-- 채팅 부분 -->
-    <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link" href="/chatting"><i class="xi-message-o xi-2x"></i></a>
-    </li>
-
-    <!-- 쪽지(메시지) 부분 -->
-    <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link" href="/messageBox"><i class="xi-mail xi-2x"></i>
-        <!-- 메시지 카운트 부분 -->
-        <c:if test="${sessionScope.id ne null && msgCnt ne 0 }">
-        &nbsp;<span class="badge badge-danger badge-counter msgCnt"></span>
-        </c:if>
-      </a>
-    </li>
-
     <div class="topbar-divider d-none d-sm-block"></div>
 
     <!-- 유저 프로필 부분 -->

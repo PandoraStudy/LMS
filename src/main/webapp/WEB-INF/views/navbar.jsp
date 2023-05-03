@@ -87,16 +87,16 @@
     <div class="sidebar-heading">추가적인 기능(이름수정필요)</div>
     <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">
-        <a style="height: 40px;" class="nav-link" href="charts.html">
+        <a style="height: 40px;" class="nav-link" href="/messageBox">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>캘린더</span>
+            <span>쪽지함</span>
         </a>
     </li>
     <!-- C 부분2 -->
     <li class="nav-item">
-        <a class="nav-link" href="/uploadVideo">
+        <a class="nav-link" href="/chatting">
             <i class="fas fa-fw fa-table"></i>
-            <span>동영상 업로드</span>
+            <span>채팅</span>
         </a>
     </li>
     <!-- Divider -->
