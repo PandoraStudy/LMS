@@ -10,6 +10,6 @@ import lombok.Data;
 @Component
 public class ApplInfoDTO {
 	private int APPL_NO, CRCLM_CD, CRCLM_CYCL, USER_NO, GENDER_CD, AGE, REL_CD, REG_CD;
-	private String KORN_FLNM, EML_ADDR, TELNO, ADDR;
+	private String KORN_FLNM, EML_ADDR, TELNO, ADDR, GENDER, ACADEMIC_STATUS;
 	private Date USER_BRDT;
 }

@@ -22,7 +22,10 @@ function search() {
 		console.log(response.data[0]);
         // 기존 테이블 내용 삭제
         result.innerHTML = "";
-
+		
+        // 조회된 데이터 건수
+        $('#cnt_subject').append(response.data.length);
+        
         // 데이터 출력
         for (let i = 0; i < response.data.length; i++) {
           const row = result.insertRow(-1);
@@ -129,7 +132,7 @@ margin: 5px;
 		교육과정정보
 	</div>
 		<div style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
-		<span id="cnt_sub"></span>건이 조회되었습니다.
+		<span id="cnt_subject"></span>건이 조회되었습니다.
 	</div>
 		<div class="main_content short">
 		<table id="result" class="main_table">
@@ -181,6 +184,7 @@ function sendAjax(rowData) {
 	          
 	          // 응답 데이터를 input 요소에 추가
 	          const data = response.data[0];
+	          
 	          //날짜
 	          const yearsInput = document.getElementById("years");
 	          yearsInput.value = data.CRCLM_CYCL.toString().substr(0,4);
@@ -230,72 +234,4 @@ function sendAjax(rowData) {
 	  xhr.setRequestHeader('Content-Type', 'application/json');
 	  xhr.send(JSON.stringify(rowData));
 	}
-</script>
-<script type="text/javascript">
-var columnSortingStates = {};
-
-function sortTable(n, table) {
-	  var rows, switching, i, x, y, shouldSwitch;
-	  switching = true;
-
-	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
-	  for (var key in columnSortingStates) {
-	    if (key != n) {
-	      columnSortingStates[key] = undefined;
-	    }
-	  }
-	  // 오름차순, 내림차순, 정렬x 순으로 정렬
-	  if (columnSortingStates[n] === undefined) {
-	    columnSortingStates[n] = "asc";
-	  } else if (columnSortingStates[n] === "asc") {
-	    columnSortingStates[n] = "desc";
-	  } else if (columnSortingStates[n] === "desc") {
-	    columnSortingStates[n] = "none";
-	  } else if (columnSortingStates[n] === "none") {
-	    columnSortingStates[n] = "asc";
-	  }
-	  dir = columnSortingStates[n];
-
-	  // 모든 th 요소에서 기호를 제거하십시오.
-	  var thElements = table.getElementsByTagName("th");
-	  for (var j = 0; j < thElements.length; j++) {
-	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
-	  }
-
-	  while (switching) {
-	    switching = false;
-	    rows = table.rows;
-	    for (i = 1; i < (rows.length - 1); i++) {
-	      shouldSwitch = false;
-	      x = rows[i].getElementsByTagName("TD")[n];
-	      y = rows[i + 1].getElementsByTagName("TD")[n];
-
-	      if (dir === "asc") {
-	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "desc") {
-	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "none") {
-	        break;
-	      }
-	    }
-	    if (shouldSwitch) {
-	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	      switching = true;
-	    }
-	  }
-
-	  // 정렬된 요소에 기호를 추가합니다.
-	  if (dir === "asc") {
-	    thElements[n].innerHTML += " ▲";
-	  } else if (dir === "desc") {
-	    thElements[n].innerHTML += " ▼";
-	  }
-	}
-
 </script>

@@ -58,6 +58,10 @@ body {
 	font-weight: 700;
 }
 
+.menu>ul>li:hover{
+	border-bottom: 2px solid black;
+}
+
 .top_search_bar {
 	position: absolute;
 	top: 0;
@@ -217,7 +221,7 @@ background-color: #303030;
 	line-height: 31px;
 	float: right;
 	box-sizing: border-box;
-	padding-left: 19px;
+	padding-left: 38px;
 }
 
 .li_step3:hover {
@@ -360,13 +364,13 @@ background-color: #303030;
 }
 
 .main_container_search>input {
-	width: 220px;
+	width: 210px;
 	/* width: calc((100% / 3) * (1 - 0.43)); */
 	min-width: 190px;
 	height: 23px;
 	float: left;
 	position: relative;
-	top: 5px;
+	top: 2px;
 	margin: 5px;
 }
 
@@ -377,7 +381,7 @@ background-color: #303030;
 	height: 28px;
 	float: left;
 	position: relative;
-	top: 5px;
+	top: 7px;
 }
 
 .div_input {
@@ -468,6 +472,9 @@ background-color: #303030;
 
 .main_table>thead>tr {
 	height: 36px;
+	position: sticky;
+    top: 0;
+    box-shadow: 0 1px 0 #c7ced2;
 }
 
 .main_table>thead>tr>th {
@@ -484,6 +491,10 @@ background-color: #303030;
 	border: 1px solid #c7ced2;
 	box-sizing: border-box;
 	border-collapse: collapse;
+}
+
+.main_table>tbody>tr:hover{
+	font-weight: 600;
 }
 
 .btnMenuX {
@@ -552,8 +563,17 @@ background-color: #303030;
 
 .noMargin {
 	margin: 0;
+	margin-left: 2px;
 }
 </style>
+<script type="text/javascript">
+$(document).ready(function () {
+    $(".menu > ul > li").click(function (e) {
+    	var text = $(this).text();
+    	$("#side_menu_title").text(text);
+    });
+});
+</script>
 <script type="text/javascript">
 //side_menu의 메뉴 toggle
 $(document).ready( function() {
@@ -684,11 +704,15 @@ function close_modal(id){
 }
 
 //modal 띄우기
-function modalSearch(id) {
+var val = null;
+var relay_input = null;
+function modalSearch(id, value, input) {
     var modal = document.getElementById("modal_opacity");
     if (modal.style.display === "none" || modal.style.display === "") {
         modal.style.display = "block";
         $("#modal_opacity").load("/"+id);
+        val = $("#" + value).val();
+        relay_input = input;
     } else {
         modal.style.display = "none";
     }
@@ -698,69 +722,69 @@ function modalSearch(id) {
 var columnSortingStates = {};
 
 function sortTable(n, table) {
-	  var rows, switching, i, x, y, shouldSwitch;
-	  switching = true;
+	var rows, switching, i, x, y, shouldSwitch;
+	switching = true;
 
-	  // 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
-	  for (var key in columnSortingStates) {
-	    if (key != n) {
-	      columnSortingStates[key] = undefined;
-	    }
-	  }
+	// 새 열을 클릭하면 다른 모든 columnSortingStates를 정의되지 않음으로 재설정
+	for (var key in columnSortingStates) {
+		if (key != n) {
+			columnSortingStates[key] = undefined;
+		}
+	}
 	
-	  // 오름차순, 내림차순, 정렬x 순으로 정렬
-	  if (columnSortingStates[n] === undefined) {
-	    columnSortingStates[n] = "asc";
-	  } else if (columnSortingStates[n] === "asc") {
-	    columnSortingStates[n] = "desc";
-	  } else if (columnSortingStates[n] === "desc") {
-	    columnSortingStates[n] = "none";
-	  } else if (columnSortingStates[n] === "none") {
-	    columnSortingStates[n] = "asc";
-	  }
-	  dir = columnSortingStates[n];
+	// 오름차순, 내림차순, 정렬x 순으로 정렬
+	if (columnSortingStates[n] === undefined) {
+		columnSortingStates[n] = "asc";
+	} else if (columnSortingStates[n] === "asc") {
+		columnSortingStates[n] = "desc";
+	} else if (columnSortingStates[n] === "desc") {
+		columnSortingStates[n] = "none";
+	} else if (columnSortingStates[n] === "none") {
+		columnSortingStates[n] = "asc";
+	}
+	dir = columnSortingStates[n];
 
-	  // 모든 th 요소에서 기호를 제거하십시오.
-	  var thElements = table.getElementsByTagName("th");
-	  for (var j = 0; j < thElements.length; j++) {
-	    thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
-	  }
+	// 모든 th 요소에서 기호를 제거하십시오.
+	var thElements = table.getElementsByTagName("th");
+	for (var j = 0; j < thElements.length; j++) {
+		thElements[j].innerHTML = thElements[j].innerHTML.replace("▲", "").replace("▼", "");
+	}
 
-	  while (switching) {
-	    switching = false;
+	while (switching) {
+		switching = false;
 	    rows = table.rows;
 	    for (i = 1; i < (rows.length - 1); i++) {
-	      shouldSwitch = false;
-	      x = rows[i].getElementsByTagName("TD")[n];
-	      y = rows[i + 1].getElementsByTagName("TD")[n];
-
-	      if (dir === "asc") {
-	        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-	          shouldSwitch = true;
-	          break;
-	        }
-	      } else if (dir === "desc") {
+			shouldSwitch = false;
+			x = rows[i].getElementsByTagName("TD")[n];
+			y = rows[i + 1].getElementsByTagName("TD")[n];
+			
+			if (dir === "asc") {
+		        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+					shouldSwitch = true;
+					break;
+		        }
+			} else if (dir === "desc") {
 	        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
 	          shouldSwitch = true;
 	          break;
 	        }
-	      } else if (dir === "none") {
-	        break;
-	      }
+			} else if (dir === "none") {
+				break;
+			}
 	    }
 	    if (shouldSwitch) {
-	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-	      switching = true;
+			rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			switching = true;
 	    }
-	  }
-
-	  // 정렬된 요소에 기호를 추가합니다.
-	  if (dir === "asc") {
-	    thElements[n].innerHTML += " ▲";
-	  } else if (dir === "desc") {
-	    thElements[n].innerHTML += " ▼";
-	  }
 	}
+
+	// 정렬된 요소에 기호를 추가합니다.
+	if (dir === "asc") {
+		thElements[n].innerHTML += " ▲";
+	} else if (dir === "desc") {
+		thElements[n].innerHTML += " ▼";
+	}
+}
 
 </script>
 </head>
@@ -805,7 +829,7 @@ function sortTable(n, table) {
 		</div>
 		<div class="main_body">
 			<div class="side_menu">
-				<div class="side_menu_title">학사</div>
+				<div class="side_menu_title" id="side_menu_title">학사</div>
 				<div class="side_menu_list">
 					<ul>
 						<li class="li_step1">수업관리
@@ -862,146 +886,200 @@ function sortTable(n, table) {
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">시범
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">시범2
 									<ul class="side_submenu_sub">
-										<li class="li_step3" id="mainContentTest2">empty3</li>
+										<li class="li_step3" id="instrInfo">시범3</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">수강관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">수강코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">수강일정관리</li>
+									</ul>
+								</li>
+								<li class="li_step2">수강대상관리
+									<ul class="side_submenu_sub">
+										<li class="li_step3">수강대상자관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">수강대상자조회</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">계절학기
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">계절학기코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">계절학기일정관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">계절학기기준관리</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">성적관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">성적코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">성적일정관리</li>
+									</ul>
+								</li>
+								<li class="li_step2">성적등급기준
+									<ul class="side_submenu_sub">
+										<li class="li_step3">성적등급기준</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">장학관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">장학코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">장학일정관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">장학기준정보</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">등록관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">등록코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">등록일정관리</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">교직관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">교직코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">교직일정관리</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">졸업관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">졸업코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">졸업일정관리</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">학정인정관리
+							<ul class="side_submenu_sub">
+								<li class="li_step3">사회봉사학점인정</li>
+							</ul>
+							<ul class="side_submenu_sub">
+								<li class="li_step3">채플학점인정</li>
+							</ul>
+						</li>
+						<li class="li_step1">비교과관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">비교과기준관리</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">설문종합
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">설문일정관리</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">국제교류
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">국제교류코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">국제교류일정관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">국제교류기준정보</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">예비군관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">예비군코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">예비군일정관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">예비군기준정보</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">학생생활관
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">생활관코드관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">생활관일정관리</li>
+									</ul>
+									<ul class="side_submenu_sub">
+										<li class="li_step3">생활관기준정보</li>
 									</ul>
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">empty1
+						<li class="li_step1">입시관리
 							<ul class="side_submenu">
-								<li class="li_step2">empty2
+								<li class="li_step2">기준정보관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">입시코드관리</li>
 									</ul>
-								</li>
-							</ul>
-						</li>
-						<li class="li_step1">empty1
-							<ul class="side_submenu">
-								<li class="li_step2">empty2
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">입시일정관리</li>
 									</ul>
-								</li>
-							</ul>
-						</li>
-						<li class="li_step1">empty1
-							<ul class="side_submenu">
-								<li class="li_step2">empty2
 									<ul class="side_submenu_sub">
-										<li class="li_step3">empty3</li>
+										<li class="li_step3">입시기준정보</li>
 									</ul>
 								</li>
 							</ul>

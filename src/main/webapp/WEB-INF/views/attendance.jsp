@@ -30,9 +30,9 @@ float: left;
 			</span>
 			<div>학번/성명</div>
 			<span class="div_input">
-			<input class="div_input_left" disabled value="">
-			<input class="div_input_right" name="department">
-			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('studentsModal')">
+			<input class="div_input_left" id="appl_NO_disabled_input_attendance" disabled value="">
+			<input class="div_input_right" name="studentName" id="korn_FLNM_readonly_input_attendance" value="">
+			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('studentsModal', 'korn_FLNM_readonly_input_attendance', 'attendance')">
 			</span>
 			<div>소속학과</div>
 			<input disabled="disabled" value="">

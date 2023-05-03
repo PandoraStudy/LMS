@@ -15,18 +15,15 @@ $(document).ready( function() {
 					var result = data;
 					var str = "";
 					$.each(result, function(i, info) {
-						str += '<tr><td>' + info.procedure
-								+ '</td><td>' + info.admission
-								+ '</td><td>' + info.student_no
-								+ '</td><td>' + info.name
-								+ '</td><td>' + info.birth
-								+ '</td><td>' + info.gender
-								+ '</td><td>' + info.department
-								+ '</td><td>' + info.day_and_night
-								+ '</td><td>' + info.grade
-								+ '</td><td>' + info.division
-								+ '</td><td>' + info.academic_status
-								+ '</td><td>' + info.date_of_admission
+						str += '<tr><td>' + info.appl_NO
+								+ '</td><td>' + info.korn_FLNM
+								+ '</td><td>' + info.crclm_CD
+								+ '</td><td>' + info.user_BRDT
+								+ '</td><td>' + info.age
+								+ '</td><td>' + info.gender_CD
+								+ '</td><td>' + info.eml_ADDR
+								+ '</td><td>' + info.telno
+								+ '</td><td>' + info.addr
 								+ '</td></tr>';
 					});
 					$('#tableBody').append(str);
@@ -53,16 +50,17 @@ $(document).ready( function() {
 				<option value="">(전체)</option>
 				<option value="재학" selected>재학</option>
 				<option value="휴학">휴학</option>
-				<option value="제적">제적</option>
-				<option value="수료">수료</option>
-				<option value="졸업">졸업</option>
-				<option value="유보">유보</option>
+<!-- 				<option value="제적">제적</option> -->
+<!-- 				<option value="수료">수료</option> -->
+<!-- 				<option value="졸업">졸업</option> -->
+<!-- 				<option value="유보">유보</option> -->
 			</select>
 			<div>소속학과</div>
 			<span class="div_input">
-			<input class="div_input_left" value="" name="crclm_CD" id="crclm_CD_disabled_input" disabled>
-			<input class="div_input_right" name="department" id="crclm_NM_readonly_input">
-			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('departmentModal')">
+			<input type="hidden" name="crclm_CD_able" value="1">
+			<input class="div_input_left" value="" name="crclm_CD" id="crclm_CD_disabled_input_studentList" disabled>
+			<input class="div_input_right" name="department" id="crclm_NM_readonly_input_studentList">
+			<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('departmentModal', 'crclm_NM_readonly_input_studentList', 'studentList')">
 			</span>
 		</div>
 	</form>
@@ -78,18 +76,15 @@ $(document).ready( function() {
 		<table id="main_table" class="main_table">
 			<thead>
 				<tr>
-					<th onclick="sortTable(0, main_table)">과정</th>
-					<th onclick="sortTable(1, main_table)">입학</th>
-					<th onclick="sortTable(2, main_table)">학번</th>
-					<th onclick="sortTable(3, main_table)">이름</th>
-					<th onclick="sortTable(4, main_table)">생년월일</th>
+					<th onclick="sortTable(0, main_table)">학번</th>
+					<th onclick="sortTable(1, main_table)">이름</th>
+					<th onclick="sortTable(2, main_table)">소속학과</th>
+					<th onclick="sortTable(3, main_table)">생년월일</th>
+					<th onclick="sortTable(4, main_table)">나이</th>
 					<th onclick="sortTable(5, main_table)">성별</th>
-					<th onclick="sortTable(6, main_table)">소속학과</th>
-					<th onclick="sortTable(7, main_table)">주야</th>
-					<th onclick="sortTable(8, main_table)">학년</th>
-					<th onclick="sortTable(9, main_table)">분반</th>
-					<th onclick="sortTable(10, main_table)">학적상태</th>
-					<th onclick="sortTable(11, main_table)">입학일자</th>
+					<th onclick="sortTable(6, main_table)">이메일</th>
+					<th onclick="sortTable(7, main_table)">연락처</th>
+					<th onclick="sortTable(8, main_table)">주소</th>
 				</tr>
 			</thead>
 			<tbody id="tableBody">

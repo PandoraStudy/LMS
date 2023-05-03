@@ -1,6 +1,5 @@
 package com.pandora.lms.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pandora.lms.dto.AdminDTO;
+import com.pandora.lms.dto.UserApplViewDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
 import com.pandora.lms.dto.CrclmInfoDTO;
+import com.pandora.lms.dto.InstrInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
 import com.pandora.lms.service.AdminService;
@@ -26,7 +26,7 @@ public class AdminController {
 	AdminService adminService;
 	
 	@Autowired
-	AdminDTO adminDTO;
+	UserApplViewDTO adminDTO;
 	
 	@Autowired
 	SearchDTO searchDTO;
@@ -50,19 +50,20 @@ public class AdminController {
 	
 	@ResponseBody
 	@PostMapping("/search/studentList")
-	public List<AdminDTO> search(@RequestParam("name") String name
+	public List<ApplInfoDTO> studentList(@RequestParam("name") String name
 							, @RequestParam("academic_status") String academic_status
-							, @RequestParam("department") String department
+							, @RequestParam("crclm_CD_able") int crclm_CD_able
 			) {
-		SearchDTO search = new SearchDTO();
 		
-		search.setName(name);
-		search.setAcademic_status(academic_status);
-		search.setDepartment(department);
+		ApplInfoDTO appl = new ApplInfoDTO();
+		System.out.println(name + ":" +academic_status + ":" + crclm_CD_able + "dd");
+		appl.setKORN_FLNM(name);
+		appl.setACADEMIC_STATUS(academic_status);
+		appl.setCRCLM_CD(crclm_CD_able);
 		
-		List<AdminDTO> searchList = adminService.searchList(search);
+		List<ApplInfoDTO> studentList = adminService.studentList(appl);
 		
-		return searchList;
+		return studentList;
 	}
 
 	@ResponseBody
@@ -111,6 +112,28 @@ public class AdminController {
 		return "departmentModal";
 	}
 	
+	@ResponseBody
+	@PostMapping("/search/departmentModal")
+	public List<CrclmInfoDTO> departmentModal(@RequestParam("department") String department
+			) {
+		CrclmInfoDTO crclm = new CrclmInfoDTO();
+		System.out.println("ddddd");
+		crclm.setCRCLM_NM(department);
+		
+		List<CrclmInfoDTO> departmentModal = adminService.departmentModal(crclm);
+		
+		for (CrclmInfoDTO crclmInfo : departmentModal) {
+		    int crclmCd = crclmInfo.getCRCLM_CD();
+		    int thirdDigit = (crclmCd / 1000) % 10;
+		    if (thirdDigit == 0) {
+		        crclmInfo.setDepartment("학부");
+		    } else {
+		        crclmInfo.setDepartment("학과");
+		    }
+		}
+		return departmentModal;
+	}
+	
 	@GetMapping("/studentsModal")
 	public String studentsModal() {
 		return "studentsModal";
@@ -126,59 +149,42 @@ public class AdminController {
 		
 		List<ApplInfoDTO> studentsModal = adminService.studentsModal(appl);
 		
-		System.out.println(studentsModal+"컨트롤러");
+		for (ApplInfoDTO applInfo : studentsModal) {
+			int gender = applInfo.getGENDER_CD();
+			if (gender == 1) {
+				applInfo.setGENDER("남자");
+			}else {
+				applInfo.setGENDER("여자");
+			}
+		}
 		return studentsModal;
 	}
 	
+	@GetMapping("/instructorModal")
+	public String instructorModal() {
+		return "instructorModal";
+	}
+	
 	@ResponseBody
-	@PostMapping("/search/departmentModal")
-	public List<CrclmInfoDTO> departmentModal(@RequestParam("department") String department
-			) {
-		CrclmInfoDTO crclm = new CrclmInfoDTO();
-		System.out.println("ddddd");
-		crclm.setCRCLM_NM(department);
+	@PostMapping("/search/instructorModal")
+	public List<InstrInfoDTO> instructorModal(@RequestParam("name") String name){
 		
-		List<CrclmInfoDTO> departmentModal = adminService.departmentModal(crclm);
+		InstrInfoDTO instr = new InstrInfoDTO();
 		
-		for (CrclmInfoDTO crclmInfo : departmentModal) {
-		    int crclmCd = crclmInfo.getCRCLM_CD();
-		    int thirdDigit = (crclmCd / 1000) % 10;
-System.out.println(crclmCd + "ddd");
-		    if (thirdDigit == 0) {
-		        crclmInfo.setDepartment("학부");
-		    } else {
-		        crclmInfo.setDepartment("학과");
-		    }
+		instr.setKORN_FLNM(name);
+		
+		List<InstrInfoDTO> instructorModal = adminService.instructorModal(instr);
+		
+		for (InstrInfoDTO instrInfo : instructorModal) {
+			int gender = instrInfo.getGENDER_CD();
+			if (gender == 10) {
+				instrInfo.setGENDER("남자");
+			}else {
+				instrInfo.setGENDER("여자");
+			}
 		}
-		return departmentModal;
-	}
-	
-	
-	
-	
-	
-	
-	
-	@GetMapping("/mainContentTest2")
-	public String mainContentTest2() {
-		return "mainContentTest2";
-	}
-	
-	@ResponseBody
-	@PostMapping("/search2")
-	public List<AdminDTO> search2(@RequestParam("name") String name
-			, @RequestParam("academic_status") String academic_status
-			, @RequestParam("department") String department
-			) {
-		SearchDTO search = new SearchDTO();
-		
-		search.setName(name);
-		search.setAcademic_status(academic_status);
-		search.setDepartment(department);
-		
-		List<AdminDTO> searchList = adminService.searchList(search);
-		
-		return searchList;
+		System.out.println(instructorModal + "ㅇㅇ");
+		return instructorModal;
 	}
 }
 
