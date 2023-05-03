@@ -3,6 +3,7 @@ package com.pandora.lms.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.pandora.lms.dto.AdminInfoDto;
 import com.pandora.lms.dto.LoginDTO;
 import com.pandora.lms.dto.UserInfoDto;
 @Mapper
@@ -22,4 +23,6 @@ public interface LoginDAO {
 	int getINSTR(int userNo);
 
 	int save(UserInfoDto userInfoDto);
+
+	AdminInfoDto findByAdminname(String username);
 }

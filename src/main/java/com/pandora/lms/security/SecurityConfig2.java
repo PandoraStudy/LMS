@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -19,47 +20,45 @@ import com.pandora.lms.service.LoginService;
 
 @Configuration
 @EnableWebSecurity
-@Order(1)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(2)
+public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
+	
+	
 	
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
 	
 //	@Autowired
-//	private LoginService LoginService;
-    
-	@Autowired
-	private LoginService LoginService;
-	
-//    @Bean
-//    public UserDetailsService AdminLoginService() {return new AdminLoginService();} 
+//	private LoginService loginService;
+//	
 //    
-
-//    
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//	     auth.userDetailsService(loginService);
+//	}
+//	
 //    @Bean
-//	public DaoAuthenticationProvider authenticationProvider1() {
+//    public UserDetailsService LoginService() {return new LoginService();} 
+//    
+//	@Bean
+//	public PasswordEncoder passwordEncoder2() {
+//		return new BCryptPasswordEncoder();
+//	}
+//
+//	@Bean
+//	public DaoAuthenticationProvider authenticationProvider2() {
 //		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(AdminLoginService());
-//		authProvider.setPasswordEncoder(passwordEncoder());
+//		authProvider.setUserDetailsService(LoginService());
+//		authProvider.setPasswordEncoder(passwordEncoder2());
 //
 //		return authProvider;
 //	}
-//  @Bean
-//  public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
-//    return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
-//  }
-	
-	
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(LoginService);
-	}
-	  
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    	http.authorizeRequests().antMatchers("/").permitAll();
+    	
     	http.csrf().disable();
-        http.antMatcher("/admin/**").authorizeRequests()
+        http.authorizeRequests()
         	.antMatchers("/css/**").permitAll()
         	.antMatchers("/scss/**").permitAll()
         	.antMatchers("/vendor/**").permitAll()
@@ -67,14 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/img/**").permitAll()
         	.antMatchers("/join").permitAll()
         	.antMatchers("/resources/**").permitAll()
-            .anyRequest().hasAnyAuthority("30");
+            .anyRequest().authenticated();
 
         http.formLogin()
-            .loginPage("/admin/login")
+            .loginPage("/login")
             .usernameParameter("id")
             .passwordParameter("pw")
-            .loginProcessingUrl("/admin/loginaction")
-            .defaultSuccessUrl("/admin/page1")
+            .loginProcessingUrl("/login")
+            .successHandler(authenticationSuccessHandler)
             .permitAll();
 
         
@@ -82,26 +81,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement()
             .sessionFixation().changeSessionId()
             .maximumSessions(1)
-            .expiredUrl("/admin/login")
+            .expiredUrl("/login")
             .maxSessionsPreventsLogin(true);
             
             
             http
             .logout()
-            .logoutSuccessUrl("/admin/login")
+            .logoutSuccessUrl("/login")
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .permitAll();
             
     }
-    
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
-
 
 }
