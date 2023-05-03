@@ -21,11 +21,11 @@
 </head>
 <script>
     /* 교시 코드 */
-    let BGNG_CLS_CD = "${lectureInfo.ON_LECT_SN}";
-    let END_CLS_CD = "${lectureInfo.ON_LECT_SN}";
+    let BGNG_CLS_CD = "${lectureInfo.BGNG_CLS_CD}";
+    let END_CLS_CD = "${lectureInfo.END_CLS_CD}";
 
     /* 오늘 날짜를 대신합니다. */
-    let today = 3;
+    let today = 4;
 
     /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
     var tag = document.createElement('script');

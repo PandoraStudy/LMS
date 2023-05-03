@@ -132,6 +132,9 @@ public class YouTubeController {
         }
 
         userInfo.put("appl_no", session.getAttribute("appl_no"));
+
+        System.out.println(userInfo);
+
         Map<String, Object> lectureInfo = sqlSession.selectOne("youtube.lectDetail", userInfo);
 
         if(session.getAttribute("appl_no") != null) {
@@ -167,6 +170,10 @@ public class YouTubeController {
         Integer today = Integer.parseInt(String.valueOf(userInfo.get("today")));
         Integer BGNG_CLS_CD = clsCd.get("BGNG_CLS_CD");
         Integer END_CLS_CD = clsCd.get("END_CLS_CD");
+
+        System.out.println("현재 교시" + today);
+        System.out.println("시작 교시" + BGNG_CLS_CD);
+        System.out.println("종료 교시" + END_CLS_CD);
 
         String msg;
 
