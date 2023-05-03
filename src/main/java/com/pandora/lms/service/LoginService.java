@@ -1,22 +1,24 @@
 package com.pandora.lms.service;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.pandora.lms.dao.LoginDAO;
 import com.pandora.lms.dto.LoginDTO;
 import com.pandora.lms.dto.UserInfoDto;
 import com.pandora.lms.dto.securityinfo;
 
-import lombok.AllArgsConstructor;
-@AllArgsConstructor
 @Service
 public class LoginService implements UserDetailsService{
+	
+	@Autowired
+    private LoginDAO loginDAO;
 
-    private final LoginDAO loginDAO;
+    
     public LoginDTO login(LoginDTO loginInfo) {
         return loginDAO.login(loginInfo);
     }
@@ -29,7 +31,7 @@ public class LoginService implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     	System.out.println("메소드명 : loadUserByUsername");
         UserInfoDto user = loginDAO.findByUsername(username);
-        
+        	
         securityinfo newone = new securityinfo(user);
         
         newone.setUserno(user.getUSER_NO());

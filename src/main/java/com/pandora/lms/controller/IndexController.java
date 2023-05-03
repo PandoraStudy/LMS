@@ -33,7 +33,7 @@ public class IndexController {
             System.err.println(ipGetter.getIP());
             mv.addObject("list", list);
             mv.addObject("totalCount", totalCount);
-            mv.addObject("myIp",ipGetter.getIP());
+            mv.addObject("myIp",ipGetter.getIP());            
             return mv;
    }
 

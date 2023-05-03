@@ -1,21 +1,24 @@
 package com.pandora.lms.controller;
 
-import com.pandora.lms.service.NoticeService;
-import com.pandora.lms.util.TextChangeUtil;
-import com.pandora.lms.util.socket.AlarmHandler;
-import lombok.AllArgsConstructor;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.pandora.lms.service.NoticeService;
+import com.pandora.lms.util.TextChangeUtil;
+import com.pandora.lms.util.socket.AlarmHandler;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Controller
@@ -26,14 +29,13 @@ public class NoticeController {
     private final AlarmHandler alarmHandler;
 
     @GetMapping("/noticeIframe")
-    public String noticeIframe() { return "/notice/noticeIframe"; }
+    public String noticeIframe() { 
+    	return "/notice/noticeIframe"; 
+    	}
 
     @GetMapping("/notice")
     public ModelAndView noticeList(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo, HttpServletRequest request, HttpSession session) {
-        if (session.getAttribute("user_no") == null) {
-            ModelAndView login = new ModelAndView("/login/login");
-            return login;
-        } else {
+
             ModelAndView mv = new ModelAndView("/notice/notice");
             Map<String, Object> pages = new HashMap<String, Object>();
             String searchType = request.getParameter("searchType");
@@ -54,14 +56,11 @@ public class NoticeController {
             return mv;
         }
 
-    }
+    
 
     @GetMapping("/noticeDetail")
     public ModelAndView noticeDetail(HttpServletRequest request, HttpSession session) {
-        if (session.getAttribute("user_no") == null) {
-            ModelAndView login = new ModelAndView("/login/login");
-            return login;
-        } else {
+
             ModelAndView mv = new ModelAndView("/notice/noticeDetail");
             String rowNum = request.getParameter("rowNum");
             String totalCnt = request.getParameter("totalCnt");
@@ -80,7 +79,7 @@ public class NoticeController {
             mv.addObject("totalCnt", totalCnt);
             return mv;
         }
-    }
+    
 
     @GetMapping("/noticeWrite")
     public String noticeWrite(HttpSession session) {
