@@ -30,8 +30,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 	        session.setAttribute("id", userDetails.getUser_id());
 	        session.setAttribute("division", userDetails.getDivision());
 	        session.setAttribute("name", userDetails.getUser_name());
-	        session.setAttribute("instr_no", userDetails.getINSTR_NO());
-	        session.setAttribute("appl_no", userDetails.getAPPL_NO());
+		 	if(userDetails.getDivision().equals("20")) {session.setAttribute("instr_no", userDetails.getINSTR_NO());}
+		 	if(userDetails.getDivision().equals("10")) {session.setAttribute("appl_no", userDetails.getAPPL_NO());  }
 	        Enumeration<String> attributeNames = session.getAttributeNames();
 	        
 	        // Iterate through all attributes and print their values to the console
