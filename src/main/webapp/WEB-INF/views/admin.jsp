@@ -247,10 +247,12 @@ background-color: #303030;
 	line-height: 31px;
 	float: right;
 	box-sizing: border-box;
-	padding-left: 38px;
+	padding-left: 48px;
 	display: none;
 }
-
+.side_submenu>li:focus{
+	font-weight: 600;
+}
 .side_submenu_sub {
 	padding: 0;
 	margin: 0;
@@ -838,7 +840,7 @@ function sortTable(n, table) {
 									<ul class="side_submenu_sub">
 										<li class="li_step3" title="학생명부조회" id="studentList">학생명부조회</li>
 										<li class="li_step3" id="li_content4">학생일정관리</li>
-										<li class="li_step3" id="li_content3">출결관리</li>
+										<li class="li_step3" id="check">출결관리</li>
 										<li class="li_step3">강사일정관리</li>
 									</ul>
 								</li>
@@ -886,11 +888,11 @@ function sortTable(n, table) {
 								</li>
 							</ul>
 						</li>
-						<li class="li_step1">시범
+						<li class="li_step1">강사관리
 							<ul class="side_submenu">
-								<li class="li_step2">시범2
+								<li class="li_step2">강사관리
 									<ul class="side_submenu_sub">
-										<li class="li_step3" id="instrInfo">시범3</li>
+										<li class="li_step3" id="instrInfo">강사명부조회</li>
 									</ul>
 								</li>
 							</ul>

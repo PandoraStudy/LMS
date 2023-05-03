@@ -5,7 +5,9 @@
 	<select id="AjaxStudent" parameterType="HashMap" resultType="HashMap">
     	SELECT * from USER_APPL_VIEW
     	WHERE USER_NO = #{studentNum} 
-    	AND CRCLM_CYCL LIKE CONCAT('%', #{Search01}, '%')
+    	<if test="Search01 != null">
+    		AND CRCLM_CYCL LIKE CONCAT('%', #{Search01}, '%')
+    	</if>
     	<if test="departmentName != null">
        	 	AND CRCLM_NM LIKE CONCAT('%', #{departmentName }, '%')
     	</if>

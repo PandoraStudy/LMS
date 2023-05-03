@@ -36,13 +36,12 @@ public class CheckController {
 	    
 	    
 	    String Search01 = year+semester;
-	    
 	    Map<String, Object> paramMap = new HashMap<>();
 	    paramMap.put("Search01", Search01);
 	    paramMap.put("studentNum", studentNum);
 	    paramMap.put("departmentName", departmentName);
 	    
-	   
+	    
 	    
 	    // 필터링 로직 수행
 	    List<Map<String, Object>> filteredData = checkService.AjaxStudent(paramMap);

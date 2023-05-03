@@ -1,22 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<html>
-<head>
-<meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<title>과목 화면</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 function search_check() {
   const year_ck = document.getElementById("year_ck").value;
   const semester_ck = document.getElementById("semester_ck").value;
-  const studentNum_ck = document.getElementById("student_num").value;
+  const studentNum_ck = document.getElementById("appl_NO_disabled_input_check").value;
   const departmentName_ck = document.getElementById("department_name").value;
 	console.log(year_ck + " " + semester_ck + " " + studentNum_ck + " " + departmentName_ck); 
   
-  if(studentNum_ck == ""){
-	  alert("학번을 입력해주세요");
-	  return;
-  }
+//   if(studentNum_ck == ""){
+// 	  alert("학번을 입력해주세요");
+// 	  return;
+//   }
   
   const data = {
     year_ck : year_ck,
@@ -29,7 +23,7 @@ function search_check() {
   xhr.onreadystatechange = function() {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       if (xhr.status === 200) {
-        const result = document.getElementById("result").getElementsByTagName("tbody")[0];
+        const result = document.getElementById("main_table_check").getElementsByTagName("tbody")[0];
         const response = JSON.parse(xhr.responseText);
         // 기존 테이블 내용 삭제
         result.innerHTML = "";
@@ -98,79 +92,61 @@ function search_check() {
 
 
 </script>
-</head>
-<style>
-.second_area{
-	width: 1000px;
-	height: 200px;
-	overflow-y: scroll;
-}
+<div id="main_container_load">
+	<div class="main_container_title">
+		<img class="title_img" alt="title" src="/img/icon/title.png">출결조회
+	</div>
 
-#result thead {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: #fff;
-}
+		<div class="main_container_interspace">
+			<input type="button" value="조회" id="search_btn" class="search_btn" onclick="search_check()">
+		</div>
+		<div class="main_container_search">
+			<div>학년도</div>
+			<span class="div_input">
+				<input class="div_input_left" id="year_ck" name="year_ck" value="2023">
+				<select class="div_select_right" name=""  id="semester_ck">
+					<option value="0">전체</option>
+				 	<option value="01" selected>1학기</option>
+				 	<option value="02">2학기</option>
+				 	<option value="03">하계 계절학기</option>
+				 	<option value="04">동계 계절학기</option>
+				</select>
+			</span>
+			<div>학번/성명</div>
+			<span class="div_input">
+				<input class="div_input_left" id="appl_NO_disabled_input_check" value="">
+				<input class="div_input_right" name="studentName" id="korn_FLNM_readonly_input_check" value="">
+				<img alt="magnifyingBtn" src="/img/icon/magnifyingBtn.png" class="magnifyingBtn" onclick="modalSearch('studentsModal', 'korn_FLNM_readonly_input_check', 'check')">
+			</span>
+			<div>소속학과</div>
+			<input disabled="disabled" value="" id="department_name" name="department_name">
+		</div>
 
-.top_text{
-	width: 90px;
-	height: 25px;
-}
-
-select{
-	height: 25px;
-}
-
-th{
-	width:105px;
-	text-align: center;
-}
-
-td{
-	text-align: center;
-}
-</style>
-<!DOCTYPE html>
-
-<body>
-    <h1>과목화면</h1>
-
-학년도 <input type="text" class="top_text" id="year_ck" name="year_ck" value="2023">
-		 <select id="semester_ck">
-		 	<option value="0">전체</option>
-		 	<option value="01">1학기</option>
-		 	<option value="02">2학기</option>
-		 	<option value="03">하계 계절학기</option>
-		 	<option value="04">동계 계절학기</option>
-		 </select>&nbsp&nbsp&nbsp
-성명/학번 :  <input type="text" id="student_name" name="student_name" disabled="disabled">
-			<input type="text" id="student_num" name="student_num">&nbsp&nbsp&nbsp
-소속학과 : <input type="text" class="top_text" id="department_name" name="department_name">&nbsp&nbsp&nbsp
-<button class="btn btn-outline-info btn-sm" onclick="search_check()">조회</button>
-<br><br><br>
-==========================================================================================
-<div class="second_area">
-<table id="result">
-  	<thead>
-    	<tr>
-			<th>개설학과</th>
-			<th>과목코드</th>
-			<th>개설과목</th>
-			<th>수강년도</th>
-			<th>학기</th>
-			<th>이수구분</th>
-			<th>담당교수</th>
-			<th>출석</th>
-			<th>결석</th>
-			<th>지각</th>
-    	</tr>
-  	</thead>
-  	<tbody></tbody>	
-</table>
+	<div class="main_container_subtitle">
+		<div class="blue_bar"></div>
+		강사 정보
+	</div>
+	<div style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
+		<span id="cnt_list"></span>건이 조회되었습니다.
+	</div>
+	<div class="main_content">
+		<table id="main_table_check" class="main_table">
+			<thead>
+				<tr>
+					<th onclick="sortTable(0, main_table_check)">개설학과</th>
+					<th onclick="sortTable(1, main_table_check)">과목코드</th>
+					<th onclick="sortTable(2, main_table_check)">개설과목</th>
+					<th onclick="sortTable(3, main_table_check)">수강년도</th>
+					<th onclick="sortTable(4, main_table_check)">학기</th>
+					<th onclick="sortTable(5, main_table_check)">이수구분</th>
+					<th onclick="sortTable(6, main_table_check)">담당교수</th>
+					<th onclick="sortTable(7, main_table_check)">출석</th>
+					<th onclick="sortTable(8, main_table_check)">결석</th>
+					<th onclick="sortTable(9, main_table_check)">지각</th>
+				</tr>
+			</thead>
+			<tbody id="tableBody_check">
+			</tbody>
+		</table>
+	</div>
 </div>
-===========================================================================================
-
-
-</body>
-</html>

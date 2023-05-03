@@ -121,7 +121,7 @@ function sendInstrNo(instrNo) {
 
 	<div class="main_container_subtitle">
 		<div class="blue_bar"></div>
-		학생 정보
+		강사 정보
 	</div>
 	<div style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
 		<span id="cnt_list"></span>건이 조회되었습니다.
