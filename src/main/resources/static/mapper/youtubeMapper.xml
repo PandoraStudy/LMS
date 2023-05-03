@@ -76,19 +76,36 @@
 
     <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
         SELECT
-            olm.APPL_NO,
             oli.ON_LECT_SN,
-            oli.ON_LECT_URL,
+            oli.ON_LECT_URL
+            <choose>
+            <when test="appl_no != null">,
+            olm.APPL_NO,
             olm.LAST_PLAY_TM,
             olm.LECT_MAX_TM,
             olm.SBJCT_NO,
             olm.LECT_PRGRS_RT
         FROM ON_LECT_MAG olm
             JOIN ON_LECT_INFO oli ON olm.ON_LECT_SN = oli.ON_LECT_SN AND olm.APPL_NO = #{appl_no }
+            </when>
+            <otherwise>
+        FROM ON_LECT_INFO oli
+            </otherwise>
+            </choose>
         WHERE
             oli.ON_LECT_SN = #{on_lect_sn }
     </select>
 
+    <select id="getClsCd" parameterType="HashMap" resultType="HashMap">
+        SELECT BGNG_CLS_CD , END_CLS_CD
+            FROM LECT_TM_INFO lti
+                JOIN  ON_LECT_MAG olm ON lti.LECT_YMD = olm.LECT_YMD
+            WHERE
+                olm.ON_LECT_SN = #{on_lect_sn }
+            AND
+                appl_no = #{appl_no }
+    </select>
+    
     <select id="getPlayTime" parameterType="HashMap" resultType="Integer">
         SELECT
             LAST_PLAY_TM

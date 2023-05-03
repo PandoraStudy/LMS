@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
-    let today = 3;
+    /* 오늘 날짜를 대신합니다. */
+    let today = 2;
 
     $(function() {
 
