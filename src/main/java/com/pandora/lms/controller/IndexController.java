@@ -24,10 +24,6 @@ public class IndexController {
   
     @GetMapping("/")
     public ModelAndView main(HttpSession session){
-        if(session.getAttribute("user_no") == null){
-            ModelAndView mv = new ModelAndView("/login/login");
-            return mv;
-        }else{
             ModelAndView mv = new ModelAndView("/index");
             int totalCount = noticeService.mainNoticCnt();
             List<Map<String, Object>> list = noticeService.mainNoticeList();
@@ -37,18 +33,13 @@ public class IndexController {
             System.err.println(ipGetter.getIP());
             mv.addObject("list", list);
             mv.addObject("totalCount", totalCount);
-            mv.addObject("myIp",ipGetter.getIP());
+            mv.addObject("myIp",ipGetter.getIP());            
             return mv;
-        }
-
-    }
+   }
 
     @GetMapping("/index")
     public ModelAndView index(HttpSession session) {
-        if (session.getAttribute("user_no") == null) {
-            ModelAndView mv = new ModelAndView("/login/login");
-            return mv;
-        } else {
+        
             ModelAndView mv = new ModelAndView("/index");
             int totalCount = noticeService.mainNoticCnt();
             List<Map<String, Object>> list = noticeService.mainNoticeList();
@@ -60,7 +51,7 @@ public class IndexController {
             mv.addObject("totalCount", totalCount);
             mv.addObject("myIp",ipGetter.getIP());
             return mv;
-        }
+      
     }
 
 }
