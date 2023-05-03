@@ -205,7 +205,6 @@
         if ((count % 5) == 0) {
             /* 실시간 재생 위치가 저장된 재생 위치 값보다 클 경우 실행합니다. */
             if (curr_time > play_time) {
-                console.log("5초마다 저장")
                 playTimeSave();
             }
         }
@@ -224,6 +223,7 @@
                     if(result == "success") {
                         console.log("[playTimeSave] " + curr_time + "초 저장");
                     } else if(result == "fail") {
+                        console.log("저장 실패");
                         player.seekTo(play_time);
                     }
                 },
@@ -323,9 +323,6 @@
                                         <div class="lecture-page-btn">
                                             <span>
                                                 <button class="btn btn-primary" onclick="location.href='/lectureList?sbjct_no=${lectureInfo.SBJCT_NO}'">목록</button>
-                                                <!-- 강의 진도율이 100프로가 아닐 시 제어합시다. -->
-                                                <button class="btn btn-secondary">이전 학습</button>
-                                                <button class="btn btn-primary">다음 학습</button>
                                             </span>
                                         </div>
                                     </div>

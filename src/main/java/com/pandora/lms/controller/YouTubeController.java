@@ -1,22 +1,27 @@
 package com.pandora.lms.controller;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpSession;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import com.google.api.client.auth.oauth2.Credential;
 import com.pandora.lms.service.YoutubeService;
 import com.pandora.lms.ytbUtil.OAuth;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.session.SqlSession;
-import org.json.JSONException;
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.util.*;
 
 @Controller
 @AllArgsConstructor
@@ -163,22 +168,24 @@ public class YouTubeController {
         Integer BGNG_CLS_CD = clsCd.get("BGNG_CLS_CD");
         Integer END_CLS_CD = clsCd.get("END_CLS_CD");
 
-        // (1 <= 2) && (2 >= 2)
-        if( (BGNG_CLS_CD <= today) && (END_CLS_CD >= today) ) {
-
-        }
-
-        int playTime = sqlSession.selectOne("youtube.getPlayTime", userInfo);
-        int saveTime = Integer.parseInt(String.valueOf(userInfo.get("curr_time")));
-
         String msg;
 
-        if ( (saveTime - playTime) > 5 ) {
-            msg = "fail";
+        if( (BGNG_CLS_CD <= today) && (END_CLS_CD >= today) ) {
+            int playTime = sqlSession.selectOne("youtube.getPlayTime", userInfo);
+            int saveTime = Integer.parseInt(String.valueOf(userInfo.get("curr_time")));
+
+            if ( (saveTime - playTime) > 5 ) {
+                System.out.println("비정상적인 저장 접근입니다.");
+                msg = "fail";
+            } else {
+                int result = sqlSession.update("youtube.playTimeSave", userInfo);
+                msg = (result == 1) ? "success" : "fail";
+            }
         } else {
-            int result = sqlSession.update("youtube.playTimeSave", userInfo);
-            msg = (result == 1) ? "success" : "fail";
+            System.out.println("교시가 지났습니다.");
+            msg = "fail";
         }
+
         return msg;
     }
 
