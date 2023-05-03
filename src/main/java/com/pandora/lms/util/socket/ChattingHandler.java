@@ -42,7 +42,6 @@ public class ChattingHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         sessions.remove(session);
-        System.err.println(status);
         System.out.println("Chtting Off");
     }
 
