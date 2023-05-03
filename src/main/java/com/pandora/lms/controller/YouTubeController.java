@@ -223,6 +223,20 @@ public class YouTubeController {
         return view;
     }
 
+
+    @PostMapping("/uploadVideo")
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
+        System.out.println("동영상 정보 : " + videoInfo);
+        System.out.println("동영상 파일 : " + videoFile);
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        oAuth.authorize(scopes, true);
+
+        return "redirect:/uploadVideo";
+    }
+
     @PostMapping("/modalUpload")
     @ResponseBody
     public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) {
@@ -256,19 +270,6 @@ public class YouTubeController {
         }
 
         return result;
-    }
-
-    @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
-        System.out.println("동영상 정보 : " + videoInfo);
-        System.out.println("동영상 파일 : " + videoFile);
-
-        List<String> scopes = new ArrayList<>();
-        scopes.add("https://www.googleapis.com/auth/youtube");
-
-        oAuth.authorize(scopes, true);
-
-        return "redirect:/uploadVideo";
     }
 
     @PostMapping("/youtubeAccess")

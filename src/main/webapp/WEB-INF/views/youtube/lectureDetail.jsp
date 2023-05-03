@@ -93,19 +93,17 @@
                     data: {"on_lect_sn": on_lect_sn },
                     dataType: "text",
                     success: function (playTime) {
-                        console.log("[getPlayTime] " + playTime + "초");
                         play_time = playTime;
                         curr_time = Math.floor(player.getCurrentTime());
 
                         /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다.  */
-                        if(curr_time == (lect_max_tm - 10)) {
+                        if(curr_time >= (lect_max_tm - 10)) {
                             player.stopVideo();
                             if( (BGNG_CLS_CD >= today) && (END_CLS_CD <= today) ) {
                                 alert("강의를 수강하셨습니다.");
                             } else {
                                 alert("강의를 수강하셨습니다.\n*지난 강의는 출석에 반영되지 않습니다.");
                             }
-
                             return false;
                         }
 
@@ -183,7 +181,7 @@
         console.log("재생 시간 [현재] : " + curr_time);
 
         /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다. *재생중일 경우 완강 시 타이머 종료 후 저장합니다.  */
-        if(curr_time == (lect_max_tm - 10)) {
+        if(curr_time >= (lect_max_tm - 10)) {
             player.stopVideo();
             clearInterval(timer);
             timer = null;
