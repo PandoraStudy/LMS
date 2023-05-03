@@ -168,22 +168,24 @@ public class YouTubeController {
         Integer BGNG_CLS_CD = clsCd.get("BGNG_CLS_CD");
         Integer END_CLS_CD = clsCd.get("END_CLS_CD");
 
-        // (1 <= 2) && (2 >= 2)
-        if( (BGNG_CLS_CD <= today) && (END_CLS_CD >= today) ) {
-
-        }
-
-        int playTime = sqlSession.selectOne("youtube.getPlayTime", userInfo);
-        int saveTime = Integer.parseInt(String.valueOf(userInfo.get("curr_time")));
-
         String msg;
 
-        if ( (saveTime - playTime) > 5 ) {
-            msg = "fail";
+        if( (BGNG_CLS_CD <= today) && (END_CLS_CD >= today) ) {
+            int playTime = sqlSession.selectOne("youtube.getPlayTime", userInfo);
+            int saveTime = Integer.parseInt(String.valueOf(userInfo.get("curr_time")));
+
+            if ( (saveTime - playTime) > 5 ) {
+                System.out.println("비정상적인 저장 접근입니다.");
+                msg = "fail";
+            } else {
+                int result = sqlSession.update("youtube.playTimeSave", userInfo);
+                msg = (result == 1) ? "success" : "fail";
+            }
         } else {
-            int result = sqlSession.update("youtube.playTimeSave", userInfo);
-            msg = (result == 1) ? "success" : "fail";
+            System.out.println("교시가 지났습니다.");
+            msg = "fail";
         }
+
         return msg;
     }
 
