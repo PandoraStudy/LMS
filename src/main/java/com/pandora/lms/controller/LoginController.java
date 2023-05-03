@@ -16,22 +16,13 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
 
     //private final LoginService loginService;
-    @GetMapping("/user/login")
+    @GetMapping("/login")
     public String login(HttpSession session){
-//    	System.out.println("Controller - GET - login");
-//    	if(session.getAttribute("username") != null) {
-//    		return "/index";
-//    	}
+    	System.out.println("Controller - GET - login");
+    	if(session.getAttribute("username") != null) {
+    		return "/index";
+    	}
          return "/login/login";
-
-    }
-    @GetMapping("/admin/login")
-    public String login2(HttpSession session){
-//    	System.out.println("Controller - GET2 - login2");
-//    	if(session.getAttribute("username") != null) {
-//    		return "/index";
-//    	}
-         return "/admin_login";
 
     }
 //
