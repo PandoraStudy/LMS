@@ -52,12 +52,11 @@
 
     function student_check(){
         $(function() {
-            var attendance_list = [];
-            var absence_list = [];
+            var attendance_list = [];/*출석 리스트*/
+            var absence_list = [];/*결석 리스트*/
 
             $('input[name="attendance_check"]:checked').each(function() {
                 attendance_list.push($(this).val());
-                alert(attendance_list);
             });
 
             $('input[name="absence_check"]:checked').each(function() {
@@ -71,7 +70,7 @@
                     "absence_check" : absence_list
                 },
                 success: function(result) {
-                    alert(result);
+
                 },
                 error: function(xhr, status, error) {
                     console.log(error);

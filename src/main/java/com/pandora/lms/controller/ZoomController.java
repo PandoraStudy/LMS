@@ -158,8 +158,14 @@ public class ZoomController {
     @PostMapping("/attendance")
     @ResponseBody
     public String attendance(HttpServletRequest request){
+        ZoomDTO zoomDTO = new ZoomDTO();
+        String attendance = Arrays.toString(request.getParameterValues("attendance_check[]"));
+        String absence = Arrays.toString(request.getParameterValues("absence_check[]"));
 
-        System.err.println(Arrays.toString(request.getParameterValues("attendance_check[]")));
+        zoomDTO.setAttendance(attendance);
+        zoomDTO.setAbsence(absence);
+
+        int result = zoomService.attendance_check(zoomDTO);
 
         return "잘옴";
     }
