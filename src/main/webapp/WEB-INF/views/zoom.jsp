@@ -50,36 +50,73 @@
         });
     };
 
+    function student_check(){
+        $(function() {
+            var attendance_list = [];
+            var absence_list = [];
+
+            $('input[name="attendance_check"]:checked').each(function() {
+                attendance_list.push($(this).val());
+                alert(attendance_list);
+            });
+
+            $('input[name="absence_check"]:checked').each(function() {
+                absence_list.push($(this).val());
+            });
+            $.ajax({
+                type: 'post',
+                url: '/attendance',
+                data: {
+                    "attendance_check" : attendance_list,
+                    "absence_check" : absence_list
+                },
+                success: function(result) {
+                    alert(result);
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+    };
+
+    function zoom_join(){
+
+        window.open('${Join_URL}',"zoom","width=1350, height=790");
+
+    };
+
 
 
 </script>
     <style>
         .all_place{
-            width: 1350px;
-            height: 796px;
-            float: left;
-        }
-
-        .zoom_place{
-            width: 1150px;
-            height: 796px;
+            width: 800px;
+            height: 700px;
             float: left;
         }
 
         .check_place{
-            width:200px;
-            height: 796px;
+            width:580px;
+            height:700px;
             float: left;
-            text-align: center;
-            background-color: black;
         }
 
-        .exit_btn{
+        .btn_place{
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 200px;
+            height: 700px;
+            float: left;
+            text-align: center;
+        }
+
+        .check_btn{
+            display: inline-block;
             margin-top: 10px;
             width: 150px;
             height: 40px;
             border-radius: 5px;
-            background-color: #007bff;
             border: none;
             color: white;
         }
@@ -88,28 +125,72 @@
 <body>
 <div class="all_place">
 
-    <div class="zoom_place"><%--줌 수업 공간--%>
-    <iframe  src="${Join_URL}" width="1150" height="796"></iframe>
+    <div class="btn_place">
+        <div class="schedule_card mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">수업 관리</h6>
+                </div>
+                <div class="card-body">
+                    <div style="height: 600px;" class="chart-area">
+                        <div>
+                            <button onclick="zoom_join()" class="check_btn" style="background-color: #007bff">수업 시작</button>
+                            <button onclick="zoom_exit()" class="check_btn" style="background-color: #dc3545">수업 종료</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
     <div class="check_place">
+        <div class="schedule_card mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">출석 체크</h6>
+                </div>
+                <!-- A 본문 부분 -->
+                <div class="card-body">
+                    <div style="height: 600px;" class="chart-area">
+                        <div>
 
-        <input onclick="zoom_exit()" type="button" value="수업 종료" class="exit_btn">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">이름</th>
+                                    <th scope="col">연락처</th>
+                                    <th scope="col">이메일</th>
+                                    <th scope="col">출석</th>
+                                    <th scope="col">결석</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${student_list}" var="list">
+                                <tr>
+                                    <td>${list.KORN_FLNM}</td>
+                                    <td>${list.TELNO}</td>
+                                    <td>${list.EML_ADDR}</td>
+                                    <th><input name="attendance_check" value="${list.APPL_NO}" type="checkbox"></th>
+                                    <th><input name="absence_check" value="${list.APPL_NO}" type="checkbox"></th>
+                                </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            <button onclick="student_check()" class="check_btn" style="background-color: #6610f2">출석 체크</button>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
 </div>
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+
 </body>
 </html>

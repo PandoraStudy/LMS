@@ -20,6 +20,13 @@
         WHERE SBJCT_NO = #{sbjct_no}
     </select>
 
+    <select id="student_lists" parameterType="ZoomDTO" resultType="HashMap">
+        SELECT APPL_NO, USER_ID, KORN_FLNM, TELNO, EML_ADDR
+        FROM SBJCT_STUDENT
+        WHERE SBJCT_NO = #{sbjct_no}
+    </select>
+
+
     <select id="user_no" parameterType="ZoomDTO" resultType="ZoomDTO">
         SELECT USER_NO
         FROM APPL_INFO
@@ -47,8 +54,6 @@
         FROM LECT_MEET_INFO
         WHERE SBJCT_NO = #{sbjct_no}
     </select>
-
-
 
 
 </mapper>

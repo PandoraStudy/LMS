@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ZoomServiceImpl implements ZoomService {
@@ -99,6 +101,12 @@ public class ZoomServiceImpl implements ZoomService {
     public ZoomDTO zoom_join(ZoomDTO zoomDTO) {
 
         return zoomDAO.zoom_join(zoomDTO);
+    }
+
+    @Override
+    public List<Map<String, Object>> student_list(ZoomDTO zoomDTO) {
+
+        return zoomDAO.student_list(zoomDTO);
     }
 
 

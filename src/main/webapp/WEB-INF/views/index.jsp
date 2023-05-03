@@ -51,7 +51,7 @@
                     success : function(result) {
                         if(result != ""){
                             alert("인증에 성공했습니다.");
-                            window.open("/zoom_connect?sbjct_no=" + result, "Zoom", "width=1350, height=790");
+                            window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=800, height=700");
                         }else{
                             alert("인증실패 관리자 문의 바람.");
                             return false;
@@ -71,11 +71,11 @@
             $.ajax({
                 url: '/zoom_join',
                 type: 'post',
-                data: { "sbjct_no" : 1 },
+                data: { "sbjct_no" : 2 },
                 dataType: 'text',
                 success : function(result) {
                     if(result != ""){
-                        window.open("/zoom_student?join_url=" + result, "Zoom_join", "width=1350, height=790");
+                        window.open(result, "Zoom_join", "width=1350, height=790");
                     }else{
                         alert("수업 시작 안함");
                         return false;
