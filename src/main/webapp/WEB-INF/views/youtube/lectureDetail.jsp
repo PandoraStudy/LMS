@@ -20,8 +20,12 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
+    /* 교시 코드 */
+    let BGNG_CLS_CD = "${lectureInfo.ON_LECT_SN}";
+    let END_CLS_CD = "${lectureInfo.ON_LECT_SN}";
+
     /* 오늘 날짜를 대신합니다. */
-    let today = 2;
+    let today = 3;
 
     /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
     var tag = document.createElement('script');
@@ -103,14 +107,22 @@
                         /* 현재 재생시간이 동영상 전체 재생시간 -10초와 같을 경우 수강 완료로 인식합니다.  */
                         if(curr_time == (lect_max_tm - 10)) {
                             player.stopVideo();
-                            alert("강의를 수강하셨습니다.");
+                            if( (BGNG_CLS_CD >= today) && (END_CLS_CD <= today) ) {
+                                alert("강의를 수강하셨습니다.");
+                            } else {
+                                alert("강의를 수강하셨습니다.\n*지난 강의는 출석에 반영되지 않습니다.");
+                            }
 
                             return false;
                         }
 
                         /* 실시간 재생 시간과 저장된 재생 시간의 차이가 3보다 클 경우 저장된 위치로 옮깁니다. */
-                        if ((curr_time - play_time) > 3) {
-                            player.seekTo(play_time);
+                        if( (BGNG_CLS_CD >= today) && (END_CLS_CD <= today) ) {
+                            if ((curr_time - play_time) > 3) {
+                                player.seekTo(play_time);
+                            }
+                        } else {
+                            console.log("지난 강의는 재생 시간을 제어하지 않습니다.");
                         }
 
                         /* 초마다 재생 시간을 검사합니다 */
@@ -150,7 +162,10 @@
                             }
                             /* 실시간 재생 위치와 데이터베이스에 등록된 값의 차이가 5초 초과일 경우 비정상 */
                             else {
-                                player.seekTo(play_time);
+                                if( (BGNG_CLS_CD >= today) && (END_CLS_CD <= today) ) {
+                                    console.log("일시저장 체크");
+                                    player.seekTo(play_time);
+                                }
                             }
                         }
 
@@ -186,19 +201,24 @@
             clearInterval(timer);
             timer = null;
             playTimeSave();
-            /* 수강 완료 출석 관련 데이터 삽입 */
-            $.post({
-                url: "/applATNDInsert",
-                data: { "sbjct_no" : sbjct_no, "on_lect_sn" : on_lect_sn },
-                dataType: "text",
-                success: function(result) {
-                    alert(result + ", 강의를 수강하셨습니다.");
-                },
-                error: function() {
-                    alert("에러 발생\n잠시 후 다시 시도해주세요.");
-                }
-            });
-            return false;
+
+            if ((BGNG_CLS_CD >= today) && (today <= END_CLS_CD)) {
+                /* 수강 완료 출석 관련 데이터 삽입 */
+                $.post({
+                    url: "/applATNDInsert",
+                    data: {"sbjct_no": sbjct_no, "on_lect_sn": on_lect_sn},
+                    dataType: "text",
+                    success: function (result) {
+                        alert("강의를 수강하셨습니다.");
+                    },
+                    error: function () {
+                        alert("에러 발생\n잠시 후 다시 시도해주세요.");
+                    }
+                });
+                return false;
+            } else {
+                alert("강의를 수강하셨습니다.\n*지난 강의는 출석에 반영되지 않습니다.");
+            }
         }
 
         /* 재생 위치를 5초마다 저장합니다. */
@@ -224,7 +244,9 @@
                         console.log("[playTimeSave] " + curr_time + "초 저장");
                     } else if(result == "fail") {
                         console.log("저장 실패");
-                        player.seekTo(play_time);
+                        if( (BGNG_CLS_CD >= today) && (END_CLS_CD <= today) ) {
+                            player.seekTo(play_time);
+                        }
                     }
                 },
                 error: function () {

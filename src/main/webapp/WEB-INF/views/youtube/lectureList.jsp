@@ -24,7 +24,7 @@
 </head>
 <script>
     /* 오늘 날짜를 대신합니다. */
-    let today = 2;
+    let today = 4;
 
     $(function() {
 

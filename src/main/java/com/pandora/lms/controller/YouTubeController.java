@@ -170,7 +170,7 @@ public class YouTubeController {
 
         String msg;
 
-        if( (BGNG_CLS_CD <= today) && (END_CLS_CD >= today) ) {
+        if( (BGNG_CLS_CD >= today) && (END_CLS_CD <= today) ) {
             int playTime = sqlSession.selectOne("youtube.getPlayTime", userInfo);
             int saveTime = Integer.parseInt(String.valueOf(userInfo.get("curr_time")));
 
