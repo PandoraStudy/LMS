@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,10 +51,23 @@ public class ZoomDAO {
     }
 
 
-    public int attendance_check(ZoomDTO zoomDTO) {
+    public void attendance_check(ZoomDTO zoomDTO) {
 
-        System.err.println("dao"+zoomDTO.getAttendance());
 
-        return 1;
+        String[] attendance = zoomDTO.getAttendance();
+        String[] absence = zoomDTO.getAbsence();
+        Map<String, Object> attendance_check = new HashMap<>();
+        attendance_check.put("sbjct_no", zoomDTO.getSbjct_no());
+        for (String value : attendance) {
+            attendance_check.put("attendance", value);
+            System.err.println(value);
+            sqlSession.update("zoom.attendance_check", attendance_check);
+        }
+
+
+
+
+
+
     }
 }

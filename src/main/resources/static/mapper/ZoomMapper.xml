@@ -55,5 +55,13 @@
         WHERE SBJCT_NO = #{sbjct_no}
     </select>
 
+    <update id="attendance_check">
+        UPDATE LECT_MEET_MAG
+        SET
+        ATTEND_STATUS = '1'
+        WHERE APPL_NO = #{attendance}
+        AND SBJCT_NO = #{sbjct_no}
+    </update>
+
 
 </mapper>

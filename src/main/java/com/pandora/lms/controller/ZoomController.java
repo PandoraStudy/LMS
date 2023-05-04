@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -108,7 +109,7 @@ public class ZoomController {
         List<Map<String, Object>> student_list = zoomService.student_list(zoomDTO);
         mv.addObject("student_list",student_list);
 
-    return mv;
+        return mv;
     }
 
 
@@ -124,7 +125,7 @@ public class ZoomController {
         int result = zoomService.zoom_exit(zoomDTO);
         System.err.println(result);
 
-       return result;
+        return result;
     }
 
     @PostMapping("/zoom_join")
@@ -157,15 +158,17 @@ public class ZoomController {
 
     @PostMapping("/attendance")
     @ResponseBody
-    public String attendance(HttpServletRequest request){
+    public String attendance(HttpServletRequest request,HttpSession session){
         ZoomDTO zoomDTO = new ZoomDTO();
-        String attendance = Arrays.toString(request.getParameterValues("attendance_check[]"));
-        String absence = Arrays.toString(request.getParameterValues("absence_check[]"));
+        String[] attendance = request.getParameterValues("attendance_check[]");
+        String[] absence = request.getParameterValues("absence_check[]");
 
+
+        zoomDTO.setSbjct_no((Integer) session.getAttribute("sbjct_no"));
         zoomDTO.setAttendance(attendance);
         zoomDTO.setAbsence(absence);
 
-        int result = zoomService.attendance_check(zoomDTO);
+        zoomService.attendances_check(zoomDTO);
 
         return "잘옴";
     }

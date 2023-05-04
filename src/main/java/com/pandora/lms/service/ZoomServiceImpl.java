@@ -110,9 +110,8 @@ public class ZoomServiceImpl implements ZoomService {
     }
 
     @Override
-    public int attendance_check(ZoomDTO zoomDTO) {
-
-        return zoomDAO.attendance_check(zoomDTO);
+    public void attendances_check(ZoomDTO zoomDTO) {
+        zoomDAO.attendance_check(zoomDTO);
     }
 
 

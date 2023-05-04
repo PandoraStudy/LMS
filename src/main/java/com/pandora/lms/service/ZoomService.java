@@ -27,5 +27,6 @@ public interface ZoomService {
 
     List<Map<String, Object>> student_list(ZoomDTO zoomDTO);
 
-    int attendance_check(ZoomDTO zoomDTO);
+
+    void attendances_check(ZoomDTO zoomDTO);
 }
