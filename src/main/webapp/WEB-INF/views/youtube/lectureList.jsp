@@ -51,9 +51,31 @@
                         alert("유효하지 않은 주소입니다.\n잠시 후 다시 시도해주세요.");
                     }
                 } else {
-                    // 줌 담당자에게 어디로 보낼지 전달 받아야 합니다.
+                    // 강사의 줌 회의 개설
                     if(snOrUrl != "") {
-                        window.open(snOrUrl, "수업명", "menubar=no, toolbar=no, fullscreen=yes");
+                        let sbjct_no = "${sbjct_no}";
+
+                        $(function() {
+                            $.ajax({
+                                url: '/zoom_open',
+                                type: 'post',
+                                data: { "sbjct_no" : sbjct_no },
+                                dataType: 'text',
+                                success : function(result) {
+                                    if(result != ""){
+                                        alert("인증에 성공했습니다.");
+                                        window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=800, height=700");
+                                    }else{
+                                        alert("인증실패 관리자 문의 바람.");
+                                        return false;
+                                    }
+                                },
+                                error : function(xhr) {
+                                    alert(xhr);
+                                    alert("요청 실패 재시도 바람.");
+                                }
+                            });
+                        });
                     } else {
                         alert("아직 회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
                     }

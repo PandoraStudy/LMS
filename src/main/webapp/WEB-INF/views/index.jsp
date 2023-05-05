@@ -40,32 +40,6 @@
             calendar.render();
         });
 
-
-        function Zoom(){
-            $(function() {
-                $.ajax({
-                    url: '/zoom_open',
-                    type: 'post',
-                    data: { "sbjct_no" : 1 },
-                    dataType: 'text',
-                    success : function(result) {
-                        if(result != ""){
-                            alert("인증에 성공했습니다.");
-                            window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=800, height=700");
-                        }else{
-                            alert("인증실패 관리자 문의 바람.");
-                            return false;
-                        }
-                    },
-                    error : function(xhr) {
-                        alert(xhr);
-                        alert("요청 실패 재시도 바람.");
-                    }
-                });
-            });
-
-        }
-
     function Zoom_Join(){
         $(function() {
             $.ajax({
