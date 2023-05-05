@@ -63,5 +63,14 @@
         AND SBJCT_NO = #{sbjct_no}
     </update>
 
+    <update id="absence_check">
+        UPDATE LECT_MEET_MAG
+        SET
+        ATTEND_STATUS = NULL
+        WHERE APPL_NO = #{absence}
+        AND SBJCT_NO = #{sbjct_no}
+    </update>
+
+
 
 </mapper>

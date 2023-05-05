@@ -86,6 +86,30 @@
     };
 
 
+    function checkAttendance(checkbox) {
+        var appl_no = checkbox.value;
+        var attendanceCheck = document.getElementsByName('attendance_check');
+        var absenceCheck = document.getElementsByName('absence_check');
+
+        for (var i = 0; i < attendanceCheck.length+absenceCheck.length; i++) {
+            if (attendanceCheck[i].value === appl_no && absenceCheck[i].checked) {
+                absenceCheck[i].checked = false;
+            }
+        }
+
+    }
+    function checkAbsence(checkbox) {
+        var appl_no = checkbox.value;
+        var attendanceCheck = document.getElementsByName('attendance_check');
+        var absenceCheck = document.getElementsByName('absence_check');
+
+        for (var i = 0; i < attendanceCheck.length+absenceCheck.length; i++) {
+            if (absenceCheck[i].value === appl_no && attendanceCheck[i].checked) {
+                attendanceCheck[i].checked = false;
+            }
+        }
+    }
+
 
 </script>
     <style>
@@ -151,7 +175,7 @@
                 </div>
                 <!-- A 본문 부분 -->
                 <div class="card-body">
-                    <div style="height: 600px;" class="chart-area">
+                    <div style="height: 600px; overflow: auto;" class="chart-area">
                         <div>
 
                             <table class="table">
@@ -170,8 +194,8 @@
                                     <td>${list.KORN_FLNM}</td>
                                     <td>${list.TELNO}</td>
                                     <td>${list.EML_ADDR}</td>
-                                    <th><input name="attendance_check" value="${list.APPL_NO}" type="checkbox"></th>
-                                    <th><input name="absence_check" value="${list.APPL_NO}" type="checkbox"></th>
+                                    <th><input name="attendance_check" value="${list.APPL_NO}" type="checkbox" onclick="checkAttendance(this)"></th>
+                                    <th><input name="absence_check" value="${list.APPL_NO}" type="checkbox" onclick="checkAbsence(this)"></th>
                                 </tr>
                                 </c:forEach>
                                 </tbody>

@@ -58,14 +58,35 @@ public class ZoomDAO {
         String[] absence = zoomDTO.getAbsence();
         Map<String, Object> attendance_check = new HashMap<>();
         attendance_check.put("sbjct_no", zoomDTO.getSbjct_no());
-        for (String value : attendance) {
-            attendance_check.put("attendance", value);
-            System.err.println(value);
-            sqlSession.update("zoom.attendance_check", attendance_check);
+
+        int result_cnt = 0;
+        int check_size = 0;
+
+        if (attendance != null){
+            check_size = check_size + attendance.length;
+            for (String value : attendance) {
+                attendance_check.put("attendance", value);
+                System.err.println("출석 : "+value);
+                sqlSession.update("zoom.attendance_check", attendance_check);
+                result_cnt = result_cnt+1;
+            }
+        }
+        if (absence != null){
+            check_size = check_size + absence.length;
+            for (String value : absence) {
+                attendance_check.put("absence", value);
+                System.err.println("결석 : "+value);
+                sqlSession.update("zoom.absence_check", attendance_check);
+                result_cnt = result_cnt+1;
+            }
         }
 
+        System.err.println("출첵한 수 "+result_cnt);
+        System.err.println("사이즈"+check_size);
 
-
+        if (check_size == result_cnt){
+            System.err.println("성공적으로 출석체크");
+        }
 
 
 

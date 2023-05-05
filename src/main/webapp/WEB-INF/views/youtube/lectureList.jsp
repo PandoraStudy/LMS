@@ -64,7 +64,7 @@
                                 success : function(result) {
                                     if(result != ""){
                                         alert("인증에 성공했습니다.");
-                                        window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=800, height=700");
+                                        window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=820, height=720");
                                     }else{
                                         alert("인증실패 관리자 문의 바람.");
                                         return false;
