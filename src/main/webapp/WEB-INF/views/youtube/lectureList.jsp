@@ -412,6 +412,7 @@
                                                 </c:choose>
                                             </div>
                                             <div style="float:right; margin-right:10px">
+                                                <c:if test="${sessionScope.appl_no ne null}">
                                             	<c:choose>
 													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
 														<button style="width:90px;" class="btn btn-outline-primary">수강완료</button>
@@ -420,6 +421,7 @@
 														<button style="width:90px;" class="btn btn-outline-success">수강중</button>
 													</c:otherwise>
 												</c:choose>
+                                                </c:if>
                                             </div>
                                         </div>
                                         <!-- 강의 -->
