@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% Integer sbjct_no = Integer.parseInt(request.getParameter("sbjct_no")); %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -164,17 +165,56 @@
                 success: function(notice) {
                     console.log(notice);
                     $("#notice_title").html(notice.notice_title);
-                    $(".notice-admin").html(notice.notice_admin);
+                    $(".notice-tr1").html("");
+                    $(".notice-tr1").append("<td class='notice-admin'>");
+                    $(".notice-tr1").append("<td class='notice-date'>");
+                    $(".notice-admin").html(notice.admin_id);
                     $(".notice-date").html(notice.notice_date);
                     $(".notice-content").html(notice.notice_content);
+                    $(".notice-modify").html("수정");
+                    $(".notice-save").html("확인");
                     $(".notice-modal").modal("show");
                 },
                 error: function() {
                     alert("공지사항을 불러오지 못했습니다.");
                 }
             });
+        });
 
+        $(".btn-notice").click(function() {
+            $("#notice_title").html("공지사항 작성");
+            $(".notice-tr1").html("<td colspan='2'><input class='form-control' type='text' id='n_title' name='n_title' style='width: 100%; height: 100%;' placeholder='제목을 입력하세요.'></td>");
+            $(".notice-content").html("<input class='form-control' type='text' id='n_content' name='n_content' style='width: 100%; height: 100%;' placeholder='내용을 입력하세요.'>");
+            $(".notice-modify").html("취소");
+            $(".notice-btn").html("저장");
+            $(".notice-modal").modal("show");
+        });
 
+        $(".notice-save").click(function() {
+            let n_title = $("#n_title").val();
+            let n_content = $("#n_content").val();
+            let category = "<%=sbjct_no + 1%>";
+
+            if(n_title != undefined) {
+                $.ajax({
+                    type: "POST",
+                    url: "/lectureNoticeWrite",
+                    data: { "instr_no": "${sessionScope.instr_no}", "notice_title" : n_title, "notice_content" : n_content, "category" : category },
+                    success: function (result) {
+                        if(result == "success") {
+                            alert("공지사항을 등록했습니다.");
+                            location.reload();
+                        } else {
+                            alert("공지사항을 등록하지 못했습니다.");
+                        }
+                    },
+                    error: function () {
+                        alert("저장하지 못했습니다.");
+                    }
+                });
+            }
+
+            $(".notice-modal").modal("hide");
         });
     });
 </script>
@@ -297,7 +337,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <div style="width: 80%; height: 40px; float: left;">${lectList[0].SBJCT_NM} 공지사항</div>
                                     <div style="width: 20%; height: 40px; float: left; margin-bottom: 5px;">
-                                        <c:if test="${sessionScope.instr_no != null}"><button class="btn btn-primary" style="float: right;">글작성</button></c:if>
+                                        <c:if test="${sessionScope.instr_no != null}"><button class="btn btn-primary btn-notice" style="float: right;">글작성</button></c:if>
                                     </div>
                                 </div>
                                 <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
@@ -490,7 +530,7 @@
                     </div>
                     <div class="modal-body">
                         <table class="table table-bordered notice-table">
-                            <tr>
+                            <tr class="notice-tr1">
                                 <td class="notice-admin">작성자</td>
                                 <td class="notice-date">작성일</td>
                             </tr>
@@ -500,8 +540,10 @@
                         </table>
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary modal-submit">확인</button>
+                    <c:if test="${sessionScope.instr_no ne null}">
+                    <button type="button" class="btn btn-secondary notice-modify" data-bs-dismiss="modal">수정</button>
+                    </c:if>
+                    <button type="button" class="btn btn-primary notice-save">확인</button>
                 </div>
                 </div>
             </div>

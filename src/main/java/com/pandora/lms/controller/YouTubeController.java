@@ -145,6 +145,23 @@ public class YouTubeController {
         return jsonObject.toString();
     }
 
+    @PostMapping("/lectureNoticeWrite")
+    @ResponseBody
+    public String lectureNoticeWrite(@RequestParam Map<String, Object> notice) {
+        System.out.println(notice);
+
+        String msg = "";
+        int reuslt = sqlSession.insert("youtube.noticeWrite", notice);
+
+        if(reuslt != 1) {
+            msg = "error";
+        } else {
+            msg = "success";
+        }
+
+        return msg;
+    }
+
     @GetMapping("/lectureDetail")
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
