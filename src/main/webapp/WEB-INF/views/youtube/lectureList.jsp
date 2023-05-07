@@ -395,14 +395,21 @@
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
                                             <div style="float:right; margin-right:20px">
                                             <!-- 완료 미완료 버튼 -->
-                                            	<c:choose>
-													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-														<button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
-													</c:when>
-													<c:otherwise>
-														<button style="width:108px;" class="btn btn-outline-danger">과제미제출</button>
-													</c:otherwise>
-												</c:choose>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.appl_no ne null}">
+                                                        <c:choose>
+                                                            <c:when test="${90 lt lect.LECT_PRGRS_RT}">
+                                                                <button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <button style="width:108px;" class="btn btn-outline-danger">과제미제출</button>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <button style="width:108px;" class="btn btn-primary">출결확인</button>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                             <div style="float:right; margin-right:10px">
                                             	<c:choose>
