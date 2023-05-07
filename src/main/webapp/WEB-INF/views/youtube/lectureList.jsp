@@ -29,6 +29,10 @@
     let today = 4;
 
     $(function() {
+        $(".btn-atnd").click(function (){
+            let sbjct_no = "<%=sbjct_no%>";
+            window.open('/lectureATND?sbjct_no=' + sbjct_no, '출결관리', 'width=820, height=720');
+        });
 
         $(".week-select").click(function() {
             let end_cls_cd = $(this).children(".fas").attr("value");
@@ -216,6 +220,8 @@
 
             $(".notice-modal").modal("hide");
         });
+
+
     });
 </script>
 <style>
@@ -407,7 +413,7 @@
                                                         </c:choose>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <button style="width:108px;" class="btn btn-primary">출결확인</button>
+                                                        <button style="width:108px;" class="btn btn-primary btn-atnd">출결확인</button>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>

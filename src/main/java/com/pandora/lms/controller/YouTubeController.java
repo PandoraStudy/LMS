@@ -72,6 +72,16 @@ public class YouTubeController {
         return view;
     }
 
+    @GetMapping("/lectureATND")
+    public ModelAndView getATND(@RequestParam int sbjct_no) {
+        ModelAndView view = new ModelAndView("youtube/lectureATND");
+
+        List<Map<String, Object>> atndInfo = sqlSession.selectList("youtube.getATND", sbjct_no);
+        view.addObject("atndInfo", atndInfo);
+
+        return view;
+    }
+
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");

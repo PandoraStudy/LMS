@@ -60,6 +60,19 @@
         WHERE notice_no = #{notice_no }
     </select>
 
+    <select id="getATND" parameterType="Integer" resultType="HashMap">
+        SELECT lti.LECT_YMD, es.SBJCT_NM, ai.KORN_FLNM, IF(aa.ATND_CD is null, '결석', '출석') as ATND
+            FROM LECT_TM_INFO lti
+                JOIN APPL_CLS ac ON lti.SBJCT_NO = ac.SBJCT_NO
+                LEFT JOIN APPL_ATND aa ON lti.LECT_YMD = aa.LECT_YMD AND lti.SBJCT_NO = aa.SBJCT_NO AND ac.APPL_NO = aa.APPL_NO
+                JOIN APPL_INFO ai ON ac.APPL_NO = ai.APPL_NO
+                JOIN ESTBL_SBJCT es ON lti.SBJCT_NO = es.SBJCT_NO
+            WHERE
+                lti.SBJCT_NO = #{sbjct_no }
+        GROUP BY aa.ATND_CD, lti.LECT_YMD, ac.APPL_NO
+        ORDER BY lti.LECT_YMD, ac.APPL_NO
+    </select>
+
     <select id="lectList" parameterType="HashMap" resultType="HashMap">
         SELECT
             es.SBJCT_NM as 'SBJCT_NM',
