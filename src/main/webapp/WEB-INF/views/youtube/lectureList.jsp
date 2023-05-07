@@ -152,6 +152,30 @@
             });
         });
 
+        $(".notice-tr").click(function() {
+            let notice_no = $(this).attr("value");
+
+            //id notice_title
+            //class notice-table
+            $.ajax({
+                url: "/lectureNoticeDetail",
+                data: { "notice_no" : notice_no },
+                dataType: "json",
+                success: function(notice) {
+                    console.log(notice);
+                    $("#notice_title").html(notice.notice_title);
+                    $(".notice-admin").html(notice.notice_admin);
+                    $(".notice-date").html(notice.notice_date);
+                    $(".notice-content").html(notice.notice_content);
+                    $(".notice-modal").modal("show");
+                },
+                error: function() {
+                    alert("공지사항을 불러오지 못했습니다.");
+                }
+            });
+
+
+        });
     });
 </script>
 <style>
@@ -288,13 +312,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="title text-truncate" style="max-width:1px; text-align: left;">T1tle</td>
-                                            <td>INSTR01</td>
-                                            <td>11</td>
-                                            <td>10:33</td>
-                                        </tr>
+                                        <c:choose>
+                                            <c:when test="${!empty notice}">
+                                                <c:forEach items="${notice}" var="notice">
+                                                <tr class="notice-tr" value="${notice.notice_no}">
+                                                    <td>${notice.notice_no }</td>
+                                                    <td class="title text-truncate" style="max-width:1px; text-align: left;">${notice.notice_title }</td>
+                                                    <td>${notice.admin_id }</td>
+                                                    <td>${notice.notice_read }</td>
+                                                    <td>${notice.notice_date }</td>
+                                                </tr>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <tr>
+                                                    <td colspan="5">등록된 공지사항이 없습니다.</td>
+                                                </tr>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -444,7 +480,34 @@
         </div>
         <!-- 메인 콘텐츠 종료 -->
 
-        <!-- Modal -->
+        <!-- 공지 작성 및 보기 Modal -->
+        <div class="modal notice-modal fade" id="noticeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="notice_title"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered notice-table">
+                            <tr>
+                                <td class="notice-admin">작성자</td>
+                                <td class="notice-date">작성일</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="notice-content" style="height: 300px;">콘텐츠</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary modal-submit">확인</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 추가용 Modal -->
         <form id="frm-modal">
             <div class="modal upload-modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

@@ -38,7 +38,20 @@
                 ORDER BY si.SBJCT_NO
             </when>
         </choose>
+    </select>
 
+    <select id="notice" parameterType="HashMap" resultType="HashMap">
+        SELECT notice_no, notice_title, admin_id, notice_date, notice_like, notice_read
+            FROM NOTICE
+                WHERE
+                    category = #{sbjct_no } + 1
+        ORDER BY notice_no DESC
+    </select>
+
+    <select id="lectureNoticeDetail" parameterType="HashMap" resultType="HashMap">
+        SELECT notice_no, admin_id, notice_title, notice_date, notice_like, notice_read, notice_content
+            FROM NOTICE
+        WHERE notice_no = #{notice_no }
     </select>
 
     <select id="lectList" parameterType="HashMap" resultType="HashMap">

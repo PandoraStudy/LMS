@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,6 +84,8 @@ public class YouTubeController {
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
 
+        List<Map<String, Object>> notice = sqlSession.selectList("youtube.notice", lectureInfo);
+
         for(Map<String, Object> lectInfo : lectList) {
             if( lectInfo.get("FILE_SN") != null ) {
                 int FILE_LENGTH = String.valueOf(lectInfo.get("FILE_SN_SEQ")).split(",").length;
@@ -117,9 +121,28 @@ public class YouTubeController {
         }
 
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
+        view.addObject("notice", notice);
         view.addObject("lectList", lectList);
 
         return view;
+    }
+
+    @GetMapping("/lectureNoticeDetail")
+    @ResponseBody
+    public String lectureNoticeDetail(@RequestParam Integer notice_no) {
+        JSONObject jsonObject = new JSONObject();
+
+        Map<String, Object> detail = sqlSession.selectOne("youtube.lectureNoticeDetail", notice_no);
+
+        jsonObject.put("notice_no", detail.get("notice_no"));
+        jsonObject.put("admin_id", detail.get("admin_id"));
+        jsonObject.put("notice_title", detail.get("notice_title"));
+        jsonObject.put("notice_content", detail.get("notice_content"));
+        jsonObject.put("notice_read", detail.get("notice_read"));
+        jsonObject.put("notice_date", detail.get("notice_date"));
+        jsonObject.put("notice_like", detail.get("notice_like"));
+
+        return jsonObject.toString();
     }
 
     @GetMapping("/lectureDetail")
