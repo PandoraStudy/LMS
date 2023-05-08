@@ -78,19 +78,12 @@
         AND ATTEND_STATUS = '1'
     </select>
 
-    <insert id="final_check" parameterType="HashMap">
-        INSERT INTO APPL_ATND
-        SET
-        SBJCT_NO = #{SBJCT_NO},
-        LECT_YMD = #{LECT_YMD},
-        CRCLM_CD = #{CRCLM_CD},
-        CRCLM_CYCL = #{CRCLM_CYCL},
-        APPL_NO = #{APPL_NO},
-        ATND_CD = #{ATTEND_STATUS},
-        SBJCT_MTHD_CD = '2'
+    <insert id="final_check" parameterType="List">
+        INSERT INTO APPL_ATND (APPL_NO, LECT_YMD, CRCLM_CYCL, ATND_CD, CRCLM_CD, SBJCT_NO, SBJCT_MTHD_CD)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.APPL_NO}, #{item.LECT_YMD}, #{item.CRCLM_CYCL}, #{item.ATTEND_STATUS}, #{item.CRCLM_CD}, #{item.SBJCT_NO}, '2')
+        </foreach>
     </insert>
-
-
-
 
 </mapper>

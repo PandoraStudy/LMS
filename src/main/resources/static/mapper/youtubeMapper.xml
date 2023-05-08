@@ -114,6 +114,7 @@
             fi.FILE_SN as 'FILE_SN',
             GROUP_CONCAT(fi.FILE_SN_SEQ ORDER BY fi.FILE_SN_SEQ SEPARATOR ',') AS 'FILE_SN_SEQ',
             GROUP_CONCAT(fi.PHYS_FILE_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'PHYS_FILE_NM',
+            GROUP_CONCAT(fi.ORGNL_FILE_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'ORGNL_FILE_NM',
             GROUP_CONCAT(fi.FILE_EXTN_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'FILE_EXTN_NM',
             GROUP_CONCAT(fi.FILE_PATH_NM  ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'FILE_PATH_NM',
             GROUP_CONCAT(fi.FILE_SZ ORDER BY fi.FILE_SN_SEQ  SEPARATOR ',') AS 'FILE_SZ'
@@ -129,6 +130,15 @@
         GROUP BY
             lti.LECT_YMD
         ORDER BY lti.LECT_YMD ASC
+    </select>
+
+    <select id="getFileInfo" parameterType="HashMap" resultType="HashMap">
+        SELECT *
+            FROM FILE_INFO
+                WHERE
+                    FILE_SN = #{file_sn}
+                AND
+                    FILE_SN_SEQ = #{file_sn_seq}
     </select>
 
     <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
@@ -232,6 +242,7 @@
                 FILE_SN_SEQ = #{FILE_SN_SEQ },
                 PHYS_FILE_NM = #{PHYS_FILE_NM },
                 ORGNL_FILE_NM = #{ORGNL_FILE_NM },
+                FILE_PATH_NM = #{FILE_PATH_NM },
                 FILE_EXTN_NM = #{FILE_EXTN_NM },
                 FILE_SZ = #{FILE_SZ }
     </insert>

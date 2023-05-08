@@ -83,10 +83,7 @@ public class ZoomDAO {
         }
         if (check_size == result_cnt){
             List<Map<String, Object>> final_check_list = sqlSession.selectList("zoom.final_check_list", attendance_check);
-            for (Map<String, Object> check_data : final_check_list) {
-                System.err.println(check_data);
-                sqlSession.insert("zoom.final_check", check_data);
-            }
+            sqlSession.insert("zoom.final_check", final_check_list);
             System.err.println("성공적으로 출석체크");
         }
 
