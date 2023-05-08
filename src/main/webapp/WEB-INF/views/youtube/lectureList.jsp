@@ -37,6 +37,7 @@
         $(".week-select").click(function() {
             let end_cls_cd = $(this).children(".fas").attr("value");
 
+
             if(today < end_cls_cd) {
                 alert("진행할 수 없는 주차입니다.");
                 return false;
@@ -390,7 +391,7 @@
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">강의</h6>
-                                <button class="btn btn-primary btn-atnd" style="width: 100px;">출결확인</button>
+                                <c:if test="${sessionScope.instr_no ne null}"><button class="btn btn-primary btn-atnd" style="width: 100px;">출결확인</button></c:if>
                             </div>
                             <!-- 강의 본문 부분 -->
                             <div class="card-body">
