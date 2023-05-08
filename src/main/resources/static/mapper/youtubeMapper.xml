@@ -55,7 +55,7 @@
     </insert>
 
     <select id="lectureNoticeDetail" parameterType="HashMap" resultType="HashMap">
-        SELECT notice_no, admin_id, notice_title, notice_date, notice_like, notice_read, notice_content
+        SELECT notice_no, admin_id, notice_title, if((date_format(now(), '%Y-%m-%d') = date_format(notice_date, '%Y-%m-%d')), date_format(notice_date, '%H:%i'), date_format(notice_date, '%m-%d')) AS `notice_date`, notice_like, notice_read, notice_content
             FROM NOTICE
         WHERE notice_no = #{notice_no }
     </select>

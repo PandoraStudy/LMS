@@ -24,7 +24,7 @@
 <h1>
     ${atndInfo[0].SBJCT_NM}
 </h1>
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>이름</th>
@@ -41,10 +41,10 @@
                 <td>
                     <c:choose>
                         <c:when test="${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND eq '출석'}">
-                            <span class="badge text-bg-primary">${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND}</span>
+                            <b style="color: blue;">${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND}</b>
                         </c:when>
                         <c:otherwise>
-                            <span class="badge text-bg-danger">${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND}</span>
+                            <b style="color: red;">${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND}</b>
                         </c:otherwise>
                     </c:choose>
                 </td>
