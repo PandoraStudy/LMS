@@ -134,9 +134,9 @@
     <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
         SELECT
             oli.ON_LECT_SN,
-            oli.ON_LECT_URL,
+            oli.ON_LECT_URL
             <choose>
-            <when test="appl_no != null">
+            <when test="appl_no != null">,
             lti.BGNG_CLS_CD,
             lti.END_CLS_CD,
             olm.APPL_NO,
