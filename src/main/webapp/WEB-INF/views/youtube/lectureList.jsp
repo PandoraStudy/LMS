@@ -398,11 +398,13 @@
                                 <div>
                                     <!-- 강의 정보 추가 위치 -->
                                     <c:set var="i" value="1"/>
+                                    ${lectList}
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
                                         <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
                                             <div style="float:right; margin-right:20px">
                                             <!-- 완료 미완료 버튼 -->
+
                                                 <c:choose>
                                                     <c:when test="${sessionScope.appl_no ne null}">
                                                         <c:choose>
@@ -420,7 +422,7 @@
                                                 <c:if test="${sessionScope.appl_no ne null}">
                                             	<c:choose>
 													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-														<button style="width:90px;" class="btn btn-outline-primary">수강완료</button>
+														<button style="width:90px;" class="btn btn-outline-primary" disabled>수강완료</button>
 													</c:when>
 													<c:otherwise>
 														<button style="width:90px;" class="btn btn-outline-success">수강중</button>
@@ -437,7 +439,6 @@
                                         <c:otherwise>border-left-primary
                                         </c:otherwise>
                                         </c:choose> collapse">
-<!-- collapse여기부분 수정 -->
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
@@ -460,7 +461,12 @@
                                                     </div>
                                                     <div style='height:20px; line-height: 20px;'>&nbsp;
 														<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
-														<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+														<c:choose>
+			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%</c:when>
+			                                                    <c:otherwise>
+																<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+			                                                    </c:otherwise>
+		                                                    </c:choose>
 														</span>
 													</div>
                                                     </c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
