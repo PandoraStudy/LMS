@@ -315,10 +315,16 @@ public class YouTubeController {
             } else {
                 Map<String, Object> fileInfo = new HashMap<>();
 
-                String realPath = context.getRealPath("/resources/");
-                String uploadPath = realPath + "upload/";
+                String realPath = context.getRealPath("/");
+                String uploadPath = "/resources/" + "upload/";
 
-                File uploadFile = new File(new File(uploadPath), file.getOriginalFilename());
+                File uploadDir = new File(realPath + uploadPath);
+
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
+
+                File uploadFile = new File(uploadDir, file.getOriginalFilename());
                 FileCopyUtils.copy(file.getBytes(), uploadFile);
 
                 fileInfo.put("FILE_SN", modalInfo.get("on_lect_sn"));
@@ -329,11 +335,13 @@ public class YouTubeController {
 
                 fileInfo.put("PHYS_FILE_NM", modalInfo.get("title"));
                 fileInfo.put("ORGNL_FILE_NM", FilenameUtils.getBaseName(file.getOriginalFilename()));
-                fileInfo.put("FILE_PATH_NM", null);
+                fileInfo.put("FILE_PATH_NM", uploadPath);
                 fileInfo.put("FILE_EXTN_NM", FilenameUtils.getExtension(file.getOriginalFilename()));
                 fileInfo.put("FILE_SZ", file.getSize());
 
+                System.out.println(uploadPath);
                 System.out.println(fileInfo);
+
                 int file_result = sqlSession.insert("youtube.insertFileInfo", fileInfo);
 
                 if(file_result == 1) result = "success";

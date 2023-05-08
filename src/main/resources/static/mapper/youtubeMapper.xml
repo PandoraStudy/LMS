@@ -232,6 +232,7 @@
                 FILE_SN_SEQ = #{FILE_SN_SEQ },
                 PHYS_FILE_NM = #{PHYS_FILE_NM },
                 ORGNL_FILE_NM = #{ORGNL_FILE_NM },
+                FILE_PATH_NM = #{FILE_PATH_NM },
                 FILE_EXTN_NM = #{FILE_EXTN_NM },
                 FILE_SZ = #{FILE_SZ }
     </insert>
