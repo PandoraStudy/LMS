@@ -37,7 +37,7 @@
     <c:forEach items="${applList}" var="appl" varStatus="applStatus">
         <tr>
             <td>${appl}</td>
-            <c:forEach begin="0" end="${clsCdCount - 1}" var="cnt" varStatus="atndStatus">
+            <c:forEach begin="0" end="${clsCdCount - 1}" varStatus="atndStatus">
                 <td>
                     <c:choose>
                         <c:when test="${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND eq '출석'}">
