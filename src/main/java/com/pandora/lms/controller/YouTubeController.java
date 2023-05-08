@@ -171,7 +171,7 @@ public class YouTubeController {
         String fileName = downloadFile.get("PHYS_FILE_NM");
         String fileExtn = downloadFile.get("FILE_EXTN_NM");
         String encodedFilename = URLEncoder.encode(fileName + "." + fileExtn, "UTF-8");
-        System.out.println(encodedFilename);
+        System.out.println("파일명" + encodedFilename);
         response.setHeader("Content-disposition", "attachment;filename=\"" + encodedFilename + "\"");
 
         // response 객체를 통해서 서버로부터 파일 다운로드
@@ -182,6 +182,10 @@ public class YouTubeController {
         FileCopyUtils.copy(fis, os);
 
         fis.close();
+        os.flush(); // 커밋을 지연시키기 위해 버퍼를 비워줌
+
+        // response의 커밋(commit)을 수동으로 호출
+        response.flushBuffer();
         os.close();
 
         return "youtube/fileDownload";
