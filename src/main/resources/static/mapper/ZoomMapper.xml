@@ -71,6 +71,26 @@
         AND SBJCT_NO = #{sbjct_no}
     </update>
 
+    <select id="final_check_list" parameterType="HashMap" resultType="HashMap">
+        SELECT LECT_YMD, SBJCT_NO, CRCLM_CD, CRCLM_CYCL, APPL_NO, ATTEND_STATUS
+        FROM LECT_MEET_MAG
+        WHERE SBJCT_NO = #{sbjct_no}
+        AND ATTEND_STATUS = '1'
+    </select>
+
+    <insert id="final_check" parameterType="HashMap">
+        INSERT INTO APPL_ATND
+        SET
+        SBJCT_NO = #{SBJCT_NO},
+        LECT_YMD = #{LECT_YMD},
+        CRCLM_CD = #{CRCLM_CD},
+        CRCLM_CYCL = #{CRCLM_CYCL},
+        APPL_NO = #{APPL_NO},
+        ATND_CD = #{ATTEND_STATUS},
+        SBJCT_MTHD_CD = '2'
+    </insert>
+
+
 
 
 </mapper>
