@@ -1,10 +1,13 @@
 package com.pandora.lms.controller;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -13,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,10 +32,11 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 public class YouTubeController {
+
     private final OAuth oAuth;
     private final YoutubeService youtubeService;
-    @Autowired
-    private  SqlSession sqlSession;
+    private final SqlSession sqlSession;
+    private final ServletContext context;
 
     @GetMapping("/lecture")
     public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) throws JSONException {
@@ -297,7 +302,7 @@ public class YouTubeController {
 
     @PostMapping("/modalUpload")
     @ResponseBody
-    public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) {
+    public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) throws IOException {
         String uploadSelect = (String) modalInfo.get("upload-select");
         String result = null;
 
@@ -309,10 +314,19 @@ public class YouTubeController {
                 result = "empty_file";
             } else {
                 Map<String, Object> fileInfo = new HashMap<>();
+
+                String realPath = context.getRealPath("/resources/");
+                String uploadPath = realPath + "upload/";
+
+                File uploadFile = new File(new File(uploadPath), file.getOriginalFilename());
+                FileCopyUtils.copy(file.getBytes(), uploadFile);
+
                 fileInfo.put("FILE_SN", modalInfo.get("on_lect_sn"));
                 Integer FILE_SN_SEQ = (Integer) sqlSession.selectOne("youtube.getFileSnSeq", modalInfo);
+
                 if(FILE_SN_SEQ != null) fileInfo.put("FILE_SN_SEQ",  FILE_SN_SEQ + 1);
                 else fileInfo.put("FILE_SN_SEQ",  1);
+
                 fileInfo.put("PHYS_FILE_NM", modalInfo.get("title"));
                 fileInfo.put("ORGNL_FILE_NM", FilenameUtils.getBaseName(file.getOriginalFilename()));
                 fileInfo.put("FILE_PATH_NM", null);
