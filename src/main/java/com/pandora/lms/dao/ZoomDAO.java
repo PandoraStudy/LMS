@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,11 +81,12 @@ public class ZoomDAO {
                 result_cnt = result_cnt+1;
             }
         }
-
-        System.err.println("출첵한 수 "+result_cnt);
-        System.err.println("사이즈"+check_size);
-
         if (check_size == result_cnt){
+            List<Map<String, Object>> final_check_list = sqlSession.selectList("zoom.final_check_list", attendance_check);
+            for (Map<String, Object> check_data : final_check_list) {
+                System.err.println(check_data);
+                sqlSession.insert("zoom.final_check", check_data);
+            }
             System.err.println("성공적으로 출석체크");
         }
 
