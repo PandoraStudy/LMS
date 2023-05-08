@@ -16,7 +16,7 @@
                     LEFT JOIN ESTBL_SBJCT es ON ac.SBJCT_NO = es.SBJCT_NO
                     LEFT JOIN CRCLM_INFO ci ON ac.CRCLM_CD = ci.CRCLM_CD
                     LEFT JOIN SBJCT_INSTR si ON ac.SBJCT_NO = si.SBJCT_NO
-                    LEFT JOIN APPL_ATND aa ON ac.SBJCT_NO = aa.SBJCT_NO
+                    LEFT JOIN APPL_ATND aa ON ac.SBJCT_NO = aa.SBJCT_NO AND aa.APPL_NO = #{appl_no }
                 WHERE
                     ac.APPL_NO = #{appl_no }
                 GROUP BY ac.SBJCT_NO
