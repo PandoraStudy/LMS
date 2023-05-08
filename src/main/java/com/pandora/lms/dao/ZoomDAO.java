@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -26,8 +28,6 @@ public class ZoomDAO {
 
     public void meeting_msg(ZoomDTO zoomDTO) {
         List<ZoomDTO> student_list = sqlSession.selectList("zoom.student_list", zoomDTO);
-        System.err.println("로그인한 ID : "+zoomDTO.getLogin_id());
-        System.err.println("dao : "+zoomDTO.getSbjct_no());
         for (ZoomDTO stdt_list : student_list) {
             stdt_list.setLogin_id(zoomDTO.getLogin_id());
             sqlSession.insert("zoom.student_msg", stdt_list);
@@ -43,5 +43,52 @@ public class ZoomDAO {
 
 
         return sqlSession.selectOne("zoom.zoom_join",zoomDTO);
+    }
+
+    public List<Map<String, Object>> student_list(ZoomDTO zoomDTO) {
+
+        return sqlSession.selectList("zoom.student_lists",zoomDTO);
+    }
+
+
+    public void attendance_check(ZoomDTO zoomDTO) {
+
+
+        String[] attendance = zoomDTO.getAttendance();
+        String[] absence = zoomDTO.getAbsence();
+        Map<String, Object> attendance_check = new HashMap<>();
+        attendance_check.put("sbjct_no", zoomDTO.getSbjct_no());
+
+        int result_cnt = 0;
+        int check_size = 0;
+
+        if (attendance != null){
+            check_size = check_size + attendance.length;
+            for (String value : attendance) {
+                attendance_check.put("attendance", value);
+                System.err.println("출석 : "+value);
+                sqlSession.update("zoom.attendance_check", attendance_check);
+                result_cnt = result_cnt+1;
+            }
+        }
+        if (absence != null){
+            check_size = check_size + absence.length;
+            for (String value : absence) {
+                attendance_check.put("absence", value);
+                System.err.println("결석 : "+value);
+                sqlSession.update("zoom.absence_check", attendance_check);
+                result_cnt = result_cnt+1;
+            }
+        }
+
+        System.err.println("출첵한 수 "+result_cnt);
+        System.err.println("사이즈"+check_size);
+
+        if (check_size == result_cnt){
+            System.err.println("성공적으로 출석체크");
+        }
+
+
+
     }
 }

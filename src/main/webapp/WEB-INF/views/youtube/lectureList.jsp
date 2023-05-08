@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% Integer sbjct_no = Integer.parseInt(request.getParameter("sbjct_no")); %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -28,6 +29,10 @@
     let today = 4;
 
     $(function() {
+        $(".btn-atnd").click(function (){
+            let sbjct_no = "<%=sbjct_no%>";
+            window.open('/lectureATND?sbjct_no=' + sbjct_no, '출결관리', 'width=820, height=720');
+        });
 
         $(".week-select").click(function() {
             let end_cls_cd = $(this).children(".fas").attr("value");
@@ -51,9 +56,38 @@
                         alert("유효하지 않은 주소입니다.\n잠시 후 다시 시도해주세요.");
                     }
                 } else {
-                    // 줌 담당자에게 어디로 보낼지 전달 받아야 합니다.
+                    // 강사의 줌 회의 개설
                     if(snOrUrl != "") {
-                        window.open(snOrUrl, "수업명", "menubar=no, toolbar=no, fullscreen=yes");
+                        let sbjct_no = "${sbjct_no}";
+
+                        let appl = "${sessionScope.appl_no}";
+                        let instr = "${sessionScope.instr_no}";
+
+                        if(appl != "") {
+                            window.open(snOrUrl, "줌", "menubar=no, toolbar=no, fullscreen=yes");
+                        } else if (instr != "") {
+                            $(function() {
+                                $.ajax({
+                                    url: '/zoom_open',
+                                    type: 'post',
+                                    data: { "sbjct_no" : sbjct_no },
+                                    dataType: 'text',
+                                    success : function(result) {
+                                        if(result != ""){
+                                            alert("인증에 성공했습니다.");
+                                            window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=820, height=720");
+                                        }else{
+                                            alert("인증실패 관리자 문의 바람.");
+                                            return false;
+                                        }
+                                    },
+                                    error : function(xhr) {
+                                        alert(xhr);
+                                        alert("요청 실패 재시도 바람.");
+                                    }
+                                });
+                            });
+                        }
                     } else {
                         alert("아직 회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
                     }
@@ -122,6 +156,71 @@
                 }
             });
         });
+
+        $(".notice-tr").click(function() {
+            let notice_no = $(this).attr("value");
+
+            //id notice_title
+            //class notice-table
+            $.ajax({
+                url: "/lectureNoticeDetail",
+                data: { "notice_no" : notice_no },
+                dataType: "json",
+                success: function(notice) {
+                    console.log(notice);
+                    $("#notice_title").html(notice.notice_title);
+                    $(".notice-tr1").html("");
+                    $(".notice-tr1").append("<td class='notice-admin'>");
+                    $(".notice-tr1").append("<td class='notice-date'>");
+                    $(".notice-admin").html(notice.admin_id);
+                    $(".notice-date").html(notice.notice_date);
+                    $(".notice-content").html(notice.notice_content);
+                    $(".notice-modify").html("수정");
+                    $(".notice-save").html("확인");
+                    $(".notice-modal").modal("show");
+                },
+                error: function() {
+                    alert("공지사항을 불러오지 못했습니다.");
+                }
+            });
+        });
+
+        $(".btn-notice").click(function() {
+            $("#notice_title").html("공지사항 작성");
+            $(".notice-tr1").html("<td colspan='2'><input class='form-control' type='text' id='n_title' name='n_title' style='width: 100%; height: 100%;' placeholder='제목을 입력하세요.'></td>");
+            $(".notice-content").html("<input class='form-control' type='text' id='n_content' name='n_content' style='width: 100%; height: 100%;' placeholder='내용을 입력하세요.'>");
+            $(".notice-modify").html("취소");
+            $(".notice-btn").html("저장");
+            $(".notice-modal").modal("show");
+        });
+
+        $(".notice-save").click(function() {
+            let n_title = $("#n_title").val();
+            let n_content = $("#n_content").val();
+            let category = "<%=sbjct_no + 1%>";
+
+            if(n_title != undefined) {
+                $.ajax({
+                    type: "POST",
+                    url: "/lectureNoticeWrite",
+                    data: { "instr_no": "${sessionScope.instr_no}", "notice_title" : n_title, "notice_content" : n_content, "category" : category },
+                    success: function (result) {
+                        if(result == "success") {
+                            alert("공지사항을 등록했습니다.");
+                            location.reload();
+                        } else {
+                            alert("공지사항을 등록하지 못했습니다.");
+                        }
+                    },
+                    error: function () {
+                        alert("저장하지 못했습니다.");
+                    }
+                });
+            }
+
+            $(".notice-modal").modal("hide");
+        });
+
 
     });
 </script>
@@ -244,7 +343,7 @@
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <div style="width: 80%; height: 40px; float: left;">${lectList[0].SBJCT_NM} 공지사항</div>
                                     <div style="width: 20%; height: 40px; float: left; margin-bottom: 5px;">
-                                        <c:if test="${sessionScope.instr_no != null}"><button class="btn btn-primary" style="float: right;">글작성</button></c:if>
+                                        <c:if test="${sessionScope.instr_no != null}"><button class="btn btn-primary btn-notice" style="float: right;">글작성</button></c:if>
                                     </div>
                                 </div>
                                 <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
@@ -259,13 +358,25 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td class="title text-truncate" style="max-width:1px; text-align: left;">T1tle</td>
-                                            <td>INSTR01</td>
-                                            <td>11</td>
-                                            <td>10:33</td>
-                                        </tr>
+                                        <c:choose>
+                                            <c:when test="${!empty notice}">
+                                                <c:forEach items="${notice}" var="notice">
+                                                <tr class="notice-tr" value="${notice.notice_no}">
+                                                    <td>${notice.notice_no }</td>
+                                                    <td class="title text-truncate" style="max-width:1px; text-align: left;">${notice.notice_title }</td>
+                                                    <td>${notice.admin_id }</td>
+                                                    <td>${notice.notice_read }</td>
+                                                    <td>${notice.notice_date }</td>
+                                                </tr>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <tr>
+                                                    <td colspan="5">등록된 공지사항이 없습니다.</td>
+                                                </tr>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -279,27 +390,35 @@
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">강의</h6>
+                                <button class="btn btn-primary btn-atnd" style="width: 100px;">출결확인</button>
                             </div>
                             <!-- 강의 본문 부분 -->
                             <div class="card-body">
                                 <div>
                                     <!-- 강의 정보 추가 위치 -->
                                     <c:set var="i" value="1"/>
+                                    ${lectList}
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
                                         <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
                                             <div style="float:right; margin-right:20px">
                                             <!-- 완료 미완료 버튼 -->
-                                            	<c:choose>
-													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-														<button style="width:108px;" class="btn btn-outline-primary" disabled>과제제출</button>
-													</c:when>
-													<c:otherwise>
-														<button style="width:108px;" class="btn btn-outline-danger">과제미제출</button>
-													</c:otherwise>
-												</c:choose>
+
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.appl_no ne null}">
+                                                        <c:choose>
+                                                            <c:when test="${90 lt lect.LECT_PRGRS_RT}">
+                                                                <button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <button style="width:108px;" class="btn btn-outline-danger">과제미제출</button>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:when>
+                                                </c:choose>
                                             </div>
                                             <div style="float:right; margin-right:10px">
+                                                <c:if test="${sessionScope.appl_no ne null}">
                                             	<c:choose>
 													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
 														<button style="width:90px;" class="btn btn-outline-primary" disabled>수강완료</button>
@@ -308,6 +427,7 @@
 														<button style="width:90px;" class="btn btn-outline-success">수강중</button>
 													</c:otherwise>
 												</c:choose>
+                                                </c:if>
                                             </div>
                                         </div>
                                         <!-- 강의 -->
@@ -321,9 +441,9 @@
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
-<!-- 수정 할 곳 -->
-													<span style="cursor: pointer">${lect.ON_LECT_NM }</span>
+                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise><c:choose><c:when test="${sessionScope.appl_no ne null}">줌수업</c:when><c:otherwise>줌생성</c:otherwise></c:choose></c:otherwise></c:choose></button>
+<!-- 여기도 수정 -->
+                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <c:if test="${sessionScope.appl_no != null}">
                                                 <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
@@ -419,7 +539,36 @@
         </div>
         <!-- 메인 콘텐츠 종료 -->
 
-        <!-- Modal -->
+        <!-- 공지 작성 및 보기 Modal -->
+        <div class="modal notice-modal fade" id="noticeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="notice_title"></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered notice-table">
+                            <tr class="notice-tr1">
+                                <td class="notice-admin">작성자</td>
+                                <td class="notice-date">작성일</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="notice-content" style="height: 300px;">콘텐츠</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                    <c:if test="${sessionScope.instr_no ne null}">
+                    <button type="button" class="btn btn-secondary notice-modify" data-bs-dismiss="modal">수정</button>
+                    </c:if>
+                    <button type="button" class="btn btn-primary notice-save">확인</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 추가용 Modal -->
         <form id="frm-modal">
             <div class="modal upload-modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">

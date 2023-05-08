@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +29,6 @@ public class ZoomController {
 
     private final ZoomService zoomService;
     private final AlarmHandler alarmHandler;
-    @GetMapping("/zoom_connect")/*줌 관리 페이지 띄우기용*/
-    public ModelAndView zoom(HttpSession session, @RequestParam Integer sbjct_no) {
-        ModelAndView mv = new ModelAndView("zoom_connect");
-        mv.addObject("sbjct_no", sbjct_no);
-        return mv;
-    }
 
     @PostMapping("/zoom_open")
     @ResponseBody
@@ -94,16 +90,12 @@ public class ZoomController {
         System.err.println("엑세스 토큰 : " + accessToken);
 
 
-
-
         String join_url = zoomService.meeting(accessToken);/*화의 개설*/
 
         zoomDTO.setJoin_url(join_url);
-        zoomDTO.setSbjct_no(1);
-        zoomService.join_url(zoomDTO);/*DB에 join_url 삽입*/
-
-        /*========================*/
         zoomDTO.setSbjct_no(sbjct_no);
+        zoomService.join_url(zoomDTO);/*DB에 join_url 삽입*/
+        /*========================*//*해당 강사의 강의를 수강하고 있는 학생에게 쪽지 발송*/
         int instr_no = (int) session.getAttribute("instr_no");
         zoomDTO.setLogin_id((String) session.getAttribute("id"));
         zoomDTO.setInstr_no(instr_no);
@@ -113,8 +105,11 @@ public class ZoomController {
         alarmHandler.sendMessage(message);  // 쪽지 알람
         /*========================*/
         mv.addObject("Join_URL",join_url);
+        /*========================*//*해당 강사의 강의를 수강하고 있는 학생들 명단 출력*/
+        List<Map<String, Object>> student_list = zoomService.student_list(zoomDTO);
+        mv.addObject("student_list",student_list);
 
-    return mv;
+        return mv;
     }
 
 
@@ -130,7 +125,7 @@ public class ZoomController {
         int result = zoomService.zoom_exit(zoomDTO);
         System.err.println(result);
 
-       return result;
+        return result;
     }
 
     @PostMapping("/zoom_join")
@@ -160,5 +155,24 @@ public class ZoomController {
 
         return mv;
     }
+
+    @PostMapping("/attendance")
+    @ResponseBody
+    public String attendance(HttpServletRequest request,HttpSession session){
+        ZoomDTO zoomDTO = new ZoomDTO();
+        String[] attendance = request.getParameterValues("attendance_check[]");
+        String[] absence = request.getParameterValues("absence_check[]");
+
+
+        zoomDTO.setSbjct_no((Integer) session.getAttribute("sbjct_no"));
+        zoomDTO.setAttendance(attendance);
+        zoomDTO.setAbsence(absence);
+
+        zoomService.attendances_check(zoomDTO);
+
+        return "잘옴";
+    }
+
+
 }
 

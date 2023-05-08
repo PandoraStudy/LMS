@@ -19,10 +19,32 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpSession session){
     	System.out.println("Controller - GET - login");
-    	if(session.getAttribute("username") != null) {
-    		return "/index";
-    	}
+
          return "/login/login";
+
+    }
+    
+    @GetMapping("/admin/login")
+    public String adminlogin(HttpSession session){
+    	System.out.println("Controller - GET - login");
+
+         return "/admin/login";
+
+    }
+    
+    
+    @GetMapping("/admin/page1")
+    public String page1(HttpSession session){
+
+         return "/admin/page1";
+
+    }
+    
+    @GetMapping("/admin/page2")
+    public String page2(HttpSession session){
+    	
+
+         return "/admin/page2";
 
     }
 //

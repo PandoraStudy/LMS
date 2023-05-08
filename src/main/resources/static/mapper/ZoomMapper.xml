@@ -20,6 +20,13 @@
         WHERE SBJCT_NO = #{sbjct_no}
     </select>
 
+    <select id="student_lists" parameterType="ZoomDTO" resultType="HashMap">
+        SELECT APPL_NO, USER_ID, KORN_FLNM, TELNO, EML_ADDR
+        FROM SBJCT_STUDENT
+        WHERE SBJCT_NO = #{sbjct_no}
+    </select>
+
+
     <select id="user_no" parameterType="ZoomDTO" resultType="ZoomDTO">
         SELECT USER_NO
         FROM APPL_INFO
@@ -30,8 +37,8 @@
         INSERT INTO message
         SET
         post_user_id = #{login_id},
-        message_title = '수업시작했다',
-        message_content = '수업시작했다',
+        message_title = '00강사님 수업 시작',
+        message_content = 'zoom 수업 입장 바랍니다.',
         read_or_not = 0,
         get_user_id = #{user_id}
     </insert>
@@ -48,6 +55,21 @@
         WHERE SBJCT_NO = #{sbjct_no}
     </select>
 
+    <update id="attendance_check">
+        UPDATE LECT_MEET_MAG
+        SET
+        ATTEND_STATUS = '1'
+        WHERE APPL_NO = #{attendance}
+        AND SBJCT_NO = #{sbjct_no}
+    </update>
+
+    <update id="absence_check">
+        UPDATE LECT_MEET_MAG
+        SET
+        ATTEND_STATUS = NULL
+        WHERE APPL_NO = #{absence}
+        AND SBJCT_NO = #{sbjct_no}
+    </update>
 
 
 

@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,6 +72,24 @@ public class YouTubeController {
         return view;
     }
 
+    @GetMapping("/lectureATND")
+    public ModelAndView getATND(@RequestParam int sbjct_no) {
+        ModelAndView view = new ModelAndView("youtube/lectureATND");
+        List<String> applList = sqlSession.selectList("youtube.getApplList", sbjct_no);
+        Integer clsCdCount = sqlSession.selectOne("youtube.getClsCdCount", sbjct_no);
+        Integer applClsCount = sqlSession.selectOne("youtube.getApplClsCount", sbjct_no);
+        List<Map<String, Object>> atndInfo = sqlSession.selectList("youtube.getATND", sbjct_no);
+
+        System.out.println(applList);
+
+        view.addObject("applList", applList);
+        view.addObject("clsCdCount", clsCdCount);
+        view.addObject("applClsCount", applClsCount);
+        view.addObject("atndInfo", atndInfo);
+
+        return view;
+    }
+
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
@@ -81,6 +101,8 @@ public class YouTubeController {
 
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
+
+        List<Map<String, Object>> notice = sqlSession.selectList("youtube.notice", lectureInfo);
 
         for(Map<String, Object> lectInfo : lectList) {
             if( lectInfo.get("FILE_SN") != null ) {
@@ -117,9 +139,45 @@ public class YouTubeController {
         }
 
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
+        view.addObject("notice", notice);
         view.addObject("lectList", lectList);
 
         return view;
+    }
+
+    @GetMapping("/lectureNoticeDetail")
+    @ResponseBody
+    public String lectureNoticeDetail(@RequestParam Integer notice_no) {
+        JSONObject jsonObject = new JSONObject();
+
+        Map<String, Object> detail = sqlSession.selectOne("youtube.lectureNoticeDetail", notice_no);
+
+        jsonObject.put("notice_no", detail.get("notice_no"));
+        jsonObject.put("admin_id", detail.get("admin_id"));
+        jsonObject.put("notice_title", detail.get("notice_title"));
+        jsonObject.put("notice_content", detail.get("notice_content"));
+        jsonObject.put("notice_read", detail.get("notice_read"));
+        jsonObject.put("notice_date", detail.get("notice_date"));
+        jsonObject.put("notice_like", detail.get("notice_like"));
+
+        return jsonObject.toString();
+    }
+
+    @PostMapping("/lectureNoticeWrite")
+    @ResponseBody
+    public String lectureNoticeWrite(@RequestParam Map<String, Object> notice) {
+        System.out.println(notice);
+
+        String msg = "";
+        int reuslt = sqlSession.insert("youtube.noticeWrite", notice);
+
+        if(reuslt != 1) {
+            msg = "error";
+        } else {
+            msg = "success";
+        }
+
+        return msg;
     }
 
     @GetMapping("/lectureDetail")
@@ -223,6 +281,20 @@ public class YouTubeController {
         return view;
     }
 
+
+    @PostMapping("/uploadVideo")
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
+        System.out.println("동영상 정보 : " + videoInfo);
+        System.out.println("동영상 파일 : " + videoFile);
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        oAuth.authorize(scopes, true);
+
+        return "redirect:/uploadVideo";
+    }
+
     @PostMapping("/modalUpload")
     @ResponseBody
     public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) {
@@ -256,19 +328,6 @@ public class YouTubeController {
         }
 
         return result;
-    }
-
-    @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
-        System.out.println("동영상 정보 : " + videoInfo);
-        System.out.println("동영상 파일 : " + videoFile);
-
-        List<String> scopes = new ArrayList<>();
-        scopes.add("https://www.googleapis.com/auth/youtube");
-
-        oAuth.authorize(scopes, true);
-
-        return "redirect:/uploadVideo";
     }
 
     @PostMapping("/youtubeAccess")

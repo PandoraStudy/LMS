@@ -24,6 +24,12 @@
         WHERE USER_ID = #{ username }
     </select>
     
+    <select id="findByAdminname" parameterType="String" resultType="AdmininfoDto">
+        SELECT *
+        FROM ADMIN_INFO
+        WHERE ADMIN_ID = #{ username }
+    </select>
+    
     <select id="getAPPL" parameterType="Integer" resultType="Integer">
         SELECT APPL_NO
         FROM APPL_INFO
