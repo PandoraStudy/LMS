@@ -28,27 +28,29 @@
     <thead>
         <tr>
             <th>이름</th>
-            <th>출결여부</th>
+            <c:forEach var="week" begin="1" end="${clsCdCount}">
+            <th>${week} 주차</th>
+            </c:forEach>
         </tr>
     </thead>
     <tbody>
-        <c:forEach items="${atndInfo}" var="atnd">
+    <c:forEach items="${applList}" var="appl" varStatus="applStatus">
         <tr>
-            <td>
-                <span class="badge text-bg-primary">${atnd.KORN_FLNM}</span>
-            </td>
-            <td>
-                <c:choose>
-                    <c:when test="${atnd.ATND eq '출석'}">
-                        <span class="badge text-bg-primary">${atnd.ATND}</span>
-                    </c:when>
-                    <c:otherwise>
-                        <span class="badge text-bg-danger">${atnd.ATND}</span>
-                    </c:otherwise>
-                </c:choose>
-            </td>
+            <td>${appl}</td>
+            <c:forEach begin="0" end="${clsCdCount - 1}" var="cnt" varStatus="atndStatus">
+                <td>
+                    <c:choose>
+                        <c:when test="${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND eq '출석'}">
+                            <span class="badge text-bg-primary">${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND}</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="badge text-bg-danger">${atndInfo[applStatus.index * clsCdCount + atndStatus.index].ATND}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+            </c:forEach>
         </tr>
-        </c:forEach>
+    </c:forEach>
     </tbody>
 </table>
 

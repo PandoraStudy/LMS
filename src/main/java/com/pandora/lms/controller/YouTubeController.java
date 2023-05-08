@@ -75,8 +75,16 @@ public class YouTubeController {
     @GetMapping("/lectureATND")
     public ModelAndView getATND(@RequestParam int sbjct_no) {
         ModelAndView view = new ModelAndView("youtube/lectureATND");
-
+        List<String> applList = sqlSession.selectList("youtube.getApplList", sbjct_no);
+        Integer clsCdCount = sqlSession.selectOne("youtube.getClsCdCount", sbjct_no);
+        Integer applClsCount = sqlSession.selectOne("youtube.getApplClsCount", sbjct_no);
         List<Map<String, Object>> atndInfo = sqlSession.selectList("youtube.getATND", sbjct_no);
+
+        System.out.println(applList);
+
+        view.addObject("applList", applList);
+        view.addObject("clsCdCount", clsCdCount);
+        view.addObject("applClsCount", applClsCount);
         view.addObject("atndInfo", atndInfo);
 
         return view;

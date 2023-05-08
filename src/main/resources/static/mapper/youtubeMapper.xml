@@ -60,8 +60,33 @@
         WHERE notice_no = #{notice_no }
     </select>
 
+    <select id="getApplList" parameterType="Integer" resultType="String">
+        SELECT ai.KORN_FLNM
+            FROM LECT_TM_INFO lti
+                JOIN APPL_CLS ac ON lti.SBJCT_NO = ac.SBJCT_NO
+                LEFT JOIN APPL_ATND aa ON lti.LECT_YMD = aa.LECT_YMD AND lti.SBJCT_NO = aa.SBJCT_NO AND ac.APPL_NO = aa.APPL_NO
+                JOIN APPL_INFO ai ON ac.APPL_NO = ai.APPL_NO
+                JOIN ESTBL_SBJCT es ON lti.SBJCT_NO = es.SBJCT_NO
+        WHERE
+            lti.SBJCT_NO = #{sbjct_no }
+        GROUP BY ac.APPL_NO
+        ORDER BY ac.APPL_NO
+    </select>
+
+    <select id="getClsCdCount" parameterType="HashMap" resultType="Integer">
+        SELECT COUNT(SBJCT_NO)
+            FROM LECT_TM_INFO
+                WHERE SBJCT_NO = #{sbjct_no }
+    </select>
+
+    <select id="getApplClsCount" parameterType="HashMap" resultType="Integer">
+        SELECT COUNT(APPL_NO)
+        FROM APPL_CLS
+        WHERE SBJCT_NO = #{sbjct_no }
+    </select>
+
     <select id="getATND" parameterType="Integer" resultType="HashMap">
-        SELECT lti.LECT_YMD, es.SBJCT_NM, ai.KORN_FLNM, IF(aa.ATND_CD is null, '결석', '출석') as ATND
+        SELECT DATE_FORMAT(lti.LECT_YMD, '%Y-%m-%d') as LECT_YMD, es.SBJCT_NM, ai.KORN_FLNM, IF(aa.ATND_CD is null, '결석', '출석') as ATND, lti.BGNG_CLS_CD, lti.END_CLS_CD
             FROM LECT_TM_INFO lti
                 JOIN APPL_CLS ac ON lti.SBJCT_NO = ac.SBJCT_NO
                 LEFT JOIN APPL_ATND aa ON lti.LECT_YMD = aa.LECT_YMD AND lti.SBJCT_NO = aa.SBJCT_NO AND ac.APPL_NO = aa.APPL_NO
@@ -70,7 +95,7 @@
             WHERE
                 lti.SBJCT_NO = #{sbjct_no }
         GROUP BY aa.ATND_CD, lti.LECT_YMD, ac.APPL_NO
-        ORDER BY lti.LECT_YMD, ac.APPL_NO
+        ORDER BY ac.APPL_NO, lti.LECT_YMD
     </select>
 
     <select id="lectList" parameterType="HashMap" resultType="HashMap">
