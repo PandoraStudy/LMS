@@ -436,10 +436,10 @@
                                                     <c:when test="${week gt lect.END_CLS_CD}">
 		                                            	<c:choose>
 															<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-																<button style="width:90px;" class="btn btn-outline-danger" disabled>미수강</button>
+																<button style="width:90px;" class="btn btn-outline-success" disabled>수강완료</button>
 															</c:when>
 															<c:otherwise>
-																<button style="width:90px;" class="btn btn-outline-success">수강완료</button>
+																<button style="width:90px;" class="btn btn-outline-danger">미수강</button>
 															</c:otherwise>
 														</c:choose>
 													</c:when>
