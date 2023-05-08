@@ -292,7 +292,7 @@
                                             <!-- 완료 미완료 버튼 -->
                                             	<c:choose>
 													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-														<button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
+														<button style="width:108px;" class="btn btn-outline-primary" disabled>과제제출</button>
 													</c:when>
 													<c:otherwise>
 														<button style="width:108px;" class="btn btn-outline-danger">과제미제출</button>
@@ -302,7 +302,7 @@
                                             <div style="float:right; margin-right:10px">
                                             	<c:choose>
 													<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-														<button style="width:90px;" class="btn btn-outline-primary">수강완료</button>
+														<button style="width:90px;" class="btn btn-outline-primary" disabled>수강완료</button>
 													</c:when>
 													<c:otherwise>
 														<button style="width:90px;" class="btn btn-outline-success">수강중</button>
@@ -318,13 +318,12 @@
                                         <c:otherwise>border-left-primary
                                         </c:otherwise>
                                         </c:choose> collapse">
-<!-- collapse여기부분 수정 -->
                                             <!-- 숨길 객체의 내용 -->
                                             <div class="week-object">
                                                 <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
                                                     <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise>줌수업</c:otherwise></c:choose></button>
-<!-- 여기도 수정 -->
-                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
+<!-- 수정 할 곳 -->
+													<span style="cursor: pointer">${lect.ON_LECT_NM }</span>
                                                 </div>
                                                 <c:if test="${sessionScope.appl_no != null}">
                                                 <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
@@ -341,7 +340,12 @@
                                                     </div>
                                                     <div style='height:20px; line-height: 20px;'>&nbsp;
 														<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
-														<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+														<c:choose>
+			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%</c:when>
+			                                                    <c:otherwise>
+																<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+			                                                    </c:otherwise>
+		                                                    </c:choose>
 														</span>
 													</div>
                                                     </c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
