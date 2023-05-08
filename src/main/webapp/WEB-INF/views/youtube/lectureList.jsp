@@ -97,7 +97,10 @@
 
         $(".week-file").click(function() {
             let file = $(this).find(".file").val();
-            alert(file);
+            let downloadTab = window.open("/fileDownload/" + file, "_blank");
+            setTimeout(function() {
+                downloadTab.close();
+            }, 1000);
         });
 
         $(".week-assign").click(function() {
@@ -482,7 +485,7 @@
                                                 <!-- 숨길 객체의 내용 -->
                                                 <div class="week-object">
                                                     <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                        <button class="file btn btn-secondary" value="${lect.PHYS_FILE_NM_LS[file_cnt]}">자료</button>
+                                                        <button class="file btn btn-secondary" value="${lect.FILE_SN},${lect.FILE_SN_SEQ_LS[file_cnt]}">자료</button>
                                                         <span>${lect.PHYS_FILE_NM_LS[file_cnt]}</span>
                                                     </div>
                                                 </div>

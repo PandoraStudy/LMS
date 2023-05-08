@@ -2,12 +2,16 @@ package com.pandora.lms.controller;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -17,11 +21,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.google.api.client.auth.oauth2.Credential;
@@ -112,14 +112,16 @@ public class YouTubeController {
         for(Map<String, Object> lectInfo : lectList) {
             if( lectInfo.get("FILE_SN") != null ) {
                 int FILE_LENGTH = String.valueOf(lectInfo.get("FILE_SN_SEQ")).split(",").length;
-                String[] PHYS_FILE_NM, FILE_SN_SEQ, FILE_EXTN_NM, FILE_SZ;
+                String[] PHYS_FILE_NM, ORGNL_FILE_NM, FILE_SN_SEQ, FILE_EXTN_NM, FILE_SZ;
 
                 FILE_SN_SEQ = String.valueOf(lectInfo.get("FILE_SN_SEQ")).split(",");
                 PHYS_FILE_NM = String.valueOf(lectInfo.get("PHYS_FILE_NM")).split(",");
+                ORGNL_FILE_NM = String.valueOf(lectInfo.get("ORGNL_FILE_NM")).split(",");
                 FILE_EXTN_NM = String.valueOf(lectInfo.get("FILE_EXTN_NM")).split(",");
                 FILE_SZ = String.valueOf(lectInfo.get("FILE_SZ")).split(",");
 
                 List<String> PHYS_FILE_NM_LS = new ArrayList<>();
+                List<String> ORGNL_FILE_NM_LS = new ArrayList<>();
                 List<String> FILE_SN_SEQ_LS = new ArrayList<>();
                 List<String> FILE_EXTN_NM_LS = new ArrayList<>();
                 List<String> FILE_SZ_LS  = new ArrayList<>();
@@ -127,16 +129,19 @@ public class YouTubeController {
                 lectInfo.put("FILE_LENGTH", FILE_LENGTH);
                 for(int i = 0; i < FILE_LENGTH; i++) {
                     PHYS_FILE_NM_LS.add(PHYS_FILE_NM[i]);
+                    ORGNL_FILE_NM_LS.add(ORGNL_FILE_NM[i]);
                     FILE_SN_SEQ_LS.add(FILE_SN_SEQ[i]);
                     FILE_EXTN_NM_LS.add(FILE_EXTN_NM[i]);
                     FILE_SZ_LS.add(FILE_SZ[i]);
                 }
                 lectInfo.put("PHYS_FILE_NM_LS", PHYS_FILE_NM_LS);
+                lectInfo.put("ORGNL_FILE_NM_LS", ORGNL_FILE_NM_LS);
                 lectInfo.put("FILE_SN_SEQ_LS", FILE_SN_SEQ_LS);
                 lectInfo.put("FILE_EXTN_NM_LS", FILE_EXTN_NM_LS);
                 lectInfo.put("FILE_SZ_LS", FILE_SZ_LS);
 
                 lectInfo.remove("PHYS_FILE_NM");
+                lectInfo.remove("ORGNL_FILE_NM");
                 lectInfo.remove("FILE_SN_SEQ");
                 lectInfo.remove("FILE_EXTN_NM");
                 lectInfo.remove("FILE_SZ");
@@ -148,6 +153,38 @@ public class YouTubeController {
         view.addObject("lectList", lectList);
 
         return view;
+    }
+
+    @GetMapping("/fileDownload/{file}")
+    public String fileDownload(@PathVariable String file, HttpServletResponse response) throws IOException {
+        Map<String, Object> fileInfo = new HashMap<>();
+        fileInfo.put("file_sn", file.split(",")[0]);
+        fileInfo.put("file_sn_seq", file.split(",")[1]);
+
+        Map<String, String> downloadFile = sqlSession.selectOne("youtube.getFileInfo", fileInfo);
+
+        String serverPath = context.getRealPath("/") + downloadFile.get("FILE_PATH_NM");
+        File serverFile = new File(serverPath, downloadFile.get("ORGNL_FILE_NM") + "." + downloadFile.get("FILE_EXTN_NM"));
+        // file 다운로드 설정
+        response.setContentType("application/download");
+        response.setContentLength( (int) serverFile.length() );
+        String fileName = downloadFile.get("PHYS_FILE_NM");
+        String fileExtn = downloadFile.get("FILE_EXTN_NM");
+        String encodedFilename = URLEncoder.encode(fileName + "." + fileExtn, "UTF-8");
+        System.out.println(encodedFilename);
+        response.setHeader("Content-disposition", "attachment;filename=\"" + encodedFilename + "\"");
+
+        // response 객체를 통해서 서버로부터 파일 다운로드
+        OutputStream os = response.getOutputStream();
+
+        // 파일 입력 객체 생성
+        FileInputStream fis = new FileInputStream(serverFile);
+        FileCopyUtils.copy(fis, os);
+
+        fis.close();
+        os.close();
+
+        return "youtube/fileDownload";
     }
 
     @GetMapping("/lectureNoticeDetail")
