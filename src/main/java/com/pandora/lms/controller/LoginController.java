@@ -1,14 +1,11 @@
 package com.pandora.lms.controller;
 
-import com.pandora.lms.dto.LoginDTO;
-import com.pandora.lms.service.LoginService;
-import lombok.AllArgsConstructor;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Controller
