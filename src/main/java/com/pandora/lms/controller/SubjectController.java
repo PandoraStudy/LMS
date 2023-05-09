@@ -1,8 +1,12 @@
 package com.pandora.lms.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,8 +63,6 @@ public class SubjectController {
 	    paramMap.put("departmentName", departmentName);
 	    
 	    System.out.println(Search01);
-	    System.out.println(subjectName);
-	    System.out.println(departmentName);
 	    
 	    // 필터링 로직 수행
 	    List<Map<String, Object>> filteredData = subjectService.AjaxSubject(paramMap);
@@ -70,6 +73,11 @@ public class SubjectController {
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("status", "success");
 	    result.put("data", filteredData);
+	    for (Map<String, Object> map : filteredData) {
+	    	for( String key : map.keySet() ) {
+	    		System.out.println(key + " : " + map.get(key));
+	    	}
+		}
 	    return mapper.writeValueAsString(result);
 	}
 	
@@ -125,17 +133,5 @@ public class SubjectController {
 		return result;
 	    }
 	
-	@PostMapping("/submitUpdate")
-	@ResponseBody
-	public Map<String, Object> SubmitUpdate(@RequestBody Map<String, String> data){
-		String departmentCd = data.get("departmentCd");
-		System.out.println("광표");
-		
-		
-		Map<String, Object> result = new HashMap<>();
-		result.put("status", "success");
-		
-		return result;
-	}
 	
 }

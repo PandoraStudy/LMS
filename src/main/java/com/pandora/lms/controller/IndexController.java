@@ -1,5 +1,6 @@
 package com.pandora.lms.controller;
 
+<<<<<<< HEAD
 import com.pandora.lms.service.NoticeService;
 import com.pandora.lms.util.TextChangeUtil;
 import com.pandora.lms.util.socket.IPGetter;
@@ -52,6 +53,17 @@ public class IndexController {
             mv.addObject("myIp",ipGetter.getIP());
             return mv;
       
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class IndexController {
+
+    @GetMapping("/index")
+    public String index() {
+        return "index";
+>>>>>>> refs/heads/ADMIN
     }
 
 }

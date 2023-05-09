@@ -14,6 +14,10 @@ public interface CheckDAO {
 
 	List<Map<String, Object>> AjaxStudent(Map<String, Object> paramMap);
 
+	List<Map<String, Object>> AjaxInstrSearch(Map<String, Object> paramMap);
+
+	void ChangeInstr(int instrNo);
+
 	
 
 	

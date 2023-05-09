@@ -1,10 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<html>
-<head>
-<meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<title>과목 화면</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 function search() {
   const year = document.getElementById("year").value;
@@ -13,10 +7,10 @@ function search() {
   const departmentName = document.getElementById("department_name").value;
   
   const data = {
-    year: year,
-    semester: semester,
-    subjectName: subjectName,
-    departmentName : departmentName
+    "year": year,
+    "semester": semester,
+    "subjectName": subjectName,
+    "departmentName" : departmentName
   };
 
   const xhr = new XMLHttpRequest();
@@ -25,10 +19,13 @@ function search() {
       if (xhr.status === 200) {
         const result = document.getElementById("result").getElementsByTagName("tbody")[0];
         const response = JSON.parse(xhr.responseText);
-
+		console.log(response.data[0]);
         // 기존 테이블 내용 삭제
         result.innerHTML = "";
-
+		
+        // 조회된 데이터 건수
+        $('#cnt_subject').append(response.data.length);
+        
         // 데이터 출력
         for (let i = 0; i < response.data.length; i++) {
           const row = result.insertRow(-1);
@@ -36,23 +33,23 @@ function search() {
           const categoryCell2 = row.insertCell(1);
           const subjectNameCell = row.insertCell(2);
           const departmentNameCell = row.insertCell(3);
-          const esntlYn = row.insertCell(4);
-          const CRCLM_CYCL = response.data[i].CRCLM_CYCL.toString();
-          categoryCell1.innerHTML = CRCLM_CYCL.substr(0,4)+"년도";
+          
+          let newText = document.createTextNode(response.data[i].CRCLM_CYCL.toString().substr(0,4) + "년도");
+      
+          categoryCell1.appendChild(newText);
 
-          if(CRCLM_CYCL.substr(5) !== '1' && CRCLM_CYCL.substr(5) !== '2'){
-        	  if(CRCLM_CYCL.substr(5) == '3'){
+          if(response.data[i].CRCLM_CYCL.toString().substr(5) !== '1' && response.data[i].CRCLM_CYCL.toString().substr(5) !== '2'){
+        	  if(response.data[i].CRCLM_CYCL.toString().substr(5) == '3'){
         		categoryCell2.innerHTML = "하계 계절학기";
         	  }else{
         		categoryCell2.innerHTML = "동계 계절학기";
         	  }
           }else{
-          		categoryCell2.innerHTML = CRCLM_CYCL.substr(5)+"학기";        	  
+          		categoryCell2.innerHTML = response.data[i].CRCLM_CYCL.toString().substr(5)+"학기";        	  
           }
           subjectNameCell.innerHTML = response.data[i].SBJCT_NM;
           departmentNameCell.innerHTML = response.data[i].CRCLM_NM;
-          esntlYn.innerHTML = response.data[i].ESNTL_YN;
-          
+       
           // 이벤트 리스너 추가
           row.addEventListener('click', function() {
             const rowData = {
@@ -78,92 +75,102 @@ function search() {
 }
 
 </script>
-</head>
 <style>
-.second_area{
-	width: 1000px;
-	height: 200px;
-	overflow-y: scroll;
-}
 
-#result thead {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  background-color: #fff;
-}
+.modity {
+	display:flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
 
-.top_text{
-	width: 90px;
-	height: 25px;
 }
-
-select{
-	height: 25px;
+.top{
+position: relative;
+top: 58px;
+float: none;
 }
-
-th{
-	width:105px;
-	text-align: center;
+.modify > div{
+/* width: 100px; */
+margin: 5px;
 }
-
-td{
-	text-align: center;
+.modify > input{
+/* width: 150px;
+min-width: 150px; */
+margin: 5px;
 }
-
 </style>
-<!DOCTYPE html>
-<html>
-<body>
-</body>
-</html>
-<body>
-    <h1>과목화면</h1>
 
-학년도 <input type="text" class="top_text" id="year" name="year" value="2023">
-		 <select id="semester">
-		 	<option value="0">전체</option>
-		 	<option value="01">1학기</option>
-		 	<option value="02">2학기</option>
-		 	<option value="03">하계 계절학기</option>
-		 	<option value="04">동계 계절학기</option>
-		 </select>&nbsp&nbsp&nbsp
-교과목명 : <input type="text" class="top_text" id="subject_name" name="subject_name">&nbsp&nbsp&nbsp
-편성학과 : <input type="text" class="top_text" id="department_name" name="department_name">&nbsp&nbsp&nbsp
-<button class="btn btn-outline-info btn-sm" onclick="search()">조회</button>
-<br><br><br>
-<h1>교육과정정보</h1>
-==========================================================================================
-<div class="second_area">
-<table id="result">
-  	<thead>
-    	<tr>
-			<th>교육년도</th>
-			<th>학기</th>
-			<th>교과목명</th>
-			<th>편성학과</th>
-			<th>교과구분</th>
-    	</tr>
-  	</thead>
-  	<tbody></tbody>	
-</table>
+<div id="main_container_load">
+	<div class="main_container_title">
+		<img class="title_img" alt="title" src="/img/icon/title.png">교육과정관리
+	</div>
+	<div style="overflow-y: hidden; overflow-x: hidden; height: 580px;">
+	<form id="search-form">
+		<div class="main_container_interspace">
+			<input type="button" value="조회" class="search_btn" onclick="search()">
+		</div>
+		<div class="main_container_search">
+		<div>학년도</div>
+		<span class="div_input">
+		<input class="div_input_left" id="year" name="year" value="2023">
+		<select id="semester"  class="div_select_right">
+			<option value="0">전체</option>
+			<option value="01">1학기</option>
+			<option value="02">2학기</option>
+			<option value="03">하계 계절학기</option>
+			<option value="04">동계 계절학기</option>
+		</select>
+		</span>
+		<div>교과목명</div>
+		<input type="text" class="top_text" id="subject_name" name="subject_name">
+		<div>편성학과</div>
+		<input type="text" class="top_text" id="department_name" name="department_name">
+		</div>
+	</form>
+	
+	<div class="main_container_subtitle">
+		<div class="blue_bar"></div>
+		교육과정정보
+	</div>
+		<div style="font-size: 14px; color: gray; position: relative; float: left; top: 20px;">
+		<span id="cnt_subject"></span>건이 조회되었습니다.
+	</div>
+		<div class="main_content short">
+		<table id="result" class="main_table">
+		  	<thead>
+		    	<tr>
+					<th onclick="sortTable(0, result)">교육년도</th>
+					<th onclick="sortTable(1, result)">학기</th>
+					<th onclick="sortTable(2, result)">교과목명</th>
+					<th onclick="sortTable(3, result)">편성학과</th>
+		    	</tr>
+		  	</thead>
+		  	<tbody></tbody>	
+		</table>
+		</div>
+		<div class="main_container_subtitle top">
+			<div class="blue_bar"></div>
+			과목정보
+		</div>
+		<div class="main_container_search modify">
+			<div>학년도</div>
+			<input id="years" name="years">
+			<div>학과코드</div>
+			<input type="text" id="departmentCd" name="departmentCd">
+			<div>편성학과</div>
+			<input type="text" id="departmentName" name="departmentName">
+			<div>편성학기</div>
+			<input type="text" id="semesterName" name="semesterName">
+			<div>교과구분</div>
+			<input type="text" id="major" name="major">
+			<div>과목코드</div>
+			<input type="text" id="subjectCd" name="subjectCd">
+			<div>과목명</div>
+			<input type="text" id="subjectName" name="subjectName">
+			<div>비고</div>
+			<input type="text" id="note" name="note">
+		</div>
+	</div>
 </div>
-===========================================================================================
-<h1>과목정보</h1>&nbsp&nbsp&nbsp
-<form id="form">
-<button type="button" class="btn btn-success" style="float:right" id="submit">수정</button>
-학년도(2023)<input type="text" id="years" name="years"><br>
-학과코드(30101111)<input type="text" id="departmentCd" name="departmentCd"><br> 
-편성학과(경영학)<input type="text" id="departmentName" name="departmentName"><br>
-편성학기(1학기)<input type="text" id="semesterName" name="semesterName"><br>
-교과구분(전공)<input type="text" id="major" name="major"><br> 
-과목코드<input type="text" id="subjectCd" name="subjectCd"><br>
-과목명<input type="text" id="subjectName" name="subjectName"><br> 
-비고(빈칸)<input type="text" id="note" name="note"><br>
-</form>
-
-   
-</body>
 <script>
 function sendAjax(rowData) {
 	  const xhr = new XMLHttpRequest();
@@ -177,14 +184,14 @@ function sendAjax(rowData) {
 	          
 	          // 응답 데이터를 input 요소에 추가
 	          const data = response.data[0];
+	          
 	          //날짜
 	          const yearsInput = document.getElementById("years");
-	          const CRCLM_CYCL = data.CRCLM_CYCL.toString();
-	          yearsInput.value = CRCLM_CYCL.substr(0,4);
+	          yearsInput.value = data.CRCLM_CYCL.toString().substr(0,4);
 	          
 	          //학기 가공
-	          if(CRCLM_CYCL.substr(5) != '1' && CRCLM_CYCL.substr(5) != '2'){
-	        	  if(CRCLM_CYCL.substr(5) == '3'){
+	          if(data.CRCLM_CYCL.toString().substr(5) != '1' && data.CRCLM_CYCL.toString().substr(5) != '2'){
+	        	  if(data.CRCLM_CYCL.toString().substr(5) == '3'){
 	          		const semesterNameInput = document.getElementById("semesterName");
 	          		semesterNameInput.value = "하계 계절학기";
 	          	  }else{
@@ -193,7 +200,7 @@ function sendAjax(rowData) {
 	          	  }
 	          }else{
 	        	  	const semesterNameInput = document.getElementById("semesterName");
-	          		semesterNameInput.value = CRCLM_CYCL.substr(5)+"학기";
+	          		semesterNameInput.value = data.CRCLM_CYCL.toString().substr(5)+"학기";
 	          }
 	          //학과명
 	          const subjectNameInput = document.getElementById("subjectName");
@@ -208,8 +215,14 @@ function sendAjax(rowData) {
 	          const subjectCdInput = document.getElementById("subjectCd");
 	          subjectCdInput.value = data.SBJCT_NO;
 	          //전공구분
-	          const majorInput = document.getElementById("major");
- 	          majorInput.value = data.ESNTL_YN;
+	          if(data.SBJCT_NO.toString().substr(1) == 'a'){
+	        	  const majorInput = document.getElementById("major");
+	        	  majorInput.value = "교양";
+	          }else{
+	        	  const majorInput = document.getElementById("major");
+	        	  majorInput.value = "전공";
+	          }
+	          
 	          
 	      } else {
 	        console.error('Error:', xhr.statusText);
@@ -221,32 +234,4 @@ function sendAjax(rowData) {
 	  xhr.setRequestHeader('Content-Type', 'application/json');
 	  xhr.send(JSON.stringify(rowData));
 	}
-	//데이터 수정
-	 $(function(){
-        $('#submit').on("click",function () {
-            var form1 = $("#form").serialize();
-
-            console.log(form1);
-            var change = confirm("수정하시겠습니까?");
-            
-            $.ajax({
-                type: "post",
-                url: "submitUpdate",
-                data: form1,
-                dataType: 'json',
-                success: function (data) {
-                    alert("success");
-                    console.log(data);
-                },
-                error: function (request, status, error) {
-                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
-                }
-            });
-        });
-    });
-    
-	
-	
 </script>
-</html>
