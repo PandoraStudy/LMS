@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             
             http
             .logout()
-            .logoutSuccessUrl("ㅋ/admin/login")
+            .logoutSuccessUrl("/admin/login")
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .permitAll();
