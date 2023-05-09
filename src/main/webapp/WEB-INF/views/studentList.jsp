@@ -21,7 +21,7 @@ $(document).ready( function() {
 								+ '</td><td>' + info.crclm_NM
 								+ '</td><td>' + info.user_BRDT
 								+ '</td><td>' + info.age
-								+ '</td><td>' + info.gender_CD
+								+ '</td><td>' + info.gender
 								+ '</td><td>' + info.eml_ADDR
 								+ '</td><td>' + info.telno
 								+ '</td><td>' + info.addr

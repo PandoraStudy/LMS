@@ -76,6 +76,17 @@ public class AdminController {
 		
 		List<ApplCrclmWrapperDTO> studentList = adminService.applList(applCrc);
 		System.out.println(studentList + "adad");
+		
+		for (ApplCrclmWrapperDTO applCrcInfo : studentList) {
+			System.out.println(applCrcInfo.getGENDER_CD() + "yy");
+			int gender = applCrcInfo.getGENDER_CD();
+			if (gender == 1) {
+				applCrcInfo.setGENDER("남자");
+			}else {
+				applCrcInfo.setGENDER("여자");
+			}
+		}
+		
 		return studentList;
 	}
 
