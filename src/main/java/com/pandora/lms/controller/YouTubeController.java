@@ -156,7 +156,7 @@ public class YouTubeController {
     }
 
     @GetMapping("/fileDownload/{file}")
-    public String fileDownload(@PathVariable String file, HttpServletResponse response) throws IOException {
+    public void fileDownload(@PathVariable String file, HttpServletResponse response) throws IOException {
         Map<String, Object> fileInfo = new HashMap<>();
         fileInfo.put("file_sn", file.split(",")[0]);
         fileInfo.put("file_sn_seq", file.split(",")[1]);
@@ -172,8 +172,7 @@ public class YouTubeController {
         String fileExtn = downloadFile.get("FILE_EXTN_NM");
         String encodedFilename = URLEncoder.encode(fileName + "." + fileExtn, "UTF-8");
         encodedFilename = encodedFilename.replaceAll("\\+", "%20");
-        System.out.println("파일명" + encodedFilename);
-        response.setHeader("Content-disposition", "attachment;filename=" + encodedFilename + ";");
+        response.setHeader("Content-disposition", "attachment;filename=" + encodedFilename);
 
         // response 객체를 통해서 서버로부터 파일 다운로드
         OutputStream os = response.getOutputStream();
@@ -183,13 +182,10 @@ public class YouTubeController {
         FileCopyUtils.copy(fis, os);
 
         fis.close();
-        os.flush(); // 커밋을 지연시키기 위해 버퍼를 비워줌
+        os.flush();
 
-        // response의 커밋(commit)을 수동으로 호출
         response.flushBuffer();
         os.close();
-
-        return "youtube/fileDownload";
     }
 
     @GetMapping("/lectureNoticeDetail")
