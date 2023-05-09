@@ -79,7 +79,6 @@ public class YouTubeController {
             lecture = sqlSession.selectList("youtube.lecture", userInfo);
         }
 
-
         view.addObject("lecture", lecture);
         return view;
     }
@@ -158,7 +157,8 @@ public class YouTubeController {
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("notice", notice);
         view.addObject("lectList", lectList);
-
+        
+        
         return view;
     }
 

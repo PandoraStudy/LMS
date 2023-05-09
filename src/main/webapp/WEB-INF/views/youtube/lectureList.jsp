@@ -480,7 +480,8 @@
                                                 </div>
                                                 <c:if test="${sessionScope.appl_no != null}">
                                                 <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
-                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
+                                                    <c:choose>
+                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
                                                     <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 10px 24px 0;'>
 	                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
 	                                                    width: 
@@ -501,7 +502,25 @@
 		                                                    </c:choose>
 														</span>
 													</div>
-                                                    </c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+                                                    <c:choose>
+                                                    	<c:when test="${lect.ATTENDANCE eq 0}">
+                                                    		<button style="width:108px;" class="btn btn-outline-success">출석</button>
+                                                    	</c:when>
+                                                    	<c:when test="${lect.ATTENDANCE eq 1 || lect.ATTENDANCE eq '결석' }">
+                                                    		<button style="width:108px;" class="btn btn-outline-danger">결석</button>
+                                                    	</c:when>
+                                                    	<c:otherwise>
+                                                    		<button style="width:108px;" class="btn btn-outline-warning">지각</button>
+                                                    	</c:otherwise>
+                                                    </c:choose>
+                                                    
+													</div>
+													
+                                                    </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                                 </c:if>
                                             </div>
@@ -535,10 +554,10 @@
                                                     <div style='height:15px; width: 200px; margin-top: -3px;'>
                                                     	<c:choose>
                                                     		<c:when test="${lect.LECT_PRGRS_RT >= 90}">
-                                                    			<b>제출</b>
+                                                    			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
                                                     		</c:when>
                                                     		<c:otherwise>
-                                                    			<b>미제출</b>
+	                                                            <button style="width:108px;" class="btn btn-outline-danger">미제출</button>
                                                     		</c:otherwise>
                                                     	</c:choose>
                                                     </div>
