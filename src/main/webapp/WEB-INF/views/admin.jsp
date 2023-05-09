@@ -101,14 +101,24 @@ body {
 }
 
 .user_menu>ul>li {
-	width: 90px;
+	width: 80px;
 	height: 20px;
 	list-style: none;
 	float: left;
 }
 
+.user_menu>ul>li:hover{
+	cursor: pointer;
+	font-weight: 600;
+}
+
 .user_menu>ul>li:not(:last-child):after {
 	content: "\00a0\00a0\00a0|";
+}
+
+.userIcon{
+	position:relative;
+	top: 3px;
 }
 
 .menu_divider {
@@ -569,6 +579,11 @@ background-color: #303030;
 }
 </style>
 <script type="text/javascript">
+//로그아웃
+function logout(){
+	location.href="/logout";
+}
+
 $(document).ready(function () {
     $(".menu > ul > li").click(function (e) {
     	var text = $(this).text();
@@ -810,9 +825,9 @@ function sortTable(n, table) {
 			</div>
 			<div class="user_menu">
 				<ul>
-					<li>내이름</li>
+					<li><img alt="icon_user" src="/img/icon/icon_user.png" class="userIcon"> ${name}</li>
 					<li>즐겨찾기</li>
-					<li>로그아웃</li>
+					<li onclick="logout()">로그아웃 <img alt="icon_logout" src="/img/icon/icon_logout.png" class="userIcon"> </li>
 				</ul>
 			</div>
 		</div>

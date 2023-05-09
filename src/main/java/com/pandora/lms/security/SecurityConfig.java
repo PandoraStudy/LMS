@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,6 +22,7 @@ import com.pandora.lms.service.LoginService;
 @Configuration
 @EnableWebSecurity
 @Order(1)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -74,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .usernameParameter("id")
             .passwordParameter("pw")
             .loginProcessingUrl("/admin/loginaction")
-            .defaultSuccessUrl("/admin/page1")
+            .successHandler(authenticationSuccessHandler)
             .permitAll();
 
         
@@ -88,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             
             http
             .logout()
+            .logoutUrl("/logout")
             .logoutSuccessUrl("/admin/login")
             .invalidateHttpSession(true)
             .clearAuthentication(true)
