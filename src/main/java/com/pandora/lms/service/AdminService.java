@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pandora.lms.dao.AdminDAO;
+import com.pandora.lms.dto.ApplCrclmWrapperDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
 import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.InstrInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
-import com.pandora.lms.dto.UserApplViewDTO;
 
 @Service
 public class AdminService {
@@ -19,8 +19,8 @@ public class AdminService {
 	@Autowired
 	AdminDAO adminDAO;
 
-	public List<ApplInfoDTO> studentList(ApplInfoDTO appl) {
-		return adminDAO.studentList(appl);
+	public List<ApplCrclmWrapperDTO> applList(ApplCrclmWrapperDTO applCrc) {
+		return adminDAO.applList(applCrc);
 	}
 
 	public List<Map<String, Object>> onlectList(Map<String, String> formData) {
@@ -41,6 +41,10 @@ public class AdminService {
 
 	public List<InstrInfoDTO> instructorModal(InstrInfoDTO instr) {
 		return adminDAO.instructorModal(instr);
+	}
+
+	public int crcList(ApplCrclmWrapperDTO applCrc) {
+		return adminDAO.crcList(applCrc);
 	}
 
 }

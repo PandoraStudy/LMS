@@ -14,10 +14,11 @@ $(document).ready( function() {
 					$('#cnt_list').empty();
 					var result = data;
 					var str = "";
+					alert(JSON.stringify(result));
 					$.each(result, function(i, info) {
 						str += '<tr><td>' + info.appl_NO
 								+ '</td><td>' + info.korn_FLNM
-								+ '</td><td>' + info.crclm_CD
+								+ '</td><td>' + info.crclm_NM
 								+ '</td><td>' + info.user_BRDT
 								+ '</td><td>' + info.age
 								+ '</td><td>' + info.gender_CD

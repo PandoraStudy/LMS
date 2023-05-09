@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pandora.lms.dto.UserApplViewDTO;
+import com.pandora.lms.dto.ApplCrclmWrapperDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
 import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.InstrInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
 import com.pandora.lms.dto.SearchDTO;
+import com.pandora.lms.dto.UserApplViewDTO;
 import com.pandora.lms.service.AdminService;
 
 @Controller
@@ -50,19 +51,31 @@ public class AdminController {
 	
 	@ResponseBody
 	@PostMapping("/search/studentList")
-	public List<ApplInfoDTO> studentList(@RequestParam("name") String name
+	public List<ApplCrclmWrapperDTO> studentList(@RequestParam("name") String name
 							, @RequestParam("academic_status") String academic_status
-							, @RequestParam("crclm_CD_able") int crclm_CD_able
+							, @RequestParam("department") String CRCLM_NM
 			) {
 		
-		ApplInfoDTO appl = new ApplInfoDTO();
-		System.out.println(name + ":" +academic_status + ":" + crclm_CD_able + "dd");
-		appl.setKORN_FLNM(name);
-		appl.setACADEMIC_STATUS(academic_status);
-		appl.setCRCLM_CD(crclm_CD_able);
+		System.out.println(name + ":" +academic_status + ":" + CRCLM_NM + "dd");
+		ApplCrclmWrapperDTO applCrc = new ApplCrclmWrapperDTO();
 		
-		List<ApplInfoDTO> studentList = adminService.studentList(appl);
+//		ApplInfoDTO appl = new ApplInfoDTO();
+//		
+//		CrclmInfoDTO crc = new CrclmInfoDTO();
+		applCrc.setCRCLM_NM(CRCLM_NM);
+		int crcCD;
+		if (CRCLM_NM != "") {
+			crcCD = adminService.crcList(applCrc);
+			System.out.println(crcCD +"dddd");
+			applCrc.setCRCLM_CD(crcCD);
+		}
+		applCrc.setKORN_FLNM(name);
+		applCrc.setACADEMIC_STATUS(academic_status);
+		applCrc.setCRCLM_NM(CRCLM_NM);
 		
+		
+		List<ApplCrclmWrapperDTO> studentList = adminService.applList(applCrc);
+		System.out.println(studentList + "adad");
 		return studentList;
 	}
 
