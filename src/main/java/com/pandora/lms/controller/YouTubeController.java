@@ -172,6 +172,7 @@ public class YouTubeController {
 
         String serverPath = context.getRealPath("/") + downloadFile.get("FILE_PATH_NM");
         File serverFile = new File(serverPath, downloadFile.get("ORGNL_FILE_NM") + "." + downloadFile.get("FILE_EXTN_NM"));
+
         // file 다운로드 설정
         response.setContentType("application/download");
         response.setContentLength( (int) serverFile.length() );
