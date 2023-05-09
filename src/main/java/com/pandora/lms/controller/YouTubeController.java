@@ -171,8 +171,9 @@ public class YouTubeController {
         String fileName = downloadFile.get("PHYS_FILE_NM");
         String fileExtn = downloadFile.get("FILE_EXTN_NM");
         String encodedFilename = URLEncoder.encode(fileName + "." + fileExtn, "UTF-8");
+        encodedFilename = encodedFilename.replaceAll("\\+", "%20");
         System.out.println("파일명" + encodedFilename);
-        response.setHeader("Content-disposition", "attachment;filename=\"" + encodedFilename + "\"");
+        response.setHeader("Content-disposition", "attachment;filename=" + encodedFilename + ";");
 
         // response 객체를 통해서 서버로부터 파일 다운로드
         OutputStream os = response.getOutputStream();
