@@ -1,6 +1,7 @@
 package com.pandora.lms.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -62,8 +63,6 @@ public class SubjectController {
 	    paramMap.put("departmentName", departmentName);
 	    
 	    System.out.println(Search01);
-	    System.out.println(subjectName);
-	    System.out.println(departmentName);
 	    
 	    // 필터링 로직 수행
 	    List<Map<String, Object>> filteredData = subjectService.AjaxSubject(paramMap);
@@ -74,6 +73,11 @@ public class SubjectController {
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("status", "success");
 	    result.put("data", filteredData);
+	    for (Map<String, Object> map : filteredData) {
+	    	for( String key : map.keySet() ) {
+	    		System.out.println(key + " : " + map.get(key));
+	    	}
+		}
 	    return mapper.writeValueAsString(result);
 	}
 	
@@ -129,17 +133,5 @@ public class SubjectController {
 		return result;
 	    }
 	
-	@PostMapping("/submitUpdate")
-	@ResponseBody
-	public Map<String, Object> SubmitUpdate(@RequestBody Map<String, String> data){
-		String departmentCd = data.get("departmentCd");
-		System.out.println("광표");
-		
-		
-		Map<String, Object> result = new HashMap<>();
-		result.put("status", "success");
-		
-		return result;
-	}
 	
 }

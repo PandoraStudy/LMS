@@ -16,8 +16,16 @@ public class CheckService {
 	CheckDAO checkDAO;
 
 	public List<Map<String, Object>> AjaxStudent(Map<String, Object> paramMap) {
-		
 		return checkDAO.AjaxStudent(paramMap);
+	}
+
+	public List<Map<String, Object>> AjaxInstrSearch(Map<String, Object> paramMap) {
+		return checkDAO.AjaxInstrSearch(paramMap);
+	}
+
+	public void ChangeInstr(int instrNo) {
+		checkDAO.ChangeInstr(instrNo);
+		
 	}
 
 	
