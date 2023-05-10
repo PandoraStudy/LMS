@@ -40,6 +40,7 @@
         </choose>
     </select>
 
+
     <select id="notice" parameterType="HashMap" resultType="HashMap">
         SELECT notice_no, notice_title, admin_id, if((date_format(now(), '%Y-%m-%d') = date_format(notice_date, '%Y-%m-%d')), date_format(notice_date, '%H:%i'), date_format(notice_date, '%m-%d')) AS `notice_date`, notice_like, notice_read
             FROM NOTICE
