@@ -112,7 +112,7 @@ public class YouTubeController {
 
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
-
+        
         List<Map<String, Object>> notice = sqlSession.selectList("youtube.notice", lectureInfo);
 
         for(Map<String, Object> lectInfo : lectList) {
