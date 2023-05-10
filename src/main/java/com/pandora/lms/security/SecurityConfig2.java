@@ -1,37 +1,26 @@
 package com.pandora.lms.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import com.pandora.lms.service.AdminLoginService;
-import com.pandora.lms.service.LoginService;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
 @Order(2)
-public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
-	
-	
-	
+public class SecurityConfig2 {
+
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
-	
-//	@Autowired
-//	private LoginService loginService;
-//	
-//    
+
 //	@Autowired
 //	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //	     auth.userDetailsService(loginService);
@@ -54,8 +43,8 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
 //		return authProvider;
 //	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Bean
+    public SecurityFilterChain mainfilterChain(HttpSecurity http) throws Exception {
     	
     	http.csrf().disable();
         http.authorizeRequests()
@@ -73,16 +62,16 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
             .usernameParameter("id")
             .passwordParameter("pw")
             .loginProcessingUrl("/login")
+            .failureUrl("/loginfail")
             .successHandler(authenticationSuccessHandler)
             .permitAll();
 
         
             http
             .sessionManagement()
-            .sessionFixation().changeSessionId()
             .maximumSessions(1)
-            .expiredUrl("/login")
-            .maxSessionsPreventsLogin(true);
+            .maxSessionsPreventsLogin(true)
+            .sessionRegistry(sessionRegistry());
             
             
             http
@@ -92,6 +81,14 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
             .clearAuthentication(true)
             .permitAll();
             
+			return http.build();
+            
     }
-
+	
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
+	
+	
 }

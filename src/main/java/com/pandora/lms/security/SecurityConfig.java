@@ -1,33 +1,29 @@
 package com.pandora.lms.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
-import com.pandora.lms.service.AdminLoginService;
 import com.pandora.lms.service.LoginService;
 
 @Configuration
-@EnableWebSecurity
 @Order(1)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 	
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
-	
-//	@Autowired
-//	private LoginService LoginService;
-    
+
 	@Autowired
 	private LoginService LoginService;
 	
@@ -55,9 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(LoginService);
 	}
 	  
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	http.authorizeRequests().antMatchers("/").permitAll();
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	http.csrf().disable();
         http.antMatcher("/admin/**").authorizeRequests()
         	.antMatchers("/css/**").permitAll()
@@ -74,24 +69,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .usernameParameter("id")
             .passwordParameter("pw")
             .loginProcessingUrl("/admin/loginaction")
-            .defaultSuccessUrl("/admin/page1")
+            .successHandler(authenticationSuccessHandler)
             .permitAll();
-
-        
-            http
-            .sessionManagement()
-            .sessionFixation().changeSessionId()
-            .maximumSessions(1)
-            .expiredUrl("/admin/login")
-            .maxSessionsPreventsLogin(true);
             
+        http
+        .sessionManagement()
+        .maximumSessions(1)
+        .maxSessionsPreventsLogin(true)
+        .sessionRegistry(adminsessionRegistry());
             
-            http
+        http
             .logout()
-            .logoutSuccessUrl("/admin/login")
+            .logoutUrl("/admin/logout")
             .invalidateHttpSession(true)
             .clearAuthentication(true)
+            .logoutSuccessUrl("/admin/login")
             .permitAll();
+			return http.build();
             
     }
     
@@ -101,7 +95,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
+    @Bean
+	public SessionRegistry adminsessionRegistry() {
+		return new SessionRegistryImpl();
+	}
+	
+	@Bean
+	public static ServletListenerRegistrationBean httpSessionEventPulisher() {
+		return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+	}
+	
 
 
 }
