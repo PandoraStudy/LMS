@@ -10,7 +10,7 @@
                     es.SBJCT_NM,
                     ci.CRCLM_NM,
                     (SELECT ii.KORN_FLNM  FROM INSTR_INFO ii WHERE ii.INSTR_NO = si.INSTR_NO) as 'KORN_FLNM',
-                    (SELECT COUNT(LECT_YMD) FROM LECT_TM_INFO lti WHERE lti.SBJCT_NO = ac.APPL_NO) as 'TOTAL_LECT_CNT',
+                    (SELECT COUNT(LECT_YMD) FROM LECT_TM_INFO lti WHERE lti.SBJCT_NO = ac.SBJCT_NO) as 'TOTAL_LECT_CNT',
                     COUNT(aa.LECT_YMD) as 'APPL_ATND_CNT'
                 FROM APPL_CLS ac
                     LEFT JOIN ESTBL_SBJCT es ON ac.SBJCT_NO = es.SBJCT_NO
