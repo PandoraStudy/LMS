@@ -71,7 +71,7 @@
       <div class="modal-body">정말로 로그아웃 하시겠습니까?</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" style="font-size: 14px;" type="button" data-dismiss="modal">취소</button>
-        <a class="btn btn-primary" style="font-size: 14px;" href="/logout">로그아웃</a>
+        <form action="/logout" method = "post"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /><button class="btn btn-primary" type="submit" style="font-size: 14px;">로그아웃</button></form>
       </div>
     </div>
   </div>
