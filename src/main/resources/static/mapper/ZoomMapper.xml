@@ -71,6 +71,17 @@
         AND SBJCT_NO = #{sbjct_no}
     </update>
 
+<!--
+    <delete id="final_delete_check">
+        DELETE ATND
+        FROM LECT_MEET_MAG MAG
+        JOIN APPL_ATND ATND ON MAG.APPL_NO = ATND.APPL_NO
+        WHERE MAG.ATTEND_STATUS IS NULL
+        AND MAG.SBJCT_NO = #{sbjct_no}
+        AND ATND.SBJCT_MTHD_CD = 2
+    </delete>
+-->
+
     <select id="final_check_list" parameterType="HashMap" resultType="HashMap">
         SELECT LECT_YMD, SBJCT_NO, CRCLM_CD, CRCLM_CYCL, APPL_NO, ATTEND_STATUS
         FROM LECT_MEET_MAG
@@ -85,5 +96,10 @@
             (#{item.APPL_NO}, #{item.LECT_YMD}, #{item.CRCLM_CYCL}, #{item.ATTEND_STATUS}, #{item.CRCLM_CD}, #{item.SBJCT_NO}, '2')
         </foreach>
     </insert>
+
+
+
+
+
 
 </mapper>
