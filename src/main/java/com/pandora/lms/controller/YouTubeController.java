@@ -78,7 +78,7 @@ public class YouTubeController {
             userInfo.put("instr_no", session.getAttribute("instr_no"));
             lecture = sqlSession.selectList("youtube.lecture", userInfo);
         }
-
+        System.out.println("lecture : "+lecture);
         view.addObject("lecture", lecture);
         return view;
     }

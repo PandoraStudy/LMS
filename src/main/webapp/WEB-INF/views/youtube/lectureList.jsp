@@ -435,7 +435,7 @@
                                                 	<c:choose>
                                                     <c:when test="${week gt lect.END_CLS_CD}">
 		                                            	<c:choose>
-															<c:when test="${90 lt lect.LECT_PRGRS_RT}">
+															<c:when test="${90 le lect.LECT_PRGRS_RT || lect.ATTENDANCE eq '1'}">
 																<button style="width:90px;" class="btn btn-outline-success" disabled>수강완료</button>
 															</c:when>
 															<c:otherwise>
@@ -446,11 +446,11 @@
 													
 													<c:when test="${week eq lect.END_CLS_CD}">
 		                                            	<c:choose>
-															<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-																<button style="width:90px;" class="btn btn-outline-primary" disabled>수강중</button>
+															<c:when test="${90 le lect.LECT_PRGRS_RT || lect.ATTENDANCE eq '1'}">
+																<button style="width:90px;" class="btn btn-outline-primary" disabled>수강완료</button>
 															</c:when>
 															<c:otherwise>
-																<button style="width:90px;" class="btn btn-outline-success">수강완료</button>
+																<button style="width:90px;" class="btn btn-outline-success">수강중</button>
 															</c:otherwise>
 														</c:choose>
 													</c:when>
@@ -487,7 +487,7 @@
 	                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
 	                                                    width: 
 		                                                    <c:choose>
-			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%;</c:when>
+			                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%;</c:when>
 			                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
 		                                                    </c:choose>' 
 		                                                    aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
@@ -496,7 +496,7 @@
                                                     <div style='height:20px; line-height: 20px;'>&nbsp;
 														<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
 														<c:choose>
-			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%</c:when>
+			                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%</c:when>
 			                                                    <c:otherwise>
 																<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
 			                                                    </c:otherwise>
