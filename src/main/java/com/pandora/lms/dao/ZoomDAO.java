@@ -37,6 +37,13 @@ public class ZoomDAO {
 
     public int zoom_exit(ZoomDTO zoomDTO) {
 
+
+
+        List<Map<String, Object>> final_check_list = sqlSession.selectList("zoom.final_check_list", zoomDTO);
+        sqlSession.insert("zoom.final_check", final_check_list);
+        System.err.println("성공적으로 출석체크");
+
+
         return sqlSession.update("zoom.zoom_exit",zoomDTO);
     }
 
@@ -60,32 +67,22 @@ public class ZoomDAO {
         Map<String, Object> attendance_check = new HashMap<>();
         attendance_check.put("sbjct_no", zoomDTO.getSbjct_no());
 
-        int result_cnt = 0;
-        int check_size = 0;
-
         if (attendance != null){
-            check_size = check_size + attendance.length;
             for (String value : attendance) {
                 attendance_check.put("attendance", value);
                 System.err.println("출석 : "+value);
                 sqlSession.update("zoom.attendance_check", attendance_check);
-                result_cnt = result_cnt+1;
             }
         }
         if (absence != null){
-            check_size = check_size + absence.length;
             for (String value : absence) {
                 attendance_check.put("absence", value);
                 System.err.println("결석 : "+value);
                 sqlSession.update("zoom.absence_check", attendance_check);
-                result_cnt = result_cnt+1;
             }
         }
-        if (check_size == result_cnt){
-            List<Map<String, Object>> final_check_list = sqlSession.selectList("zoom.final_check_list", attendance_check);
-            sqlSession.insert("zoom.final_check", final_check_list);
-            System.err.println("성공적으로 출석체크");
-        }
+
+
 
 
 
