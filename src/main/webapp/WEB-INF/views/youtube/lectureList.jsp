@@ -417,7 +417,7 @@
                                                     	<c:choose>
                                                     	<c:when test="${week >= lect.END_CLS_CD}">
 	                                                        <c:choose>
-	                                                            <c:when test="${90 lt lect.LECT_PRGRS_RT}">
+	                                                            <c:when test="${90 lt lect.LECT_PRGRS_RT || lect.ATTENDANCE eq '1'}">
 	                                                                <button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
 	                                                            </c:when>
 	                                                            <c:otherwise>
@@ -549,7 +549,7 @@
                                                 <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
                                                     <div style='height:15px; width: 200px; margin-top: -3px;'>
                                                     	<c:choose>
-                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90}">
+                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90 || lect.ATTENDANCE eq '1'}">
                                                     			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
                                                     		</c:when>
                                                     		<c:otherwise>
