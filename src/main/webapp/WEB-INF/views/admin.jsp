@@ -101,14 +101,24 @@ body {
 }
 
 .user_menu>ul>li {
-	width: 90px;
+	width: 80px;
 	height: 20px;
 	list-style: none;
 	float: left;
 }
 
+.user_menu>ul>li:hover{
+	cursor: pointer;
+	font-weight: 600;
+}
+
 .user_menu>ul>li:not(:last-child):after {
 	content: "\00a0\00a0\00a0|";
+}
+
+.userIcon{
+	position:relative;
+	top: 3px;
 }
 
 .menu_divider {
@@ -534,7 +544,15 @@ background-color: #303030;
 	left: calc(50% - 305px);
 	border: 1px solid #0060af;
 }
-
+.modal_password{
+	width: 468px;
+	height: 398px;
+	background-color: white;
+	position: absolute;
+	top: calc(50vh - 199px);
+	left: calc(50% - 234px);
+	border: 1px solid #0060af;
+}
 .modal_top_bar {
 	width: calc(100% - 10px);
 	height: 29px;
@@ -569,6 +587,11 @@ background-color: #303030;
 }
 </style>
 <script type="text/javascript">
+//로그아웃
+function logout(){
+	location.href="/logout";
+}
+
 $(document).ready(function () {
     $(".menu > ul > li").click(function (e) {
     	var text = $(this).text();
@@ -582,31 +605,30 @@ $(document).ready( function() {
 $(".li_step1").click(function(e){
 // 	console.log("d");
 	$(this).find(".li_step2").toggle();
-// 	$(this).find('.dd').toggle();
     e.stopPropagation();
-    e.preventDefault();
+//     e.preventDefault();
 	});
 });
 $(document).ready( function() {
 $(".li_step2").click(function(e){
 	$(this).find('.li_step3').toggle();
     e.stopPropagation();								//e.stopPropagation는 이벤트가 상위 엘리먼트에 전달되지 않게 막아 준다.
-    e.preventDefault();									//e.preventDefault는 고유 동작을 중단시킨다.
+//     e.preventDefault();									//e.preventDefault는 고유 동작을 중단시킨다.
 	});
 });
 $(document).ready( function() {
 	$(".li_step3").click(function(e){
-		alert("li_step3");
+// 		alert("li_step3");
 	    e.stopPropagation();
 	});
 });
 //1번탭 활성화
-$(document).ready( function() {
-	$("#tabs1, #li_content1").click(function(e){
-	    $("#main_container").css("display","block");
-	    $("#tabs1").attr("checked", "checked");
-	});
-});
+// $(document).ready( function() {
+// 	$("#tabs1, #li_content1").click(function(e){
+// 	    $("#main_container").css("display","block");
+// 	    $("#tabs1").attr("checked", "checked");
+// 	});
+// });
 //test include
 // $(document).ready( function() {
 // 	$("#studentList").click(function(e){
@@ -620,17 +642,17 @@ $(document).ready( function() {
 // 	});
 // });
 //test2 include
-$(document).ready( function() {
-	$("#mainContentTest2").click(function(e){
-		alert("테스트2");
-// 		$("#tab_bar").load("/mainContentTest2 #tab2");
-		$("#main_container").append("<div id='load_mainContentTest2' class='content'></div>");
-		$("#load_mainContentTest2").load("/mainContentTest2");
-	    $("#tabs2").attr("checked", "checked");
-	    var id = $(this).attr("id");
-	    showContent("load_mainContentTest2", id);
-	});
-});
+// $(document).ready( function() {
+// 	$("#mainContentTest2").click(function(e){
+// 		alert("테스트2");
+// // 		$("#tab_bar").load("/mainContentTest2 #tab2");
+// 		$("#main_container").append("<div id='load_mainContentTest2' class='content'></div>");
+// 		$("#load_mainContentTest2").load("/mainContentTest2");
+// 	    $("#tabs2").attr("checked", "checked");
+// 	    var id = $(this).attr("id");
+// 	    showContent("load_mainContentTest2", id);
+// 	});
+// });
 
 //li를 클릭했을 때 탭과 main_content 활성화
 function showContent(c_id, id) {
@@ -641,9 +663,9 @@ function showContent(c_id, id) {
     // if 조건에 맞는 input[name=tabs]의 checked 속성을 설정합니다.
     $("input[name=tabs]").each(function() {
         if ("tabs_" + id == $(this).attr("id")) {
-            $(this).prop("checked", true);
-        } else {
-            $(this).prop("checked", false);
+            $(this).prop("checked", true);						//attr() - HTML attribute 값이 모두 String 으로 넘어옴 
+        } else {												//prop() - 자바스크립트의 프로퍼티 값이 넘어오기 때문에 boolean, date, function 등도 가져올 수 있음
+            $(this).prop("checked", false);						//.prop()는 .attr() 보다 약 2.5 배 빠름
         }
     });
 }
@@ -655,19 +677,19 @@ function tabs(id){
 	$("#load_" + id).show();
 }
 
-//탭 추가
+//side_menu를 클릭했을 때 탭 추가 + jsp 로드 + 활성화
 $(document).ready(function () {
     $(".li_step3").click(function (e) {
     	var id = $(this).attr('id');
         var title = $(this).text();
-        var tabs = $("#tab_bar label");
-        var isDuplicate = false;
+        var tabs = $("#tab_bar label");						//id가 tab_bar인 태그 안의 label 태그
+        var isDuplicate = false;							//true일 경우 중복, false일 경우 중복x
 
         // 기존 탭들의 텍스트를 확인하여 중복되는 것이 있는지 확인합니다.
         tabs.each(function () {
-            if ($(this).text() === title) {
-                isDuplicate = true;
-                return false; // 중복되는 경우, each() 반복을 종료합니다.
+            if ($(this).text() === title) {					//title에서 가져온 text와 현재 비교하고있는 $(this).text()와 비교
+                isDuplicate = true;							//같을 경우 isDuplicate를 true로 변환
+                return false; 								// 중복되는 경우, each() 반복을 종료합니다.
             }
         });
 
@@ -675,7 +697,7 @@ $(document).ready(function () {
         if (!isDuplicate) {
             var newTab = "<input type='radio' name='tabs' id='tabs_" 
             + id + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" 
-            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' id='tabs_"+id+"' onclick='close_tab(\""+id+"\")'></label>";
+            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' onclick='close_tab(\""+id+"\")'></label>";
             $("#tab_bar").append(newTab);
         }
         
@@ -694,9 +716,20 @@ function load(id){
 
 //tab 닫기
 function close_tab(id){
-	$("#tabs_" + id).remove();
-	$("label[for='tabs_" + id + "']").remove();
-	$("#load_" + id).remove();
+	// 이전 라디오 버튼을 찾습니다.
+    var previousRadioButton = $("#tabs_" + id).prev('input[type=radio]');
+	alert(previousRadioButton.html());
+	alert(previousRadioButton.text());
+	alert(previousRadioButton.val());
+    // 닫히는 탭을 제거합니다.
+    $("#tabs_" + id).remove();
+    $("label[for='tabs_" + id + "']").remove();
+    $("#load_" + id).remove();
+
+    // 이전 라디오 버튼이 있으면 체크합니다.
+    if (previousRadioButton.length > 0) {
+        previousRadioButton.prop('checked', true);
+    }
 }
 
 //modal창 닫기
@@ -710,7 +743,7 @@ var val = null;
 var relay_input = null;
 function modalSearch(id, value, input) {
     var modal = document.getElementById("modal_opacity");
-    if (modal.style.display === "none" || modal.style.display === "") {
+    if (modal.style.display === "none") {
         modal.style.display = "block";
         $("#modal_opacity").load("/"+id);
         val = $("#" + value).val();
@@ -810,9 +843,9 @@ function sortTable(n, table) {
 			</div>
 			<div class="user_menu">
 				<ul>
-					<li>내이름</li>
+					<li onclick="modalSearch('userInfoModal')"><img alt="icon_user" src="/img/icon/icon_user.png" class="userIcon"> ${name}</li>
 					<li>즐겨찾기</li>
-					<li>로그아웃</li>
+					<li onclick="logout()">로그아웃 <img alt="icon_logout" src="/img/icon/icon_logout.png" class="userIcon"> </li>
 				</ul>
 			</div>
 		</div>

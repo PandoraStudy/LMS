@@ -1,10 +1,15 @@
 package com.pandora.lms.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,12 +40,12 @@ public class AdminController {
 	@Autowired
 	OnLectNmDTO onlectnmDTO;
 	
+
 	@GetMapping("/admin")
-	public String admin() {
-//		ModelAndView mv = new ModelAndView("admin");
-//		List<AdminDTO> adminList = adminService.adminList();
-//		mv.addObject("list", adminList);
-//		System.out.println(adminList.toString());
+	public String admin(HttpSession session,
+						Model model) {
+		model.addAttribute("id", session.getAttribute("id"));
+		model.addAttribute("name", session.getAttribute("name"));
 		return "admin";
 	}
 	
@@ -56,17 +61,12 @@ public class AdminController {
 							, @RequestParam("department") String CRCLM_NM
 			) {
 		
-		System.out.println(name + ":" +academic_status + ":" + CRCLM_NM + "dd");
 		ApplCrclmWrapperDTO applCrc = new ApplCrclmWrapperDTO();
 		
-//		ApplInfoDTO appl = new ApplInfoDTO();
-//		
-//		CrclmInfoDTO crc = new CrclmInfoDTO();
 		applCrc.setCRCLM_NM(CRCLM_NM);
 		int crcCD;
 		if (CRCLM_NM != "") {
 			crcCD = adminService.crcList(applCrc);
-			System.out.println(crcCD +"dddd");
 			applCrc.setCRCLM_CD(crcCD);
 		}
 		applCrc.setKORN_FLNM(name);
@@ -75,16 +75,20 @@ public class AdminController {
 		
 		
 		List<ApplCrclmWrapperDTO> studentList = adminService.applList(applCrc);
-		System.out.println(studentList + "adad");
 		
 		for (ApplCrclmWrapperDTO applCrcInfo : studentList) {
-			System.out.println(applCrcInfo.getGENDER_CD() + "yy");
 			int gender = applCrcInfo.getGENDER_CD();
 			if (gender == 1) {
 				applCrcInfo.setGENDER("남자");
 			}else {
 				applCrcInfo.setGENDER("여자");
 			}
+			LocalDate current_date = LocalDate.now();
+			int current_Year = current_date.getYear();
+			int birth = Integer.parseInt(applCrcInfo.getUSER_BRDT().toString().substring(0, 4));
+			int age = current_Year - birth;
+			applCrcInfo.setAGE(age);
+			
 		}
 		
 		return studentList;
@@ -94,7 +98,6 @@ public class AdminController {
 	@PostMapping("/search/onlect")
 	public List<Map<String, Object>> onlect(@RequestParam Map<String,String> formData){
 		System.out.println(formData.toString());
-		//{year=2023, department_name=, ON_SBJECT_NM=컴퓨터, ON_LECT_NM=, ON_INSTR_NM=}
 		List<Map<String, Object>> rsl = adminService.onlectList(formData);
 		for (Map<String, Object> map : rsl) {
 			System.out.println(map.toString());
@@ -209,6 +212,11 @@ public class AdminController {
 		}
 		System.out.println(instructorModal + "ㅇㅇ");
 		return instructorModal;
+	}
+	
+	@GetMapping("/userInfoModal")
+	public String userInfoModal() {
+		return "userInfoModal";
 	}
 }
 

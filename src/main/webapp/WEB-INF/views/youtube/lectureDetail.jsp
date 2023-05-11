@@ -31,6 +31,7 @@
 
         /* 오늘 날짜를 대신합니다. */
         let today = "${week }";
+
         /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
         var tag = document.createElement('script');
 
