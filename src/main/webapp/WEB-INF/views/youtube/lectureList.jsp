@@ -25,10 +25,7 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
-    /* 오늘 날짜를 대신합니다. */
-    let today = 4;
 	
-    
     $(function() {
         $(".btn-atnd").click(function (){
             let sbjct_no = "<%=sbjct_no%>";
@@ -407,8 +404,7 @@
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
                                             
                                             <!-- value 조건만 바꾸면댐 -->
-                                            <c:set var="week" value="4"/>
-                                            
+                                            <c:set var="week" value="${week }"/>
                                             
                                             <!-- 완료 미완료 버튼 -->
                                             <div style="float:right; margin-right:20px">

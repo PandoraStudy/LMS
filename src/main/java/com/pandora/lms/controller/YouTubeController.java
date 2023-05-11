@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -41,12 +42,11 @@ import lombok.AllArgsConstructor;
 public class YouTubeController {
 
     private final OAuth oAuth;
-    private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
     private final ServletContext context;
 
     @GetMapping("/lecture")
-    public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) throws JSONException {
+    public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("/youtube/lecture");
 
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
@@ -78,7 +78,7 @@ public class YouTubeController {
             userInfo.put("instr_no", session.getAttribute("instr_no"));
             lecture = sqlSession.selectList("youtube.lecture", userInfo);
         }
-        System.out.println("lecture : "+lecture);
+        
         view.addObject("lecture", lecture);
         return view;
     }
@@ -101,10 +101,29 @@ public class YouTubeController {
         return view;
     }
 
+
+
+    public static int getWeek(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int currentDate = cal.get(Calendar.DATE);
+		cal.set(Calendar.DATE, 1);
+		int firstDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
+//		cal.set(Calendar.DATE, 15);//날짜임시수정
+		
+		return (int) Math.ceil((currentDate + firstDay) / 7.0);
+      }
+
+
+    
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
-
+        
+       	int week = getWeek(new Date());
+       	System.out.println(week + "주차");
+        
+        
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -157,7 +176,7 @@ public class YouTubeController {
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("notice", notice);
         view.addObject("lectList", lectList);
-        
+        view.addObject("week", week);
         
         return view;
     }
