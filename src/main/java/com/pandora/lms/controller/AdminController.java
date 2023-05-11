@@ -44,7 +44,7 @@ public class AdminController {
 	@GetMapping("/admin")
 	public String admin(HttpSession session,
 						Model model) {
-		System.out.println(session.getAttribute("name") + "dd");
+		model.addAttribute("id", session.getAttribute("id"));
 		model.addAttribute("name", session.getAttribute("name"));
 		return "admin";
 	}
@@ -61,14 +61,12 @@ public class AdminController {
 							, @RequestParam("department") String CRCLM_NM
 			) {
 		
-		System.out.println(name + ":" +academic_status + ":" + CRCLM_NM + "dd");
 		ApplCrclmWrapperDTO applCrc = new ApplCrclmWrapperDTO();
 		
 		applCrc.setCRCLM_NM(CRCLM_NM);
 		int crcCD;
 		if (CRCLM_NM != "") {
 			crcCD = adminService.crcList(applCrc);
-			System.out.println(crcCD +"dddd");
 			applCrc.setCRCLM_CD(crcCD);
 		}
 		applCrc.setKORN_FLNM(name);
@@ -77,7 +75,6 @@ public class AdminController {
 		
 		
 		List<ApplCrclmWrapperDTO> studentList = adminService.applList(applCrc);
-		System.out.println(studentList + "adad");
 		
 		for (ApplCrclmWrapperDTO applCrcInfo : studentList) {
 			int gender = applCrcInfo.getGENDER_CD();
@@ -90,7 +87,6 @@ public class AdminController {
 			int current_Year = current_date.getYear();
 			int birth = Integer.parseInt(applCrcInfo.getUSER_BRDT().toString().substring(0, 4));
 			int age = current_Year - birth;
-			System.out.println("현재 : " + current_Year + "," + "생일 : " + birth);
 			applCrcInfo.setAGE(age);
 			
 		}
@@ -221,6 +217,11 @@ public class AdminController {
 		}
 		System.out.println(instructorModal + "ㅇㅇ");
 		return instructorModal;
+	}
+	
+	@GetMapping("/userInfoModal")
+	public String userInfoModal() {
+		return "userInfoModal";
 	}
 }
 
