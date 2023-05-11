@@ -3,59 +3,44 @@ package com.pandora.lms.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.messaging.simp.broker.OrderedMessageChannelDecorator;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
-@Configuration
+import com.pandora.lms.service.LoginService;
+
+import lombok.RequiredArgsConstructor;
+
 @EnableWebSecurity
-@Order(2)
-public class SecurityConfig2 {
+@RequiredArgsConstructor
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class ClientPageConfig {
 
 	@Autowired
 	private AuthenticationSuccessHandler authenticationSuccessHandler;
 
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//	     auth.userDetailsService(loginService);
-//	}
-//	
-//    @Bean
-//    public UserDetailsService LoginService() {return new LoginService();} 
-//    
-//	@Bean
-//	public PasswordEncoder passwordEncoder2() {
-//		return new BCryptPasswordEncoder();
-//	}
-//
-//	@Bean
-//	public DaoAuthenticationProvider authenticationProvider2() {
-//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//		authProvider.setUserDetailsService(LoginService());
-//		authProvider.setPasswordEncoder(passwordEncoder2());
-//
-//		return authProvider;
-//	}
+	@Autowired
+	private LoginService LoginService;
+
 
 	@Bean
     public SecurityFilterChain mainfilterChain(HttpSecurity http) throws Exception {
     	
     	http.csrf().disable();
-        http.authorizeRequests()
-        	.antMatchers("/css/**").permitAll()
-        	.antMatchers("/scss/**").permitAll()
-        	.antMatchers("/vendor/**").permitAll()
-        	.antMatchers("/js/**").permitAll()
-        	.antMatchers("/img/**").permitAll()
-        	.antMatchers("/join").permitAll()
-        	.antMatchers("/resources/**").permitAll()
-            .anyRequest().authenticated();
+    	http.httpBasic().disable();
+        http.requestMatchers().antMatchers("/**").and().authorizeRequests()
+        	.antMatchers("/css/**","/scss/**","/vendor/**","/js/**","/img/**","/join","/resources/**").permitAll()
+            .anyRequest().authenticated().and().userDetailsService(LoginService);
 
         http.formLogin()
             .loginPage("/login")
@@ -77,8 +62,8 @@ public class SecurityConfig2 {
             http
             .logout()
             .logoutSuccessUrl("/login")
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
+//            .invalidateHttpSession(true)
+//            .clearAuthentication(true)
             .permitAll();
             
 			return http.build();
@@ -89,6 +74,17 @@ public class SecurityConfig2 {
 	public SessionRegistry sessionRegistry() {
 		return new SessionRegistryImpl();
 	}
-	
+	 @Bean
+	    public PasswordEncoder passwordEncoder() {
+	        return new BCryptPasswordEncoder();
+	    }
+
+		
+		@Bean
+		public static ServletListenerRegistrationBean httpSessionEventPulisher() {
+			return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+		}
+		
+
 	
 }
