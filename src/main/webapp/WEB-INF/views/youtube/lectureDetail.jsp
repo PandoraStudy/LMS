@@ -30,7 +30,7 @@
         let END_CLS_CD = "${lectureInfo.END_CLS_CD}";
 
         /* 오늘 날짜를 대신합니다. */
-        let today = 4;
+        let today = 2;
 
         /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
         var tag = document.createElement('script');
