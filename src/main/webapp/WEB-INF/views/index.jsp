@@ -32,15 +32,79 @@
     <%-- ==================full캘린더================== --%>
     <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
+                initialView: 'dayGridMonth',
+                selectable: true,
+                select: function(info) {
+                    var startDate = info.startStr;
+                    var endDate = info.endStr;
+
+                    var eventTitle = prompt('이벤트 제목을 입력하세요');
+
+                    if (eventTitle) {
+                        var event = {
+                            title: eventTitle,
+                            start: startDate,
+                            end: endDate
+                        };
+
+                        calendar.addEvent(event);
+
+                        // AJAX 요청 보내기
+                        saveEventToServer(event);
+                    }
+
+                    calendar.unselect();
+                },
+                eventClick: function(info) {
+                    var deleteConfirmation = confirm("추가한 이벤트를 삭제하시겠습니까?");
+
+                    if (deleteConfirmation) {
+                        info.event.remove();
+
+                        // AJAX 요청 보내기
+                        deleteEventFromServer(info.event);
+                    }
+                }
             });
+
             calendar.render();
+
+            function saveEventToServer(event) {
+                // AJAX 요청 코드 작성
+                $.ajax({
+                    url: '/save-event',
+                    method: 'POST',
+                    data: event,
+                    success: function(response) {
+                        console.log('이벤트가 성공적으로 서버에 저장되었습니다.');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('이벤트를 서버에 저장하는 중에 오류가 발생했습니다:', error);
+                    }
+                });
+            }
+
+            function deleteEventFromServer(event) {
+                // AJAX 요청 코드 작성
+                $.ajax({
+                    url: '/delete-event',
+                    method: 'POST',
+                    data: { eventId: event.id },
+                    success: function(response) {
+                        console.log('이벤트가 성공적으로 서버에서 삭제되었습니다.');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('이벤트를 서버에서 삭제하는 중에 오류가 발생했습니다:', error);
+                    }
+                });
+            }
         });
 
-    function Zoom_Join(){
+
+        function Zoom_Join(){
         $(function() {
             $.ajax({
                 url: '/zoom_join',

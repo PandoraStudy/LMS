@@ -38,32 +38,6 @@
                             $("#txt_code").text(response);
                             $("#btn-upload").attr("disabled", false);
                             $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
-
-                            $("#btn-upload").click(function () {
-                                let video_title = $("#video_title").val();
-                                let video_desc = $("#video_desc").val();
-                                let video_file = $("#video_file").val();
-
-                                if (video_title == "") {
-                                    alert("제목이 비었습니다.");
-                                    $("#video_title").focus();
-                                    return false;
-                                }
-
-                                if (video_desc == "") {
-                                    alert("내용이 비었습니다.");
-                                    $("#video_desc").focus();
-                                    return false;
-                                }
-
-                                if (video_file == "") {
-                                    alert("파일이 없습니다.");
-                                    $("#video_file").focus();
-                                    return false;
-                                }
-
-                                $("#form-video").submit();
-                            });
                         } else {
                             $("#txt_code").text("인증 실패 했습니다.");
                         }
@@ -72,6 +46,33 @@
             } else {
                 alert("이미 인증이 완료 됐습니다.");
             }
+        });
+
+        $("#btn-upload").click(function () {
+
+            let video_title = $("#video_title").val();
+            let video_desc = $("#video_desc").val();
+            let video_file = $("#video_file").val();
+
+            if (video_title == "") {
+                alert("제목이 비었습니다.");
+                $("#video_title").focus();
+                return false;
+            }
+
+            if (video_desc == "") {
+                alert("내용이 비었습니다.");
+                $("#video_desc").focus();
+                return false;
+            }
+
+            if (video_file == "") {
+                alert("파일이 없습니다.");
+                $("#video_file").focus();
+                return false;
+            }
+
+            $("#form-video").submit();
         });
     });
 </script>

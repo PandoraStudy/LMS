@@ -55,16 +55,18 @@
                         alert("유효하지 않은 주소입니다.\n잠시 후 다시 시도해주세요.");
                     }
                 } else {
-                    // 강사의 줌 회의 개설
-                    if(snOrUrl != "") {
-                        let sbjct_no = "${sbjct_no}";
+                    let sbjct_no = "${sbjct_no}";
+                    let appl = "${sessionScope.appl_no}";
+                    let instr = "${sessionScope.instr_no}";
 
-                        let appl = "${sessionScope.appl_no}";
-                        let instr = "${sessionScope.instr_no}";
-
-                        if(appl != "") {
+                    if(appl != "") {
+                        if(snOrUrl != "") {
                             window.open(snOrUrl, "줌", "menubar=no, toolbar=no, fullscreen=yes");
-                        } else if (instr != "") {
+                        } else {
+                            alert("회의가 개설되지 않았습니다.");
+                        }
+                    } else if (instr != "") {
+                        // 강사의 줌 회의 개설
                             $(function() {
                                 $.ajax({
                                     url: '/zoom_open',
@@ -86,9 +88,6 @@
                                     }
                                 });
                             });
-                        }
-                    } else {
-                        alert("아직 회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
                     }
                 }
         });

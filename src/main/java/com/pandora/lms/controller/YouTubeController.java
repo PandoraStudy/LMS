@@ -17,6 +17,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pandora.lms.ytbUtil.UploadVideo;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONObject;
@@ -365,7 +366,9 @@ public class YouTubeController {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        oAuth.authorize(scopes, true);
+        Credential credential = oAuth.authorize(scopes, true);
+        UploadVideo uploadVideo = new UploadVideo();
+        uploadVideo.uploadVideo(credential, videoFile);
 
         return "redirect:/uploadVideo";
     }
@@ -428,7 +431,7 @@ public class YouTubeController {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(scopes, false);
+        Credential credential = oAuth.authorize(scopes, true);
         if (credential != null) {
             return "인증이 완료 됐습니다.";
         } else {
