@@ -94,11 +94,6 @@ public class AdminController {
 		return studentList;
 	}
 
-	private void getClass(Date user_BRDT) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@ResponseBody
 	@PostMapping("/search/onlect")
 	public List<Map<String, Object>> onlect(@RequestParam Map<String,String> formData){
