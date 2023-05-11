@@ -404,7 +404,8 @@
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
                                             
                                             <!-- value 조건만 바꾸면댐 -->
-                                            <c:set var="week" value="${week }"/>
+<%--                                             <c:set var="week" value="${week }"/> --%>
+                                            <c:set var="week" value="4"/>
                                             
                                             <!-- 완료 미완료 버튼 -->
                                             <div style="float:right; margin-right:20px">
@@ -460,63 +461,93 @@
                                                 </c:if>
                                             </div>
                                         </div>
+                                        
                                         <!-- 강의 -->
-                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
-                                        <c:choose>
-                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger
-                                        </c:when>
-                                        <c:otherwise>border-left-primary
-                                        </c:otherwise>
-                                        </c:choose> collapse">
-                                            <!-- 숨길 객체의 내용 -->
-                                            <div class="week-object">
-                                                <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="mthd btn 
-                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise><c:choose><c:when test="${sessionScope.appl_no ne null}">줌수업</c:when><c:otherwise>줌생성</c:otherwise></c:choose></c:otherwise></c:choose></button>
-                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
-                                                </div>
-                                                <c:if test="${sessionScope.appl_no != null}">
-                                                <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
-                                                    <c:choose>
-                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
-                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 10px 24px 0;'>
-	                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
-	                                                    width: 
-		                                                    <c:choose>
-			                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%;</c:when>
-			                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
-		                                                    </c:choose>' 
-		                                                    aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+	                                    <c:set var="week" value="${week }"/>
+	                                    <!-- 지난주차들 -->
+	                                    <c:if test="${i le week}">
+	                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
+	                                        <c:choose>
+	                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger
+	                                        </c:when>
+	                                        <c:otherwise>border-left-primary
+	                                        </c:otherwise>
+	                                        </c:choose> collapse">
+	                                            <!-- 숨길 객체의 내용 -->
+	                                            
+	                                            
+	                                            
+	                                        
+	                                        
+	                                        
+	                                        
+	                                        
+	                                            <div class="week-object">
+	                                                <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+	                                                    <button class="mthd btn 
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when>
+	                                                    <c:otherwise>btn-primary</c:otherwise>
+	                                                    </c:choose>" 
+	                                                    value="
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when>
+	                                                    <c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}">
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when>
+	                                                    <c:otherwise>
+	                                                    <c:choose>
+	                                                    <c:when test="${sessionScope.appl_no ne null}">줌수업</c:when>
+	                                                    <c:otherwise>줌생성</c:otherwise>
+	                                                    </c:choose>
+	                                                    </c:otherwise>
+	                                                    </c:choose>
+	                                                    </button>
+	                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
+	                                                </div>
+	                                                <c:if test="${sessionScope.appl_no != null}">
+	                                                <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
+	                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 10px 24px 0;'>
+		                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
+		                                                    width: 
+			                                                    <c:choose>
+				                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%;</c:when>
+				                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
+			                                                    </c:choose>' 
+			                                                    aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+		                                                    </div>
 	                                                    </div>
-                                                    </div>
-                                                    <div style='height:20px; line-height: 20px;'>&nbsp;
-														<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
-														<c:choose>
-			                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%</c:when>
-			                                                    <c:otherwise>
-																<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
-			                                                    </c:otherwise>
-		                                                    </c:choose>
-														</span>
-													</div>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
-                                                    <c:choose>
-                                                    	<c:when test="${lect.ATTENDANCE eq '1'}">
-                                                    		<button style="width:108px;" class="btn btn-outline-success">출석</button>
-                                                    	</c:when>
-                                                    	<c:when test="${lect.ATTENDANCE eq '0' || lect.ATTENDANCE eq '결석' }">
-                                                    		<button style="width:108px;" class="btn btn-outline-danger">결석</button>
-                                                    	</c:when>
-                                                    </c:choose>
-													</div>
-                                                    </c:otherwise>
-                                                    </c:choose>
-                                                </div>
-                                                </c:if>
-                                            </div>
-                                        </div>
+	                                                    <div style='height:20px; line-height: 20px;'>&nbsp;
+															<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
+															<c:choose>
+				                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%</c:when>
+				                                                    <c:otherwise>
+																	<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+				                                                    </c:otherwise>
+			                                                    </c:choose>
+															</span>
+														</div>
+	                                                    </c:when>
+	                                                    <c:otherwise>
+	                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+	                                                    <c:choose>
+	                                                    	<c:when test="${lect.ATTENDANCE eq '1'}">
+	                                                    		<button style="width:108px;" class="btn btn-outline-success">출석</button>
+	                                                    	</c:when>
+	                                                    	<c:when test="${lect.ATTENDANCE eq '0' || lect.ATTENDANCE eq '결석' }">
+	                                                    		<button style="width:108px;" class="btn btn-outline-danger">결석</button>
+	                                                    	</c:when>
+	                                                    </c:choose>
+														</div>
+	                                                    </c:otherwise>
+	                                                    </c:choose>
+	                                                </div>
+	                                                </c:if>
+	                                            </div>
+	                                        </div>
+										</c:if>
                                         <c:if test="${lect.FILE_SN ne null}">
                                             <c:set var="file_cnt" value="0"/>
                                             <c:forEach begin="1" end="${lect.FILE_LENGTH}">
@@ -533,30 +564,38 @@
                                             <c:set var="file_cnt" value="${file_cnt + 1}"/>
                                             </c:forEach>
                                         </c:if>
-                                        <!-- 과제 -->
-                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
-                                            <!-- 숨길 객체의 내용 -->
-                                            <div class="week-object">
-                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="assign btn btn-warning">과제</button>
-                                                    <span>${lect.ON_LECT_NM }</span>
-                                                </div>
-                                                <c:if test="${sessionScope.appl_no != null}">
-                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
-                                                    	<c:choose>
-                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90 || lect.ATTENDANCE eq '1'}">
-                                                    			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
-                                                    		</c:when>
-                                                    		<c:otherwise>
-	                                                            <button style="width:108px;" class="btn btn-outline-danger">미제출</button>
-                                                    		</c:otherwise>
-                                                    	</c:choose>
-                                                    </div>
-                                                </div>
-                                                </c:if>
-                                            </div>
-                                        </div>
+                                        
+                                        
+                                        
+                                        <c:set var="week" value="${week }"/>
+                                        <!-- 지난주차들 -->
+                                        <c:if test="${i le week}">
+	                                        <!-- 과제 -->
+	                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
+	                                            <!-- 숨길 객체의 내용 -->
+	                                            <div class="week-object">
+	                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+	                                                    <button class="assign btn btn-warning">과제</button>
+	                                                    <span>${lect.ON_LECT_NM }</span>
+	                                                </div>
+	                                                <c:if test="${sessionScope.appl_no != null}">
+	                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
+	                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+	                                                    	<c:choose>
+	                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90 || lect.ATTENDANCE eq '1'}">
+	                                                    			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
+	                                                    		</c:when>
+	                                                    		<c:otherwise>
+		                                                            <button style="width:108px;" class="btn btn-outline-danger">미제출</button>
+	                                                    		</c:otherwise>
+	                                                    	</c:choose>
+	                                                    </div>
+	                                                </div>
+	                                                </c:if>
+	                                            </div>
+	                                        </div>
+                                        </c:if>
+                                        
                                         <c:if test="${sessionScope.instr_no != null && lect.SBJCT_MTHD_CD ne 2}">
                                         <!-- 추가 -->
                                         <div class="week-upload week-content${i} ${status.last ? 'content-last' : ''} border-left-success collapse">
