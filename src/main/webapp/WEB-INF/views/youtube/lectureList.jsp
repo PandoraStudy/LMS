@@ -67,7 +67,6 @@
                         }
                     } else if (instr != "") {
                         // 강사의 줌 회의 개설
-                        if(snOrUrl == "") {
                             $(function() {
                                 $.ajax({
                                     url: '/zoom_open',
@@ -89,7 +88,6 @@
                                     }
                                 });
                             });
-                        }
                     }
                 }
         });
