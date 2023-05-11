@@ -60,7 +60,11 @@
                     let instr = "${sessionScope.instr_no}";
 
                     if(appl != "") {
-                        window.open(snOrUrl, "줌", "menubar=no, toolbar=no, fullscreen=yes");
+                        if(snOrUrl != "") {
+                            window.open(snOrUrl, "줌", "menubar=no, toolbar=no, fullscreen=yes");
+                        } else {
+                            alert("회의가 개설되지 않았습니다.");
+                        }
                     } else if (instr != "") {
                         // 강사의 줌 회의 개설
                         if(snOrUrl == "") {
@@ -87,8 +91,6 @@
                             });
                         }
                     }
-
-
                 }
         });
 
