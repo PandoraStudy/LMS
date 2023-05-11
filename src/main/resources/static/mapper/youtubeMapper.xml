@@ -144,7 +144,8 @@
     <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
         SELECT
             oli.ON_LECT_SN,
-            oli.ON_LECT_URL
+            oli.ON_LECT_URL,
+            oli.SBJCT_NO
             <choose>
             <when test="appl_no != null">,
             lti.BGNG_CLS_CD,
@@ -152,7 +153,6 @@
             olm.APPL_NO,
             olm.LAST_PLAY_TM,
             olm.LECT_MAX_TM,
-            olm.SBJCT_NO,
             olm.LECT_PRGRS_RT
         FROM ON_LECT_MAG olm
             JOIN ON_LECT_INFO oli ON olm.ON_LECT_SN = oli.ON_LECT_SN AND olm.APPL_NO = #{appl_no }
