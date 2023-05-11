@@ -1,5 +1,5 @@
-    let wsmsg = new WebSocket('ws:/172.30.1.2/user');  //채팅용 소켓
-    let wslist = new WebSocket('ws:/172.30.1.2/list'); //참여인원 소켓
+    let wsmsg = new WebSocket('ws:/172.30.1.89/user');  //채팅용 소켓
+    let wslist = new WebSocket('ws:/172.30.1.89/list'); //참여인원 소켓
 
     wsmsg.onopen = function(event) {
         console.log("채팅이 열렸습니다.");

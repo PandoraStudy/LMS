@@ -45,6 +45,10 @@ public class NoticeController {
             int startPage = (pageNo * 10) - 10;
             int totalCount = noticeService.noticeCount(pages);
             int lastPage = (int) Math.ceil((double) totalCount / 10);
+            if((startPage+10)>totalCount) {
+                startPage = totalCount - 10;
+                pageNo = lastPage;
+            }
             pages.put("startPage", startPage);
             pages.put("lastPage", lastPage);
             List<Map<String, Object>> list = noticeService.noticeList(pages);
@@ -84,6 +88,7 @@ public class NoticeController {
     @GetMapping("/noticeWrite")
     public String noticeWrite(HttpSession session) {
         if (session.getAttribute("user_no") == null) return "redirect:/login";
+        if (session.getAttribute("id") != "dudu") return "redirect:/notice";
         else return "/notice/noticeWrite";
     }
 
@@ -119,10 +124,13 @@ public class NoticeController {
     }
 
     @GetMapping("/noticeUpdate")
-    public ModelAndView noticeUpdate(@RequestParam String rowNum, HttpServletRequest request, HttpSession session) {
+    public ModelAndView noticeUpdate(String rowNum, HttpServletRequest request, HttpSession session) {
         if (session.getAttribute("user_no") == null) {
-            ModelAndView login = new ModelAndView("/login/login");
+            ModelAndView login = new ModelAndView("redirect:/login");
             return login;
+        } else if (session.getAttribute("id") != "dudu") {
+            ModelAndView notice = new ModelAndView("redirect:/notice");
+            return notice;
         } else {
             ModelAndView mv = new ModelAndView("/notice/noticeWrite");
             String totalCnt = request.getParameter("totalCnt");
@@ -138,6 +146,7 @@ public class NoticeController {
     @GetMapping("/noticeDelete")
     public String noticeDelete(String rowNum, HttpSession session) {
         if (session.getAttribute("user_no") == null) return "redirect:/login";
+        if (session.getAttribute("id") != "dudu") return "redirect:/notice";
         else {
             String notice_no = Integer.toString(noticeService.noticeNo(rowNum));
             int result = noticeService.noticeDelete(notice_no);
