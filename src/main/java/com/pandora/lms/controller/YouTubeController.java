@@ -113,16 +113,13 @@ public class YouTubeController {
 		
 		return (int) Math.ceil((currentDate + firstDay) / 7.0);
       }
-
-
+    
     
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
         
        	int week = getWeek(new Date());
-       	System.out.println(week + "주차");
-        
         
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
@@ -250,10 +247,18 @@ public class YouTubeController {
         return msg;
     }
 
+    
+    
+
+    
+    
     @GetMapping("/lectureDetail")
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
-
+        
+        int week = getWeek(new Date());
+       	System.out.println(week + "주");
+       	
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -274,7 +279,8 @@ public class YouTubeController {
         }
 
         view.addObject("lectureInfo", lectureInfo);
-
+        view.addObject("week", week);
+        
         return view;
     }
 
