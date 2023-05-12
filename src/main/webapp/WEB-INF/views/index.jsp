@@ -75,7 +75,7 @@
             function saveEventToServer(event) {
                 // AJAX 요청 코드 작성
                 $.ajax({
-                    url: '/save-event',
+                    url: '/save_event',
                     method: 'POST',
                     data: event,
                     success: function(response) {
@@ -88,9 +88,8 @@
             }
 
             function deleteEventFromServer(event) {
-                // AJAX 요청 코드 작성
                 $.ajax({
-                    url: '/delete-event',
+                    url: '/delete_event',
                     method: 'POST',
                     data: { eventId: event.id },
                     success: function(response) {
@@ -245,10 +244,7 @@
                                     <div style="height: 140px;" class="chart-area">
                                         <div>
 
-                                            <button onclick="Zoom()" class="btn btn-primary">줌 수업 시작하기</button>
-
-
-                                            <button onclick="Zoom_Join()" class="btn btn-google">줌 수업 참여하기</button>
+                                            <h1>공사중</h1>
 
                                         </div>
                                     </div>
