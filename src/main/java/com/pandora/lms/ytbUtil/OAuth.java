@@ -15,6 +15,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Preconditions;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -140,12 +141,11 @@ public class OAuth {
                     runtime.exec("xdg-open " + url);
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
-                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    Runtime.getRuntime().exec("C:\\Windows\\System32\\rundll32.exe url.dll,FileProtocolHandler " + url);
                     System.out.println("이메일로 전송 : " + url);
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
-                    Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null,
-                            url);
+                    Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null, url);
                 }
             }
         } catch (IOException | InternalError | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
