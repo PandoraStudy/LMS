@@ -84,7 +84,7 @@
     <hr class="sidebar-divider line">
 
     <!-- B 카테고리 -->
-    <div class="sidebar-heading">추가적인 기능(이름수정필요)</div>
+    <div class="sidebar-heading">엔터테인먼트</div>
     <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">
         <a style="height: 40px;" class="nav-link" href="/messageBox">

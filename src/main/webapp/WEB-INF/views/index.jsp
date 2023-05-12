@@ -38,35 +38,75 @@
                 initialView: 'dayGridMonth',
                 selectable: true,
                 select: function(info) {
-                    var startDate = info.startStr;
-                    var endDate = info.endStr;
+                    var startDate = info.startStr;/일정 시작일/
+                    var endDate = info.endStr;/일정 종료일/
 
-                    var eventTitle = prompt('이벤트 제목을 입력하세요');
+                    var modal = document.getElementById("myModal"); /모달창/
+                    var eventTitleElement = document.getElementById("eventTitle");/일정명 입력 공간/
+                    var closeButton = document.getElementById("close_btn");/모달 닫기 버튼/
+                    var saveButton = document.getElementById("saveButton");/일정 저장 버튼/
 
-                    if (eventTitle) {
-                        var event = {
-                            title: eventTitle,
-                            start: startDate,
-                            end: endDate
-                        };
+                    modal.style.display = "block"; /모달 창 띄우기/
 
-                        calendar.addEvent(event);
+                    saveButton.addEventListener("click", function() {
+                        var eventTitle = document.getElementById("eventInput").value;
 
-                        // AJAX 요청 보내기
-                        saveEventToServer(event);
-                    }
+                        if (eventTitle) {
+                            var event = {
+                                title: eventTitle,
+                                start: startDate,
+                                end: endDate
+                            };
+
+                            calendar.addEvent(event);
+
+                            // AJAX 요청 보내기
+                            saveEventToServer(event);
+                        }
+
+                        modal.style.display = "none";
+                        document.getElementById("eventInput").value = ""; // 입력 필드 초기화
+                    });
+
+                    // 모달 창 'x' 버튼 클릭 시
+                    closeButton.addEventListener("click", function() {
+                        modal.style.display = "none";
+                        document.getElementById("eventInput").value = ""; // 입력 필드 초기화
+                    });
 
                     calendar.unselect();
                 },
                 eventClick: function(info) {
-                    var deleteConfirmation = confirm("추가한 이벤트를 삭제하시겠습니까?");
+                    // 모달 창 띄우기
+                    var modal = document.getElementById("myModal");
+                    var eventTitleElement = document.getElementById("eventTitle");
+                    var deleteButton = document.getElementById("deleteButton");
+                    var closeButton = document.getElementById("close_btn");
+                    var eventTitle = document.getElementById("eventInput");
 
-                    if (deleteConfirmation) {
+
+                    eventTitleElement.innerText = "이벤트명: " + info.event.title;
+                    modal.style.display = "block";
+
+                    // 이벤트 삭제 버튼 클릭 시
+                    deleteButton.addEventListener("click", function() {
+
                         info.event.remove();
 
                         // AJAX 요청 보내기
                         deleteEventFromServer(info.event);
-                    }
+
+                        // 모달 창 닫기
+                        modal.style.display = "none";
+                    });
+
+                    // 모달 창 'x' 버튼 클릭 시
+                    closeButton.addEventListener("click", function() {
+                        modal.style.display = "none";
+                    });
+
+                    saveButton.style.display = "none";/*저장 버튼 숨기기*/
+                    eventTitle.style.display = "none";/*입력 공간 숨기기*/
                 }
             });
 
@@ -160,6 +200,43 @@
         .none{ font-size:14px; }
         .none:hover{ background-color: #cccccc; }
 
+        /*===== 모달 창 스타일 ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* =================================== */
     </style>
 </head>
 
@@ -282,7 +359,18 @@
 
                                     <div class="chart-pie pt-4 pb-2">
                                         <%--본문 내용 작성하는 부분--%>
-                                        <div id="calendar"></div>
+                                            <div id="calendar"></div>
+
+                                            <div id="myModal" class="modal">
+                                                <div class="modal-content">
+                                                    <span id="close_btn" class="close">&times;</span>
+                                                    <p id="eventTitle"></p>
+                                                    <input type="text" id="eventInput" placeholder="이벤트 제목을 입력하세요">
+                                                    <button id="saveButton">저장</button>
+                                                    <button id="deleteButton">이벤트 삭제</button>
+                                                </div>
+                                            </div>
+                                            <%--본문 내용 작성하는 부분--%>
                                     </div>
                                 </div>
                             </div>
