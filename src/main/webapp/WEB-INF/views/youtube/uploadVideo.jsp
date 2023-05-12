@@ -24,7 +24,7 @@
 </head>
 <script>
     $(function () {
-        let auth = "${auth}";
+        let auth = ${auth};
 
         $("#btn-access").click(function () {
             if (auth != true) {
@@ -32,16 +32,14 @@
                     url: "/youtubeAccess",
                     dataType: "text",
                     success: function (response) {
-                        alert(response);
-                        // if (response != "") {
-                        //     auth = true;
-                        //
-                        //     $("#txt_code").text(response);
-                        //     $("#btn-upload").attr("disabled", false);
-                        //     $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
-                        // } else {
-                        //     window.open(response, "_blank");
-                        // }
+                        if (response != "") {
+                            auth = true;
+                            $("#txt_code").text(response);
+                            $("#btn-upload").attr("disabled", false);
+                            $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
+                        } else {
+                            window.open(response, "_blank");
+                        }
                     }
                 });
             } else {

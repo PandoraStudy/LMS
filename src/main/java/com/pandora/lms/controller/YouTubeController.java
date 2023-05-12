@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class YouTubeController {
             userInfo.put("instr_no", session.getAttribute("instr_no"));
             lecture = sqlSession.selectList("youtube.lecture", userInfo);
         }
-        
+
         view.addObject("lecture", lecture);
         return view;
     }
@@ -99,30 +100,30 @@ public class YouTubeController {
 
         return view;
     }
-    
+
     //Calendar함수
     public static int getWeek() {
     	Calendar cal = Calendar.getInstance();
-    	
+
     	//강제로 년월도일변경
 //    	cal.set(Calendar.YEAR, 2023);//년도 변경
     	//1월 : JANUARY, 2월 : FEBRUARY, 3월 : MARCH, 4월 : APRIL, 5월 : MAY, 6월 : JUNE
 		//7월 : JULY, 8월 : AUGUST, 9월 : SEPTEMBER, 10월 : OCTOBER, 11월 : NOVEMBER, 12월 : DECEMBER
 //    	cal.set(Calendar.MONTH, Calendar.MAY);
 //    	cal.set(Calendar.DATE, 13);
-    	
+
     	int week = cal.get(Calendar.WEEK_OF_MONTH);
-    	
+
     	return week;
     }
-    
-    
+
+
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
 
        	int week = getWeek();
-       	
+
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -130,7 +131,7 @@ public class YouTubeController {
 
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
-        
+
         List<Map<String, Object>> notice = sqlSession.selectList("youtube.notice", lectureInfo);
 
         for(Map<String, Object> lectInfo : lectList) {
@@ -176,7 +177,7 @@ public class YouTubeController {
         view.addObject("notice", notice);
         view.addObject("lectList", lectList);
         view.addObject("week", week);
-        
+
         return view;
     }
 
@@ -218,9 +219,9 @@ public class YouTubeController {
     @GetMapping("/lectureDetail")
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
-        
+
         int week = getWeek();
-       	
+
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -242,7 +243,7 @@ public class YouTubeController {
 
         view.addObject("lectureInfo", lectureInfo);
         view.addObject("week", week);
-        
+
         return view;
     }
 
@@ -388,25 +389,26 @@ public class YouTubeController {
 
     @PostMapping("/youtubeAccess")
     @ResponseBody
-    public void youtubeAccess(HttpServletResponse response) throws Exception {
+    public String youtubeAccess() throws Exception {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(response, scopes, false);
-        if(credential != null) {
-            response.setContentType("text/plain");
-            response.getWriter().write("인증이 완료 됐습니다.");
+        Credential credential = oAuth.authorize(scopes, false);
+        if (credential != null) {
+            return "인증이 완료 됐습니다.";
+        } else {
+            return null;
         }
     }
 
     @GetMapping("/uploadVideo")
-    public ModelAndView uploadVideo(HttpServletResponse response) throws Exception {
+    public ModelAndView uploadVideo() throws Exception {
         ModelAndView view = new ModelAndView("youtube/uploadVideo");
 
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(response, scopes, true);
+        Credential credential = oAuth.authorize(scopes, true);
 
         if (credential != null) {
             view.addObject("auth", true);
@@ -418,14 +420,14 @@ public class YouTubeController {
     }
 
     @PostMapping("/uploadVideo")
-    public String uploadVideo(HttpServletResponse response, @RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
         System.out.println("동영상 정보 : " + videoInfo);
         System.out.println("동영상 파일 : " + videoFile);
 
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(response, scopes, true);
+        Credential credential = oAuth.authorize(scopes, true);
         UploadVideo uploadVideo = new UploadVideo();
         uploadVideo.uploadVideo(credential, videoFile, videoInfo);
 
