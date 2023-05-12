@@ -141,7 +141,7 @@ public class OAuth {
                     runtime.exec("xdg-open " + url);
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
-                    Runtime.getRuntime().exec("C:\\Windows\\System32\\rundll32.exe url.dll,FileProtocolHandler " + url);
+                    Runtime.getRuntime().exec("C:\\Windows\\System32\\rundll32 url.dll,FileProtocolHandler " + url);
                     System.out.println("이메일로 전송 : " + url);
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
