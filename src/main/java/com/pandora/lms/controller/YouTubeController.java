@@ -100,27 +100,30 @@ public class YouTubeController {
 
         return view;
     }
-
-
-
-    public static int getWeek(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		int currentDate = cal.get(Calendar.DATE);
-		cal.set(Calendar.DATE, 1);
-		int firstDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
-//		cal.set(Calendar.DATE, 15);//날짜임시수정
-		
-		return (int) Math.ceil((currentDate + firstDay) / 7.0);
-      }
+    
+    //Calendar함수
+    public static int getWeek() {
+    	Calendar cal = Calendar.getInstance();
+    	
+    	//강제로 년월도일변경
+//    	cal.set(Calendar.YEAR, 2023);//년도 변경
+    	//1월 : JANUARY, 2월 : FEBRUARY, 3월 : MARCH, 4월 : APRIL, 5월 : MAY, 6월 : JUNE
+		//7월 : JULY, 8월 : AUGUST, 9월 : SEPTEMBER, 10월 : OCTOBER, 11월 : NOVEMBER, 12월 : DECEMBER
+//    	cal.set(Calendar.MONTH, Calendar.MAY);
+//    	cal.set(Calendar.DATE, 13);
+    	
+    	int week = cal.get(Calendar.WEEK_OF_MONTH);
+    	
+    	return week;
+    }
     
     
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
-        
-       	int week = getWeek(new Date());
-        
+
+       	int week = getWeek();
+       	
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -256,8 +259,7 @@ public class YouTubeController {
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
         
-        int week = getWeek(new Date());
-       	System.out.println(week + "주");
+        int week = getWeek();
        	
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
