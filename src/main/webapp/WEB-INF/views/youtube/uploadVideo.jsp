@@ -24,7 +24,7 @@
 </head>
 <script>
     $(function () {
-        let auth = ${auth};
+        let auth = "${auth}";
 
         $("#btn-access").click(function () {
             if (auth != true) {
@@ -129,19 +129,41 @@
                                             <tr>
                                                 <td>인증 여부</td>
                                                 <td>
-                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'>인증이 완료 됐습니다.</c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
+                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'><b>인증이 완료 됐습니다.</b></c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>과목 번호</td>
+                                                <td>
+                                                    <select class="form-select" name="LECT_YMD" id="lect_ymd">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>진행 주차</td>
+                                                <td>
+                                                    <select class="form-select" name="SBJCT_NO" id="sbjct_no">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>강의 제목</td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="video_title" id="video_title" placeholder="강의 제목을 입력해주세요.">
+                                                    <input class="form-control" type="text" name="ON_LECT_NM" id="video_title" placeholder="강의 제목을 입력해주세요.">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>강의 설명</td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="video_desc" id="video_desc" placeholder="강의 설명을 입력해주세요.">
+                                                    <input class="form-control" type="text" name="ON_LECT_CN" id="video_desc" placeholder="강의 설명을 입력해주세요.">
                                                 </td>
                                             </tr>
                                             <tr>

@@ -141,6 +141,7 @@ public class OAuth {
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
                     Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    System.out.println(url);
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
                     Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null,
@@ -149,7 +150,7 @@ public class OAuth {
             }
         } catch (IOException | InternalError | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
                  InvocationTargetException | URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "Unable to open browser", e);
+            System.out.println(Level.WARNING + "\nUnable to open browser\n" + e);
         }
     }
 }
