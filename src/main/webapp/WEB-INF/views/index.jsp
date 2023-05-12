@@ -40,7 +40,6 @@
                 select: function(info) {
                     var startDate = info.startStr;/일정 시작일/
                     var endDate = info.endStr;/일정 종료일/
-
                     var modal = document.getElementById("myModal"); /모달창/
                     var eventTitleElement = document.getElementById("eventTitle");/일정명 입력 공간/
                     var closeButton = document.getElementById("close_btn");/모달 닫기 버튼/
@@ -50,23 +49,19 @@
 
                     saveButton.addEventListener("click", function() {
                         var eventTitle = document.getElementById("eventInput").value;
-
                         if (eventTitle) {
                             var event = {
                                 title: eventTitle,
                                 start: startDate,
                                 end: endDate
                             };
-
                             calendar.addEvent(event);
-
                             // AJAX 요청 보내기
                             saveEventToServer(event);
                         }
-
                         modal.style.display = "none";
                         document.getElementById("eventInput").value = ""; // 입력 필드 초기화
-                    });
+                    }, {once:true});
 
                     // 모달 창 'x' 버튼 클릭 시
                     closeButton.addEventListener("click", function() {
