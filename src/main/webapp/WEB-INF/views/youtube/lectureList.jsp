@@ -313,6 +313,14 @@
         line-height: 40px;
         text-align: center;
     }
+    
+	.pointer_default{
+	cursor: default;
+	}
+
+	.pointer{
+	cursor: pointer;
+	}
 
 </style>
 <body id="page-top">
@@ -345,7 +353,7 @@
                             <!-- 강의 본문 부분 -->
                             <div class="card-body border-left-primary">
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    <div style="width: 80%; height: 40px; float: left;">${lectList[0].SBJCT_NM} 공지사항</div>
+                                    <div style="width: 80%; height: 40px; float: left;" class="pointer_default">${lectList[0].SBJCT_NM} 공지사항</div>
                                     <div style="width: 20%; height: 40px; float: left; margin-bottom: 5px;">
                                         <c:if test="${sessionScope.instr_no != null}"><button class="btn btn-primary btn-notice" style="float: right;">글작성</button></c:if>
                                     </div>
@@ -353,7 +361,7 @@
                                 <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
                                     <table class="table">
                                         <thead>
-                                        <tr>
+                                        <tr class="pointer_default">
                                             <td class="col-1">번호</td>
                                             <td class="col-4">제목</td>
                                             <td class="col-2">작성자</td>
@@ -365,7 +373,7 @@
                                         <c:choose>
                                             <c:when test="${!empty notice}">
                                                 <c:forEach items="${notice}" var="notice">
-                                                <tr class="notice-tr" value="${notice.notice_no}">
+                                                <tr class="notice-tr pointer" value="${notice.notice_no}">
                                                     <td>${notice.notice_no }</td>
                                                     <td class="title text-truncate" style="max-width:1px; text-align: left;">${notice.notice_title }</td>
                                                     <td>${notice.admin_id }</td>
@@ -376,7 +384,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <tr>
-                                                    <td colspan="5">등록된 공지사항이 없습니다.</td>
+                                                    <td colspan="5" class="pointer_default">등록된 공지사항이 없습니다.</td>
                                                 </tr>
                                             </c:otherwise>
                                         </c:choose>
@@ -393,7 +401,7 @@
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">강의</h6>
+                                <h6 class="m-0 font-weight-bold text-primary pointer_default">강의</h6>
                                 <c:if test="${sessionScope.instr_no ne null}"><button class="btn btn-primary btn-atnd" style="width: 100px;">출결확인</button></c:if>
                             </div>
                             <!-- 강의 본문 부분 -->
@@ -402,7 +410,7 @@
                                     <!-- 강의 정보 추가 위치 -->
                                     <c:set var="i" value="1"/>
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
-                                        <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target=".week-content${i}">
+                                        <div class="week-select ${status.last ? 'select-last' : ''} pointer" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
                                             
 <!-- value 조건만 바꾸면댐 -->
@@ -516,7 +524,7 @@
 		                                                    </div>
 	                                                    </div>
 	                                                    <div style='height:20px; line-height: 20px;'>&nbsp;
-															<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
+															<span class='float-right pointer_default' style='height:20px; margin-right:45px; padding-top: 2px;'>
 															<c:choose>
 				                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%</c:when>
 				                                                    <c:otherwise>
@@ -551,7 +559,7 @@
                                             <div class="week-file week-content${i} ${status.last ? 'content-last' : ''} border-left-secondary collapse">
                                                 <!-- 숨길 객체의 내용 -->
                                                 <div class="week-object">
-                                                    <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <div class="week-title pointer" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
                                                         <button class="file btn btn-secondary" value="${lect.FILE_SN},${lect.FILE_SN_SEQ_LS[file_cnt]}">자료</button>
                                                         <span>${lect.PHYS_FILE_NM_LS[file_cnt]}</span>
                                                     </div>
@@ -569,7 +577,7 @@
 	                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
 	                                            <!-- 숨길 객체의 내용 -->
 	                                            <div class="week-object">
-	                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+	                                                <div class="week-title pointer" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
 	                                                    <button class="assign btn btn-warning">과제</button>
 	                                                    <span>${lect.ON_LECT_NM }</span>
 	                                                </div>
