@@ -419,7 +419,7 @@ public class YouTubeController {
     }
 
     @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
+    public String uploadVideo(HttpServletResponse response, @RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
         System.out.println("동영상 정보 : " + videoInfo);
         System.out.println("동영상 파일 : " + videoFile);
 
