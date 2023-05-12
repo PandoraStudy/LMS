@@ -24,12 +24,18 @@ public class UploadVideo {
     /* API 요청을 위한 YouTube 객체의 전역 인스턴스입니다. */
     private static YouTube youtube;
     private Map<String, Object> result;
-    public Map<String, Object> uploadVideo(Credential credential, MultipartFile videoFile) {
+    public Map<String, Object> uploadVideo(Credential credential, MultipartFile videoFile, Map<String, Object> videoInfo) {
          result = new HashMap<>();
 
         System.out.println("액세스 관련 : " + credential.getAccessToken());
         System.out.println("파일 이름 : " + videoFile.getOriginalFilename());
         System.out.println("파일 크기 : " + videoFile.getSize());
+
+        String LECT_YMD = String.valueOf(videoInfo.get("LECT_YMD"));
+        String SBJCT_NO = String.valueOf(videoInfo.get("SBJCT_NO"));
+        String ON_LECT_NM = String.valueOf(videoInfo.get("ON_LECT_NM"));
+        String ON_LECT_CN = String.valueOf(videoInfo.get("ON_LECT_CN"));
+
         /* 업로드되는 동영상의 형식 */
         String VIDEO_FILE_FORMAT = "video/*";
 
@@ -55,8 +61,8 @@ public class UploadVideo {
             VideoSnippet snippet = new VideoSnippet();
 
             /* 동영상 정보를 입력합니다. */
-            snippet.setTitle("동영상 제목 입니다.");
-            snippet.setDescription("동영상 정보란 입니다.");
+            snippet.setTitle(ON_LECT_NM);
+            snippet.setDescription(ON_LECT_CN);
 
             /* 키워드 설정 */
             List<String> tags = new ArrayList<String>();
@@ -64,7 +70,6 @@ public class UploadVideo {
             tags.add("Pandora!");
             tags.add("java");
             tags.add("YouTube Data API V3");
-            tags.add("erase me");
             snippet.setTags(tags);
 
             // 영상 객체에 완성된 스니펫을 설정합니다.
@@ -130,10 +135,13 @@ public class UploadVideo {
             System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
             System.out.println("  - Duration: " + returnedVideo.getContentDetails().getDuration());
 
-            result.put("video_url", returnedVideo.getId());
-            result.put("video_duration", returnedVideo.getContentDetails().getDuration());
-            result.put("video_title", returnedVideo.getSnippet().getTitle());
-            result.put("video_desc", returnedVideo.getSnippet().getDescription());
+            result.put("SBJCT_NO", SBJCT_NO);
+            result.put("LECT_YMD", LECT_YMD);
+            result.put("ON_LECT_NM", returnedVideo.getSnippet().getTitle());
+            result.put("ON_LECT_CN", returnedVideo.getSnippet().getDescription());
+            result.put("ON_LECT_URL", returnedVideo.getId());
+            result.put("ON_LECT_TM", returnedVideo.getContentDetails().getDuration());
+
 
         } catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
