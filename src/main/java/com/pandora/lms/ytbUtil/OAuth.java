@@ -143,6 +143,7 @@ public class OAuth {
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
                     Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    System.out.println("진입");
                     response.setContentType("text/plain");
                     response.getWriter().write(url);
                     System.out.println(url);

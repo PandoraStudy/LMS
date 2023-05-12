@@ -32,7 +32,7 @@
                     url: "/youtubeAccess",
                     dataType: "text",
                     success: function (response) {
-                        alert(response)
+                        alert(response);
                         // if (response != "") {
                         //     auth = true;
                         //
