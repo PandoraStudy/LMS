@@ -101,21 +101,17 @@ public class YouTubeController {
     }
     
     //Calendar함수
-    public static int getWeek() {  //list, detail용
+    public static int getWeek() {
     	Calendar cal = Calendar.getInstance();
     	
-    	//개강일자 입력
-    	cal.set(Calendar.YEAR, 2023);
+    	//강제로 년월도일변경
+//    	cal.set(Calendar.YEAR, 2023);//년도 변경
     	//1월 : JANUARY, 2월 : FEBRUARY, 3월 : MARCH, 4월 : APRIL, 5월 : MAY, 6월 : JUNE
 		//7월 : JULY, 8월 : AUGUST, 9월 : SEPTEMBER, 10월 : OCTOBER, 11월 : NOVEMBER, 12월 : DECEMBER
-    	cal.set(Calendar.MONTH, Calendar.APRIL);
-    	cal.set(Calendar.DATE, 24);
-    	
-    	cal.setMinimalDaysInFirstWeek(7); //한주를 최소 7일로 설정
-    	cal.setFirstDayOfWeek(Calendar.MONDAY);//한주의 첫 번째요일을 월요일로 설정
+//    	cal.set(Calendar.MONTH, Calendar.MAY);
+//    	cal.set(Calendar.DATE, 13);
     	
     	int week = cal.get(Calendar.WEEK_OF_MONTH);
-    	System.out.println(week + "주차입니다.");
     	
     	return week;
     }
@@ -405,7 +401,7 @@ public class YouTubeController {
     }
 
     @GetMapping("/uploadVideo")
-    public ModelAndView uploadVideo() throws Exception {
+    public ModelAndView uploadVideo(HttpServletResponse response) throws Exception {
         ModelAndView view = new ModelAndView("youtube/uploadVideo");
 
         List<String> scopes = new ArrayList<>();
