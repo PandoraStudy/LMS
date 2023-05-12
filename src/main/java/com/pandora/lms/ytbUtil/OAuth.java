@@ -149,7 +149,7 @@ public class OAuth {
             }
         } catch (IOException | InternalError | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
                  InvocationTargetException | URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "Unable to open browser", e);
+            System.out.println(Level.WARNING + "\nUnable to open browser\n" + e);
         }
     }
 }
