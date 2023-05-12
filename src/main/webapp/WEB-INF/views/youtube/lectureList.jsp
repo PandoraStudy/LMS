@@ -411,7 +411,7 @@
                                     <c:set var="i" value="1"/>
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
                                         <div class="week-select ${status.last ? 'select-last' : ''} pointer" data-toggle="collapse" data-target=".week-content${i}">
-                                            <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
+                                            <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i }주차
                                             
 <!-- value 조건만 바꾸면댐 -->
 <%-- <c:set var="week" value="${week }"/> --%>
