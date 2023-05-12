@@ -142,7 +142,7 @@ public class OAuth {
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
                     //Runtime.getRuntime().exec("cmd /c start " + url);
-                    ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", url);
+                    ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start ", "\"" + url + "\"");
                     processBuilder.start();
 
                     System.out.println(url);
