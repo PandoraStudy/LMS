@@ -140,6 +140,9 @@ public class OAuth {
                     runtime.exec("xdg-open " + url);
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
+                    // Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + url);
+
                     Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
