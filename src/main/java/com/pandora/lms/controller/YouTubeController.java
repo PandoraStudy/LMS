@@ -8,7 +8,6 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -389,11 +388,11 @@ public class YouTubeController {
 
     @PostMapping("/youtubeAccess")
     @ResponseBody
-    public String youtubeAccess() throws Exception {
+    public String youtubeAccess(HttpServletResponse response) throws Exception {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(scopes, false);
+        Credential credential = oAuth.authorize(response, scopes, false);
         if (credential != null) {
             return "인증이 완료 됐습니다.";
         } else {
@@ -408,7 +407,7 @@ public class YouTubeController {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(scopes, true);
+        Credential credential = oAuth.authorize(response, scopes, true);
 
         if (credential != null) {
             view.addObject("auth", true);
@@ -427,7 +426,7 @@ public class YouTubeController {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
-        Credential credential = oAuth.authorize(scopes, true);
+        Credential credential = oAuth.authorize(response, scopes, true);
         UploadVideo uploadVideo = new UploadVideo();
         uploadVideo.uploadVideo(credential, videoFile, videoInfo);
 

@@ -32,15 +32,16 @@
                     url: "/youtubeAccess",
                     dataType: "text",
                     success: function (response) {
-                        if (response != "") {
-                            auth = true;
-
-                            $("#txt_code").text(response);
-                            $("#btn-upload").attr("disabled", false);
-                            $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
-                        } else {
-                            $("#txt_code").text("인증 실패 했습니다.");
-                        }
+                        alert(response)
+                        // if (response != "") {
+                        //     auth = true;
+                        //
+                        //     $("#txt_code").text(response);
+                        //     $("#btn-upload").attr("disabled", false);
+                        //     $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
+                        // } else {
+                        //     window.open(response, "_blank");
+                        // }
                     }
                 });
             } else {
