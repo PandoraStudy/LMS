@@ -140,10 +140,8 @@ public class OAuth {
                     runtime.exec("xdg-open " + url);
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
-                    // Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-                    Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + url);
-
-                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    p.waitFor();
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
                     Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null,
@@ -151,7 +149,7 @@ public class OAuth {
                 }
             }
         } catch (IOException | InternalError | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
-                 InvocationTargetException | URISyntaxException e) {
+                 InvocationTargetException | URISyntaxException | InterruptedException e) {
             System.out.println(Level.WARNING + "\nUnable to open browser\n" + e);
         }
     }
