@@ -143,7 +143,7 @@ public class OAuth {
                     // older windows
                     //Runtime.getRuntime().exec("cmd /c start " + url);
                     String encodedUrl = url.replace("&", "%26");
-                    ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start ", encodedUrl);
+                    ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start \"\"", encodedUrl + "\"");
                     processBuilder.start();
 
                     System.out.println(url);
