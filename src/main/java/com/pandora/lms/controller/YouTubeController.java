@@ -388,15 +388,14 @@ public class YouTubeController {
 
     @PostMapping("/youtubeAccess")
     @ResponseBody
-    public String youtubeAccess(HttpServletResponse response) throws Exception {
+    public void youtubeAccess(HttpServletResponse response) throws Exception {
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
         Credential credential = oAuth.authorize(response, scopes, false);
-        if (credential != null) {
-            return "인증이 완료 됐습니다.";
-        } else {
-            return null;
+        if(credential != null) {
+            response.setContentType("text/plain");
+            response.getWriter().write("인증이 완료 됐습니다.");
         }
     }
 
