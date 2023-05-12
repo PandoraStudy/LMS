@@ -141,7 +141,10 @@ public class OAuth {
                     runtime.exec("xdg-open " + url);
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
-                    Runtime.getRuntime().exec("cmd /c start explorer " + url);
+                    //Runtime.getRuntime().exec("cmd /c start " + url);
+                    ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", url);
+                    processBuilder.start();
+
                     System.out.println(url);
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
