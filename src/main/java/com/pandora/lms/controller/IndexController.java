@@ -1,26 +1,32 @@
 package com.pandora.lms.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.pandora.lms.dto.UserInfoDto;
 import com.pandora.lms.service.NoticeService;
 import com.pandora.lms.util.TextChangeUtil;
 import com.pandora.lms.util.socket.IPGetter;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Controller
 public class IndexController {
-
+	
     private final NoticeService noticeService;
     private final TextChangeUtil textChangeUtil;
     private final IPGetter ipGetter;
+    
+   
   
     @GetMapping("/")
     public ModelAndView main(HttpSession session){
