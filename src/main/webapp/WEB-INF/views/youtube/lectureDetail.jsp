@@ -30,7 +30,8 @@
         let END_CLS_CD = "${lectureInfo.END_CLS_CD}";
 
         /* 오늘 날짜를 대신합니다. */
-        let today = 4;
+//         let today = "${week }";
+        let today = "4";
 
         /* createElement를 사용해서 html이 로드되면 <script><script> 태그를 생성 */
         var tag = document.createElement('script');
@@ -321,6 +322,14 @@
         padding-top: 10px;
         box-sizing: border-box;
     }
+    
+    .pointer_default{
+	cursor: default;
+	}
+
+	.pointer{
+	cursor: pointer;
+	}
 </style>
 <body id="page-top">
 <!-- Page Wrapper -->
@@ -348,7 +357,7 @@
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
+                                <h6 class="m-0 font-weight-bold text-primary pointer_default">내 강의실</h6>
                             </div>
                             <!-- A 본문 부분 -->
                             <div class="card-body">

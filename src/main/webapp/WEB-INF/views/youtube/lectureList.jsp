@@ -25,10 +25,10 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
 <script>
-    /* 오늘 날짜를 대신합니다. */
-    let today = 4;
+	/* 오늘 날짜를 대신합니다. */
+// 	let today = ${week };
+	let today = 4;
 	
-    
     $(function() {
         $(".btn-atnd").click(function (){
             let sbjct_no = "<%=sbjct_no%>";
@@ -58,16 +58,18 @@
                         alert("유효하지 않은 주소입니다.\n잠시 후 다시 시도해주세요.");
                     }
                 } else {
-                    // 강사의 줌 회의 개설
-                    if(snOrUrl != "") {
-                        let sbjct_no = "${sbjct_no}";
+                    let sbjct_no = "${sbjct_no}";
+                    let appl = "${sessionScope.appl_no}";
+                    let instr = "${sessionScope.instr_no}";
 
-                        let appl = "${sessionScope.appl_no}";
-                        let instr = "${sessionScope.instr_no}";
-
-                        if(appl != "") {
+                    if(appl != "") {
+                        if(snOrUrl != "") {
                             window.open(snOrUrl, "줌", "menubar=no, toolbar=no, fullscreen=yes");
-                        } else if (instr != "") {
+                        } else {
+                            alert("회의가 개설되지 않았습니다.");
+                        }
+                    } else if (instr != "") {
+                        // 강사의 줌 회의 개설
                             $(function() {
                                 $.ajax({
                                     url: '/zoom_open',
@@ -77,7 +79,7 @@
                                     success : function(result) {
                                         if(result != ""){
                                             alert("인증에 성공했습니다.");
-                                            window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=820, height=720");
+                                            window.open("https://zoom.us/oauth/authorize?client_id=Kpvu8qjDSZCEnEtzZ58KnA&response_type=code&redirect_uri=http://localhost/zoom/token?sbjct_no=" + result, "Zoom", "width=820, height=720, menubar=no");
                                         }else{
                                             alert("인증실패 관리자 문의 바람.");
                                             return false;
@@ -89,9 +91,6 @@
                                     }
                                 });
                             });
-                        }
-                    } else {
-                        alert("아직 회의가 개설되지 않았습니다.\n잠시 후 다시 시도해주세요.");
                     }
                 }
         });
@@ -314,6 +313,14 @@
         line-height: 40px;
         text-align: center;
     }
+    
+	.pointer_default{
+	cursor: default;
+	}
+
+	.pointer{
+	cursor: pointer;
+	}
 
 </style>
 <body id="page-top">
@@ -346,7 +353,7 @@
                             <!-- 강의 본문 부분 -->
                             <div class="card-body border-left-primary">
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    <div style="width: 80%; height: 40px; float: left;">${lectList[0].SBJCT_NM} 공지사항</div>
+                                    <div style="width: 80%; height: 40px; float: left;" class="pointer_default">${lectList[0].SBJCT_NM} 공지사항</div>
                                     <div style="width: 20%; height: 40px; float: left; margin-bottom: 5px;">
                                         <c:if test="${sessionScope.instr_no != null}"><button class="btn btn-primary btn-notice" style="float: right;">글작성</button></c:if>
                                     </div>
@@ -354,7 +361,7 @@
                                 <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
                                     <table class="table">
                                         <thead>
-                                        <tr>
+                                        <tr class="pointer_default">
                                             <td class="col-1">번호</td>
                                             <td class="col-4">제목</td>
                                             <td class="col-2">작성자</td>
@@ -366,7 +373,7 @@
                                         <c:choose>
                                             <c:when test="${!empty notice}">
                                                 <c:forEach items="${notice}" var="notice">
-                                                <tr class="notice-tr" value="${notice.notice_no}">
+                                                <tr class="notice-tr pointer" value="${notice.notice_no}">
                                                     <td>${notice.notice_no }</td>
                                                     <td class="title text-truncate" style="max-width:1px; text-align: left;">${notice.notice_title }</td>
                                                     <td>${notice.admin_id }</td>
@@ -377,7 +384,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <tr>
-                                                    <td colspan="5">등록된 공지사항이 없습니다.</td>
+                                                    <td colspan="5" class="pointer_default">등록된 공지사항이 없습니다.</td>
                                                 </tr>
                                             </c:otherwise>
                                         </c:choose>
@@ -394,7 +401,7 @@
                         <div class="card shadow mb-4">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">강의</h6>
+                                <h6 class="m-0 font-weight-bold text-primary pointer_default">강의</h6>
                                 <c:if test="${sessionScope.instr_no ne null}"><button class="btn btn-primary btn-atnd" style="width: 100px;">출결확인</button></c:if>
                             </div>
                             <!-- 강의 본문 부분 -->
@@ -403,12 +410,12 @@
                                     <!-- 강의 정보 추가 위치 -->
                                     <c:set var="i" value="1"/>
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
-                                        <div class="week-select ${status.last ? 'select-last' : ''}" data-toggle="collapse" data-target=".week-content${i}">
-                                            <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i}주차
+                                        <div class="week-select ${status.last ? 'select-last' : ''} pointer" data-toggle="collapse" data-target=".week-content${i}">
+                                            <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i }주차
                                             
-                                            <!-- value 조건만 바꾸면댐 -->
-                                            <c:set var="week" value="4"/>
-                                            
+<!-- value 조건만 바꾸면댐 -->
+<%-- <c:set var="week" value="${week }"/> --%>
+<c:set var="week" value="4"/>
                                             
                                             <!-- 완료 미완료 버튼 -->
                                             <div style="float:right; margin-right:20px">
@@ -417,7 +424,7 @@
                                                     	<c:choose>
                                                     	<c:when test="${week >= lect.END_CLS_CD}">
 	                                                        <c:choose>
-	                                                            <c:when test="${90 lt lect.LECT_PRGRS_RT}">
+	                                                            <c:when test="${90 lt lect.LECT_PRGRS_RT || lect.ATTENDANCE eq '1'}">
 	                                                                <button style="width:108px;" class="btn btn-outline-primary">과제제출</button>
 	                                                            </c:when>
 	                                                            <c:otherwise>
@@ -435,7 +442,7 @@
                                                 	<c:choose>
                                                     <c:when test="${week gt lect.END_CLS_CD}">
 		                                            	<c:choose>
-															<c:when test="${90 lt lect.LECT_PRGRS_RT}">
+															<c:when test="${90 le lect.LECT_PRGRS_RT || lect.ATTENDANCE eq '1'}">
 																<button style="width:90px;" class="btn btn-outline-success" disabled>수강완료</button>
 															</c:when>
 															<c:otherwise>
@@ -446,11 +453,11 @@
 													
 													<c:when test="${week eq lect.END_CLS_CD}">
 		                                            	<c:choose>
-															<c:when test="${90 lt lect.LECT_PRGRS_RT}">
-																<button style="width:90px;" class="btn btn-outline-primary" disabled>수강중</button>
+															<c:when test="${90 le lect.LECT_PRGRS_RT || lect.ATTENDANCE eq '1'}">
+																<button style="width:90px;" class="btn btn-outline-primary" disabled>수강완료</button>
 															</c:when>
 															<c:otherwise>
-																<button style="width:90px;" class="btn btn-outline-success">수강완료</button>
+																<button style="width:90px;" class="btn btn-outline-success">수강중</button>
 															</c:otherwise>
 														</c:choose>
 													</c:when>
@@ -464,48 +471,87 @@
                                                 </c:if>
                                             </div>
                                         </div>
-                                        <!-- 강의 -->
-                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
-                                        <c:choose>
-                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger
-                                        </c:when>
-                                        <c:otherwise>border-left-primary
-                                        </c:otherwise>
-                                        </c:choose> collapse">
-                                            <!-- 숨길 객체의 내용 -->
-                                            <div class="week-object">
-                                                <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="mthd btn <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when><c:otherwise>btn-primary</c:otherwise></c:choose>" value="<c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when><c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}"><c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when><c:otherwise><c:choose><c:when test="${sessionScope.appl_no ne null}">줌수업</c:when><c:otherwise>줌생성</c:otherwise></c:choose></c:otherwise></c:choose></button>
-                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
-                                                </div>
-                                                <c:if test="${sessionScope.appl_no != null}">
-                                                <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
-                                                    <c:choose><c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
-                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 10px 24px 0;'>
-	                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
-	                                                    width: 
-		                                                    <c:choose>
-			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%;</c:when>
-			                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
-		                                                    </c:choose>' 
-		                                                    aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+                                        
+<!-- 강의 -->
+<%-- <c:set var="week" value="${week }"/> --%>
+<c:set var="week" value="4"/>
+
+	                                    <!-- 지난주차들 -->
+	                                    <c:if test="${i le week}">
+	                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
+	                                        <c:choose>
+	                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger
+	                                        </c:when>
+	                                        <c:otherwise>border-left-primary
+	                                        </c:otherwise>
+	                                        </c:choose> collapse">
+	                                            <!-- 숨길 객체의 내용 -->
+	                                            <div class="week-object">
+	                                                <div class="week-title" style="height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+	                                                    <button class="mthd btn 
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">btn-danger</c:when>
+	                                                    <c:otherwise>btn-primary</c:otherwise>
+	                                                    </c:choose>" 
+	                                                    value="
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">${lect.ON_LECT_SN }</c:when>
+	                                                    <c:otherwise>${lect.LECT_URL}</c:otherwise></c:choose>,${lect.SBJCT_MTHD_CD}">
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">유튜브</c:when>
+	                                                    <c:otherwise>
+	                                                    <c:choose>
+	                                                    <c:when test="${sessionScope.appl_no ne null}">줌수업</c:when>
+	                                                    <c:otherwise>줌생성</c:otherwise>
+	                                                    </c:choose>
+	                                                    </c:otherwise>
+	                                                    </c:choose>
+	                                                    </button>
+	                                                    <span style="cursor: pointer">${lect.ON_LECT_NM }</span>
+	                                                </div>
+	                                                <c:if test="${sessionScope.appl_no != null}">
+	                                                <div style="padding-top: 5px; box-sizing: border-box; height: 30px; float: right; line-height: 30px; display: flex; justify-content: right;">
+	                                                    <c:choose>
+	                                                    <c:when test="${lect.SBJCT_MTHD_CD eq 1}">          
+	                                                    <div class='progress mb-4' style='height:15px; width: 200px; margin:5px 10px 24px 0;'>
+		                                                    <div class='progress-bar bg-primary' role='progressbar' style='height:20px; 
+		                                                    width: 
+			                                                    <c:choose>
+				                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%;</c:when>
+				                                                    <c:otherwise>${lect.LECT_PRGRS_RT}%;</c:otherwise>
+			                                                    </c:choose>' 
+			                                                    aria-valuenow='20' aria-valuemin='0' aria-valuemax='100'>
+		                                                    </div>
 	                                                    </div>
-                                                    </div>
-                                                    <div style='height:20px; line-height: 20px;'>&nbsp;
-														<span class='float-right' style='height:20px; margin-right:45px; padding-top: 2px;'>
-														<c:choose>
-			                                                    <c:when test="${90 lt lect.LECT_PRGRS_RT}">100%</c:when>
-			                                                    <c:otherwise>
-																<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
-			                                                    </c:otherwise>
-		                                                    </c:choose>
-														</span>
-													</div>
-                                                    </c:when><c:otherwise><div style='height:15px; width: 200px; margin-top: -3px;'><b>${lect.ATTENDANCE}</b></div></c:otherwise></c:choose>
-                                                </div>
-                                                </c:if>
-                                            </div>
-                                        </div>
+	                                                    <div style='height:20px; line-height: 20px;'>&nbsp;
+															<span class='float-right pointer_default' style='height:20px; margin-right:45px; padding-top: 2px;'>
+															<c:choose>
+				                                                    <c:when test="${90 le lect.LECT_PRGRS_RT}">100%</c:when>
+				                                                    <c:otherwise>
+																	<fmt:parseNumber value="${lect.LECT_PRGRS_RT}" integerOnly="true"></fmt:parseNumber>%
+				                                                    </c:otherwise>
+			                                                    </c:choose>
+															</span>
+														</div>
+	                                                    </c:when>
+	                                                    <c:otherwise>
+	                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+	                                                    <c:choose>
+	                                                    	<c:when test="${lect.ATTENDANCE eq '1'}">
+	                                                    		<button style="width:108px;" class="btn btn-outline-success">출석</button>
+	                                                    	</c:when>
+	                                                    	<c:when test="${lect.ATTENDANCE eq '0' || lect.ATTENDANCE eq '결석' }">
+	                                                    		<button style="width:108px;" class="btn btn-outline-danger">결석</button>
+	                                                    	</c:when>
+	                                                    </c:choose>
+														</div>
+	                                                    </c:otherwise>
+	                                                    </c:choose>
+	                                                </div>
+	                                                </c:if>
+	                                            </div>
+	                                        </div>
+										</c:if>
                                         <c:if test="${lect.FILE_SN ne null}">
                                             <c:set var="file_cnt" value="0"/>
                                             <c:forEach begin="1" end="${lect.FILE_LENGTH}">
@@ -513,7 +559,7 @@
                                             <div class="week-file week-content${i} ${status.last ? 'content-last' : ''} border-left-secondary collapse">
                                                 <!-- 숨길 객체의 내용 -->
                                                 <div class="week-object">
-                                                    <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+                                                    <div class="week-title pointer" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
                                                         <button class="file btn btn-secondary" value="${lect.FILE_SN},${lect.FILE_SN_SEQ_LS[file_cnt]}">자료</button>
                                                         <span>${lect.PHYS_FILE_NM_LS[file_cnt]}</span>
                                                     </div>
@@ -522,30 +568,37 @@
                                             <c:set var="file_cnt" value="${file_cnt + 1}"/>
                                             </c:forEach>
                                         </c:if>
-                                        <!-- 과제 -->
-                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
-                                            <!-- 숨길 객체의 내용 -->
-                                            <div class="week-object">
-                                                <div class="week-title" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-                                                    <button class="assign btn btn-warning">과제</button>
-                                                    <span>${lect.ON_LECT_NM }</span>
-                                                </div>
-                                                <c:if test="${sessionScope.appl_no != null}">
-                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
-                                                    	<c:choose>
-                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90}">
-                                                    			<b>제출</b>
-                                                    		</c:when>
-                                                    		<c:otherwise>
-                                                    			<b>미제출</b>
-                                                    		</c:otherwise>
-                                                    	</c:choose>
-                                                    </div>
-                                                </div>
-                                                </c:if>
-                                            </div>
-                                        </div>
+<!-- 날짜 변경 -->
+<%-- <c:set var="week" value="${week }"/> --%>
+<c:set var="week" value="4"/>
+                                        <!-- 지난주차들 -->
+                                        <c:if test="${i le week}">
+	                                        <!-- 과제 -->
+	                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
+	                                            <!-- 숨길 객체의 내용 -->
+	                                            <div class="week-object">
+	                                                <div class="week-title pointer" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+	                                                    <button class="assign btn btn-warning">과제</button>
+	                                                    <span>${lect.ON_LECT_NM }</span>
+	                                                </div>
+	                                                <c:if test="${sessionScope.appl_no != null}">
+	                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
+	                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+	                                                    	<c:choose>
+	                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90 || lect.ATTENDANCE eq '1'}">
+	                                                    			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
+	                                                    		</c:when>
+	                                                    		<c:otherwise>
+		                                                            <button style="width:108px;" class="btn btn-outline-danger">미제출</button>
+	                                                    		</c:otherwise>
+	                                                    	</c:choose>
+	                                                    </div>
+	                                                </div>
+	                                                </c:if>
+	                                            </div>
+	                                        </div>
+                                        </c:if>
+                                        
                                         <c:if test="${sessionScope.instr_no != null && lect.SBJCT_MTHD_CD ne 2}">
                                         <!-- 추가 -->
                                         <div class="week-upload week-content${i} ${status.last ? 'content-last' : ''} border-left-success collapse">

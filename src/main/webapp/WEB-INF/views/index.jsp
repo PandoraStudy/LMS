@@ -32,15 +32,103 @@
     <%-- ==================full캘린더================== --%>
     <script>
 
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth'
+                initialView: 'dayGridMonth',
+                selectable: true,
+                select: function(info) {
+                    var startDate = info.startStr;/*일정 시작일*/
+                    var endDate = info.endStr;/*일정 종료일*/
+
+                    var eventTitle = prompt('이벤트 제목을 입력하세요');
+
+                    if (eventTitle) {
+                        var event = {
+                            title: eventTitle,
+                            start: startDate,
+                            end: endDate
+                        };
+
+                        calendar.addEvent(event);
+
+                        // AJAX 요청 보내기
+                        saveEventToServer(event);
+                    }
+
+                    calendar.unselect();
+
+
+                },
+
+                eventClick: function(info) {
+                    // 모달 창 띄우기
+                    var modal = document.getElementById("myModal");
+                    var eventTitleElement = document.getElementById("eventTitle");
+                    var deleteButton = document.getElementById("deleteButton");
+                    var closeButton = document.getElementById("close_btn");
+                    var eventTitle = document.getElementById("eventInput");
+
+
+                    eventTitleElement.innerText = "이벤트명: " + info.event.title;
+                    modal.style.display = "block";
+
+                    // 이벤트 삭제 버튼 클릭 시
+                    deleteButton.addEventListener("click", function() {
+
+                        info.event.remove();
+
+                        // AJAX 요청 보내기
+                        deleteEventFromServer(info.event);
+
+                        // 모달 창 닫기
+                        modal.style.display = "none";
+                    });
+
+                    // 모달 창 'x' 버튼 클릭 시
+                    closeButton.addEventListener("click", function() {
+                        modal.style.display = "none";
+                    });
+
+                    saveButton.style.display = "none";/*저장 버튼 숨기기*/
+                    eventTitle.style.display = "none";/*입력 공간 숨기기*/
+                }
             });
+
             calendar.render();
+
+            function saveEventToServer(event) {
+                // AJAX 요청 코드 작성
+                $.ajax({
+                    url: '/save_event',
+                    method: 'POST',
+                    data: event,
+                    success: function(response) {
+                        console.log('이벤트가 성공적으로 서버에 저장되었습니다.');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('이벤트를 서버에 저장하는 중에 오류가 발생했습니다:', error);
+                    }
+                });
+            }
+
+            function deleteEventFromServer(event) {
+                $.ajax({
+                    url: '/delete_event',
+                    method: 'POST',
+                    data: { eventId: event.id },
+                    success: function(response) {
+                        console.log('이벤트가 성공적으로 서버에서 삭제되었습니다.');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('이벤트를 서버에서 삭제하는 중에 오류가 발생했습니다:', error);
+                    }
+                });
+            }
         });
 
-    function Zoom_Join(){
+
+        function Zoom_Join(){
         $(function() {
             $.ajax({
                 url: '/zoom_join',
@@ -97,6 +185,43 @@
         .none{ font-size:14px; }
         .none:hover{ background-color: #cccccc; }
 
+        /*===== 모달 창 스타일 ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* =================================== */
     </style>
 </head>
 
@@ -181,10 +306,7 @@
                                     <div style="height: 140px;" class="chart-area">
                                         <div>
 
-                                            <button onclick="Zoom()" class="btn btn-primary">줌 수업 시작하기</button>
-
-
-                                            <button onclick="Zoom_Join()" class="btn btn-google">줌 수업 참여하기</button>
+                                            <h1>공사중</h1>
 
                                         </div>
                                     </div>
@@ -222,7 +344,18 @@
 
                                     <div class="chart-pie pt-4 pb-2">
                                         <%--본문 내용 작성하는 부분--%>
-                                        <div id="calendar"></div>
+                                            <div id="calendar"></div>
+
+                                            <div id="myModal" class="modal">
+                                                <div class="modal-content">
+                                                    <span id="close_btn" class="close">&times;</span>
+                                                    <p id="eventTitle"></p>
+                                                    <input type="text" id="eventInput" placeholder="이벤트 제목을 입력하세요">
+                                                    <button id="saveButton">저장</button>
+                                                    <button id="deleteButton">이벤트 삭제</button>
+                                                </div>
+                                            </div>
+                                            <%--본문 내용 작성하는 부분--%>
                                     </div>
                                 </div>
                             </div>

@@ -12,6 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pandora.lms.dto.UserInfoDto;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.pandora.lms.service.NoticeService;
 import com.pandora.lms.util.TextChangeUtil;
 import com.pandora.lms.util.socket.IPGetter;
@@ -57,7 +67,13 @@ public class IndexController {
             mv.addObject("totalCount", totalCount);
             mv.addObject("myIp",ipGetter.getIP());
             return mv;
-      
+    }
+    
+    @GetMapping("/giveall")
+    public @ResponseBody String giveall() {
+        
+            
+            return "apion";
     }
 
 }

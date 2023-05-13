@@ -16,34 +16,13 @@ import lombok.Setter;
 public class securityAdmininfo implements UserDetails{
 	
 	private AdminInfoDto userinfodto;
-	private int userno;
-	private int APPL_NO;
-	private int INSTR_NO;
-	private String user_name , user_id , division;
-	@Override
-	public boolean equals(Object obj) {
-		if (obj instanceof securityAdmininfo) {
-			return this.user_name.equals(((securityAdmininfo)obj).user_name);
-		}
-		return false;
-	}
 	
-	@Override
-	public int hashCode() {
-		return this.user_name.hashCode();
-		}
 
 	public securityAdmininfo(AdminInfoDto userinfodto) {
-		System.out.println("메소드명 : securityinfo");
-		this.userno = userinfodto.getADMIN_NO();
-		this.user_name = userinfodto.getKORN_FLNM();
-		System.out.println(userno);
 		
 		this.userinfodto = userinfodto;
 
 	}
-	
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collect = new ArrayList<GrantedAuthority>();

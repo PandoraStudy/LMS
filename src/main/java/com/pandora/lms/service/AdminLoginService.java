@@ -36,10 +36,6 @@ public class AdminLoginService implements UserDetailsService{
         	
         securityAdmininfo newone = new securityAdmininfo(user);
         
-        newone.setDivision(String.valueOf(user.getUSER_GROUP_CD()));
-        newone.setUser_name(user.getKORN_FLNM());
-        newone.setUser_id(user.getADMIN_ID());
-        newone.setAPPL_NO(user.getADMIN_NO());
              
         return newone;
     }

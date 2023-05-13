@@ -19,6 +19,14 @@
     <link href="css/logo.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 </head>
+<style>
+.pointer_default{
+	cursor: default;
+}
+.pointer{
+	cursor: pointer;
+}
+</style>
 <body id="page-top">
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -45,7 +53,7 @@
                 <div class="row">
                     <!-- A카드 게시판 -->
                     <div class="col-xl-12 col-lg-7">
-                        <div class="card shadow mb-4">
+                        <div class="card shadow mb-4 pointer_default">
                             <!-- A 카드 설정 버튼 부분 -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary">내 강의실</h6>
@@ -66,7 +74,7 @@
                                         <tbody id="tb_lecture">
                                         <c:forEach items="${lecture }" var="i">
                                         <tr style='height:70px; line-height:70px;'>
-                                            <td class='text-center' onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">${i.SBJCT_NM }</td>
+                                            <td class='text-center pointer' onclick="location.href='lectureList?sbjct_no=${i.SBJCT_NO}'">${i.SBJCT_NM }</td>
                                             <td class='text-center'>${i.CRCLM_NM }</td>
                                             <td class='text-center'>${i.KORN_FLNM }</td>
                                             <c:if test="${sessionScope.appl_no != null}">

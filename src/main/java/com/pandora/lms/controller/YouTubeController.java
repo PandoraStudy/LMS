@@ -7,26 +7,34 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.pandora.lms.ytbUtil.UploadVideo;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.ibatis.session.SqlSession;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.google.api.client.auth.oauth2.Credential;
-import com.pandora.lms.service.YoutubeService;
 import com.pandora.lms.ytbUtil.OAuth;
+
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -34,12 +42,11 @@ import lombok.AllArgsConstructor;
 public class YouTubeController {
 
     private final OAuth oAuth;
-    private final YoutubeService youtubeService;
     private final SqlSession sqlSession;
     private final ServletContext context;
 
     @GetMapping("/lecture")
-    public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) throws JSONException {
+    public ModelAndView lecture(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("/youtube/lecture");
 
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
@@ -72,7 +79,6 @@ public class YouTubeController {
             lecture = sqlSession.selectList("youtube.lecture", userInfo);
         }
 
-
         view.addObject("lecture", lecture);
         return view;
     }
@@ -95,9 +101,28 @@ public class YouTubeController {
         return view;
     }
 
+    //Calendar함수
+    public static int getWeek() {
+    	Calendar cal = Calendar.getInstance();
+
+    	//강제로 년월도일변경
+//    	cal.set(Calendar.YEAR, 2023);//년도 변경
+    	//1월 : JANUARY, 2월 : FEBRUARY, 3월 : MARCH, 4월 : APRIL, 5월 : MAY, 6월 : JUNE
+		//7월 : JULY, 8월 : AUGUST, 9월 : SEPTEMBER, 10월 : OCTOBER, 11월 : NOVEMBER, 12월 : DECEMBER
+//    	cal.set(Calendar.MONTH, Calendar.MAY);
+//    	cal.set(Calendar.DATE, 13);
+
+    	int week = cal.get(Calendar.WEEK_OF_MONTH);
+
+    	return week;
+    }
+
+
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
+
+       	int week = getWeek();
 
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
@@ -151,44 +176,9 @@ public class YouTubeController {
         view.addObject("sbjct_no", lectureInfo.get("sbjct_no"));
         view.addObject("notice", notice);
         view.addObject("lectList", lectList);
+        view.addObject("week", week);
 
         return view;
-    }
-
-    @GetMapping("/fileDownload/{file}")
-    public String fileDownload(@PathVariable String file, HttpServletResponse response) throws IOException {
-        Map<String, Object> fileInfo = new HashMap<>();
-        fileInfo.put("file_sn", file.split(",")[0]);
-        fileInfo.put("file_sn_seq", file.split(",")[1]);
-
-        Map<String, String> downloadFile = sqlSession.selectOne("youtube.getFileInfo", fileInfo);
-
-        String serverPath = context.getRealPath("/") + downloadFile.get("FILE_PATH_NM");
-        File serverFile = new File(serverPath, downloadFile.get("ORGNL_FILE_NM") + "." + downloadFile.get("FILE_EXTN_NM"));
-        // file 다운로드 설정
-        response.setContentType("application/download");
-        response.setContentLength( (int) serverFile.length() );
-        String fileName = downloadFile.get("PHYS_FILE_NM");
-        String fileExtn = downloadFile.get("FILE_EXTN_NM");
-        String encodedFilename = URLEncoder.encode(fileName + "." + fileExtn, "UTF-8");
-        System.out.println("파일명" + encodedFilename);
-        response.setHeader("Content-disposition", "attachment;filename=\"" + encodedFilename + "\"");
-
-        // response 객체를 통해서 서버로부터 파일 다운로드
-        OutputStream os = response.getOutputStream();
-
-        // 파일 입력 객체 생성
-        FileInputStream fis = new FileInputStream(serverFile);
-        FileCopyUtils.copy(fis, os);
-
-        fis.close();
-        os.flush(); // 커밋을 지연시키기 위해 버퍼를 비워줌
-
-        // response의 커밋(commit)을 수동으로 호출
-        response.flushBuffer();
-        os.close();
-
-        return "youtube/fileDownload";
     }
 
     @GetMapping("/lectureNoticeDetail")
@@ -230,6 +220,8 @@ public class YouTubeController {
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
 
+        int week = getWeek();
+
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -250,6 +242,7 @@ public class YouTubeController {
         }
 
         view.addObject("lectureInfo", lectureInfo);
+        view.addObject("week", week);
 
         return view;
     }
@@ -308,39 +301,6 @@ public class YouTubeController {
         return "success";
     }
 
-
-    @GetMapping("/uploadVideo")
-    public ModelAndView uploadVideo() throws Exception {
-        ModelAndView view = new ModelAndView("youtube/uploadVideo");
-
-        List<String> scopes = new ArrayList<>();
-        scopes.add("https://www.googleapis.com/auth/youtube");
-
-        Credential credential = oAuth.authorize(scopes, true);
-
-        if (credential != null) {
-            view.addObject("auth", true);
-        } else {
-            view.addObject("auth", false);
-        }
-
-        return view;
-    }
-
-
-    @PostMapping("/uploadVideo")
-    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
-        System.out.println("동영상 정보 : " + videoInfo);
-        System.out.println("동영상 파일 : " + videoFile);
-
-        List<String> scopes = new ArrayList<>();
-        scopes.add("https://www.googleapis.com/auth/youtube");
-
-        oAuth.authorize(scopes, true);
-
-        return "redirect:/uploadVideo";
-    }
-
     @PostMapping("/modalUpload")
     @ResponseBody
     public String modalUpload(@RequestParam Map<String, Object> modalInfo, @RequestPart(name = "file", required = false) MultipartFile file) throws IOException {
@@ -393,6 +353,40 @@ public class YouTubeController {
         return result;
     }
 
+    @GetMapping("/fileDownload/{file}")
+    public void fileDownload(@PathVariable String file, HttpServletResponse response) throws IOException {
+        Map<String, Object> fileInfo = new HashMap<>();
+        fileInfo.put("file_sn", file.split(",")[0]);
+        fileInfo.put("file_sn_seq", file.split(",")[1]);
+
+        Map<String, String> downloadFile = sqlSession.selectOne("youtube.getFileInfo", fileInfo);
+
+        String serverPath = context.getRealPath("/") + downloadFile.get("FILE_PATH_NM");
+        File serverFile = new File(serverPath, downloadFile.get("ORGNL_FILE_NM") + "." + downloadFile.get("FILE_EXTN_NM"));
+
+        // file 다운로드 설정
+        response.setContentType("application/download");
+        response.setContentLength( (int) serverFile.length() );
+        String fileName = downloadFile.get("PHYS_FILE_NM");
+        String fileExtn = downloadFile.get("FILE_EXTN_NM");
+        String encodedFilename = URLEncoder.encode(fileName + "." + fileExtn, "UTF-8");
+        encodedFilename = encodedFilename.replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename=" + encodedFilename);
+
+        // response 객체를 통해서 서버로부터 파일 다운로드
+        OutputStream os = response.getOutputStream();
+
+        // 파일 입력 객체 생성
+        FileInputStream fis = new FileInputStream(serverFile);
+        FileCopyUtils.copy(fis, os);
+
+        fis.close();
+        os.flush();
+
+        response.flushBuffer();
+        os.close();
+    }
+
     @PostMapping("/youtubeAccess")
     @ResponseBody
     public String youtubeAccess() throws Exception {
@@ -405,6 +399,39 @@ public class YouTubeController {
         } else {
             return null;
         }
+    }
+
+    @GetMapping("/uploadVideo")
+    public ModelAndView uploadVideo() throws Exception {
+        ModelAndView view = new ModelAndView("youtube/uploadVideo");
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        Credential credential = oAuth.authorize(scopes, true);
+
+        if (credential != null) {
+            view.addObject("auth", true);
+        } else {
+            view.addObject("auth", false);
+        }
+
+        return view;
+    }
+
+    @PostMapping("/uploadVideo")
+    public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
+        System.out.println("동영상 정보 : " + videoInfo);
+        System.out.println("동영상 파일 : " + videoFile);
+
+        List<String> scopes = new ArrayList<>();
+        scopes.add("https://www.googleapis.com/auth/youtube");
+
+        Credential credential = oAuth.authorize(scopes, true);
+        UploadVideo uploadVideo = new UploadVideo();
+        uploadVideo.uploadVideo(credential, videoFile, videoInfo);
+
+        return "redirect:/uploadVideo";
     }
 
 }

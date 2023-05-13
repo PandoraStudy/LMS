@@ -15,6 +15,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Preconditions;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -140,16 +141,16 @@ public class OAuth {
                     runtime.exec("xdg-open " + url);
                 } else if (osName.toLowerCase().contains("windows")) {
                     // older windows
-                    Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+                    Runtime.getRuntime().exec("cmd /c start \"\" \"" + url + "\"");
                 } else if (osName.toLowerCase().contains("mac")) {
                     // probably mac os
-                    Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null,
-                            url);
+                    Class.forName("com.apple.eio.FileManager").getDeclaredMethod("openURL", String.class).invoke(null, url);
                 }
             }
         } catch (IOException | InternalError | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
                  InvocationTargetException | URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "Unable to open browser", e);
+            System.out.println(Level.WARNING + "\nUnable to open browser\n" + e);
         }
     }
+
 }

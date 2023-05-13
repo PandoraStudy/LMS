@@ -10,7 +10,7 @@
                     es.SBJCT_NM,
                     ci.CRCLM_NM,
                     (SELECT ii.KORN_FLNM  FROM INSTR_INFO ii WHERE ii.INSTR_NO = si.INSTR_NO) as 'KORN_FLNM',
-                    (SELECT COUNT(LECT_YMD) FROM LECT_TM_INFO lti WHERE lti.SBJCT_NO = ac.APPL_NO) as 'TOTAL_LECT_CNT',
+                    (SELECT COUNT(LECT_YMD) FROM LECT_TM_INFO lti WHERE lti.SBJCT_NO = ac.SBJCT_NO) as 'TOTAL_LECT_CNT',
                     COUNT(aa.LECT_YMD) as 'APPL_ATND_CNT'
                 FROM APPL_CLS ac
                     LEFT JOIN ESTBL_SBJCT es ON ac.SBJCT_NO = es.SBJCT_NO
@@ -144,7 +144,8 @@
     <select id="lectDetail" parameterType="HashMap" resultType="HashMap">
         SELECT
             oli.ON_LECT_SN,
-            oli.ON_LECT_URL
+            oli.ON_LECT_URL,
+            oli.SBJCT_NO
             <choose>
             <when test="appl_no != null">,
             lti.BGNG_CLS_CD,
@@ -152,7 +153,6 @@
             olm.APPL_NO,
             olm.LAST_PLAY_TM,
             olm.LECT_MAX_TM,
-            olm.SBJCT_NO,
             olm.LECT_PRGRS_RT
         FROM ON_LECT_MAG olm
             JOIN ON_LECT_INFO oli ON olm.ON_LECT_SN = oli.ON_LECT_SN AND olm.APPL_NO = #{appl_no }

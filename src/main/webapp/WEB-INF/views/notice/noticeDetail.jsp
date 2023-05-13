@@ -44,9 +44,9 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
-                <div style="background-color: #2a96a5; width:100%; height:200px;">
+                <div style="background-color: #2a96a5; width:100%; height:200px;" onclick="location.href='/notice'">
                     <div style="width:1200px;height:200px; margin:0 auto;">
-                        <h1 class="mb-0" style="font-weight:bold; color:white; padding:50px 0px 0px 20px;">공지사항</h1><br>
+                        <h1 class="mb-0" style="font-weight:bold; color:white; padding:50px 0px 0px 20px; cursor: pointer;">공지사항</h1><br>
                         <h5 style="color:white; margin-left:20px;">Pandora 대학에 다양한 소식을 알려드립니다.</h5>
                     </div>
                 </div>
@@ -62,10 +62,10 @@
                     </div>
                     <div class="detailMid"><br>${noticeDetail.notice_content }<br><br></div><br><br>
                     <div style="display: inline-block;">
-                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>다음글</a>
+                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}"><i class="xi-angle-left xi-x"></i>이전글</a>   
                     </div>
                     <div style="display: inline-block; float:right;">
-                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum - 1 }&totalCnt=${totalCnt}">이전글<i class="xi-angle-right xi-x"></i></a>
+                        <a style="color:black; font-weight: bold;" href="/noticeDetail?rowNum=${rowNum + 1 }&totalCnt=${totalCnt}">다음글<i class="xi-angle-right xi-x"></i></a>
                     </div>
                     <br><br><br>
                     <div>

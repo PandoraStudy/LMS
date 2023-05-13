@@ -3,7 +3,7 @@
     $(function(){
        $("#alarm").hide();
     });
-    let ws = new WebSocket("ws://172.30.1.37/noticeAlarm");
+    let ws = new WebSocket("ws://172.30.1.71/noticeAlarm");
     ws.onopen = function(event) { console.log("알림감지가 작동되고 있습니다."); };
     ws.onmessage = function(event) {
         console.log(event.data);
@@ -84,7 +84,7 @@
     <hr class="sidebar-divider line">
 
     <!-- B 카테고리 -->
-    <div class="sidebar-heading">추가적인 기능(이름수정필요)</div>
+    <div class="sidebar-heading">엔터테인먼트</div>
     <!-- 추가적인 기능(이름 수정 필요) -->
     <li class="nav-item">
         <a style="height: 40px;" class="nav-link" href="/messageBox">

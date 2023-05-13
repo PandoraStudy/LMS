@@ -24,7 +24,7 @@
 </head>
 <script>
     $(function () {
-        let auth = ${auth};
+        let auth = "${auth}";
 
         $("#btn-access").click(function () {
             if (auth != true) {
@@ -38,32 +38,6 @@
                             $("#txt_code").text(response);
                             $("#btn-upload").attr("disabled", false);
                             $("#btn-upload").removeClass("btn-secondary").addClass("btn-primary");
-
-                            $("#btn-upload").click(function () {
-                                let video_title = $("#video_title").val();
-                                let video_desc = $("#video_desc").val();
-                                let video_file = $("#video_file").val();
-
-                                if (video_title == "") {
-                                    alert("제목이 비었습니다.");
-                                    $("#video_title").focus();
-                                    return false;
-                                }
-
-                                if (video_desc == "") {
-                                    alert("내용이 비었습니다.");
-                                    $("#video_desc").focus();
-                                    return false;
-                                }
-
-                                if (video_file == "") {
-                                    alert("파일이 없습니다.");
-                                    $("#video_file").focus();
-                                    return false;
-                                }
-
-                                $("#form-video").submit();
-                            });
                         } else {
                             $("#txt_code").text("인증 실패 했습니다.");
                         }
@@ -72,6 +46,33 @@
             } else {
                 alert("이미 인증이 완료 됐습니다.");
             }
+        });
+
+        $("#btn-upload").click(function () {
+
+            let video_title = $("#video_title").val();
+            let video_desc = $("#video_desc").val();
+            let video_file = $("#video_file").val();
+
+            if (video_title == "") {
+                alert("제목이 비었습니다.");
+                $("#video_title").focus();
+                return false;
+            }
+
+            if (video_desc == "") {
+                alert("내용이 비었습니다.");
+                $("#video_desc").focus();
+                return false;
+            }
+
+            if (video_file == "") {
+                alert("파일이 없습니다.");
+                $("#video_file").focus();
+                return false;
+            }
+
+            $("#form-video").submit();
         });
     });
 </script>
@@ -128,19 +129,41 @@
                                             <tr>
                                                 <td>인증 여부</td>
                                                 <td>
-                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'>인증이 완료 됐습니다.</c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
+                                                    <span id="txt_code"><c:choose><c:when test='${auth eq true}'><b>인증이 완료 됐습니다.</b></c:when><c:otherwise>미인증 상태입니다.</c:otherwise></c:choose></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>과목 번호</td>
+                                                <td>
+                                                    <select class="form-select" name="LECT_YMD" id="lect_ymd">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>진행 주차</td>
+                                                <td>
+                                                    <select class="form-select" name="SBJCT_NO" id="sbjct_no">
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                        <option>4</option>
+                                                    </select>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>강의 제목</td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="video_title" id="video_title" placeholder="강의 제목을 입력해주세요.">
+                                                    <input class="form-control" type="text" name="ON_LECT_NM" id="video_title" placeholder="강의 제목을 입력해주세요.">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>강의 설명</td>
                                                 <td>
-                                                    <input class="form-control" type="text" name="video_desc" id="video_desc" placeholder="강의 설명을 입력해주세요.">
+                                                    <input class="form-control" type="text" name="ON_LECT_CN" id="video_desc" placeholder="강의 설명을 입력해주세요.">
                                                 </td>
                                             </tr>
                                             <tr>
