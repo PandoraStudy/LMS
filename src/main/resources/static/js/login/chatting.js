@@ -15,6 +15,7 @@
             if (event !== null && event !== undefined) {
                 var msg = JSON.parse(eventData);
                 msg.msg = msg.msg.replace(/</g,"&lt;").replace(/>/g,"&gt;");    //tag 적용시키지 않도록 <> 변환
+                if(msg.time < 10){msg.time="0"+msg.time}
                 if(msg.msg===""){
                     $("#messageBox").append(
                         "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+msg.userName+"님이 들어오셨습니다.</div>"
