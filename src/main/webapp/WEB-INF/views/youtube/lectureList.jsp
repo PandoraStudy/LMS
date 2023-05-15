@@ -36,13 +36,16 @@
         });
 
         $(".week-select").click(function() {
+            let appl_no = "${sessionScope.appl_no}";
             let end_cls_cd = $(this).children(".fas").attr("value");
 
-
-            if(today < end_cls_cd) {
-                alert("진행할 수 없는 주차입니다.");
-                return false;
+            if(appl_no != "") {
+                if(today < end_cls_cd) {
+                    alert("진행할 수 없는 주차입니다.");
+                    return false;
+                }
             }
+
             $(this).children(".fas").toggleClass("fa-chevron-down fa-chevron-up");
         });
 

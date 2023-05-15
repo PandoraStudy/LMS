@@ -48,6 +48,8 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
    // implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'mysql:mysql-connector-java:8.0.28'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {

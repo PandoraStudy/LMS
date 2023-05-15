@@ -26,10 +26,10 @@ public class SubjectController {
 	@Autowired
 	SubjectService subjectService;
 	
-	@GetMapping("/subject")
+	@GetMapping("/admin/subject")
 	public String subject() {
 		
-		return "subject";
+		return "admin/subject";
 	}
 	
 	//학생의 수강신청된 교육과정을 가져오는 부분 ****

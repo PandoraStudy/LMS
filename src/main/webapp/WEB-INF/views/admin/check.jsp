@@ -7,10 +7,11 @@ function search_check() {
   const departmentName_ck = document.getElementById("department_name").value;
 	console.log(year_ck + " " + semester_ck + " " + studentNum_ck + " " + departmentName_ck); 
   
-//   if(studentNum_ck == ""){
-// 	  alert("학번을 입력해주세요");
-// 	  return;
-//   }
+
+  if(studentNum_ck == ""){
+	  alert("학번을 입력해주세요");
+	  return;
+  }
   
   const data = {
     year_ck : year_ck,

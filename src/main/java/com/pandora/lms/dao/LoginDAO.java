@@ -25,4 +25,15 @@ public interface LoginDAO {
 	int save(UserInfoDto userInfoDto);
 
 	AdminInfoDto findByAdminname(String username);
+	
+	//전달된 데이터를 조회하는 SQL문을 실행 시켜서 해당 아이디가 존재하는 지 확인
+	String checkEamil(String id);
+
+	void tempkeysave(UserInfoDto userInfoDto);
+
+	int ckkey(String key);
+
+	int compareNum(UserInfoDto userInfoDto);
+
+	int rewritepw(UserInfoDto userInfoDto);
 }

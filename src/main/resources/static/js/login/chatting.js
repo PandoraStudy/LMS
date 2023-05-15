@@ -1,5 +1,5 @@
-    let wsmsg = new WebSocket('ws:/172.30.1.71/user');  //채팅용 소켓
-    let wslist = new WebSocket('ws:/172.30.1.71/list'); //참여인원 소켓
+    let wsmsg = new WebSocket('ws:/172.30.1.23/user');  //채팅용 소켓
+    let wslist = new WebSocket('ws:/172.30.1.23/list'); //참여인원 소켓
 
     wsmsg.onopen = function(event) {
         console.log("채팅이 열렸습니다.");
@@ -15,6 +15,7 @@
             if (event !== null && event !== undefined) {
                 var msg = JSON.parse(eventData);
                 msg.msg = msg.msg.replace(/</g,"&lt;").replace(/>/g,"&gt;");    //tag 적용시키지 않도록 <> 변환
+                if(msg.time < 10){msg.time="0"+msg.time}
                 if(msg.msg===""){
                     $("#messageBox").append(
                         "<div class='messageName' style='text-align: left;'><img src='/resources/pandora_logo.png' style='width:30px; height:30px; margin-right:3px;'>"+msg.userName+"님이 들어오셨습니다.</div>"

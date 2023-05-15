@@ -21,23 +21,24 @@ public class CheckController {
 	@Autowired	
 	CheckService checkService;
 	
-	@GetMapping("/check")
-	public String subject() {	
-		return "check";
+	@GetMapping("/admin/check")
+	public String check() {	
+		return "admin/check";
 	}
 	
 	@PostMapping("/studentCheck")
 	@ResponseBody
 	public String subjectFilter(@RequestBody Map<String, String> formData) throws JsonProcessingException {
-	    String year = formData.get("year");
-	    String semester = formData.get("semester");
-	    String studentNum = formData.get("studentNum");
-	    String departmentName = formData.get("departmentName");
+	    String year = formData.get("year_ck");
+	    String semester = formData.get("semester_ck");
+	    String studentNum = formData.get("studentNum_ck");
+	    String departmentName = formData.get("departmentName_ck");
 	    
+	    System.out.println(year);
 	    
 	    String Search01 = year+semester;
 	    System.out.println(Search01);
-	    System.out.println(studentNum);
+	    System.out.println(studentNum + "dd");
 	    
 	    Map<String, Object> paramMap = new HashMap<>();
 	    paramMap.put("Search01", Search01);
