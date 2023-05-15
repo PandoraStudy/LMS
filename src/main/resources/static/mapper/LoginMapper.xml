@@ -44,15 +44,37 @@
     
      <insert id="save" parameterType="UserInfoDto">
         INSERT INTO USER_INFO (
-            USER_NO, USER_ID, PSWD, KORN_FLNM, USER_BRDT,
+            USER_ID, PSWD, KORN_FLNM, USER_BRDT,
             EML_ADDR, TELNO, PSWD_CHG_YN, PSWD_CHG_DT,
             PSWD_ERR_NMTM, USER_GROUP_CD
         )
         VALUES (
-            19, #{USER_ID}, #{PSWD}, #{KORN_FLNM}, #{USER_BRDT},
+            #{USER_ID}, #{PSWD}, #{KORN_FLNM}, #{USER_BRDT},
             #{EML_ADDR}, #{TELNO}, #{PSWD_CHG_YN}, #{PSWD_CHG_DT},
             #{PSWD_ERR_NMTM}, #{USER_GROUP_CD}
         )
     </insert>
+    
+    <select id="checkEamil" parameterType="String" resultType="String">
+    	SELECT EML_ADDR FROM USER_INFO WHERE USER_ID = #{id}
+    </select>
+    
+    <update id="tempkeysave" parameterType="UserInfoDto">
+    	UPDATE USER_INFO
+		SET PSWD_ERR_NMTM = #{PSWD_ERR_NMTM}
+		WHERE USER_ID = #{USER_ID} and EML_ADDR = #{EML_ADDR}
+    </update>
+    
+    <select id="compareNum" parameterType="UserInfoDto" resultType="Integer">
+    	SELECT COUNT(*)
+    	FROM USER_INFO
+    	WHERE USER_ID = #{USER_ID} and PSWD_ERR_NMTM = #{PSWD_ERR_NMTM}
+    </select>
+    
+    <update id="rewritepw" parameterType="UserInfoDto">
+    	UPDATE USER_INFO
+		SET PSWD = #{PSWD}
+		WHERE PSWD_ERR_NMTM = #{PSWD_ERR_NMTM}
+    </update>
 
 </mapper>
