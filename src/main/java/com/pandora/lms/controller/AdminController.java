@@ -1,6 +1,5 @@
 package com.pandora.lms.controller;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -46,12 +45,12 @@ public class AdminController {
 						Model model) {
 		model.addAttribute("id", session.getAttribute("id"));
 		model.addAttribute("name", session.getAttribute("name"));
-		return "admin";
+		return "admin/admin";
 	}
 	
-	@GetMapping("/studentList")
+	@GetMapping("/admin/studentList")
 	public String studentList() {
-	    return "studentList";
+	    return "admin/studentList";
 	}
 	
 	@ResponseBody
@@ -105,9 +104,9 @@ public class AdminController {
 		return rsl;
 	}
 	
-	@GetMapping("/insertYoutube")
+	@GetMapping("/admin/insertYoutube")
 	public String insertYoutube() {
-		return "insertYoutube";
+		return "admin/insertYoutube";
 	}
 	
 	@ResponseBody
@@ -124,19 +123,15 @@ public class AdminController {
 		return insertYoutube;
 	}
 	
-	@GetMapping("/attendance")
+	@GetMapping("/admin/attendance")
 	public String attendance() {
-		return "attendance";
+		return "admin/attendance";
 	}
 	
-	@GetMapping("/opacity")
-	public String opacity() {
-		return "opacity";
-	}
 	
-	@GetMapping("/departmentModal")
+	@GetMapping("/admin/modal/departmentModal")
 	public String departmentModal() {
-		return "departmentModal";
+		return "admin/modal/departmentModal";
 	}
 	
 	@ResponseBody
@@ -161,9 +156,9 @@ public class AdminController {
 		return departmentModal;
 	}
 	
-	@GetMapping("/studentsModal")
+	@GetMapping("/admin/modal/studentsModal")
 	public String studentsModal() {
-		return "studentsModal";
+		return "admin/modal/studentsModal";
 	}
 	
 	@ResponseBody
@@ -187,9 +182,9 @@ public class AdminController {
 		return studentsModal;
 	}
 	
-	@GetMapping("/instructorModal")
+	@GetMapping("/admin/modal//instructorModal")
 	public String instructorModal() {
-		return "instructorModal";
+		return "admin/modal/instructorModal";
 	}
 	
 	@ResponseBody
@@ -214,9 +209,9 @@ public class AdminController {
 		return instructorModal;
 	}
 	
-	@GetMapping("/userInfoModal")
+	@GetMapping("/admin/modal/userInfoModal")
 	public String userInfoModal() {
-		return "userInfoModal";
+		return "admin/modal/userInfoModal";
 	}
 }
 
