@@ -46,7 +46,7 @@ public class UploadVideo {
 
             /* 업로드할 비디오 파일을 가져옵니다, 콘솔로 사용자가 올린 파일명을 출력합니다. */
             byte[] videoFileByte = videoFile.getBytes();
-            System.out.println("You chose " + videoFile.getOriginalFilename() + " to upload.");
+            System.out.println(videoFile.getOriginalFilename() + "을(를) 업로드 중입니다.");
 
             /* 비디오 추가 정보 */
             Video videoObjectDefiningMetadata = new Video();
@@ -110,7 +110,7 @@ public class UploadVideo {
                             break;
                         case MEDIA_IN_PROGRESS:
                             System.out.println("Upload in progress");
-                            System.out.println("Upload percentage: " + uploader.getProgress());
+                            System.out.println("Upload percentage: " + (uploader.getProgress() * 100));
                             break;
                         case MEDIA_COMPLETE:
                             System.out.println("Upload Completed!");
@@ -133,14 +133,14 @@ public class UploadVideo {
             System.out.println("  - Tags: " + returnedVideo.getSnippet().getTags());
             System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
             System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
-            System.out.println("  - Duration: " + returnedVideo.getContentDetails().getDuration());
+            System.out.println("  - Duration: " + returnedVideo.getContentDetails());
 
             result.put("SBJCT_NO", SBJCT_NO);
             result.put("LECT_YMD", LECT_YMD);
             result.put("ON_LECT_NM", returnedVideo.getSnippet().getTitle());
             result.put("ON_LECT_CN", returnedVideo.getSnippet().getDescription());
             result.put("ON_LECT_URL", returnedVideo.getId());
-            result.put("ON_LECT_TM", returnedVideo.getContentDetails().getDuration());
+            // result.put("ON_LECT_TM", returnedVideo.getContentDetails().getDuration());
 
 
         } catch (GoogleJsonResponseException e) {
