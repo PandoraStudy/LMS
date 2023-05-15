@@ -711,7 +711,8 @@ function showContent(c_id, id) {
 
 //tab을 클릭했을 때 main_content 활성화
 function tabs(id){
-// 	alert(id);
+// 	alert(id + "탭클릭");
+	$("#tabs_" + id).prop("checked", true);
 	$(".content").hide();
 	$("#load_" + id).show();
 }
@@ -739,7 +740,7 @@ $(document).ready(function () {
         	cnt++;
             var newTab = "<input type='radio' name='tabs' id='tabs_" 
             + id + "' tabNum='" + cnt + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" 
-            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' onclick='close_tab(\"" + id + "\")'></label>";
+            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' onclick='close_tab(event, \"" + id + "\")'></label>";
             $("#tab_bar").append(newTab);
         }
         
@@ -758,7 +759,7 @@ function load(id){
 }
 
 //tab 닫기
-function close_tab(id) {
+function close_tab(event, id) {
 //     var currentTab = $("#tabs_" + id);
 //     var nextTab = currentTab.next('input[type="radio"]');
 //     var prevTab = currentTab.prev('input[type="radio"]');
@@ -776,7 +777,7 @@ function close_tab(id) {
 //         var newId = tabToShow.attr('id').replace('tabs_', '');
 //         tabs(newId);
 //     }
-
+	event.stopPropagation();
 	var tabNum = parseInt($("#tabs_" + id).attr('tabNum')); // 닫는 tab의 tabNum
     var previousTab = null;
     var nextTab = null;
@@ -789,21 +790,23 @@ function close_tab(id) {
     // 이전 또는 다음 tabs 찾기
     $("#tab_bar input[type='radio']").each(function () {
         var currentTabNum = parseInt($(this).attr('tabNum'));
-        alert(currentTabNum);
-        if (currentTabNum === tabNum - 1) {
-            previousTab = $(this);
+        if (currentTabNum < tabNum) {
+            previousTab = $(this).attr('id');
+//         alert(previousTab.substring(5) + "프");
         }
 
-        if (currentTabNum === tabNum + 1) {
-            nextTab = $(this);
+        if (currentTabNum > tabNum) {
+            nextTab = $(this).attr('id');
+//         alert(nextTab + "다");
         }
     });
 
-    // Check and activate the tab
+    // 탭 확인 및 활성화
     if (previousTab != null) {
-        previousTab.attr("checked", "checked");
+//         alert(previousTab.substring(5) + "프실");
+        tabs(previousTab.substring(5));
     } else if (nextTab != null) {
-        nextTab.attr("checked", "checked");
+    	tabs(nextTab.substring(5));
     }
     
     cnt--;

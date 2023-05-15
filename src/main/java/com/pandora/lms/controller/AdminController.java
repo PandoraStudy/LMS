@@ -112,7 +112,8 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/insertYoutube/save")
 	public List<OnLectNmDTO> insertYoutube(@RequestParam("ON_LECT_URL") String ON_LECT_URL
-											, @RequestParam("file_upload") MultipartFile fileUpload){
+//											, @RequestParam("file_upload") MultipartFile fileUpload
+											){
 		
 		OnLectNmDTO onLect = new OnLectNmDTO();
 		onLect.setON_LECT_URL(ON_LECT_URL);
