@@ -186,7 +186,7 @@
         .none:hover{ background-color: #cccccc; }
 
         /*===== 모달 창 스타일 ===== */
-        .modal {
+        /* .modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -220,7 +220,7 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
-        }
+        } */
         /* =================================== */
     </style>
 </head>

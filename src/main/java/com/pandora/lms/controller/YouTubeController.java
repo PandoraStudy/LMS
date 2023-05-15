@@ -78,7 +78,7 @@ public class YouTubeController {
             userInfo.put("instr_no", session.getAttribute("instr_no"));
             lecture = sqlSession.selectList("youtube.lecture", userInfo);
         }
-
+        
         view.addObject("lecture", lecture);
         return view;
     }
@@ -100,30 +100,34 @@ public class YouTubeController {
 
         return view;
     }
-
+    
     //Calendar함수
-    public static int getWeek() {
-    	Calendar cal = Calendar.getInstance();
-
-    	//강제로 년월도일변경
-//    	cal.set(Calendar.YEAR, 2023);//년도 변경
+    public static int getWeek() {  //list, detail용
+    	Calendar cal = Calendar.getInstance();  
+    	
+    	//개강일자 입력
+    	cal.set(Calendar.YEAR, 2023);
     	//1월 : JANUARY, 2월 : FEBRUARY, 3월 : MARCH, 4월 : APRIL, 5월 : MAY, 6월 : JUNE
 		//7월 : JULY, 8월 : AUGUST, 9월 : SEPTEMBER, 10월 : OCTOBER, 11월 : NOVEMBER, 12월 : DECEMBER
-//    	cal.set(Calendar.MONTH, Calendar.MAY);
-//    	cal.set(Calendar.DATE, 13);
-
+    	cal.set(Calendar.MONTH, Calendar.APRIL);
+    	cal.set(Calendar.DATE, 24);
+    	
+    	cal.setMinimalDaysInFirstWeek(7); //한주를 최소 7일로 설정
+    	cal.setFirstDayOfWeek(Calendar.MONDAY);//한주의 첫 번째요일을 월요일로 설정
+    	
     	int week = cal.get(Calendar.WEEK_OF_MONTH);
-
+    	System.out.println(week + "주차입니다.");
+    	
     	return week;
     }
-
-
+    
+    
     @GetMapping("/lectureList")
     public ModelAndView youtubeList(@RequestParam Map<String, Object> lectureInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureList");
 
        	int week = getWeek();
-
+       	
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -131,7 +135,7 @@ public class YouTubeController {
 
         lectureInfo.put("appl_no", session.getAttribute("appl_no"));
         List<Map<String, Object>> lectList = sqlSession.selectList("youtube.lectList", lectureInfo);
-
+        
         List<Map<String, Object>> notice = sqlSession.selectList("youtube.notice", lectureInfo);
 
         for(Map<String, Object> lectInfo : lectList) {
@@ -177,7 +181,7 @@ public class YouTubeController {
         view.addObject("notice", notice);
         view.addObject("lectList", lectList);
         view.addObject("week", week);
-
+        
         return view;
     }
 
@@ -219,9 +223,9 @@ public class YouTubeController {
     @GetMapping("/lectureDetail")
     public ModelAndView lectureDetail(@RequestParam Map<String, Object> userInfo, HttpSession session) {
         ModelAndView view = new ModelAndView("youtube/lectureDetail");
-
+        
         int week = getWeek();
-
+       	
         if(session.getAttribute("appl_no") == null && session.getAttribute("instr_no") == null) {
             view.setViewName("redirect:/login");
             return view;
@@ -243,7 +247,7 @@ public class YouTubeController {
 
         view.addObject("lectureInfo", lectureInfo);
         view.addObject("week", week);
-
+        
         return view;
     }
 
