@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <style>
 .modal_search{
-height: 38px;
+height: 195px;
 }
 .modal_search > div {
 width: 138px;
@@ -16,10 +16,6 @@ position: relative;
 top: -1px;
 margin: 5px;
 }
-.main_container_search{
-height: 195px;
-}
-
 .red{
 color: red;
 height: 30px;

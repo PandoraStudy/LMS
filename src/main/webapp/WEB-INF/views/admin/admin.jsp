@@ -28,7 +28,40 @@ body {
 	position: relative;
 	left: 20px;
 	bottom: -20px;
-	background-color: blue;
+	background-color: lightblue;
+}
+
+.banner_logo{
+	position: relative;
+	height: 65px;
+	float: left;
+}
+
+.logo_big_text{
+	width: auto;
+	float: left;
+	font-weight: 900;
+	font-size: 18px;
+ 	font-style: oblique;
+	position: relative;
+	top: 13px;
+	left: 10px;
+	margin: 0;
+	padding: 0;
+	color: 
+}
+
+.logo_small_text{
+	width: auto;
+	float: left;
+	font-weight: 900;
+	font-size: 17px;
+	font-style: oblique;
+	position: relative;
+	top: 10px;
+	left: 60px;
+	margin: 0;
+	padding: 0;
 }
 
 .menu {
@@ -290,11 +323,17 @@ background-color: #303030;
 	padding-right: 20px;
 	width: calc(100% - 260px);
 	height: calc(100vh - 125px);
-	/* float: right; */
-	/* background-color: skyblue; */
 	position: relative;
 	right: -20px;
-	/* display: none; */
+	background-color: white;
+}
+
+.university_view{
+	position: absolute;
+	right: 10px;
+	width: calc(100% - 20px);
+	height: calc(100vh - 130px);
+	opacity: 0.5;
 }
 
 .title_img {
@@ -677,6 +716,8 @@ function tabs(id){
 	$("#load_" + id).show();
 }
 
+//현재 tab의 갯수
+var cnt = 0;
 //side_menu를 클릭했을 때 탭 추가 + jsp 로드 + 활성화
 $(document).ready(function () {
     $(".li_step3").click(function (e) {
@@ -695,9 +736,10 @@ $(document).ready(function () {
 
         // 중복되는 탭이 없을 때만 새로운 탭을 추가합니다.
         if (!isDuplicate) {
+        	cnt++;
             var newTab = "<input type='radio' name='tabs' id='tabs_" 
-            + id + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" 
-            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' onclick='close_tab(\""+id+"\")'></label>";
+            + id + "' tabNum='" + cnt + "' checked><label for='tabs_" + id + "' onclick='tabs(\"" + id + "\")'>" 
+            + title + "<img alt='btnMenuX' src='/img/btnMenuX.png' class='btnMenuX' onclick='close_tab(\"" + id + "\")'></label>";
             $("#tab_bar").append(newTab);
         }
         
@@ -708,29 +750,68 @@ $(document).ready(function () {
 
 //main_content에 load
 function load(id){
+	$("#university_view").css("display","none");
 	$("#main_container").append("<div id='load_"+id+"' class='content'></div>");
-	$("#load_" + id).load("/"+id+"");
+	$("#load_" + id).load("/admin/"+id+"");
 	$("#tabs_" + id).attr("checked", "checked");
 	showContent("load_" + id, id);
 }
 
 //tab 닫기
-function close_tab(id){
-	// 이전 라디오 버튼을 찾습니다.
-    var previousRadioButton = $("#tabs_" + id).prev('input[type=radio]');
-	alert(previousRadioButton.html());
-	alert(previousRadioButton.text());
-	alert(previousRadioButton.val());
-    // 닫히는 탭을 제거합니다.
+function close_tab(id) {
+//     var currentTab = $("#tabs_" + id);
+//     var nextTab = currentTab.next('input[type="radio"]');
+//     var prevTab = currentTab.prev('input[type="radio"]');
+
+//     // 다음 탭이 있다면 그것을 선택하고, 없다면 이전 탭을 선택합니다.
+//     var tabToShow = nextTab.length ? nextTab : prevTab;
+
+//     // 삭제할 탭과 레이블, 내용을 제거합니다.
+//     currentTab.remove();
+//     $("label[for='tabs_" + id + "']").remove();
+//     $("#load_" + id).remove();
+
+//     // 다음 혹은 이전 탭이 있다면 그것을 활성화합니다.
+//     if (tabToShow.length) {
+//         var newId = tabToShow.attr('id').replace('tabs_', '');
+//         tabs(newId);
+//     }
+
+	var tabNum = parseInt($("#tabs_" + id).attr('tabNum')); // 닫는 tab의 tabNum
+    var previousTab = null;
+    var nextTab = null;
+	
+	// 닫히는 탭을 제거합니다.
     $("#tabs_" + id).remove();
     $("label[for='tabs_" + id + "']").remove();
     $("#load_" + id).remove();
+    
+    // 이전 또는 다음 tabs 찾기
+    $("#tab_bar input[type='radio']").each(function () {
+        var currentTabNum = parseInt($(this).attr('tabNum'));
+        alert(currentTabNum);
+        if (currentTabNum === tabNum - 1) {
+            previousTab = $(this);
+        }
 
-    // 이전 라디오 버튼이 있으면 체크합니다.
-    if (previousRadioButton.length > 0) {
-        previousRadioButton.prop('checked', true);
+        if (currentTabNum === tabNum + 1) {
+            nextTab = $(this);
+        }
+    });
+
+    // Check and activate the tab
+    if (previousTab != null) {
+        previousTab.attr("checked", "checked");
+    } else if (nextTab != null) {
+        nextTab.attr("checked", "checked");
+    }
+    
+    cnt--;
+    if(cnt == 0){
+    	$("#university_view").css("display","block");
     }
 }
+
 
 //modal창 닫기
 function close_modal(id){
@@ -743,9 +824,9 @@ var val = null;
 var relay_input = null;
 function modalSearch(id, value, input) {
     var modal = document.getElementById("modal_opacity");
-    if (modal.style.display === "none") {
+    if (modal.style.display === "none" || modal.style.display === "") {
         modal.style.display = "block";
-        $("#modal_opacity").load("/"+id);
+        $("#modal_opacity").load("/admin/modal/"+id);
         val = $("#" + value).val();
         relay_input = input;
     } else {
@@ -826,7 +907,11 @@ function sortTable(n, table) {
 <body>
 	<div>
 		<div class="top_menu">
-			<div class="banner"></div>
+			<div class="banner">
+				<img alt="pandora_logo" src="/img/pandora_logo2.png" class="banner_logo">
+				<div class="logo_big_text">PANDORA</div>
+          		<div class="logo_small_text">university</div>
+			</div>
 			<div class="menu">
 				<ul>
 					<li>입시</li>
@@ -837,10 +922,10 @@ function sortTable(n, table) {
 					<li>시스템</li>
 				</ul>
 			</div>
-			<div class="top_search_bar">
-				<input type="text" class="top_search"><input type="button"
-					value="검색" class="top_search_btn">
-			</div>
+<!-- 			<div class="top_search_bar"> -->
+<!-- 				<input type="text" class="top_search"><input type="button" -->
+<!-- 					value="검색" class="top_search_btn"> -->
+<!-- 			</div> -->
 			<div class="user_menu">
 				<ul>
 					<li onclick="modalSearch('userInfoModal')"><img alt="icon_user" src="/img/icon/icon_user.png" class="userIcon"> ${name}</li>
@@ -1323,7 +1408,9 @@ function sortTable(n, table) {
 			<!-- 		<div class="main_container" id="content2" style="background-color: blue;"></div> -->
 
 			<!-- main_container -->
-			<div class="main_container" id="main_container"></div>
+			<div class="main_container" id="main_container">
+				<img alt="university_view" src="/img/university_view.jpg" id="university_view" class="university_view">
+			</div>
 		</div>
 	</div>
 	<div id="modal_opacity" class="modal_opacity"></div>
