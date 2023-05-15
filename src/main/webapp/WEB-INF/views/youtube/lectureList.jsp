@@ -413,6 +413,7 @@
                                         <div class="week-select ${status.last ? 'select-last' : ''} pointer" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i }주차
                                             
+                                            
 <!-- value 조건만 바꾸면댐 -->
 <%-- <c:set var="week" value="${week }"/> --%>
 <c:set var="week" value="4"/>
@@ -568,37 +569,47 @@
                                             <c:set var="file_cnt" value="${file_cnt + 1}"/>
                                             </c:forEach>
                                         </c:if>
+                                        
+                                        
+                                        
+<%-- 										<c:set var="instr_no" value="${sessionScope.instr_no eq null }"/> --%>
+										<c:if test="${sessionScope.instr_no eq null }">
+                                        
+                                        
+                                        
+                                        
+                                        
 <!-- 날짜 변경 -->
 <%-- <c:set var="week" value="${week }"/> --%>
 <c:set var="week" value="4"/>
-                                        <!-- 지난주차들 -->
-                                        <c:if test="${i le week}">
-	                                        <!-- 과제 -->
-	                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
-	                                            <!-- 숨길 객체의 내용 -->
-	                                            <div class="week-object">
-	                                                <div class="week-title pointer" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
-	                                                    <button class="assign btn btn-warning">과제</button>
-	                                                    <span>${lect.ON_LECT_NM }</span>
-	                                                </div>
-	                                                <c:if test="${sessionScope.appl_no != null}">
-	                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
-	                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
-	                                                    	<c:choose>
-	                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90 || lect.ATTENDANCE eq '1'}">
-	                                                    			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
-	                                                    		</c:when>
-	                                                    		<c:otherwise>
-		                                                            <button style="width:108px;" class="btn btn-outline-danger">미제출</button>
-	                                                    		</c:otherwise>
-	                                                    	</c:choose>
-	                                                    </div>
-	                                                </div>
-	                                                </c:if>
-	                                            </div>
-	                                        </div>
+											<!-- 지난주차들 -->
+	                                        <c:if test="${i le week}">
+		                                        <!-- 과제 -->
+		                                        <div class="week-assign week-content${i} ${status.last ? 'content-last' : ''} border-left-warning collapse">
+		                                            <!-- 숨길 객체의 내용 -->
+		                                            <div class="week-object">
+		                                                <div class="week-title pointer" style="width: 50%; height: 30px; padding-top: 2px; box-sizing: border-box; float: left;">
+		                                                    <button class="assign btn btn-warning">과제</button>
+		                                                    <span>${lect.ON_LECT_NM }</span>
+		                                                </div>
+		                                                <c:if test="${sessionScope.appl_no != null}">
+		                                                <div style="width: 50%; padding-top: 5px; box-sizing: border-box; height: 30px; float: left; line-height: 30px; display: flex; justify-content: right;">
+		                                                    <div style='height:15px; width: 200px; margin-top: -3px;'>
+		                                                    	<c:choose>
+		                                                    		<c:when test="${lect.LECT_PRGRS_RT >= 90 || lect.ATTENDANCE eq '1'}">
+		                                                    			<button style="width:108px;" class="btn btn-outline-primary">제출</button>
+		                                                    		</c:when>
+		                                                    		<c:otherwise>
+			                                                            <button style="width:108px;" class="btn btn-outline-danger">미제출</button>
+		                                                    		</c:otherwise>
+		                                                    	</c:choose>
+		                                                    </div>
+		                                                </div>
+		                                                </c:if>
+		                                            </div>
+		                                        </div>
+	                                        </c:if>
                                         </c:if>
-                                        
                                         <c:if test="${sessionScope.instr_no != null && lect.SBJCT_MTHD_CD ne 2}">
                                         <!-- 추가 -->
                                         <div class="week-upload week-content${i} ${status.last ? 'content-last' : ''} border-left-success collapse">
