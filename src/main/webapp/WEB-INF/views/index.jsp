@@ -83,7 +83,7 @@
 
                         // 모달 창 닫기
                         modal.style.display = "none";
-                    });
+                    },{once:true});
 
                     // 모달 창 'x' 버튼 클릭 시
                     closeButton.addEventListener("click", function() {
