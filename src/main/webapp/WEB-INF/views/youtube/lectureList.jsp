@@ -481,7 +481,7 @@
 <c:set var="week" value="4"/>
 
 	                                    <!-- 지난주차들 -->
-	                                    <c:if test="${i le week}">
+	                                    <c:if test="${i le week || sessionScope.instr_no ne null}">
 	                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
 	                                        <c:choose>
 	                                        <c:when test="${lect.SBJCT_MTHD_CD eq 1}">border-left-danger
