@@ -15,7 +15,8 @@ public class CalendarController {
     @PostMapping("/save_event")
     public String save_event(HttpServletRequest request, HttpSession session){
         CalendarDTO calendarDTO = new CalendarDTO();
-
+        System.out.println(request.getParameter("start"));
+        System.out.println(request.getParameter("end"));
         calendarDTO.setTitle(request.getParameter("title"));
         calendarDTO.setStart_date(request.getParameter("start"));
         calendarDTO.setEnd_date(request.getParameter("end"));

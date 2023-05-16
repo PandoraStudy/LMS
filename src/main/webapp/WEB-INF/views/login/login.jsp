@@ -33,12 +33,12 @@
     <div class="container-login100">
         <div class="wrap-login100">
             <form class="login100-form validate-form" method="post" action="/login" onsubmit="return loginck()">
-<%--             	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
+            	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <span class="login100-form-title p-b-26">
                     <img src="/resources/pandora_banner.png" style="width:50px; height:50px;"><b style="font-style: italic;">Pandora University</b>
                 </span>
-                <span class="login100-form-title p-b-20">
-						<i class="zmdi zmdi-font"></i>
+                <span class="login100-form-title p-b-40">
+						<!-- <i class="zmdi zmdi-font"></i>
                     <label style="font-size:20px; cursor:pointer;">
                         <input type="radio" name="division" value="0010" checked >
                         <span>student</span>
@@ -46,7 +46,7 @@
                     <label style="font-size:20px; cursor:pointer;">
                         <input type="radio" name="division" value="0020">
                         <span>professor</span>
-                    </label>
+                    </label> -->
                 </span>
                 <!-- ID -->
                 <div class="wrap-input100 validate-input">

@@ -14,7 +14,6 @@ $(document).ready( function() {
 					$('#cnt_list').empty();
 					var result = data;
 					var str = "";
-					alert(JSON.stringify(result));
 					$.each(result, function(i, info) {
 						str += '<tr><td>' + info.appl_NO
 								+ '</td><td>' + info.korn_FLNM
@@ -51,10 +50,6 @@ $(document).ready( function() {
 				<option value="">(전체)</option>
 				<option value="재학" selected>재학</option>
 				<option value="휴학">휴학</option>
-<!-- 				<option value="제적">제적</option> -->
-<!-- 				<option value="수료">수료</option> -->
-<!-- 				<option value="졸업">졸업</option> -->
-<!-- 				<option value="유보">유보</option> -->
 			</select>
 			<div>소속학과</div>
 			<span class="div_input">

@@ -3,8 +3,6 @@ package com.pandora.lms.dto;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
