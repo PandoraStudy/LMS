@@ -48,7 +48,10 @@ public class LoginService implements UserDetailsService{
     		int no = loginDAO.getAPPL(user.getUSER_NO());
     		System.out.println("no는?"+no);
     		newone.setAPPL_NO(no);
-    	}		
+    	} else {
+    		System.out.println("관리자입니다.");
+
+    	}
         
         return newone;
     }

@@ -23,7 +23,7 @@ public class securityinfo implements UserDetails{
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof securityinfo) {
-			return this.user_name.equals(((securityinfo)obj).user_name);
+			return this.user_id.equals(((securityinfo)obj).user_id);
 		}
 		return false;
 	}
