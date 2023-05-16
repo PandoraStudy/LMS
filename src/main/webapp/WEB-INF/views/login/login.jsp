@@ -63,8 +63,8 @@
                     </div>
                 </div>
                 <div class="text-center p-t-50">
-                    비밀번호를 잊어버리셨다면<br>
-                    학교에 문의하십시오.
+                    <a href="/pwreset">비밀번호를 잊어버리셨다면</a><br>
+                    
                 </div>
             </form>
         </div>

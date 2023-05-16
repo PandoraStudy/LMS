@@ -20,14 +20,14 @@ public class PasswordResetController {
     private PasswordResetService passwordResetService;
     
     //초기 페이지 - 아이디 입력
-    @GetMapping("/passwrodresetpage")
+    @GetMapping("/pwreset")
     public String page0(){
 
     	return "passwordpage0";
     }
     
     //입력받은 아이디로 이메일 확인
-    @PostMapping("/passwordresetrequest")	
+    @PostMapping("/pwreset/request")	
     public ModelAndView page1(@RequestParam String id) {
     	ModelAndView mv = new ModelAndView();
     	String email = passwordResetService.checkEamil(id);
@@ -45,7 +45,7 @@ public class PasswordResetController {
     		userInfoDto = passwordResetService.tempkeysave(userInfoDto);
     		
     		//해당 아이디에 매핑되어 있는 이메일 주소에 인증 메일을 전송
-    		//passwordResetService.tosendemail(userInfoDto);
+    		passwordResetService.tosendemail(userInfoDto);
     		
     		mv.addObject("attr", userInfoDto.getUSER_ID());
     		mv.setViewName("/passwordCheck");
@@ -55,7 +55,7 @@ public class PasswordResetController {
     }
     
     //이메일 전송 후 임시키 확인 페이지
-    @PostMapping("/passwordCheckrequest")
+    @PostMapping("/pwreset/checkrequest")
     public ModelAndView page2(@RequestParam int key , String userid) {
     	ModelAndView mv = new ModelAndView();
     	System.out.println("임시번호는"+key);
@@ -77,7 +77,7 @@ public class PasswordResetController {
     }
     
     //새로운 비밀번호를 입력 받아서 DB에 저장
-    @PostMapping("/changepw")
+    @PostMapping("/pwreset/changepw")
     public String page3(@RequestParam String pw, int userid) {
     	UserInfoDto userInfoDto = new UserInfoDto();
     	userInfoDto.setPSWD_ERR_NMTM(userid);

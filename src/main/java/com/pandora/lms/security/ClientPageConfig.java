@@ -37,7 +37,7 @@ public class ClientPageConfig {
     	http.csrf().disable();
     	http.httpBasic().disable();
         http.requestMatchers().antMatchers("/**").and().authorizeRequests()
-        	.antMatchers("/css/**","/scss/**","/vendor/**","/js/**","/img/**","/join","/resources/**").permitAll()
+        	.antMatchers("/css/**","/scss/**","/vendor/**","/js/**","/img/**","/join","/resources/**" , "/pwreset/**").permitAll()
             .anyRequest().authenticated().and().userDetailsService(LoginService);
 
         http.formLogin()
