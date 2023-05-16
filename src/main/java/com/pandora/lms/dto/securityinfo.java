@@ -38,7 +38,7 @@ public class securityinfo implements UserDetails{
 		this.userno = userinfodto.getUSER_NO();
 		this.user_name = userinfodto.getKORN_FLNM();
 		System.out.println(userno);
-		
+		System.out.println(userinfodto.getUSER_GROUP_CD());
 		this.userinfodto = userinfodto;
 
 	}
