@@ -38,7 +38,7 @@ public class CheckController {
 	    
 	    String Search01 = year+semester;
 	    System.out.println(Search01);
-	    System.out.println(studentNum + "dd");
+	    System.out.println(studentNum);
 	    
 	    Map<String, Object> paramMap = new HashMap<>();
 	    paramMap.put("Search01", Search01);

@@ -2,10 +2,6 @@
 <script type="text/javascript">
 //studentList에서 입력한 value값 가져오기
 $(document).ready( function() {
-	$("#name").val(val);
-	alert(relay_input);
-});
-$(document).ready( function() {
 	$("#search_btn_modal").click(
 		function(e) {
 			$.ajax({

@@ -1,6 +1,9 @@
 package com.pandora.lms.controller;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pandora.lms.dto.ApplCrclmWrapperDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.AttendanceDTO;
 import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.InstrInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
-import com.pandora.lms.dto.SearchDTO;
-import com.pandora.lms.dto.UserApplViewDTO;
 import com.pandora.lms.service.AdminService;
 
 @Controller
@@ -30,16 +32,6 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
-	@Autowired
-	UserApplViewDTO adminDTO;
-	
-	@Autowired
-	SearchDTO searchDTO;
-	
-	@Autowired
-	OnLectNmDTO onlectnmDTO;
-	
-
 	@GetMapping("/admin")
 	public String admin(HttpSession session,
 						Model model) {
@@ -112,7 +104,7 @@ public class AdminController {
 	@ResponseBody
 	@PostMapping("/insertYoutube/save")
 	public List<OnLectNmDTO> insertYoutube(@RequestParam("ON_LECT_URL") String ON_LECT_URL
-//											, @RequestParam("file_upload") MultipartFile fileUpload
+											, @RequestParam("file_upload") MultipartFile fileUpload
 											){
 		
 		OnLectNmDTO onLect = new OnLectNmDTO();
@@ -129,6 +121,48 @@ public class AdminController {
 		return "admin/attendance";
 	}
 	
+	@ResponseBody
+	@PostMapping("/search/attendance")
+	public List<AttendanceDTO> attendance(@RequestParam("years") String years
+										, @RequestParam("semester") String semester
+										, @RequestParam("studentNumber") String studentNumber
+										, @RequestParam("department") String CRCLM_NM){
+		AttendanceDTO atnd = new AttendanceDTO();
+		
+		int attendace = adminService.attendaceCnt(atnd);
+		System.out.println(attendace + "추울");
+		atnd.setAttendace(attendace);
+		
+//		System.out.println(years + "1");
+		System.out.println(semester);
+//		System.out.println(studentNumber);
+		System.out.println(CRCLM_NM + "2");
+		if (semester == "01") {
+			atnd.setCRCLM_CYCL(202301);
+		}else if(semester == "02") {
+			atnd.setCRCLM_CYCL(202302);
+		}
+//		int LECT_YMD = Integer.parseInt(years);
+		int APPL_NO = Integer.parseInt(studentNumber);
+//		atnd.setLECT_YMD(LECT_YMD);
+		atnd.setAPPL_NO(APPL_NO);
+		atnd.setCRCLM_NM(CRCLM_NM);
+		
+		
+		List<AttendanceDTO> attendanceList = adminService.attendanceList(atnd);
+		for (AttendanceDTO attendanceDTO : attendanceList) {
+			System.out.println(attendanceDTO.getAttendace() + "출석");
+			int semesters = attendanceDTO.getCRCLM_CYCL();
+			System.out.println(semesters + "semesters");
+			if (semesters == 202301) {
+				attendanceDTO.setSemester("1학기");
+			} else if(semesters == 202302) {
+				attendanceDTO.setSemester("2학기");
+			}
+		}
+		
+		return attendanceList;
+	}
 	
 	@GetMapping("/admin/modal/departmentModal")
 	public String departmentModal() {

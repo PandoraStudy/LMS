@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pandora.lms.dto.ApplCrclmWrapperDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.AttendanceDTO;
 import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.InstrInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
@@ -29,6 +30,10 @@ public interface AdminDAO {
 	public List<CrclmInfoDTO> departmentModal(CrclmInfoDTO crclm);
 
 	public List<InstrInfoDTO> instructorModal(InstrInfoDTO instr);
+
+	public List<AttendanceDTO> attendanceList(AttendanceDTO atnd);
+
+	public int attendaceCnt(AttendanceDTO atnd);
 
 
 }

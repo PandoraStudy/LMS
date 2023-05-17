@@ -28,40 +28,43 @@ body {
 	position: relative;
 	left: 20px;
 	bottom: -20px;
-	background-color: lightblue;
+/* 	background-color: lightblue; */
 }
 
 .banner_logo{
 	position: relative;
-	height: 65px;
+	height: 50px;
 	float: left;
+	position: relative;
+	top: 7px;
 }
 
 .logo_big_text{
 	width: auto;
 	float: left;
 	font-weight: 900;
-	font-size: 18px;
+	font-size: 25px;
  	font-style: oblique;
 	position: relative;
-	top: 13px;
-	left: 10px;
+	top: 10px;
+	left: 5px;
 	margin: 0;
 	padding: 0;
-	color: 
+	color: #0057aa;
 }
 
 .logo_small_text{
 	width: auto;
 	float: left;
 	font-weight: 900;
-	font-size: 17px;
+	font-size: 14px;
 	font-style: oblique;
 	position: relative;
-	top: 10px;
-	left: 60px;
+	top: 7px;
+	left: 5px;
 	margin: 0;
 	padding: 0;
+	color: #0057aa;
 }
 
 .menu {
@@ -760,23 +763,6 @@ function load(id){
 
 //tab 닫기
 function close_tab(event, id) {
-//     var currentTab = $("#tabs_" + id);
-//     var nextTab = currentTab.next('input[type="radio"]');
-//     var prevTab = currentTab.prev('input[type="radio"]');
-
-//     // 다음 탭이 있다면 그것을 선택하고, 없다면 이전 탭을 선택합니다.
-//     var tabToShow = nextTab.length ? nextTab : prevTab;
-
-//     // 삭제할 탭과 레이블, 내용을 제거합니다.
-//     currentTab.remove();
-//     $("label[for='tabs_" + id + "']").remove();
-//     $("#load_" + id).remove();
-
-//     // 다음 혹은 이전 탭이 있다면 그것을 활성화합니다.
-//     if (tabToShow.length) {
-//         var newId = tabToShow.attr('id').replace('tabs_', '');
-//         tabs(newId);
-//     }
 	event.stopPropagation();
 	var tabNum = parseInt($("#tabs_" + id).attr('tabNum')); // 닫는 tab의 tabNum
     var previousTab = null;
@@ -912,8 +898,8 @@ function sortTable(n, table) {
 		<div class="top_menu">
 			<div class="banner">
 				<img alt="pandora_logo" src="/img/pandora_logo2.png" class="banner_logo">
-				<div class="logo_big_text">PANDORA</div>
-          		<div class="logo_small_text">university</div>
+				<div class="logo_big_text">판도라대학교</div>
+          		<div class="logo_small_text">pandora university</div>
 			</div>
 			<div class="menu">
 				<ul>
@@ -988,6 +974,15 @@ function sortTable(n, table) {
 								</li>
 							</ul>
 						</li>
+						<li class="li_step1">강사관리
+							<ul class="side_submenu">
+								<li class="li_step2">강사관리
+									<ul class="side_submenu_sub">
+										<li class="li_step3" id="instrInfo">강사명부조회</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
 						<li class="li_step1">교과관리
 							<ul class="side_submenu" id="side_submenu">
 								<li class="li_step2">교육과정관리
@@ -1005,15 +1000,6 @@ function sortTable(n, table) {
 									<ul class="side_submenu_sub">
 										<li class="li_step3">학생성적조회</li>
 										<li class="li_step3">학생성적조회</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li class="li_step1">강사관리
-							<ul class="side_submenu">
-								<li class="li_step2">강사관리
-									<ul class="side_submenu_sub">
-										<li class="li_step3" id="instrInfo">강사명부조회</li>
 									</ul>
 								</li>
 							</ul>

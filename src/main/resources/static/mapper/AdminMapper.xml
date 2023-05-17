@@ -77,4 +77,30 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="attendaceCnt" parameterType="com.pandora.lms.dto.AttendanceDTO" resultType="Integer">
+		SELECT COUNT(APPL_NO)
+		FROM APPL_ATND
+	</select>
+	
+	<select id="attendanceList" parameterType="com.pandora.lms.dto.AttendanceDTO" resultType="com.pandora.lms.dto.AttendanceDTO">
+		SELECT DISTINCT a.APPL_NO, c.*, i.*
+		FROM APPL_ATND AS a
+		JOIN CRCLM_INFO AS c ON a.CRCLM_CD = c.CRCLM_CD
+		JOIN instr_subject_info AS i ON a.CRCLM_CD = i.CRCLM_CD
+		<where>
+<!-- 			<if test="LECT_YMD != 0"> -->
+<!-- 				YEAR(a.LECT_YMD) = #{LECT_YMD} -->
+<!-- 			</if> -->
+			<if test="APPL_NO != 0">
+				AND a.APPL_NO = #{APPL_NO}
+			</if>
+			<if test="CRCLM_CYCL != 0">
+				AND a.CRCLM_CYCL = #{CRCLM_CYCL}
+			</if>
+			<if test="CRCLM_NM != null">
+				AND i.CRCLM_NM LIKE CONCAT('%',#{CRCLM_NM},'%')
+			</if>
+		</where>
+	</select>
 </mapper>

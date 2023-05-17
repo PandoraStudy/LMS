@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.pandora.lms.dao.AdminDAO;
 import com.pandora.lms.dto.ApplCrclmWrapperDTO;
 import com.pandora.lms.dto.ApplInfoDTO;
+import com.pandora.lms.dto.AttendanceDTO;
 import com.pandora.lms.dto.CrclmInfoDTO;
 import com.pandora.lms.dto.InstrInfoDTO;
 import com.pandora.lms.dto.OnLectNmDTO;
@@ -45,6 +46,14 @@ public class AdminService {
 
 	public int crcList(ApplCrclmWrapperDTO applCrc) {
 		return adminDAO.crcList(applCrc);
+	}
+
+	public List<AttendanceDTO> attendanceList(AttendanceDTO atnd) {
+		return adminDAO.attendanceList(atnd);
+	}
+
+	public int attendaceCnt(AttendanceDTO atnd) {
+		return adminDAO.attendaceCnt(atnd);
 	}
 
 }
