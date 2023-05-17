@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.pandora.lms.service.AdminLoginService;
 
@@ -24,6 +25,10 @@ public class AdminPageConfig {
 //		auth.userDetailsService(adminLoginService);
 //	}
 	
+	
+	@Autowired
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
+
    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	http.csrf().disable();
@@ -36,7 +41,7 @@ public class AdminPageConfig {
             .usernameParameter("id")
             .passwordParameter("pw")
             .loginProcessingUrl("/admin/loginaction")
-            //.successHandler(authenticationSuccessHandler)
+            .successHandler(authenticationSuccessHandler)
             .permitAll();
             
         http

@@ -246,5 +246,10 @@
                 FILE_EXTN_NM = #{FILE_EXTN_NM },
                 FILE_SZ = #{FILE_SZ }
     </insert>
+    
+    <insert id="insertNewYOUtubeLecture" parameterType="HashMap">
+    INSERT into `ON_LECT_INFO` (`LECT_YMD`  , `SBJCT_NO` ,`CRCLM_CD` , `CRCLM_CYCL` , `ON_LECT_NM` ,  `ON_LECT_CN` , `ON_LECT_URL`)
+VALUES ("2023-04-28 14:57:11" , #{SBJCT_NO} , #{CRCLM_CD} , 202301 , #{ON_LECT_NM} , #{ON_LECT_CN} , #{ON_LECT_URL} );
+    </insert>
 
 </mapper>

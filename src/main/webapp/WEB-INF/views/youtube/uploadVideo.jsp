@@ -133,20 +133,31 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>과목 번호</td>
+                                                <td>학과</td>
                                                 <td>
-                                                    <select class="form-select" name="LECT_YMD" id="lect_ymd">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
+                                                    <select class="form-select" name="CRCLM_CD" id="CRCLM_CD">
+                                                       <option value="150901">컴퓨터공학부</option>
+                                                        <option value="150902">경영학부</option>
+                                                        <option value="150903">경제학부</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>과목번호</td>
+                                                <td>
+                                                    <select class="form-select" name="SBJCT_NO" id="sbjct_no">
+                                                        <option value="1">자바</option>
+                                                        <option value="2">웹디자인</option>
+                                                        <option value="3">리눅스</option>
+                                                        <option value="4">자바스크립트</option>
+                                                        <option value="5">스프링</option>
                                                     </select>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>진행 주차</td>
                                                 <td>
-                                                    <select class="form-select" name="SBJCT_NO" id="sbjct_no">
+                                                    <select class="form-select" name="LECT_YMD" id="lect_ymd">
                                                         <option>1</option>
                                                         <option>2</option>
                                                         <option>3</option>

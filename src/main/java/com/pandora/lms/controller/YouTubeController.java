@@ -419,7 +419,7 @@ public class YouTubeController {
         } else {
             view.addObject("auth", false);
         }
-
+        
         return view;
     }
 
@@ -427,15 +427,29 @@ public class YouTubeController {
     public String uploadVideo(@RequestParam Map<String, Object> videoInfo, @RequestPart(name = "video_file") MultipartFile videoFile) throws Exception {
         System.out.println("동영상 정보 : " + videoInfo);
         System.out.println("동영상 파일 : " + videoFile);
-
+        
         List<String> scopes = new ArrayList<>();
         scopes.add("https://www.googleapis.com/auth/youtube");
 
         Credential credential = oAuth.authorize(scopes, true);
         UploadVideo uploadVideo = new UploadVideo();
-        uploadVideo.uploadVideo(credential, videoFile, videoInfo);
+        Map<String, Object> result = uploadVideo.uploadVideo(credential, videoFile, videoInfo);
 
+        //DB에 저장하는 로직
+        sqlSession.insert("youtube.insertNewYOUtubeLecture", result);
+        
         return "redirect:/uploadVideo";
     }
+    
+//    @GetMapping("/youtubetesting")
+//    public void youtubetesting() {
+//    	Map<String, Object> result = new HashMap<String, Object>();
+//    	result.put("CRCLM_CD", "150902");
+//        result.put("SBJCT_NO", "2234");
+//        result.put("ON_LECT_NM", "거시경제학");
+//        result.put("ON_LECT_CN", "국가 단위의 글로벌 규모의 경제를 학습");
+//        result.put("ON_LECT_URL", "kakao");
+//    	sqlSession.insert("youtube.insertNewYOUtubeLecture", result);
+//    }
 
 }
