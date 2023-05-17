@@ -305,22 +305,20 @@
                                 <div class="card-body">
                                     <div style="height: 140px;" class="chart-area">
                                         <div>
-											<table class="table">
-												<c:forEach var="notice" items="${list }">
-												<tr class="none">
-													<td>${notice.rowNum }</td>
-													<td class="title text-truncate" style="max-width:1px; text-align: left;">
-													<a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
-													</td>
-													<td>${notice.admin_id }</td>
-													<td>${notice.notice_read }</td>
-													<td>${notice.notice_date }</td>
-												</tr>
-												</c:forEach>
-											</table>
-
-                                            
-
+											<ul style="list-style: none; margin:0; padding:0;">
+												<li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
+													<a href="/noticeDetail?rowNum=7&totalCnt=${totalCount}" style=" color:black;">[모집] TOEIC 정기시험 고사장 준비 및 진행 보조 아르바이트</a>
+												</li>
+                                                <li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
+													<a href="/noticeDetail?rowNum=8&totalCnt=${totalCount}" style=" color:black;">[1차 모집] 2023년 경기도 청년 복지포인트</a>
+												</li>
+                                                <li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
+													<a href="/noticeDetail?rowNum=8&totalCnt=${totalCount}" style=" color:black;">[나라키움 남양주복합청사] 행복주택 제2차 입주자 모집</a>
+												</li>
+                                                <li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
+													<a href="/noticeDetail?rowNum=10&totalCnt=${totalCount}" style=" color:black;">2023 KBO-NINE 프로그램」모집 안내</a>
+												</li>
+											</ul>
                                         </div>
                                     </div>
                                 </div>

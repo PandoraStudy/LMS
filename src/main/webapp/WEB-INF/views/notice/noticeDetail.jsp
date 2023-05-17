@@ -44,12 +44,12 @@
             <%-- 탑 바 --%>
             <%@include file="../top.jsp" %>
             <!-- 본문 컨텐츠 부분 시작 -->
-                <div style="background-color: #2a96a5; width:100%; height:200px;" onclick="location.href='/notice'">
+                <!-- <div style="background-color: #2a96a5; width:100%; height:200px;" onclick="location.href='/notice'">
                     <div style="width:1200px;height:200px; margin:0 auto;">
                         <h1 class="mb-0" style="font-weight:bold; color:white; padding:50px 0px 0px 20px; cursor: pointer;">공지사항</h1><br>
                         <h5 style="color:white; margin-left:20px;">Pandora 대학에 다양한 소식을 알려드립니다.</h5>
                     </div>
-                </div>
+                </div> -->
             <div class="container-fluid" style="width:1200px; height:750px;">
                 <div class="d-sm-flex align-items-center justify-content-between mb-4" style="margin-top:50px; text-align: center; ">
                     <h1 class="text-truncate" style="font-weight:bold; width:1200px; color:black;"> ${noticeDetail.notice_title } </h1>
