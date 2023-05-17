@@ -299,14 +299,18 @@
                             <div class="card shadow mb-4">
                                 <!-- A 카드 설정 버튼 부분 -->
                                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">학사 일정</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">학습지원 안내</h6>
                                 </div>
                                 <!-- A 본문 부분 -->
                                 <div class="card-body">
                                     <div style="height: 140px;" class="chart-area">
                                         <div>
-
-                                            <h1>공사중</h1>
+											<ul>
+												<li>[2023-04] 운동일지 공모전 안내</li>
+												<li>[2023-04] 학습노트 공모전 안내</li>
+												<li>[2023-04] UCC 공모전 신청 안내</li>
+											</ul>
+                                            
 
                                         </div>
                                     </div>
@@ -324,24 +328,24 @@
                                 <div
                                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">캘린더</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                             aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">필요한가 ?</div>
-                                            <a class="dropdown-item" href="#">필요하나요?</a>
-                                            <a class="dropdown-item" href="#">필요 합니까?</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">아아아ㅏ아아아아</a>
-                                        </div>
-                                    </div>
+<!-- 수정 -->
+<!--                                     <div class="dropdown no-arrow"> -->
+<!--                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" -->
+<!--                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!--                                             <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i> -->
+<!--                                         </a> -->
+<!--                                         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" -->
+<!--                                              aria-labelledby="dropdownMenuLink"> -->
+<!--                                             <div class="dropdown-header">필요한가 ?</div> -->
+<!--                                             <a class="dropdown-item" href="#">필요하나요?</a> -->
+<!--                                             <a class="dropdown-item" href="#">필요 합니까?</a> -->
+<!--                                             <div class="dropdown-divider"></div> -->
+<!--                                             <a class="dropdown-item" href="#">아아아ㅏ아아아아</a> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
                                 </div>
 
                                 <div style="margin:5px; padding:0; height: 550px;" class="card-body">
-
                                     <div class="chart-pie pt-4 pb-2">
                                         <%--본문 내용 작성하는 부분--%>
                                             <div id="calendar"></div>
@@ -364,9 +368,9 @@
 
                     <!-- 진도율 카드 -->
                     <div class="row">
-                        <!-- Content Column -->
+<!--                         Content Column -->
                         <div class="col-lg-5 mb-4">
-                            <!-- 진도율 -->
+<!--                             진도율 -->
                             <div class="card shadow mb-4" >
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
@@ -407,13 +411,13 @@
                         </div>
 
                         <div class="col-lg-6 mb-4">
-                            <!-- 식단 -->
+<!--                             식단 -->
                             <div style="width: 785px;" class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div>
-                                    <img style="height: 329px; width: 785px; margin-left: -1px" src="/img/pandora_rise.png">
+                                    <img style="height: 329px; width: 550px; margin: px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>

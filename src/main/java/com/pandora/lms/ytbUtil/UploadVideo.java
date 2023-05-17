@@ -27,7 +27,7 @@ public class UploadVideo {
     public Map<String, Object> uploadVideo(Credential credential, MultipartFile videoFile, Map<String, Object> videoInfo) {
          result = new HashMap<>();
 
-        System.out.println("액세스 관련 : " + credential.getAccessToken());
+        System.out.println("엑세스 관련 : " + credential.getAccessToken());
         System.out.println("파일 이름 : " + videoFile.getOriginalFilename());
         System.out.println("파일 크기 : " + videoFile.getSize());
 
