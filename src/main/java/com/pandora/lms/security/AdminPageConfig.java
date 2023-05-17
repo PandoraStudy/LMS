@@ -41,7 +41,7 @@ public class AdminPageConfig {
             .usernameParameter("id")
             .passwordParameter("pw")
             .loginProcessingUrl("/admin/loginaction")
-            .successHandler(authenticationSuccessHandler)
+            // .successHandler(authenticationSuccessHandler)
             .permitAll();
             
         http
