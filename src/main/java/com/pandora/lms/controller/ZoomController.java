@@ -40,6 +40,8 @@ public class ZoomController {
 
 
         if(result.getZOOM_AUTH() == 1){
+            String message = "회의가 개설되었습니다.";
+            alarmHandler.sendMessage(message);  // 쪽지 알람
             return sbjct_no.toString();
         }else{
             return "";
