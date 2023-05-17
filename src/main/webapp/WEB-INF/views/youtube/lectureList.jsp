@@ -346,7 +346,6 @@
                 <!-- 메인 페이지의 탑 -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-gray-800"></h1>
-                    <%--                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> 이건무슨 버튼으로 쓸까</a>--%>
                 </div>
 
                 <div class="row">
@@ -415,8 +414,6 @@
                                         <c:forEach items="${lectList}" var="lect" varStatus="status">
                                         <div class="week-select ${status.last ? 'select-last' : ''} pointer" data-toggle="collapse" data-target=".week-content${i}">
                                             <i class="fas fa-chevron-down" value="${lect.END_CLS_CD}"></i> ${i }주차
-                                            
-                                            
 <!-- value 조건만 바꾸면댐 -->
 <%-- <c:set var="week" value="${week }"/> --%>
 <c:set var="week" value="4"/>
@@ -475,11 +472,9 @@
                                                 </c:if>
                                             </div>
                                         </div>
-                                        
 <!-- 강의 -->
 <%-- <c:set var="week" value="${week }"/> --%>
 <c:set var="week" value="4"/>
-
 	                                    <!-- 지난주차들 -->
 	                                    <c:if test="${i le week || sessionScope.instr_no ne null}">
 	                                        <div class="week-content week-content${i} ${status.last ? 'content-last' : ''} 
@@ -572,16 +567,7 @@
                                             <c:set var="file_cnt" value="${file_cnt + 1}"/>
                                             </c:forEach>
                                         </c:if>
-                                        
-                                        
-                                        
-<%-- 										<c:set var="instr_no" value="${sessionScope.instr_no eq null }"/> --%>
 										<c:if test="${sessionScope.instr_no eq null }">
-                                        
-                                        
-                                        
-                                        
-                                        
 <!-- 날짜 변경 -->
 <%-- <c:set var="week" value="${week }"/> --%>
 <c:set var="week" value="4"/>

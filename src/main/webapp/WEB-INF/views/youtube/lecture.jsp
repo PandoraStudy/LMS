@@ -103,10 +103,9 @@
         <!-- 디테일 화면 종료 -->
     </div>
     <!-- 메인 콘텐츠 종료 -->
-
+    
     <!-- Footer -->
     <%@include file="../footer.jsp" %>
-
 </div>
 <!-- End of Content Wrapper -->
 
