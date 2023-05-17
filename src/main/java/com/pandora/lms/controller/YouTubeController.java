@@ -80,6 +80,7 @@ public class YouTubeController {
         }
         
         view.addObject("lecture", lecture);
+        
         return view;
     }
 
@@ -181,6 +182,7 @@ public class YouTubeController {
         view.addObject("notice", notice);
         view.addObject("lectList", lectList);
         view.addObject("week", week);
+        System.out.println(lectList);
         
         return view;
     }

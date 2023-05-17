@@ -292,7 +292,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>-+------------------------------------------
+                            </div>
                         </div>
                         <!-- 학사일정 -->
                         <div class="schedule_card mb-4" style="margin-top:230px;">
@@ -305,11 +305,20 @@
                                 <div class="card-body">
                                     <div style="height: 140px;" class="chart-area">
                                         <div>
-											<ul>
-												<li>[2023-04] 운동일지 공모전 안내</li>
-												<li>[2023-04] 학습노트 공모전 안내</li>
-												<li>[2023-04] UCC 공모전 신청 안내</li>
-											</ul>
+											<table class="table">
+												<c:forEach var="notice" items="${list }">
+												<tr class="none">
+													<td>${notice.rowNum }</td>
+													<td class="title text-truncate" style="max-width:1px; text-align: left;">
+													<a href="/noticeDetail?rowNum=${notice.rowNum }&totalCnt=${totalCount}">${notice.notice_title }</a>
+													</td>
+													<td>${notice.admin_id }</td>
+													<td>${notice.notice_read }</td>
+													<td>${notice.notice_date }</td>
+												</tr>
+												</c:forEach>
+											</table>
+
                                             
 
                                         </div>
@@ -376,48 +385,60 @@
                                     <h6 class="m-0 font-weight-bold text-primary">진도율</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">자바
-                                        <span class="float-right">20%</span></h4>
+                                <c:forEach items="${lecture }" var="i">
+                                
+                                    <h4 class="small font-weight-bold">${i.SBJCT_NM }
+                                        <span class="float-right">${i.LECT_MAG }%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: ${i.LECT_MAG }%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">파이썬 <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">자바 스크립트<span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">HTML<span
-                                            class="float-right">80%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
-                                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">진행율<span
-                                            class="float-right">Complete!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
+								</c:forEach>
+                                    
+<!--                                     <h4 class="small font-weight-bold">파이썬 <span -->
+<!--                                             class="float-right">40%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" -->
+<!--                                              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+                                    
+                                    
+<!--                                     <h4 class="small font-weight-bold">자바 스크립트<span -->
+<!--                                             class="float-right">60%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar" role="progressbar" style="width: 60%" -->
+<!--                                              aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+                                    
+                                    
+<!--                                     <h4 class="small font-weight-bold">HTML<span -->
+<!--                                             class="float-right">80%</span></h4> -->
+<!--                                     <div class="progress mb-4"> -->
+<!--                                         <div class="progress-bar bg-info" role="progressbar" style="width: 80%" -->
+<!--                                              aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+                                    
+                                    
+<!--                                     <h4 class="small font-weight-bold">진행율<span -->
+<!--                                             class="float-right">Complete!</span></h4> -->
+<!--                                     <div class="progress"> -->
+<!--                                         <div class="progress-bar bg-success" role="progressbar" style="width: 100%" -->
+<!--                                              aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div> -->
+<!--                                     </div> -->
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-lg-6 mb-4">
-<!--                             식단 -->
+                        <!-- 식단 -->
                             <div style="width: 785px;" class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div>
-                                    <img style="height: 329px; width: 550px; margin: px" src="/img/pandora_rise.png">
+                                    <img style="height: 329px; width: 550px; margin: 0 116px 0 116px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
