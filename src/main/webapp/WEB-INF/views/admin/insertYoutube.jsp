@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<style type="text/css">
+.min > div{
+width: 100px;
+min-width: 100px;
+}
+</style>
 <script type="text/javascript">
 	//조회
 	$(document).ready(function() {
@@ -180,7 +186,7 @@ $(document).ready(function() {
 	</table>
 </div>
 <br>
-<div class="main_container_search" id="insert_btn_inYou">
+<div class="main_container_search min" id="insert_btn_inYou">
 	<input type="hidden" id="">
 	
 	<div>학년도</div>
