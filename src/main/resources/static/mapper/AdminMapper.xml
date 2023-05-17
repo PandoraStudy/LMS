@@ -84,10 +84,11 @@
 	</select>
 	
 	<select id="attendanceList" parameterType="com.pandora.lms.dto.AttendanceDTO" resultType="com.pandora.lms.dto.AttendanceDTO">
-		SELECT DISTINCT a.APPL_NO, c.*, i.*
+		SELECT c.*, i.*
 		FROM APPL_ATND AS a
 		JOIN CRCLM_INFO AS c ON a.CRCLM_CD = c.CRCLM_CD
 		JOIN instr_subject_info AS i ON a.CRCLM_CD = i.CRCLM_CD
+		GROUP BY a.APPL_NO
 		<where>
 <!-- 			<if test="LECT_YMD != 0"> -->
 <!-- 				YEAR(a.LECT_YMD) = #{LECT_YMD} -->
