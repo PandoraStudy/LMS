@@ -438,7 +438,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div>
-                                    <img style="height: 329px; width: 550px; margin: 0 116px 0 116px" src="/img/pandora_rise.png">
+                                    <img style="height: 329px; width: 650px; margin: 10px 62.5px 10px 62.5px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
