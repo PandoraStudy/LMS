@@ -305,18 +305,18 @@
                                 <div class="card-body">
                                     <div style="height: 140px;" class="chart-area">
                                         <div>
-											<ul style="list-style: none; margin:0; padding:0;">
+											<ul class="table" style="list-style: none; margin:0; padding:0; font-weight: bold;">
 												<li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
-													<a href="/noticeDetail?rowNum=7&totalCnt=${totalCount}" style=" color:black;">[모집] TOEIC 정기시험 고사장 준비 및 진행 보조 아르바이트</a>
+													<a href="/noticeDetail?rowNum=7&totalCnt=${totalCount}">[모집] TOEIC 정기시험 고사장 준비 및 진행 보조 아르바이트</a>
 												</li>
                                                 <li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
-													<a href="/noticeDetail?rowNum=8&totalCnt=${totalCount}" style=" color:black;">[1차 모집] 2023년 경기도 청년 복지포인트</a>
+													<a href="/noticeDetail?rowNum=8&totalCnt=${totalCount}">[1차 모집] 2023년 경기도 청년 복지포인트</a>
 												</li>
                                                 <li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
-													<a href="/noticeDetail?rowNum=8&totalCnt=${totalCount}" style=" color:black;">[나라키움 남양주복합청사] 행복주택 제2차 입주자 모집</a>
+													<a href="/noticeDetail?rowNum=8&totalCnt=${totalCount}">[나라키움 남양주복합청사] 행복주택 제2차 입주자 모집</a>
 												</li>
                                                 <li style="text-align: left; font-size: 18px; height:35px; line-height: 35px;">
-													<a href="/noticeDetail?rowNum=10&totalCnt=${totalCount}" style=" color:black;">2023 KBO-NINE 프로그램」모집 안내</a>
+													<a href="/noticeDetail?rowNum=10&totalCnt=${totalCount}">2023 KBO-NINE 프로그램」모집 안내</a>
 												</li>
 											</ul>
                                         </div>
@@ -436,7 +436,7 @@
                                     <h6 class="m-0 font-weight-bold text-primary">식단표</h6>
                                 </div>
                                 <div>
-                                    <img style="height: 329px; width: 550px; margin: 0 116px 0 116px" src="/img/pandora_rise.png">
+                                    <img style="height: 329px; width: 650px; margin: 10px 62.5px 10px 62.5px" src="/img/pandora_rise.png">
                                 </div>
                             </div>
                         </div>
