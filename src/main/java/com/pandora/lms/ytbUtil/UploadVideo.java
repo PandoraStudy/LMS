@@ -30,7 +30,7 @@ public class UploadVideo {
         System.out.println("액세스 관련 : " + credential.getAccessToken());
         System.out.println("파일 이름 : " + videoFile.getOriginalFilename());
         System.out.println("파일 크기 : " + videoFile.getSize());
-
+        String CRCLM_CD = String.valueOf(videoInfo.get("CRCLM_CD"));
         String LECT_YMD = String.valueOf(videoInfo.get("LECT_YMD"));
         String SBJCT_NO = String.valueOf(videoInfo.get("SBJCT_NO"));
         String ON_LECT_NM = String.valueOf(videoInfo.get("ON_LECT_NM"));
@@ -135,6 +135,7 @@ public class UploadVideo {
             System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
             System.out.println("  - Duration: " + returnedVideo.getContentDetails());
 
+            result.put("CRCLM_CD", CRCLM_CD);
             result.put("SBJCT_NO", SBJCT_NO);
             result.put("LECT_YMD", LECT_YMD);
             result.put("ON_LECT_NM", returnedVideo.getSnippet().getTitle());
